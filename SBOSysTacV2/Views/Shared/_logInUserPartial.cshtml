@@ -1,0 +1,126 @@
+﻿
+@*@using Microsoft.AspNet.Identity*@
+@using Microsoft.AspNet.Identity
+@model SBOSysTacV2.ViewModel.UsersViewModel
+
+
+    <div class="navbar-custom-menu">
+        
+    @if (Request.IsAuthenticated)
+    {
+        @Html.HiddenFor(m => m.has_superadminRights, new { @id = "has_superadminRight" })
+
+        <ul class="nav navbar-nav">
+            <!-- Messages: style can be found in dropdown.less-->
+            <!-- Notifications: style can be found in dropdown.less -->
+            
+            @*<li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-bell-o"></i>
+                    <span class="label label-warning">2</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header">You have 2 notifications</li>
+                    <li>
+                        
+                       
+                        <ul class="menu">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-users text-aqua"></i> 2 Booking Events Today
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="footer"><a href="#">View all</a></li>
+                </ul>
+
+            </li>*@
+
+        
+
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="@Url.Content("~/Content/dist/img/avatar04.png")" class="user-image" alt="User Image">
+                    <span class="hidden-xs">@Model.username</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- User image -->
+
+
+
+                    <li class="user-header">
+                        <img src="@Url.Content("~/Content/dist/img/avatar04.png")" class="img-circle" alt="User Image">
+                        <p>
+                            @Model.username - <span class="text-danger">@Model.roles</span>
+                            @*<small>Member since Nov. 2012</small>*@
+
+                        </p>
+                    </li>
+                    <!-- Menu Body -->
+                    <li class="user-body">
+                    
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <button class="btn btn-default btn-flat" id="btnProfile" data-userid="@Model.userId">Profile</button>
+                                </div>
+
+                              
+                                <div class="col-xs-4 text-center">
+                                    @*@if (User.IsInRole("superadmin") || User.IsInRole("admin"))
+                                        {
+                                            <a href="@Url.Action("Index", "Admin")" class="btn btn-danger btn-flat" id="adminpage">Admin Page</a>
+                                        }*@
+                                </div>
+
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+
+                                <div class="col-xs-4 text-center">
+                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-primary btn-flat">Sign out</a>
+                                </div>
+                                
+                                      }
+
+                            </div>
+                      
+                    </li>
+                    <!-- Menu Footer-->
+                    @*@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <li class="user-footer">
+                    <div class="pull-left">
+                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    </div>
+                    <div class="center-block">
+                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    </div>
+                    <div class="pull-right">
+                        <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Sign out</a>
+                    </div>
+                </li>
+            }*@
+                </ul>
+
+            </li>
+            <!-- Control Sidebar Toggle Button -->
+
+            <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            </li>
+        </ul>
+    
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-left">
+            <li style="margin-right: 50px;">@Html.ActionLink("Log in", "Login", "Account")</li>
+        </ul>
+    }
+</div>
+
+

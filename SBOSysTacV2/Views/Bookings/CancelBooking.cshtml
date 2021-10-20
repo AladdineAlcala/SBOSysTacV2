@@ -1,0 +1,155 @@
+﻿@model SBOSysTacV2.ViewModel.CancelBookingViewModel
+
+<div class="pad margin no-print" style="padding-left: 0 !important; padding-right: 0 !important; margin-bottom: 0; padding-bottom: 0;">
+    <div class="callout callout-info">
+        <h4>Cancel Booking</h4>
+    </div>
+</div>
+
+@using (Html.BeginForm("SaveCancelledBooking", "Bookings", FormMethod.Post, new {id = "formcancelbooking"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.TransId)
+
+    
+
+    <div class="row" style="margin-top: 0; margin-bottom: 0;">
+        <section class="invoice">
+            <div class="row">
+                <div class="col-xs-7">
+                    <h2 class="page-header" style="margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid #c8c8a6; color: #2f4f4f;">
+                        <i class="fa fa-address-card"></i> @Model.CustomerFullname
+
+                    </h2>
+                </div>
+                <div class="col-xs-5" style="margin-top: 8px;">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label text-right" style="margin-top: 9px;">Date Cancelled:</label>
+                        <div class="col-sm-7">
+                            <div class="input-group date">
+
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+
+                                @*<input type="text"class="form-control pull-right" id="canceldatepicker"/>*@
+                                @Html.TextBoxFor(m=>m.CancelDate,new {@class= "form-control pull-right", id= "canceldatepicker",@value=Model.CancelDate})
+                               
+                            </div>
+                            @Html.ValidationMessageFor(m => m.CancelDate, null, new {@class = "text-danger"})
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            @{
+                var amount = Model.AmountDue - Model.AmountPaid;
+
+
+            }
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="control-label text-bold col-sm-6 titlehead"> Booking Details</div>
+                    <br/>
+                    <div class="clearfix"></div>
+                    <div class="control-label col-sm-5"> BOOKING NO:</div> <span class="bookdetails">@Model.TransId</span>
+                    <br/>
+                    <div class="control-label col-sm-5"> EVENT DATE:</div> <span class="bookdetails"> @Model.EventDate.ToString("MMM d, yyyy h:mm tt")</span>
+                    <br/>
+                    <div class="control-label col-sm-5"> OCCASION:</div> <span class="bookdetails">@Model.Occasion</span>
+                    <br/>
+                    <div class="control-label col-sm-5"> VENUE:</div> <span class="bookdetails"> @Model.Venue</span>
+                    <br/>
+                    <div class="control-label col-sm-5"> PACKAGE:</div> <span class="bookdetails"> @Model.PackageDesc</span>
+                    <br/>
+                    <div class="control-label col-sm-5"> No of HEADS:</div> <span class="bookdetails"> @Model.NoofPax</span>
+                    <br/>
+                    <div class="control-label col-sm-5"> AMOUNT DUE:</div> <span class="bookdetails">@String.Format("{0:N}", @Model.AmountDue)</span>
+                    <br/>
+                    <div class="control-label col-sm-5"> TOTAL PAID:</div> <span class="bookdetails">@String.Format("{0:N}", @Model.AmountPaid)</span>
+                    <br/>
+                    <div class="control-label col-sm-5"> UNPAID BALANCE:</div> <span class="bookdetails">@String.Format("{0:N}", @amount > 0 ? amount : 0)</span>
+                    <br/>
+                    <div class="control-label col-sm-5"> REFUNDABLE AMOUNT:</div> <span class="bookdetails">@String.Format("{0:N}", @amount < 0 ? System.Math.Abs(amount) : 0)</span>
+                    <br/>
+                </div>
+                <div class="col-sm-4" style="margin-top: 160px;">
+                    <div class="checkbox" style="margin-left: 15px;">
+                        <label>
+                            @Html.CheckBoxFor(m => m.isRefundable, new {@class = "options", @id = "bookingisrefundable"})
+
+                            This Booking is refundable?
+                        </label>
+
+                    </div>
+                    <a href="#" class="btn bg-orange margin disabled"><i class="fa fa-archive"></i> Create Refund Entry </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="row">
+        <section class="invoice">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required">
+                            Reason for Cancellation:
+                        </label>
+                        <div class="col-sm-12">
+                            @*<textarea rows="2" class="form-control"></textarea>*@
+                            
+                            @Html.TextAreaFor(m=>m.ReasonforCancel,new {@class="form-control", rows = "3" })
+                            @Html.ValidationMessageFor(m => m.ReasonforCancel, null, new {@class = "text-danger"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="row">
+        <div class="box-footer" style="padding-left: 0px;">
+            <div class="col-md-5 col-sm-offset-4">
+                <button class="btn bg-olive btn-flat" type="button" id="btn_savecanceledbooking"><i class="fa fa-credit-card"></i> Proceed</button>
+                <button class="btn bg-purple btn-flat" type="button" id="btn_cancelbooking">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+
+        var url_cancelledbooking= {
+            bookingListIndex: "@Url.Action("Load_CancelledBookingList","Inquiry")",
+            bookUrl_IndexLoad:"@Url.Action("Index", "Bookings")"
+        }
+
+
+
+        //$(function() {
+
+
+        //    $('#canceldatepicker').datepicker("setDate", new Date());
+        //    $('#canceldatepicker').datepicker({ autoclose: true,format:'mm/dd/yyyy'});
+
+
+
+
+
+        //});
+
+    </script>
+
+
+    @Scripts.Render("~/Scripts/js_cancelBooking.js")
+}

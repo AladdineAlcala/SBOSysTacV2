@@ -1,0 +1,60 @@
+﻿@using SBOSysTacV2.ViewModel
+@model UserUpdatePassViewModel
+
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-2">
+        <p class="login-box-msg text-left">Update User Password</p>
+    </div>
+</div>
+        
+@using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form",@id= "updateFormUser" }))
+{
+    @Html.AntiForgeryToken()
+
+                                @Html.ValidationSummary(true,"", new { @class = "text-danger" })
+		
+    @Html.HiddenFor(x=>x.userId);
+
+    <div class="form-group">
+        @*@Html.LabelFor(m => m.Coursename, new {@class = "col-sm-2 control-label required"})*@
+        <label class="col-sm-2 control-label required">Enter Old Password</label>
+        <div class="col-sm-6">
+            @*<input type="password" class="form-control" placeholder="Old Password">*@
+            @Html.TextBoxFor(m => m.oldPass, new {@class = "form-control", @type = "password",@placeholder = "Enter Old Password" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(m => m.oldPass, null, new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label required">New Password</label>
+        <div class="col-sm-6">
+            @Html.TextBoxFor(m => m.newPass, new { @class = "form-control", @type = "password" ,@placeholder = "Enter New Password" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(m => m.newPass, null, new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label required">Confirm Password</label>
+        <div class="col-sm-6">
+            @Html.TextBoxFor(m => m.confirmnewPass, new { @class = "form-control", @type = "password",@placeholder = "Confirm Password" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(m => m.confirmnewPass, null, new {@class = "text-danger"})
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <!-- /.col -->
+        <div class="col-xs-3 col-sm-offset-2">
+            <button type="submit" class="btn btn-primary btn-block btn-flat" id="updateSecurity">Update</button>
+        </div>
+        <!-- /.col -->
+    </div>
+
+}

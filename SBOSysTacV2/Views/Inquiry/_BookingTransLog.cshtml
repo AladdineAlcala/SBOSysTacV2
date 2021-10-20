@@ -1,0 +1,77 @@
+﻿@using System.Data.Entity
+@using SBOSysTacV2.ViewModel
+@model IEnumerable<BookingHistoryLogViewModel>
+
+
+@*<div class="table-responsive">
+    <table id="table_logs" class="table table-bordered table-hover" style="width: 100%;">
+        <thead>
+
+            <tr>
+                <th>Log Date</th>
+                <th>User</th>
+                <th>Operation</th>
+                <th>Audit Data</th>
+
+            </tr>
+
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>*@
+
+<ul class="timeline">
+   
+  @foreach (var item in Model)
+  {
+     
+      <!--time line label-->
+      <li class="time-label">
+
+          <span class="bg-red">
+            @item.Logdate.ToShortDateString()
+          </span>
+      </li>
+      <!--time line label-->
+
+
+      <!-- timeline item-->
+      <li>
+          @{
+              var i = "";
+
+              if (item.Log_operation == "Insert")
+              {
+                  i = "fa-file-text-o";
+              }
+              else if (item.Log_operation == "Delete")
+              {
+                  i = "fa-trash";
+              }
+              else
+              {
+                  i = "fa-edit (alias)";
+              }
+          }
+          <i class="fa @i bg-blue"></i>
+          <div class="timeline-item">
+              <span class="time"><i class="fa fa-clock-o"></i>@item.Logdate.ToString("hh:mm:ss t z")</span>
+              <h3 class="timeline-header">@item.Log_operation</h3>
+
+              <div class="timeline-body">
+                  <ol>
+                      @foreach (var t in item.BookingEventList)
+                      {
+                          <li>@t.eventDetails</li>
+                      }
+                  </ol>
+              </div>
+
+          </div>
+      </li>
+
+      <!-- timeline item-->
+  }
+
+ 
+</ul>

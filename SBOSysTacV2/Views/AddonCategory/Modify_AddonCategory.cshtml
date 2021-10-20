@@ -1,0 +1,33 @@
+﻿@using SBOSysTacV2
+@model SBOSysTacV2.ViewModel.AddonCatViewModel
+
+@using (Html.BeginForm("Modify_AddonCategory", "AddonCategory", FormMethod.Post, new { @class = "form-horizontal", @id = "addoncatform", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.addoncatId)
+
+    <div class="box-body">
+
+        <div class="form-group">
+            <label class="control-label col-sm-3 required">Addons Category</label>
+            <div class="col-sm-7">
+                @Html.TextBoxFor(model => model.addoncatdetails, new { @class = "form-control", @data_toggle = "popover", @placeholder = "Enter addons category", @autofocus = "autofocus" })
+                @Html.ValidationMessageFor(model => model.addoncatdetails, null, new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="box-footer" style="padding-left: 0px;">
+        <div class="col-md-5 col-sm-offset-3">
+
+            @*<input type="submit" value="Register " title="Register" id="btn_regCourse" class="btn btn-success btn-sm"/>*@
+            <button class="btn bg-olive btn-flat" type="submit" id="btn_modifyaddoncategory">Modify</button>
+            <button class="btn bg-purple btn-flat" type="button" id="btn_canceldiscount">Cancel</button>
+
+        </div>
+    </div>
+}
+

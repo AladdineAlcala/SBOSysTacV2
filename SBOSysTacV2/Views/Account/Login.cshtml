@@ -1,0 +1,67 @@
+﻿@using SBOSysTacV2.ViewModel
+@model LoginViewModel
+
+<div class="login-box">
+    <div class="login-logo">
+        @*<a href="../../index2.html"><b>Admin</b>LTE</a>*@
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+
+    @using (Html.BeginForm("Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group has-feedback">
+          
+            <div class="col-xs-12">
+                @Html.TextBoxFor(m =>m.Username, new { @class = "form-control", @placeholder = "Username",autofocus="autofocus"})
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+
+        </div>
+
+        <div class="form-group has-feedback">
+           
+            <div class="col-xs-12">
+                @Html.TextBoxFor(m =>m.Password, new { @class = "form-control",@type= "password", @placeholder = "Password" })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.RememberMe) Remember Me
+                    </label>
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            </div>
+            <!-- /.col -->
+        </div>
+    }
+       
+
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+@section scripts
+{
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+            $("body").addClass("sidebar-collapse");
+        });
+    
+
+    </script>
+}

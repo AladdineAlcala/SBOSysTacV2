@@ -1,0 +1,60 @@
+﻿@using SBOSysTacV2.ViewModel
+@model PackageBookingViewModel
+
+@{
+    var totalAddons = Model.AddOns.Sum(x => x.AddonAmount);
+}
+
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title text-blue">Additional Information/Addons and Uprades</h3>
+        <div class="box-tools">
+            <button id="addon_Information" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-info-circle"></i></button>
+            <button id="addon_upgrades" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-glass"></i></button>
+        </div>
+
+    </div>
+    <!--box-header-->
+    <div class="box-body table-responsive no-padding" style="height: 330px;">
+        <table class="table table-hover">
+            <tbody>
+            @foreach (var item in Model.AddOns)
+            {
+                <tr>
+                    <td class="addontools">
+                        <span><i class="fa fa-trash" id="addons_remove" data-id="@item.No"></i></span>
+                        <span><i class="fa fa-edit" id="addons_modify" data-id="@item.No"></i></span>
+                     
+                    </td>
+
+                    <td>@item.AddonsDescription </td>
+                    <td>@item.AddonNote</td>
+                    @{
+                        if (item.AddonAmount > 0)
+                        {
+                            <td class="text-right">@(String.Format("{0:N}", item.AddonAmount))</td>
+                        }
+                        else
+                        {
+                            <td class="text-right">- - -</td>
+                        }
+                    }
+                  
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+            <tr>
+                <td class="text-right text-bold" colspan="2">Total:</td>
+               
+                <td class="text-right text-bold" colspan="3">Php : @(String.Format("{0:N}", totalAddons))</td>
+            </tr>
+            </tfoot>
+
+
+
+
+        </table>
+    </div>
+    <!--box-body-->
+</div>

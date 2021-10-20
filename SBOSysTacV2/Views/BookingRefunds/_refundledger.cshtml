@@ -1,0 +1,101 @@
+﻿@using SBOSysTacV2.ViewModel
+@model RefundTransViewModel
+@{
+    decimal debitAmount = Model.BookingRefund.refundAmount;
+    decimal creditedAmount = 0;
+
+}
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Refund Entry</h3>
+            <div class="box-tools">
+
+             
+                <button id="add_refundpayment" class="btn bg-olive-active btn-flat" data-id="@Model.transId"><i class="fa fa-credit-card"></i></button>
+                
+
+            </div>
+        </div>
+
+        <div class="box-body no-padding">
+            <table class="table table-condensed table-hover table-responsive" id="refundledgertable">
+                <thead>
+                    <tr>
+                        <th class="text-center">DATE</th>
+                        <th class="text-center">RFNo.</th>
+                        <th class="text-left">PARTICULARS</th>
+                        <th class="text-right">DEBIT</th>
+                        <th class="text-right">CREDIT</th>
+                        <th class="text-right">BALANCE</th>
+                        <td class="text-center" style="width: 120px;"></td>
+                    </tr>
+                </thead>
+                <tr id="balance" style="background: #8FBC8F; font-size: 1.0em;" class="bookdetails">
+                    
+                    @if (Model.BookingRefund != null)
+                    {
+                        <td class="text-center">@Model.BookingRefund.rfDate.ToString("MMM dd,yyyy")</td>
+                        <td class="text-center">@Model.BookingRefund.rfId</td>
+                        <td> </td>
+
+                        <td class="text-right">
+                            @String.Format("{0:N}", Model.BookingRefund.refundAmount)
+                        </td>
+
+                        <td></td>
+                        <td class="text-right">
+                            @String.Format("{0:N}", Model.BookingRefund.refundAmount)
+                        </td>
+
+
+                        <td></td>
+                    }
+                    else
+                    {
+                        <td class="text-info"> No Refund Entry Found:</td>
+                    }
+
+
+                </tr>
+                <tbody>
+                @{
+                    foreach (var item in Model.PostRefundEntry)
+                    {
+                        creditedAmount +=Convert.ToDecimal(item.Amount);
+
+                        <tr class="bookdetails">
+                                   
+                            <td></td>
+                            <td></td>
+                            <td class="text-left">@item.Particular</td>
+                            <td></td>
+                            <td class="text-right">@item.Amount</td>
+                            <td></td>
+                            <td class="text-center">
+                                
+                                <div class="tools">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true" id="updatepayment"></i>
+                                    <i class="fa fa-trash" aria-hidden="true" id="removepayment"></i>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+                </tbody>
+                <tfoot>
+               
+                <tr class="bookdetails">
+                    <td>Total</td>
+                    <td colspan='3' class="text-bold text-right"> <span style="float: right;">@string.Format("{0:N}", debitAmount)</span> </td>
+                    <td colspan='1' class="text-bold text-right"> <span style="float: right;">@string.Format("{0:N}", creditedAmount)</span> </td>
+                    <td colspan='1' class="text-bold text-right"> <span style="float: right;">@string.Format("{0:N}",debitAmount-creditedAmount)</span> </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

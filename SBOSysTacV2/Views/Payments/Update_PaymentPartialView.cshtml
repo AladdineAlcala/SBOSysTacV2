@@ -1,0 +1,115 @@
+﻿@using System.Web.Mvc.Html
+@using SBOSysTacV2.ViewModel
+@model PaymentsViewModel
+
+@using (Html.BeginForm("Update_PaymentPartialView", "Payments", FormMethod.Post, new { @class = "form-horizontal", @id = "Updatepaymentform", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(m=>m.PayNo)
+    @Html.HiddenFor(m => m.transId)
+    @*@Html.HiddenFor(m => m.dateofPayment)*@
+
+    <div class="box-body">
+        
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-6 col-sm-offset-6">
+                <div class="form-group">
+                    <label class="col-xs-4 control-label text-right">Date Entry</label>
+                    <div class="col-xs-8">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+
+                            @*<input type="text"class="form-control pull-right" id="paymentrefunddatepicker"/>*@
+
+                            @Html.TextBoxFor(m=>m.dateofPayment,new {@class= "form-control pull-right", id= "paymentdatepicker" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.particular, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-7">
+                @Html.TextAreaFor(m => m.particular, new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(m => m.particular, null, new { @class = "text-danger" })
+        </div>
+        
+        @Html.HiddenFor(m => m.payType)
+
+        @*<div class="form-group">
+            @Html.LabelFor(m => m.payType, new { @class = "col-sm-2 control-label required" })
+            <div class="col-sm-6">
+                @Html.DropDownListFor(m => m.payType, new List<SelectListItem>
+                {
+                    new SelectListItem {Value="0",Text="Partial" },
+                    new SelectListItem {Value="1",Text="Full Payment" },
+                }, new { @class = "form-control", @placeholder = "Select Payment Type" })
+            </div>
+            @Html.ValidationMessageFor(m => m.payType, null, new { @class = "text-danger" })
+        </div>*@
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Enter Amount: </label>
+            <div class="col-sm-7">
+                @Html.TextBoxFor(m => m.amtPay, new { @class = "form-control text-right", @placeholder = "0.00", @id = "txtpayamt" })
+            </div>
+            @Html.ValidationMessageFor(m => m.amtPay, null, new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Payment Means: </label>
+            <div class="col-sm-7">
+               
+                <div class="radio">
+                    <label>
+                        @Html.RadioButtonFor(m => m.pay_means, "Cash", Model.pay_means == "Cash" ? new {@Checked = "checked"} : null)
+                        Cash
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        @Html.RadioButtonFor(m => m.pay_means, "Online", Model.pay_means == "Online" ? new {@Checked = "checked"} : null)
+                        Online
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        @Html.RadioButtonFor(m => m.pay_means, "Check", Model.pay_means=="Check"? new {@Checked="checked"}:null)
+                        Check
+                        @*@Html.TextBoxFor(m => m.checkNo, new { disabled = "disabled", @class = "form-control", @id = "txtcheckNo" })*@
+                    </label>
+                    @Html.TextBoxFor(m => m.checkNo, new { disabled = "disabled", @class = "form-control", @id = "txtcheckNo", @placeholder = "Enter Bank Check Details" })
+                </div>
+
+                @Html.ValidationMessageFor(m => m.pay_means, null, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.notes, new { @class = "col-sm-3 control-label" })
+
+            <div class="col-sm-7">
+                @Html.TextAreaFor(m => m.notes, new { @class = "form-control" })
+            </div>
+        </div>
+
+    </div>
+
+    <div class="box-footer" style="padding-left: 0px;">
+        <div class="col-md-5 col-sm-offset-3">
+
+            @*<input type="submit" value="Register " title="Register" id="btn_regCourse" class="btn btn-success btn-sm"/>*@
+            <button class="btn bg-olive btn-flat" type="submit" id="btn_updatePayment">Update Payment</button>
+            <button class="btn bg-purple btn-flat" type="button" id="btn_cancelupdatePaymnt">Cancel</button>
+
+        </div>
+    </div>
+
+}
+

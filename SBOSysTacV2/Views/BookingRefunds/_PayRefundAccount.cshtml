@@ -1,0 +1,84 @@
+﻿@using SBOSysTacV2.ViewModel
+@model PostRefundEntryViewModel
+
+<div class="box box-primary">
+    <div class="box-body">
+       @using (Html.BeginForm("PostCreditRefundEntry","BookingRefunds",FormMethod.Post,new {@class="form-horizontal",id="form_registercreditentry"}))
+       {
+        @Html.AntiForgeryToken()
+           @Html.ValidationSummary()
+
+           @Html.HiddenFor(x=>x.rfID)
+           @Html.HiddenFor(x=>x.transId)
+           <div class="row">
+                
+               <div class="form-group">
+                   <label class="col-sm-3 control-label">Details: </label>
+                   <div class="col-sm-7">
+                       @Html.TextAreaFor(m => m.refundentrydetail, new { @class = "form-control"})
+                   </div>
+                   @Html.ValidationMessageFor(m => m.refundentrydetail, null, new { @class = "text-danger" })
+               </div>
+                
+               <div class="form-group">
+                   <label class="col-sm-3 control-label">Credited Amount of: </label>
+                   <div class="col-sm-7">
+                       @Html.TextBoxFor(m=>m.EntryAmount,new {@class="form-control text-right",@placeholder="0.00", @id = "txtpayentry_amt" })
+                   </div>
+                   @Html.ValidationMessageFor(m => m.EntryAmount, null, new { @class = "text-danger" })
+               </div>
+                
+               @*<div class="form-group">
+                    <label class="col-sm-3 control-label">Payment Means: </label>
+                    <div class="col-sm-7">
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(m => m.pay_means, "Cash",new {@checked=true})
+                                Cash
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(m => m.pay_means, "Online", false)
+                                Online
+                            </label>
+                        </div>
+
+                        <div style="display: inline-block;">
+                            <div class="radio">
+                  
+                                <label style="display: inline-block">
+                           
+                                    @Html.RadioButtonFor(m=>m.pay_means,"Check",false)
+                                    Check
+                                </label>
+                                @Html.TextBoxFor(m => m.checkNo, new { disabled = "disabled", @class = "form-control", @id = "txtcheckNo", @placeholder = "Enter Bank Check Details" })
+                   
+                   
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(m=>m.pay_means,null,new {@class="text-danger"})
+                    </div>
+                </div>*@
+        
+               @*<div class="form-group">
+                    @Html.LabelFor(m => m.notes, new { @class = "col-sm-3 control-label" })
+
+                    <div class="col-sm-7">
+                        @Html.TextAreaFor(m => m.notes, new { @class = "form-control" })
+                    </div>
+                </div>*@
+                
+                
+               <div class="col-md-5 col-md-offset-3">
+
+                   @*<input type="submit" value="Register " title="Register" id="btn_regCourse" class="btn btn-success btn-sm"/>*@
+                   <button class="btn bg-olive btn-flat" type="submit" id="btn_regcreditentry">Create Refund Entry</button>
+                   <button class="btn bg-purple btn-flat"type="button" id="btn_cancelcreditentry">Cancel</button>
+
+               </div>
+
+           </div>
+       }
+    </div>
+</div>

@@ -1,0 +1,133 @@
+﻿@model SBOSysTacV2.ViewModel.CustomerDetailsViewModel
+
+
+<section class="content">
+    <div class="box">
+    
+        <div class="box-header with-border">
+            <i class="fa fa-user-plus fa-fw"></i>
+            <h3 class="box-title">New Customer Details</h3>
+
+        </div>
+        
+        <div class="row top-buffer"></div>
+
+    @using (Html.BeginForm("CreateCustomer", "Customers", FormMethod.Post, new {@id = "newcustomer"}))
+    {
+        <div class="box-body">
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(model => model.c_Id)
+
+
+
+            <div class="row">
+                <div class="col-lg-4">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.lastname, new {@class = "required"})
+                        @Html.TextBoxFor(model => model.lastname, new {@class = "form-control", @data_toggle = "popover", @placeholder = "Enter Lastname", @autofocus = "autofocus"})
+                        @Html.ValidationMessageFor(model => model.lastname, null, new {@class = "text-danger"})
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.firstname, new {@class = "required"})
+                        @Html.TextBoxFor(model => model.firstname, new {@class = "form-control", @data_toggle = "popover", @placeholder = "Enter Firstname"})
+                        @Html.ValidationMessageFor(model => model.firstname, null, new {@class = "text-danger"})
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.middle)
+                        @Html.TextBoxFor(model => model.middle, new {@class = "form-control", @data_toggle = "popover"})
+
+                    </div>
+
+                </div>
+            </div>
+            <!--end row-->
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.address, new {@class = "required"})
+                        @Html.TextAreaFor(model => model.address, new {@class = "form-control", @data_toggle = "popover", rows = "3"})
+                        @Html.ValidationMessageFor(model => model.address, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.contact1, new {@class = "required"})
+                        @Html.TextBoxFor(model => model.contact1, new {@class = "form-control", @data_toggle = "popover", @placeholder = "09232313233"})
+                        @*@Html.TextBoxFor(model => model.contact2, new {@class = "form-control contactsupdown", @data_toggle = "popover", @placeholder = "053-561-1111", @id = "contact"})*@
+                        @Html.ValidationMessageFor(model => model.contact1, null, new {@class = "text-danger"})
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+
+            <div class="row">   
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.company)
+                        @Html.TextBoxFor(model => model.company, new {@class = "form-control", @data_toggle = "popover"})
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.contact2, new {@class = "required"})
+                        @*@Html.TextBoxFor(model => model.contact1, new {@class = "form-control", @data_toggle = "popover", @placeholder = "09232313233", @id = "contact"})*@
+                        @Html.TextBoxFor(model => model.contact2, new {@class = "form-control", @data_toggle = "popover", @placeholder = "053-561-1111"})
+                        @Html.ValidationMessageFor(model => model.contact2, null, new {@class = "text-danger"})
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+
+            
+
+        </div>
+
+        <div class="box-footer">
+            <div class="col-lg-6 col-lg-offset-3">
+                <p class="text-center">
+                    
+                    @*<input type="submit" value="Register" title="Register" id="btn_savecustomer" data-toggle="modal" class="btn bg-olive btn-flat" style="padding-right: 40px; padding-left: 40px;"/>*@
+                    <button class="btn bg-olive btn-flat" type="submit" id="btn_savecustomer">Register Customer</button>
+                    <button class="btn bg-purple btn-flat" type="button" id="cancel" onclick="window.history.back()">Cancel</button>
+                </p>
+            </div>
+
+        </div>
+    }
+    </div>
+    
+  
+</section>
+
+
+
+@section scripts
+{
+
+    <script type="text/javascript">
+
+        var customerUrl = {
+            url_customerIndex:"@Url.Action("Index","Customers")",
+            url_customerAdd: "@Url.Action("CreateCustomer","Customers")",
+            url_customerloadDataTable: "@Url.Action("LoadCustomers", "Customers")"
+
+        }
+    </script>
+
+    @Scripts.Render("~/Scripts/js_customer.js")
+
+
+}

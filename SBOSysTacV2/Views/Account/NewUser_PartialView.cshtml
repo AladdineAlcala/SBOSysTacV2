@@ -1,0 +1,61 @@
+﻿@using SBOSysTacV2.ViewModel
+@model RegisterViewModel
+    
+
+<div class="box-body">
+    
+    <div class="register-box-body">
+        <p class="login-box-msg text-left">Register a new user</p>
+
+        
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form",@id= "registerFormUser" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        <div class="form-group has-feedback">
+            <div class="col-xs-12">
+                @*<input type="text" class="form-control" placeholder="Full name">*@
+                @Html.TextBoxFor(m => m.UserName, new {@class = "form-control",@placeholder="Username" })
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="col-xs-12">
+                @*<input type="email" class="form-control" placeholder="Email">*@
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control",@placeholder="Email" })
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="col-xs-12">
+                @*<input type="password" class="form-control" placeholder="Password">*@
+                @Html.TextBoxFor(m => m.Password, new {@class = "form-control",@placeholder="Password",@type="password" })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="col-xs-12">
+                @*<input type="password" class="form-control" placeholder="Retype password">*@
+                @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Retype password", @type = "password" })
+                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+            </div>
+        </div>
+        <div class="row">
+
+            <!-- /.col -->
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block btn-flat" id="registerUser">Register</button>
+            </div>
+            <!-- /.col -->
+        </div>
+
+    }
+       
+    </div>
+    <!-- /.form-box -->
+
+
+
+</div>

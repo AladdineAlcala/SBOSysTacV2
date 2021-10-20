@@ -1,0 +1,207 @@
+﻿@using SBOSysTacV2.ViewModel
+@model ReservationViewModel
+
+<section class="content">
+
+    <div class="box">
+
+        <div class="box-header with-border">
+            <i class="fa fa-ticket fa-fw"></i>
+           
+            <h3 class="box-title">Create New Booking Reservation</h3>
+        </div>
+
+        @using (Html.BeginForm("CreateReservation", "Reservations", FormMethod.Post, new { @class = "form-horizontal", id ="reservation" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(m => m.reservationId)
+
+         
+            <div class="box-body">
+
+                <div class="row">
+
+                    <div class="col-sm-9" style="margin-right: 0px; padding-right: 0px; width: 650px;">
+                        <div class="form-group" style="width: 600px;">
+                            @Html.LabelFor(m => m.fullname, new { @class = "col-sm-3 control-label required" })
+
+                            <div class="col-sm-9">
+
+                                @Html.TextBoxFor(m => m.fullname, new { @class = "form-control", @id = "customer", @placeholder = "Search Customer" })
+                                @Html.ValidationMessageFor(model => model.fullname, null, new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        
+                        <div class="form-group" style="width: 600px;">
+                            @Html.LabelFor(m => m.reserveDate, new { @class = "col-sm-3 control-label required" })
+                            <div class="col-sm-9">
+                                <div class="input-group date">
+
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+
+
+                                    @Html.TextBoxFor(m => m.reserveDate, new { @class = "form-control pull-right", @id = "event_date" }) @*//@value = Model.reserveDate*@ 
+                                </div>
+                                @Html.ValidationMessageFor(model => model.reserveDate, null, new { @class = "text-danger" })
+                            </div>
+
+
+
+                        </div>
+
+
+                        <div class="form-group" style="width: 600px;">
+                            @Html.LabelFor(m => m.noofperson, new { @class = "col-sm-3 control-label required" })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.noofperson, new { @class = "form-control", @placeholder = "Enter no. of person" })
+                                @Html.ValidationMessageFor(m => m.noofperson, null, new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                        <div class="form-group" style="width: 600px;">
+                            @Html.LabelFor(m => m.occasion, new { @class = "col-sm-3 control-label required" })
+                            <div class="col-sm-9">
+
+                                @Html.TextBoxFor(m => m.occasion, new { @class = "form-control", @id = "occassion", @placeholder = "Enter Occassion" })
+                                @Html.ValidationMessageFor(model => model.occasion, null, new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        <div class="form-group" style="width: 600px;">
+                            @Html.LabelFor(m => m.eventVenue, new { @class = "col-sm-3 control-label required" })
+                            <div class="col-sm-9">
+
+                                @Html.TextBoxFor(m => m.eventVenue, new { @class = "form-control", @id = "eventVenue", @placeholder = "Enter event venue" })
+                              
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @Html.HiddenFor(m => m.customerId, new { @id = "hidden_cusId" })
+
+
+            <div class="box-footer" style="padding-left: 0px;">
+                <div class="col-md-5 col-sm-offset-2">
+
+
+                    <button class="btn bg-olive btn-flat" type="submit" id="btn_regreservation"><i class="fa fa-credit-card"></i> Save Reservation</button>
+                    <button class="btn bg-purple btn-flat" type="button" id="btn_cancelreservation">Cancel</button>
+
+                </div>
+            </div>
+            <!-- /.box-footer-->
+
+        }
+
+    </div>
+
+</section>
+<!-- main container-->
+
+
+
+
+
+
+@section scripts
+{
+
+    <script type="text/javascript">
+
+
+        
+        var reservationUrl = {
+            reserveUrl_Index: "@Url.Action("Index", "Reservations")",
+            reserveUrl_listofReservations: "@Url.Action("Get_ReservationsList", "Reservations")",
+            reserveUrl_createNewReservation: "@Url.Action("CreateReservation", "Reservations")",
+            reserveUrl_removeReservation: "@Url.Action("Remove_Reservation", "Reservations")"
+
+         
+        }
+
+
+
+        $(function () {
+
+            //var vm = {};
+            var dateNow = new Date();
+
+            var customers = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('fullname'),
+
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+
+                remote: {
+                        url: '/Customers/GetCustomers?query=%QUERY',
+                         // url: '/Sals/Customers/GetCustomers?query=%QUERY',
+                    wildcard: '%QUERY'
+
+                }
+
+            });
+
+            //customers.initialize();
+
+            $('#customer').typeahead({
+                    highlight: true
+
+                },
+                {
+                    name: 'customers',
+
+                    display: 'fullname',
+
+                    source: customers
+
+                }).on("typeahead:selected typeahead:autocompleted",
+                function (e, customer) {
+                    e.preventDefault();
+
+                    $('#hidden_cusId').val(customer.customerId);
+
+                    //vm.customerId = customer.customerId;
+                    //console.log(vm.customerId);
+                });
+
+
+            $('#event_date').datetimepicker(
+                {
+                    //format: "DD-MMM-YYYY",
+                    //defaultDate: dateNow
+
+                    //maxDate: moment(),
+                    allowInputToggle: true,
+                    enabledHours: false,
+                    locale: moment().local('en'),
+                    format: "DD-MMM-YYYY HH:mm A",
+                    defaultDate: dateNow
+
+                }
+            );
+
+        });
+
+
+    </script>
+
+    @Scripts.Render("~/Scripts/js_reservation.js")
+}
+
+
+
+
+

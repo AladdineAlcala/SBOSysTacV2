@@ -1,0 +1,111 @@
+﻿@using SBOSysTacV2.ViewModel
+@model PrintOptionViewModel
+
+
+@{
+    ViewBag.Title = "ReportContainer";
+}
+
+@if (Request.IsAuthenticated)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div id="frameholder" style="display: block;">
+                <iframe id="ReportFrame" src="" onload="document.getElementById('spinn-loader').style.display = 'none';" width="100%" height="1000" style="border: none"></iframe>
+            </div>
+       
+        </div>
+    </div>
+}
+
+
+
+@Html.Hidden("hiddentransId",@Model.Id);
+@Html.Hidden("hiddenprintOption",@Model.selPrintOpt)
+@Html.Hidden("datefrom",@Model.dateFrom)
+@Html.Hidden("dateto", @Model.dateTo)
+@Html.Hidden("clientId",@Model.Id)
+
+<div id="spinn-loader">
+    Loading data Pls. wait....
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $('#spinn-loader').show();
+
+
+        $(document).ready(function() {
+
+            var paramTransId = $('#hiddentransId').val();
+            var clientId=$('#clientId').val();
+            var selprintopt = $('#hiddenprintOption').val();
+
+            var filterdatefrom = $('#datefrom').val();
+            var filterdateto = $('#dateto').val();
+
+            //console.log(filterdatefrom + '' + filterdateto);
+
+            if (selprintopt === "contform")
+            {
+
+                $("#ReportFrame").attr("src",
+                    "@Url.Content("~/Reports/ReportViewers/ReportViewerContractPrint.aspx?transactionId=")" +
+                    paramTransId);
+
+
+            }
+            else if (selprintopt === "accnrecievesummary") {
+
+
+                $("#ReportFrame").attr("src",
+                    "@Url.Content("~/Reports/ReportViewers/AccountsRecieveSummary.aspx?")");
+
+
+            }
+            else if (selprintopt === "accnrecievepercustomer")
+            {
+                $("#ReportFrame").attr("src",
+                    "@Url.Content("~/Reports/ReportViewers/AccountsRecieveClient.aspx?clientId=")" + clientId);
+
+            }
+            else if (selprintopt === "cashreport")
+            {
+                $("#ReportFrame").attr("src",
+                    "@Url.Content("~/Reports/ReportViewers/CashReportViewer.aspx?filterdatefrom=")" + filterdatefrom + "&filterdateto=" + filterdateto);
+            }
+
+            else if (selprintopt === "distribution")
+            {
+
+            }
+            else if (selprintopt === "printaccnRcv") {
+                $("#ReportFrame").attr("src",
+                    "@Url.Content("~/Reports/ReportViewers/AccnRecvPayment.aspx?transactionId=")" +
+                    paramTransId);
+
+            }
+            else if (selprintopt ==="cateringreport") {
+
+                $("#ReportFrame").attr("src",
+                    "@Url.Content("~/Reports/ReportViewers/Admin_MonthCatReport.aspx?month=")" + filterdatefrom);
+            }
+
+
+            else {
+                $("#ReportFrame").attr("src",
+                    "@Url.Content("~/Reports/ReportViewers/ReportViewerContractFunction.aspx?transactionId=")" +
+                    paramTransId);
+            }
+
+
+
+
+    });
+
+        </script>
+
+
+}
