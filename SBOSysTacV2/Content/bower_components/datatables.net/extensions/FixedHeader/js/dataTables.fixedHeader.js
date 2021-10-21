@@ -51,7 +51,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 var _instCounter = 0;
 
 var FixedHeader = function ( dt, config ) {
@@ -124,7 +123,6 @@ var FixedHeader = function ( dt, config ) {
 	this._constructor();
 };
 
-
 /*
  * Variable: FixedHeader
  * Purpose:  Prototype for FixedHeader
@@ -134,7 +132,7 @@ $.extend( FixedHeader.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * API methods
 	 */
-	
+
 	/**
 	 * Enable / disable the fixed elements
 	 *
@@ -154,9 +152,9 @@ $.extend( FixedHeader.prototype, {
 
 		this.update();
 	},
-	
+
 	/**
-	 * Set header offset 
+	 * Set header offset
 	 *
 	 * @param  {int} new value for headerOffset
 	 */
@@ -169,7 +167,7 @@ $.extend( FixedHeader.prototype, {
 
 		return this.c.headerOffset;
 	},
-	
+
 	/**
 	 * Set footer offset
 	 *
@@ -185,7 +183,6 @@ $.extend( FixedHeader.prototype, {
 		return this.c.footerOffset;
 	},
 
-	
 	/**
 	 * Recalculate the position of the fixed elements and force them into place
 	 */
@@ -195,11 +192,10 @@ $.extend( FixedHeader.prototype, {
 		this._scroll( true );
 	},
 
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
-	
+
 	/**
 	 * FixedHeader constructor - adding the required event listeners and
 	 * simple initialisation
@@ -250,7 +246,6 @@ $.extend( FixedHeader.prototype, {
 		this._positions();
 		this._scroll();
 	},
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
@@ -393,7 +388,7 @@ $.extend( FixedHeader.prototype, {
 	 * * `in` - Floating over the DataTable
 	 * * `below` - (Header only) Fixed to the bottom of the table body
 	 * * `above` - (Footer only) Fixed to the top of the table body
-	 * 
+	 *
 	 * @param  {string}  mode        Mode that the item should be shown in
 	 * @param  {string}  item        'header' or 'footer'
 	 * @param  {boolean} forceChange Force a redraw of the mode, even if already
@@ -412,7 +407,7 @@ $.extend( FixedHeader.prototype, {
 		var focus = $.contains( tablePart[0], document.activeElement ) ?
 			document.activeElement :
 			null;
-		
+
 		if ( focus ) {
 			focus.blur();
 		}
@@ -526,7 +521,6 @@ $.extend( FixedHeader.prototype, {
 		}
 	},
 
-
 	/**
 	 * Mode calculation - determine what mode the fixed items should be placed
 	 * into.
@@ -584,7 +578,6 @@ $.extend( FixedHeader.prototype, {
 	}
 } );
 
-
 /**
  * Version
  * @type {String}
@@ -604,7 +597,6 @@ FixedHeader.defaults = {
 	footerOffset: 0
 };
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables interfaces
  */
@@ -612,7 +604,6 @@ FixedHeader.defaults = {
 // Attach for constructor access
 $.fn.dataTable.FixedHeader = FixedHeader;
 $.fn.DataTable.FixedHeader = FixedHeader;
-
 
 // DataTables creation - check if the FixedHeader option has been defined on the
 // table and if so, initialise
@@ -686,7 +677,6 @@ $.each( ['header', 'footer'], function ( i, el ) {
 		} );
 	} );
 } );
-
 
 return FixedHeader;
 }));

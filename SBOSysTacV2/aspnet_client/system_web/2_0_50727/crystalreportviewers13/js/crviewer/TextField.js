@@ -1,7 +1,7 @@
 /*
  * ================================================================================
  * TextField
- * 
+ *
  * Internal class. Text box that renders correctly in a Parameter UI
  * ================================================================================
  */
@@ -17,7 +17,7 @@ bobj.crv.params.newTextField = function(kwArgs) {
         maxChar: null,
         tooltip: null,
         disabled: false,
-        editable: true, 
+        editable: true,
         password: false,
         focusCB: null,
         blurCB: null,
@@ -28,33 +28,33 @@ bobj.crv.params.newTextField = function(kwArgs) {
         isTextItalic : false,
         canOpenAdvDialog : false
     }, kwArgs);
-    
+
     var o = newTextFieldWidget(
         kwArgs.id,
-        kwArgs.changeCB, 
+        kwArgs.changeCB,
         kwArgs.maxChar,
-        kwArgs.keyUpCB, 
-        kwArgs.enterCB, 
+        kwArgs.keyUpCB,
+        kwArgs.enterCB,
         true, //nomargin
         kwArgs.tooltip,
         null, //width
-        kwArgs.focusCB, 
+        kwArgs.focusCB,
         kwArgs.blurCB);
-        
+
     o.widgetType = 'TextField';
-    
+
     // Update instance with constructor arguments
     bobj.fillIn(o, kwArgs);
     o.disabled = kwArgs.disabled;
     o.width = kwArgs.width;
-    
+
     // Update instance with member functions
     MochiKit.Base.update(o, bobj.crv.params.TextField);
-    
+
     if (kwArgs.cleanValue) {
-        o.setValue(kwArgs.cleanValue);    
+        o.setValue(kwArgs.cleanValue);
     }
-    
+
     return o;
 };
 
@@ -64,19 +64,19 @@ bobj.crv.params.TextField = {
         if (this.css)
             this.css.color = color;
     },
-    
+
     setTextItalic : function(isTextItalic) {
         this.isTextItalic = isTextItalic;
         if (this.css)
             this.css.fontStyle = isTextItalic ? 'italic' : '';
     },
-    
+
     setTabDisabled : function(dis) {
         bobj.disableTabbingKey (this.layer, dis);
     },
-    
+
     eraseHelpTxt: MochiKit.Base.noop,
-    
+
     getHTML : function() {
         var style = {
             width : bobj.unitValue (this.width)
@@ -115,7 +115,7 @@ bobj.crv.params.TextField = {
 
         if (!this.editable) {
             attributes.readonly = "readonly";
-            
+
             if (this.canOpenAdvDialog) {
                 style.cursor = "pointer";
             }
@@ -130,7 +130,7 @@ bobj.crv.params.TextField = {
 
         return bobj.html.INPUT (attributes);
     },
-    
+
     /**
      * Resets textField object. Sets clean value, current value
      */
@@ -139,13 +139,12 @@ bobj.crv.params.TextField = {
         this.cleanValue = value;
         this.setValue (value);
     },
-    
+
     setValue : function(value) {
         TextFieldWidget_setValue.call (this, value);
     },
-    
+
     setCleanValue : function(value) {
         this.cleanValue = value;
     }
 };
-

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 // Known Issues:
 //
 // * Patterns only support repeat.
@@ -34,9 +33,7 @@
 
 // Only add this code if we do not already have a canvas implementation
 if (!document.createElement('canvas').getContext) {
-
 (function() {
-
   // alias some functions to make (compiled) code shorter
   var m = Math;
   var mr = m.round;
@@ -390,7 +387,6 @@ if (!document.createElement('canvas').getContext) {
     yellowgreen: '#9ACD32'
   };
 
-
   function getRgbHslContent(styleString) {
     var start = styleString.indexOf('(', 3);
     var end = styleString.indexOf(')', start + 1);
@@ -708,7 +704,6 @@ if (!document.createElement('canvas').getContext) {
                            yStart: pStart.y,
                            xEnd: pEnd.x,
                            yEnd: pEnd.y});
-
   };
 
   contextPrototype.rect = function(aX, aY, aWidth, aHeight) {
@@ -858,7 +853,6 @@ if (!document.createElement('canvas').getContext) {
       vmlStr.push('padding:0 ', mr(max.x / Z), 'px ', mr(max.y / Z),
                   'px 0;filter:progid:DXImageTransform.Microsoft.Matrix(',
                   filter.join(''), ", sizingmethod='clip');");
-
     } else {
       vmlStr.push('top:', mr(d.y / Z), 'px;left:', mr(d.x / Z), 'px;');
     }
@@ -939,11 +933,10 @@ if (!document.createElement('canvas').getContext) {
                          mr(p.xEnd), ',', mr(p.yEnd));
             break;
         }
-  
-  
+
         // TODO: Following is broken for curves due to
         //       move to proper paths.
-  
+
         // Figure out dimensions so we can do gradient fills
         // properly
         if (p) {
@@ -962,15 +955,15 @@ if (!document.createElement('canvas').getContext) {
         }
       }
       lineStr.push(' ">');
-  
+
       if (!aFill) {
         appendStroke(this, lineStr);
       } else {
         appendFill(this, lineStr, min, max);
       }
-  
+
       lineStr.push('</g_vml_:shape>');
-  
+
       this.element_.insertAdjacentHTML('beforeEnd', lineStr.join(''));
     }
   };
@@ -1424,5 +1417,4 @@ if (!document.createElement('canvas').getContext) {
   CanvasPattern = CanvasPattern_;
   DOMException = DOMException_;
 })();
-
 } // if

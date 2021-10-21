@@ -2,7 +2,6 @@
 var PE_VALUE_DESC_SEPARATOR = ' - ';
 
 if(typeof(_pe) == 'undefined') {
-
 _pe = new function()
 {
 var o=this
@@ -406,7 +405,7 @@ function _documentWidth(win)
 // Gets the document(page) width
 // return [int]
 {
-    var win=win?win:window;  
+    var win=win?win:window;
     var width = Math.max(document.body.clientWidth,document.documentElement.clientWidth);
     width = Math.max(width,document.body.scrollWidth);
     return width;
@@ -416,8 +415,7 @@ function _documentHeight(win)
 // Gets the document(page) width
 // return [int]
 {
-    
-    var win=win?win:window;  
+    var win=win?win:window;
     var height = Math.max(document.body.clientHeight,document.documentElement.clientHeight);
     height = Math.max(height,document.body.scrollHeight);
 
@@ -427,10 +425,10 @@ function _documentHeight(win)
 function _winWidth(win)
 {
     var win=win?win:window
-    var width;  
-    if(_pe._ie) 
+    var width;
+    if(_pe._ie)
     {
-        if(_pe._isQuirksMode) 
+        if(_pe._isQuirksMode)
         {
             width = win.document.body.clientWidth;
         }
@@ -444,15 +442,14 @@ function _winWidth(win)
         width = win.innerWidth;
     }
     return width;
-
 }
 function _winHeight(win)
 {
-    var win=win?win:window;  
+    var win=win?win:window;
     var height;
-    if(_pe._ie) 
+    if(_pe._ie)
     {
-        if(_pe._isQuirksMode) 
+        if(_pe._isQuirksMode)
         {
             height = document.body.clientHeight;
         }
@@ -466,29 +463,27 @@ function _winHeight(win)
         height = win.innerHeight;
     }
     return height;
-
 }
 
 function _getScrollX(win)
 {
     var scrollLeft = 0;
-    var win=win?win:window;  
-     
+    var win=win?win:window;
+
     if(typeof(win.scrollX ) == 'number') {
         scrollLeft = win.scrollX;
     }
     else {
         scrollLeft = Math.max(win.document.body.scrollLeft,win.document.documentElement.scrollLeft);
     }
-    
-    return scrollLeft;
 
+    return scrollLeft;
 }
 function _getScrollY(win)
 {
     var scrollTop = 0;
-    var win=win?win:window;  
-     
+    var win=win?win:window;
+
     if(typeof(win.scrollY ) == 'number') {
         scrollTop = window.scrollY;
     }
@@ -617,7 +612,7 @@ if (l)
 var css=l.style
 if(b)
 css.display=''
-else 
+else
 css.display='none'
 }
 }
@@ -639,7 +634,7 @@ else if (y+h>scrY+winCY) window.scrollTo(scrX, Math.max(y,y+h-winCY))
 function Units_toggle(uid)
 {
 var o=this,c=o.num
-for(var i=0;i<c;i++) 
+for(var i=0;i<c;i++)
 o.show(i,true)
 o.activate(uid)
 }
@@ -647,7 +642,7 @@ o.activate(uid)
 function Units_toggle(uid)
 {
 var o=this,c=o.num
-for(var i=0;i<c;i++) 
+for(var i=0;i<c;i++)
 o.show(i,((i==uid)?true:false))
 }
 */
@@ -813,7 +808,7 @@ if (dl)
 d=dl[i]
 if(d=='') d=v
 else if(o.dop==0) d=v+PE_VALUE_DESC_SEPARATOR+d
-} 
+}
 else d=v
 
 if (sel && sel==v)
@@ -971,7 +966,7 @@ var o=this
 if (wty)
 {
 if(wty=='AvailableList') o.updateLOV(wty)
-else if(wty=='ListBox') o.updateSLOV() 
+else if(wty=='ListBox') o.updateSLOV()
 else o.updateLOV(wty,true)
 }
 else
@@ -1155,7 +1150,7 @@ var el=document.getElementById(pid+wty+'Batch')
 if (!o || !el) return
 
 var i=el.selectedIndex
-if (i>=0) 
+if (i>=0)
 {
 var lov=o.lov[wty]
 if (!lov) return
@@ -1167,9 +1162,9 @@ o.update(wty)
 function P_applyFilter(wty,filter)
 {
     if (filter==null) {return;}
-    
+
     var o=this;
-    
+
     var vl=o.vl;
     var dl=o.dl;
     if (!vl || vl.constructor != Array || vl.length==0) {return;}
@@ -1177,15 +1172,15 @@ function P_applyFilter(wty,filter)
     if (!dl || dl.constructor != Array) {
         dlExists = false;
     }
-    
+
     var lov=o.lov[wty];
     if (!lov) {return;}
-    
+
     var oldfilter=lov.filter;
     if (!oldfilter) oldfilter='';
-    
+
     if(filter==oldfilter) {return;}
-    
+
     var wvl=null;
     var wdl=null;
     if(filter=='') {
@@ -1196,18 +1191,18 @@ function P_applyFilter(wty,filter)
         if (dlExists) {
             wdl=[];
         }
-        
+
         // Replace no-break spaces used by thousand separators with regular spaces
         filter = filter.replace(String.fromCharCode(0xA0), ' ');
-        
+
         var j = 0;
         // we always loop through vl because this is always guranteed to exist unlike dl
         for (var i = 0, len = vl.length; i < len; i++) {
             var value = vl[i];
             var desc = (dlExists ? dl[i] : '');
-            
+
             var stringToSearch = '';
-            
+
             if (o.dop == 1) { //if description only prompt
                 if (desc == '') {
                     stringToSearch = value;
@@ -1223,10 +1218,10 @@ function P_applyFilter(wty,filter)
                     stringToSearch += desc;
                 }
             }
-            
+
             // Replace no-break spaces used by thousand separators with regular spaces
             stringToSearch = stringToSearch.replace(String.fromCharCode(0xA0), ' ');
-            
+
             if (stringToSearch && stringToSearch.toLowerCase().indexOf(filter.toLowerCase()) != -1) {
                 wvl[j] = value;
                 if(dlExists) {
@@ -1236,14 +1231,14 @@ function P_applyFilter(wty,filter)
             }
         }
     }
-    
+
     // update LOV
     lov.filter=filter
     lov.vl=wvl
     lov.dl=wdl
     lov.bidx=-1
     lov.sidx=-1
-    
+
     o.updateLOV(wty,true)
 }
 
@@ -1251,23 +1246,23 @@ function P_promptFilter(pid,wty, e)
 {
     var o=_pe._prompts[pid]
     if (!o) return
-    
+
     var vl=o.vl
     var dl=o.dl
     if (!vl || vl.length==0) return
-    
+
     var lov=o.lov[wty]
     if (!lov) return
-    
+
     var filter=lov.filter
     if (!filter) filter=''
-    
+
     var filterIcon = e.target ? e.target : e.srcElement;
     var pos = _findPos(filterIcon)
     // Placing filter dialog below the filter icon
     var x = pos.x + filterIcon.offsetWidth;
     var y = pos.y + filterIcon.offsetHeight;
-    
+
     o.showFilter(wty,filter,x,y)
 }
 
@@ -1275,7 +1270,7 @@ function P_promptClearFilter(pid,wty, e)
 {
     var o=_pe._prompts[pid];
     if (!o) return;
-    
+
     if(o.filterDlg)
     {
         o.filterDlg.setValue('');
@@ -1300,7 +1295,7 @@ function _findPos(el,relTo) {
     var relTo = relTo?relTo:null
     var posX = 0;
     var posY = 0;
-    
+
     while(el.parentNode || el.offsetParent) {
         if(el.offsetParent) {
             posX +=el.offsetLeft;
@@ -1316,13 +1311,13 @@ function _findPos(el,relTo) {
                     posY += el.style.top;
                 }
             }
-            el = el.parentNode;   
+            el = el.parentNode;
         }
         else {
             break;
         }
     }
-    
+
     if(relTo) {
         relToCord = getPos2(relTo);
         posX -= relToCord.x;
@@ -1395,21 +1390,21 @@ textField.getHTML() +
 '<tr>' +
 '<td align="center" valign="right">' +
 '</td>' +
-'</tr>' + 
+'</tr>' +
 
 '<tr>' +
 '<td align="right" valign="center">' +
    '<table cellspacing="0" cellpadding="0" border="0"><tbody><tr>' +
-   '<td>' +   
+   '<td>' +
    okButton.getHTML() +
    '</td>' +
    '<td>' + _getSpace(5,1)+ '</td>' +
    '<td>' +
    cancelButton.getHTML() +
    '</td>' +
-   '</tr></tbody></table>'+   
+   '</tr></tbody></table>'+
 '</td>' +
-'</tr>' + 
+'</tr>' +
 '</table>' +
 o.endHTML()
 )
@@ -1497,7 +1492,7 @@ var txt = this.getHTML(i)
 
 if (parent.writeSource)
     parent.writeSource(txt)
-    
+
 document.write(txt)
 }
 function Ctl_begin()
@@ -1852,7 +1847,6 @@ function TextField_select()
 this.layer.select()
 }
 
-
 // dialog
 function newDlgBox(id,title,width,height,defaultCB,cancelCB,noCloseButton)
 {
@@ -1939,19 +1933,19 @@ function DlgBox_endHTML()
 {
 var moveableCb=' onselectstart="return false" ondragstart="return false" onmousedown="'+'DlgBox_down(event,\''+this.id+'\',this,true);return false;" '
 var resz=this.resizeable?('<tr  onselectstart="return false" height="18" valign="bottom" align="right"><td>'+_img(_pe._images+"resize.gif",14,14,null, moveableCb + ' style="cursor:NW-resize" ')+'</td></tr>'):''
-return '</td></tr>'+resz+'</table><a style="position:absolute;left:-30px;top:-30px; visibility:hidden" id="lastLink_'+this.id+'" href="javascript:void(0)" onfocus="'+'DlgBox_keepFocus(\''+this.id+'\');return false;" ></a>' 
+return '</td></tr>'+resz+'</table><a style="position:absolute;left:-30px;top:-30px; visibility:hidden" id="lastLink_'+this.id+'" href="javascript:void(0)" onfocus="'+'DlgBox_keepFocus(\''+this.id+'\');return false;" ></a>'
 }
 function DlgBox_getContainerWidth()
 {
 var o=this
 return o.width-(2+2)
 }
-function DlgBox_getContainerHeight() 
+function DlgBox_getContainerHeight()
 {
 var o=this
 return o.height-(2+18+2+2+2)
 }
-function DlgBox_close(id) 
+function DlgBox_close(id)
 {
 var o=_pe.DlgBox_instances[id]
 if (o)
@@ -2098,7 +2092,7 @@ dlg.show(false)
 if (dlg.cancelCB!=null) dlg.cancelCB()
 return false;
 break;
-case 8: 
+case 8:
 return _isTextInput(_pe._ie?window.event:e);
 break;
 }
@@ -2258,11 +2252,11 @@ function promptengine_addDiscreteValue (
     pid)
 {
     var form=document.getElementById(fid)
-    
+
     var sLyr = document.getElementById(pid + "DiscreteValue")
     var src = sLyr
     var sLT=sLyr.type.toLowerCase()
-    
+
     var fromLB=false
     if (sLT!="text" && sLT!="hidden" && sLT!="password")
     {
@@ -2270,7 +2264,7 @@ function promptengine_addDiscreteValue (
         src = sLyr.options[sLyr.selectedIndex];
         fromLB=true
     }
-    
+
     var sval=src.value
     if (!promptengine_checkValue (sval, type) )
     {
@@ -2287,11 +2281,11 @@ function promptengine_addDiscreteValue (
         si=dLyr.length
         dLyr.options[si] = new Option(((src.text)?src.text:sval),sval,false,false);
     }
-    
+
     dLyr.options[si].selected=true
 
     _safeSetFocus(sLyr)
-    
+
     if (sLyr.select) sLyr.select();
     if (fromLB && sLyr.selectedIndex < sLyr.length - 1)
         sLyr.selectedIndex = sLyr.selectedIndex + 1;      //... or move to next selection in listbox
@@ -2370,7 +2364,7 @@ for(var i=0;i<numOfSL;i++)
 var opt=slOpts[i]
 slCtl.add(opt.value, opt.text, copySL[i]!=null)
 }
- 
+
 var changed = false;
 for (var i=0; i <numOfAL; i++)
 {
@@ -2403,7 +2397,7 @@ function promptengine_addRangeValue (
 {
     var lowerBoundPickList = document.getElementById(promptID + "SelectLowerRangeValue");
     var upperBoundPickList = document.getElementById(promptID + "SelectUpperRangeValue");
-    
+
     lowerBound = document.getElementById(promptID + "LowerBound");
     upperBound = document.getElementById(promptID + "UpperBound");
     //handle select box, not text box case
@@ -2418,7 +2412,7 @@ function promptengine_addRangeValue (
     lowerUnBounded = document.getElementById(promptID + "NoLBoundCheck").checked;
     upperUnBounded = document.getElementById(promptID + "NoUBoundCheck").checked;
     lvalue = uvalue = "";
-    
+
     if ( ! lowerUnBounded )
     {
         if ( ! promptengine_checkRangeBoundValue ( lowerBound.value, type ) ) {
@@ -2437,10 +2431,10 @@ function promptengine_addRangeValue (
         }
         uvalue = upperBound.value;
     }
-    
+
     var ldisplay = "";
     var udisplay = "";
-    
+
     var found = false;
     if (lowerBoundPickList != null && lvalue != null && lvalue.length > 0)
     {
@@ -2458,7 +2452,7 @@ function promptengine_addRangeValue (
     }
     if (!found)
         ldisplay = (lowerBound.text && !lowerUnBounded) ? lowerBound.text : lvalue;
-        
+
     found = false;
     if (upperBoundPickList != null && uvalue != null && uvalue.length > 0)
     {
@@ -2497,7 +2491,7 @@ function promptengine_addRangeValue (
 
     promptEntry = new Option(display,value,false,false);
     theList = document.getElementById(promptID + "ListBox");
-    
+
     // search the list/select box for the new option, if the returned index is -1, i.e., no such option, add it
     // otherwise, highlight that option
     var idx = promptengine_findOptionInList(theList, value);
@@ -2505,7 +2499,7 @@ function promptengine_addRangeValue (
         theList.selectedIndex = idx;
     else
         theList.options[theList.length] = promptEntry;
-	
+
     return true;
 }
 
@@ -2581,7 +2575,7 @@ function promptengine_onSetNullCheckClicked(
         if (document.getElementById(promptID + "DiscreteValue") != null)
             document.getElementById(promptID + "DiscreteValue").disabled = false;
         if (document.getElementById(promptID + "SelectValue") != null)
-            document.getElementById(promptID + "SelectValue").disabled = false;            
+            document.getElementById(promptID + "SelectValue").disabled = false;
     }
 }
 
@@ -2647,7 +2641,7 @@ function PE_removeValue(
     var opts=lyr.options
     var len= lyr.length
     if (len==0) return false
-    
+
     var changed = false
     var lastSelected = -1
 
@@ -2666,11 +2660,11 @@ function PE_removeValue(
         }
         changed=true
     }
-    
+
     if(!changed) return false
-    
+
     lbCtl.update()
-    
+
     // resync and update selection
     if (lastSelected >= 0)
     {
@@ -2680,7 +2674,7 @@ function PE_removeValue(
         else if (lastSelected == lyr.length && lastSelected > 0)
             lyr.options[lastSelected-1].selected = true; // highlight the last item
     }
-    
+
     return true;
 }
 
@@ -2724,9 +2718,9 @@ function promptengine_updateValueField (
 
     if (curVal.length > 0)
         curVal += "&";
-        
+
     var encoded = promptengine_encodeValueField(value);
-        
+
     curVal += promptID + "=" + encoded;
 
     valueField.value = curVal;
@@ -2775,7 +2769,7 @@ function promptengine_updateDiscreteValue (
         {
             value = valueField.value;
         }
-        
+
         if (!valueRequired && (value == null || value.length == 0)) {
             return promptengine_updateValueField(form, valueID, promptID, "");
         }
@@ -2832,12 +2826,12 @@ function promptengine_updateRangeValue (
         upperChecked = document.getElementById(promptID + "UpperCheck").checked;
         uvalue = lvalue = "";
 
-        if (!valueRequired && 
-            (lowerBound.value == null || lowerBound.value.length == 0 || lowerUnBounded) && 
+        if (!valueRequired &&
+            (lowerBound.value == null || lowerBound.value.length == 0 || lowerUnBounded) &&
             (upperBound.value == null || upperBound.value.length == 0 || upperUnBounded)) {
             return promptengine_updateValueField(form, valueID, promptID, "");
         }
-        
+
         if ( ! lowerUnBounded )
         {
             if ( checkValue && !promptengine_checkRangeBoundValue ( lowerBound.value, type ) ) {
@@ -2909,7 +2903,7 @@ function promptengine_updateMultiValue (
 	                focusField.focus();
                 return false;
             }
-            
+
             value = "_crEMPTY_";     //if value is empty, set to empty string
         }
         else
@@ -2954,17 +2948,17 @@ function promptengine_checkValue (
 {
     if (value == null)
         return false;
-        
+
     if (value=="_crNULL_")
         return true;
-        
+
     if (type==_pe._nm && !regNumber.test (value))
     {
         if (value.length > 0)
             alert ( L_BadNumber );
         else
             alert ( (typeof L_Empty) != 'undefined'? L_Empty : L_NoValue );
-            
+
         return false;
     }
     else if (type==_pe._cy && !regCurrency.test ( value ))
@@ -3030,8 +3024,8 @@ function promptengine_checkRangeBoundValue (
         alert ( (typeof L_Empty) != 'undefined'? L_Empty : L_NoValue );
         return false;
     }
-        
-    return promptengine_checkValue(value, type);    
+
+    return promptengine_checkValue(value, type);
 }
 
 function promptengine_isSubmitEvent(evt)
@@ -3238,19 +3232,19 @@ function promptengine_showHidePromptByKey(fieldSetId, imgId, currentImgPath, cha
 {
     var correctKey = false;
     var fieldSet = document.getElementById(fieldSetId);
-    
+
     if (fieldSet == null)
         return;
 
     if (isNetscape)
     {
-        if ( (evt.which == LEFT_ARROW_KEY && fieldSet.style.display == "") || 
+        if ( (evt.which == LEFT_ARROW_KEY && fieldSet.style.display == "") ||
             (evt.which == RIGHT_ARROW_KEY && fieldSet.style.display == "none") )
                 correctKey = true;
     }
     else
     {
-        if ( (window.event.keyCode == LEFT_ARROW_KEY && fieldSet.style.display == "") || 
+        if ( (window.event.keyCode == LEFT_ARROW_KEY && fieldSet.style.display == "") ||
             (window.event.keyCode == RIGHT_ARROW_KEY && fieldSet.style.display == "none") )
                 correctKey = true;
     }
@@ -3261,13 +3255,13 @@ function promptengine_showHidePromptByKey(fieldSetId, imgId, currentImgPath, cha
 
 function promptengine_showHidePrompt(fieldSetId, imgId, currentImgPath, changeImgPath, evt)
 {
-    var imgElem;    
+    var imgElem;
     imgElem = document.getElementById(imgId);
 
     if (imgElem!= null && fieldSetId != null)
     {
         if (!imgElem.origImage)
-            imgElem.origImage = imgElem.src;    
+            imgElem.origImage = imgElem.src;
 
         var fieldSet = document.getElementById(fieldSetId);
         if (fieldSet != null)
@@ -3293,7 +3287,7 @@ function promptengine_showHidePrompt(fieldSetId, imgId, currentImgPath, changeIm
 
 function promptengine_scrollTo(elt)
 {
-    if (!elt) return; 
+    if (!elt) return;
 
     var scrY=_getScrollY(),scrX=_getScrollX()
 
@@ -3326,8 +3320,8 @@ function promptengine_anchorOnKeyPress(e) {
 	if(evt.keyCode == 13 && target.onclick) {
 		target.onclick.apply(target,[e]);
 	}
-	
-	return true;	
+
+	return true;
 }
 
 function promptengine_encodeUTF8(string) {
@@ -3373,17 +3367,17 @@ function promptengine_encodeBASE64(byteArray) {
     var arr = [];
     var c1, c2, c3, e1, e2, e3, e4;
     var i = 0, arrLen = byteArray.length;
-    
+
     while(i < arrLen) {
         c1 = byteArray[i++];
         c2 = byteArray[i++];
         c3 = byteArray[i++];
-        
+
         e1 = c1 >> 2;
         e2 = ((c1 & 3) << 4) | (c2 >> 4);
         e3 = ((c2 & 15) << 2) | (c3 >> 6);
         e4 = c3 & 63;
-        
+
         if (isNaN(c2)) {
             e3 = e4 = 64;
         } else if(isNaN(c3)) {

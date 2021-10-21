@@ -14,7 +14,6 @@ define( [
 	"./selector" // contains
 ], function( jQuery, access, document, documentElement, isFunction, rnumnonpx,
              curCSS, addGetHookIf, support, isWindow ) {
-
 "use strict";
 
 jQuery.offset = {
@@ -41,14 +40,12 @@ jQuery.offset = {
 			curPosition = curElem.position();
 			curTop = curPosition.top;
 			curLeft = curPosition.left;
-
 		} else {
 			curTop = parseFloat( curCSSTop ) || 0;
 			curLeft = parseFloat( curCSSLeft ) || 0;
 		}
 
 		if ( isFunction( options ) ) {
-
 			// Use jQuery.extend here to allow modification of coordinates argument (gh-1848)
 			options = options.call( elem, i, jQuery.extend( {}, curOffset ) );
 		}
@@ -62,7 +59,6 @@ jQuery.offset = {
 
 		if ( "using" in options ) {
 			options.using.call( elem, props );
-
 		} else {
 			curElem.css( props );
 		}
@@ -70,10 +66,8 @@ jQuery.offset = {
 };
 
 jQuery.fn.extend( {
-
 	// offset() relates an element's border box to the document origin
 	offset: function( options ) {
-
 		// Preserve chaining for setter
 		if ( arguments.length ) {
 			return options === undefined ?
@@ -120,10 +114,8 @@ jQuery.fn.extend( {
 
 		// position:fixed elements are offset from the viewport, which itself always has zero offset
 		if ( jQuery.css( elem, "position" ) === "fixed" ) {
-
 			// Assume position:fixed implies availability of getBoundingClientRect
 			offset = elem.getBoundingClientRect();
-
 		} else {
 			offset = this.offset();
 
@@ -134,11 +126,9 @@ jQuery.fn.extend( {
 			while ( offsetParent &&
 				( offsetParent === doc.body || offsetParent === doc.documentElement ) &&
 				jQuery.css( offsetParent, "position" ) === "static" ) {
-
 				offsetParent = offsetParent.parentNode;
 			}
 			if ( offsetParent && offsetParent !== elem && offsetParent.nodeType === 1 ) {
-
 				// Incorporate borders into its offset, since they are outside its content origin
 				parentOffset = jQuery( offsetParent ).offset();
 				parentOffset.top += jQuery.css( offsetParent, "borderTopWidth", true );
@@ -182,7 +172,6 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 
 	jQuery.fn[ method ] = function( val ) {
 		return access( this, function( elem, method, val ) {
-
 			// Coalesce documents and windows
 			var win;
 			if ( isWindow( elem ) ) {
@@ -200,7 +189,6 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 					!top ? val : win.pageXOffset,
 					top ? val : win.pageYOffset
 				);
-
 			} else {
 				elem[ method ] = val;
 			}

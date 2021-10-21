@@ -20,26 +20,26 @@ bobj.crv.newStatusbar = function(kwArgs) {
             width           : null,
             height          : null,
             fontStyle       : null,
-            fontSize        : null         
+            fontSize        : null
        }
    }, kwArgs);
-       
+
     var o = newPaletteContainerWidget(kwArgs.id);
 
     o.margin = 0;
-    bobj.fillIn(o, kwArgs);  
+    bobj.fillIn(o, kwArgs);
     o._rightZoneWgts = [];
     o.widgetType = 'Statusbar';
-    
+
     // Attach member functions (since we can't use prototypes)
     o.initOld = o.init;
     UPDATE(o, bobj.crv.Statusbar);
-    
+
     o.palette = newPaletteWidget(o.id + "_palette");
     o.palette.isLeftTableFixed = true;
     o.add(o.palette);
-    
-    return o;    
+
+    return o;
 };
 
 bobj.crv.Statusbar = {
@@ -51,7 +51,7 @@ bobj.crv.Statusbar = {
         bobj.setVisualStyle (this.layer, this.visualStyle);
         this.palette.init ();
     },
-    
+
     /**
      * Overrides parent
      */
@@ -68,7 +68,7 @@ bobj.crv.Statusbar = {
             }
         });
     },
-    
+
     /**
      * Overrides parent
      */
@@ -76,9 +76,9 @@ bobj.crv.Statusbar = {
         this._addRightZone ();
         return (this.beginHTML () + this.palette.getHTML () + this.endHTML ());
     },
-    
+
     /**
-     * Private. Adds right-aligned widgets to the right zone of the palette 
+     * Private. Adds right-aligned widgets to the right zone of the palette
      */
     _addRightZone : function() {
         this.palette.beginRightZone ();
@@ -90,7 +90,7 @@ bobj.crv.Statusbar = {
 
         delete this._rightZoneWgts;
     },
-    
+
     /**
      * Overrides parent
      */
@@ -101,7 +101,7 @@ bobj.crv.Statusbar = {
         this.end ();
         document.write (bobj.crv.getInitHTML (this.widx));
     },
-    
+
     /**
      * Add child widgets to the statusbar - left or right
      */
@@ -122,7 +122,7 @@ bobj.crv.Statusbar = {
             this.palette.add (widget);
         }
     },
-    
+
     /**
      * Update child widgets - if they are exists in the statusbar
      */
@@ -147,7 +147,7 @@ bobj.crv.Statusbar = {
             }
         }
     },
-    
+
     doLayout : function() {
         if (this.breadcrumb) {
             this.breadcrumb._doLayout();
@@ -156,16 +156,16 @@ bobj.crv.Statusbar = {
 };
 
 /**
- * StatusbarBreadcrumb widget constructor ({values: String[]})  
+ * StatusbarBreadcrumb widget constructor ({values: String[]})
  */
 bobj.crv.newStatusbarBreadcrumb = function(kwArgs) {
 	var o = newWidget(bobj.uniqueId());
 
-    o.widgetType = 'StatusbarBreadcrumb'; 
+    o.widgetType = 'StatusbarBreadcrumb';
     o.values = kwArgs.values;
     o.layoutAlign = 'left';
-    
-    o._separatorImage = img(bobj.crvUri('images/breadcrumbSep.gif'), 14, 9); 
+
+    o._separatorImage = img(bobj.crvUri('images/breadcrumbSep.gif'), 14, 9);
 
     MochiKit.Base.update(o, bobj.crv.StatusbarBreadcrumb);
     return o;
@@ -179,7 +179,7 @@ bobj.crv.StatusbarBreadcrumb = {
         this.values = kwArgs.values;
         this.layer.innerHTML = this._render ();
     },
-    
+
     /**
      * Overrides parent
      */
@@ -190,7 +190,7 @@ bobj.crv.StatusbarBreadcrumb = {
             id : this.id
         }, this._render ()));
     },
-    
+
     /**
      * Render the breadcrumbs as table cells separated by an image - called by getHTML and update
      */
@@ -217,7 +217,7 @@ bobj.crv.StatusbarBreadcrumb = {
         }
         return html;
     },
-    
+
     _doLayout : function() {
         var needsRightAlign = (this.layer.parentNode.scrollWidth > this.layer.parentNode.offsetWidth) || (this.layer.offsetLeft < 0);
         if (needsRightAlign) {
@@ -231,19 +231,18 @@ bobj.crv.StatusbarBreadcrumb = {
     }
 };
 
-
 /**
  * StatusbarVersionIndicator widget constructor ({value: String})
  */
 bobj.crv.newStatusbarVersionIndicator = function(kwArgs) {
     var text = (kwArgs && kwArgs.value) ? L_bobj_crv_LastRefreshed + ": " + kwArgs.value : ' ';
-    var o = NewLabelWidget(bobj.uniqueId(), text, true);    
-    
+    var o = NewLabelWidget(bobj.uniqueId(), text, true);
+
     o.widgetType = 'StatusbarVersionIndicator';
-    o.layoutAlign = 'right';    
-    
-    MochiKit.Base.update(o, bobj.crv.StatusbarVersionIndicator);    
-    return o; 
+    o.layoutAlign = 'right';
+
+    MochiKit.Base.update(o, bobj.crv.StatusbarVersionIndicator);
+    return o;
 };
 
 bobj.crv.StatusbarVersionIndicator = {

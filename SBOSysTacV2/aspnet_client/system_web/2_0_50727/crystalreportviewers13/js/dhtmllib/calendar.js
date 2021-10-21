@@ -18,8 +18,6 @@ palette.js, menu.js and dom.js must also be included before
 =============================================================
 */
 
-
-
 _firstWeekDay=0
 _dateObj=new Date
 
@@ -64,8 +62,6 @@ function newCalendarTextFieldButton(id,textId,changeCB,maxChar,keyUpCB,enterCB,n
 	o.setDateValueFromString=CTFB_setDateValueFromString
 	o.setStringFromDateValue=CTFB_setStringFromDateValue
 
-
-
 	return o
 }
 
@@ -87,7 +83,7 @@ function CTFB_setFormatInfo(format,arrDays,arrMonth,AM,PM)
 function CTFB_resize(w,h)
 {
 	var o=this
-	
+
 	o.text.resize(w!=null?(Math.max(0,w-22)):null,h)
 	o.widResize(w,h)
 }
@@ -186,19 +182,19 @@ function CTFB_setDateValueFromString()
 	var o=this
 	var strDateValue=o.getValue()
 	var strInputFormat=o.format
-	
+
 	var strRet = setDateValue(strDateValue, strInputFormat);
-	
+
 	if(strRet == ",,")
 		o.calendar.menu.setToday(true);
 	else
 	{
-		var arr = strRet.split(",");//strRet = strMonth + ',' + strDay + ',' + strYear;	
+		var arr = strRet.split(",");//strRet = strMonth + ',' + strDay + ',' + strYear;
 		var strDay=arr[1],strMonth=arr[0],strYear=arr[2];
-		
+
 		o.calendar.set(parseInt(strDay), parseInt(strMonth), parseInt(strYear))
 		o.calendar.menu.update()
-	}	
+	}
 }
 
 // ================================================================================
@@ -206,7 +202,7 @@ function CTFB_setDateValueFromString()
 function CTFB_setStringFromDateValue() {
 	var o=this
 	var format=""+o.format
-		
+
 	var date=_dateObj
 	var menu=o.calendar.menu
 	//date.setDate(menu.day+1)
@@ -218,12 +214,10 @@ function CTFB_setStringFromDateValue() {
 	date.setHours(0)
 	date.setMinutes(0)
 	date.setSeconds(0)
-	
+
 	var result=formatDate(date,format);
 	o.setValue(result)
 }
-
-
 
 // ================================================================================
 // ================================================================================
@@ -238,7 +232,7 @@ function CTFB_setStringFromDateValue() {
 function newCalendarButton(id,changeCB)
 // CONSTRUCTOR
 {
-	var o=newIconWidget(id,_skin+"menus.gif",IconCalendarMenuWidget_ClickCB,null,_openCalendarLab,16,16,0,114,0,114)	
+	var o=newIconWidget(id,_skin+"menus.gif",IconCalendarMenuWidget_ClickCB,null,_openCalendarLab,16,16,0,114,0,114)
 
 	o.setClasses("iconhover", "iconcheck", "iconhover", "iconcheckhover")
 
@@ -260,15 +254,15 @@ function newCalendarButton(id,changeCB)
 // OBJECT newCalendarIconButton (Constructor)
 //
 // creates a calendar icon button widget
-// 
+//
 // ================================================================================
 // ================================================================================
 
 function newCalendarIconButton(id,src,changeCB,text,alt,w,h,dx,dy,disDx,disDy)
 // CONSTRUCTOR
 {
-	var o=newIconMenuWidget(id,src,IconCalendarMenuWidget_ClickCB,text,_openCalendarLab,w,h,dx,dy,disDx,disDy,false)	
-	
+	var o=newIconMenuWidget(id,src,IconCalendarMenuWidget_ClickCB,text,_openCalendarLab,w,h,dx,dy,disDx,disDy,false)
+
 	o.changeCB=changeCB
 	o.menu=newCalendarMenuWidget("iconMenu_menu_"+id,IconCalendarMenuWidget_hideCB,IconMenuCalendarMenuWidget_closeCB)
 	o.menu.parCalendar=o
@@ -331,7 +325,6 @@ function IconCalendarMenuWidget_closeCB()
 		IconWidget_outCB(o.index)
 	else
 		IconWidget_overCB(o.index)
-
 }
 
 // ================================================================================
@@ -385,7 +378,7 @@ function newCalendarWidget(id,changeCB)
 	var p2=o.p2=newIconWidget(id+"_p2",_skin+'../lov.gif',CalendarWidget_clickCB,"",_calendarPrevYearLab,8,4,46,12)
 	var n1=o.n1=newIconWidget(id+"_n1",_skin+'../lov.gif',CalendarWidget_clickCB,"",_calendarNextMonthLab,8,4,46,0)
 	var n2=o.n2=newIconWidget(id+"_n2",_skin+'../lov.gif',CalendarWidget_clickCB,"",_calendarNextYearLab,8,4,46,0)
-	
+
 	p1.allowDblClick=true
 	p2.allowDblClick=true
 	n1.allowDblClick=true
@@ -409,9 +402,9 @@ function newCalendarWidget(id,changeCB)
 
 	o.focus=CalendarWidget_focus
 	o.focusOnDay=CalendarWidget_focusOnDay
-	
+
 	o.isCalendar=true
-	
+
 	return o
 }
 
@@ -454,7 +447,7 @@ function CalendarWidget_init()
 
 	var l=o.layer=getLayer(o.id)
 	o.layer._widget=o.widx
-	o.css=o.layer.style	
+	o.css=o.layer.style
 	for (var i=0;i<42;i++)
 		o.daysL[i]=getElemBySub(l,""+i)
 
@@ -466,9 +459,9 @@ function CalendarWidget_init()
 function CalendarWidget_getHTML()
 {
 	var o=this,d=_moz?10:12
-	
+
 	var keysCbs=' onkeydown="'+_codeWinName+'.MenuWidget_keyDown(\''+o.id+'\',event);return true" '
-	
+
 	var s='<table onmousedown="'+_codeWinName+'._minb(event)" onmouseup="'+_codeWinName+'._minb(event)" '+keysCbs+' style="cursor:default" class="calendarFrame" id="'+o.id+'" border="0" cellpadding="0" cellspacing="0">'+
 
 		// Month year zone
@@ -504,9 +497,9 @@ function CalendarWidget_getHTML()
 		{
 			s+='<tr align="right">'
 			for (var j=0;j<7;j++)
-			{				
+			{
 				s+='<td class="calendarTextPart" onmousedown="'+_codeWinName+'.CalendarWidget_mouseDown(this)" onmouseover="'+_codeWinName+'.CalendarWidget_mouseOver(this)" onmouseout="'+_codeWinName+'.CalendarWidget_mouseOut(this)" onkeydown="'+_codeWinName+'.CalendarWidget_keyDown(this,event)">'+
-					'<div subid="'+(j+(i*7))+'" class="menuCalendar"></div></td>'					
+					'<div subid="'+(j+(i*7))+'" class="menuCalendar"></div></td>'
 			}
 
 			s+='</tr>'
@@ -538,7 +531,6 @@ function CalendarWidget_mouseDown(lay)
 	o.update()
 	if (o.changeCB)
 		o.changeCB()
-	
 }
 
 // ================================================================================
@@ -565,15 +557,14 @@ function CalendarWidget_clickCB()
 		m.year=m.year+(o.p2?-1:1)
 		m.update()
 	}
-	if (o.today)	
+	if (o.today)
 	{
 		m=o.par
-		m.setToday(true)			
+		m.setToday(true)
 		if (m.changeCB)
 			m.changeCB()
 	}
 }
-
 
 // ================================================================================
 // ================================================================================
@@ -602,7 +593,7 @@ function newCalendarMenuWidget(id,changeCB,closeCB)
 	var p2=o.p2=newIconWidget(id+"_p2",_skin+'../lov.gif',CalendarMenuWidget_clickCB,"",_calendarPrevYearLab,8,4,46,12)
 	var n1=o.n1=newIconWidget(id+"_n1",_skin+'../lov.gif',CalendarMenuWidget_clickCB,"",_calendarNextMonthLab,8,4,46,0)
 	var n2=o.n2=newIconWidget(id+"_n2",_skin+'../lov.gif',CalendarMenuWidget_clickCB,"",_calendarNextYearLab,8,4,46,0)
-	
+
 	p1.allowDblClick=true
 	p2.allowDblClick=true
 	n1.allowDblClick=true
@@ -625,9 +616,9 @@ function newCalendarMenuWidget(id,changeCB,closeCB)
 
 	o.focus=CalendarWidget_focus
 	o.focusOnDay=CalendarWidget_focusOnDay
-	
+
 	o.isCalendar=true
-	
+
 	return o
 }
 
@@ -657,7 +648,7 @@ function CalendarMenuWidget_getHTML()
 	var o=this,d=_moz?10:12
 
 	var keysCbs=' onkeydown="'+_codeWinName+'.MenuWidget_keyDown(\''+o.id+'\',event);return true" '
-	
+
 	//var s=o.getShadowHTML()
 	var s=''
 	s+='<a style="position:absolute;left:-30px;top:-30px; visibility:hidden" id="startLink_'+o.id+'" href="javascript:void(0)" onfocus="'+_codeWinName+'.MenuWidget_keepFocus(\''+o.id+'\');return false;" ></a>'
@@ -696,9 +687,9 @@ function CalendarMenuWidget_getHTML()
 		{
 			s+='<tr align="right">'
 			for (var j=0;j<7;j++)
-			{				
+			{
 				s+='<td class="calendarTextPart" onmousedown="'+_codeWinName+'.CalendarMenuWidget_mouseDown(this)" onmouseover="'+_codeWinName+'.CalendarWidget_mouseOver(this)" onmouseout="'+_codeWinName+'.CalendarWidget_mouseOut(this)" onkeydown="'+_codeWinName+'.CalendarMenuWidget_keyDown(this,event)">'+
-					'<div subid="'+(j+(i*7))+'" class="menuCalendar"></div></td>'					
+					'<div subid="'+(j+(i*7))+'" class="menuCalendar"></div></td>'
 			}
 
 			s+='</tr>'
@@ -706,8 +697,6 @@ function CalendarMenuWidget_getHTML()
 
 		s+='<tr><td colspan="7" style="padding:2px;"><table width="100%" height="3" cellpadding="0" cellspacing="0" border="0" style="'+backImgOffset(_skin+"menus.gif",0,80)+';"><tbody><tr><td></td></tr></tbody></table></td></tr>'
 		s+='<tr><td colspan="7" align="center" style="padding-bottom=3px;padding-top:3px;">'+o.today.getHTML()+'</td></tr>'
-
-
 
 		// End menu
 		s+='</table></td></tr>'
@@ -741,20 +730,20 @@ function CalendarMenuWidget_clickCB()
 		m.year=m.year+(o.p2?-1:1)
 		m.update()
 	}
-	if (o.today)	
+	if (o.today)
 	{
 		m=o.par
-		m.setToday(true)			
+		m.setToday(true)
 		m.show(false)
 		if (m.changeCB)
 			m.changeCB()
-	
+
 		//give focus to parent textfield when close menu
 		var cal = m.parCalendar
 		if( cal && cal.ctfb && cal.ctfb.text)
 			cal.ctfb.text.focus()
 		else
-			cal.focus()		
+			cal.focus()
 	}
 }
 
@@ -770,7 +759,6 @@ function CalendarWidget_update()
 
 	month.innerHTML=convStr(_month[o.month])
 	year.innerHTML=convStr(""+o.year)
-
 
 	_dateObj.setYear(o.year)
 	_dateObj.setMonth(o.month)
@@ -846,13 +834,13 @@ function CalendarMenuWidget_mouseDown(lay)
 	o.show(false)
 	if (o.changeCB)
 		o.changeCB()
-	
+
 	//give focus to parent textfield when close menu
 	var cal = o.parCalendar
 	if( cal && cal.ctfb && cal.ctfb.text)
 		cal.ctfb.text.focus()
 	else
-		cal.focus()		
+		cal.focus()
 }
 
 // ================================================================================
@@ -882,7 +870,6 @@ function CalendarWidget_mouseOut(lay)
 
 	if (o.day!=day)
 		lay.className="menuCalendar"
-
 }
 
 // ================================================================================
@@ -904,15 +891,15 @@ function getElemBySub(l,subId)
 // ================================================================================
 function CalendarWidget_focus()
 {
-	var o=this	
-	o.n1.focus()	
+	var o=this
+	o.n1.focus()
 	if(o.endLink) o.endLink.show(true)
 	if(o.startLink) o.startLink.show(true)
 }
 
 function CalendarWidget_focusOnDay()
 {
-	var o=this	
+	var o=this
 	o.day.focus()
 }
 

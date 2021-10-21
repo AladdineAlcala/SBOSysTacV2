@@ -10,21 +10,17 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
 			"./effect"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.effects.effect.shake = function( o, done ) {
-
 	var el = $( this ),
 		props = [ "position", "top", "bottom", "left", "right", "height", "width" ],
 		mode = $.effects.setMode( el, o.mode || "effect" ),
@@ -78,7 +74,5 @@ return $.effects.effect.shake = function( o, done ) {
 			[ 1, 0 ].concat( queue.splice( queuelen, anims + 1 ) ) );
 	}
 	el.dequeue();
-
 };
-
 }));

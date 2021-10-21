@@ -2,16 +2,13 @@
 /* Written by Vojtech Rinik (vojto@hmm.sk). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['sk'] = {
 	closeText: 'Zavrieť',
 	prevText: '&#x3C;Predchádzajúci',
@@ -33,5 +30,4 @@ datepicker.regional['sk'] = {
 datepicker.setDefaults(datepicker.regional['sk']);
 
 return datepicker.regional['sk'];
-
 }));

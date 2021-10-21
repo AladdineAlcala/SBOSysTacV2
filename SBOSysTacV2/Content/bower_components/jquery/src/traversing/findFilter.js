@@ -5,7 +5,6 @@ define( [
 	"./var/rneedsContext",
 	"../selector"
 ], function( jQuery, indexOf, isFunction, rneedsContext ) {
-
 "use strict";
 
 // Implement the identical functionality for filter and not
@@ -93,5 +92,4 @@ jQuery.fn.extend( {
 		).length;
 	}
 } );
-
 } );

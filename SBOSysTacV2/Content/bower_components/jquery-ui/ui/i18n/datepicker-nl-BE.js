@@ -2,16 +2,13 @@
 /* David De Sloovere @DavidDeSloovere */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['nl-BE'] = {
 	closeText: 'Sluiten',
 	prevText: '←',
@@ -33,5 +30,4 @@ datepicker.regional['nl-BE'] = {
 datepicker.setDefaults(datepicker.regional['nl-BE']);
 
 return datepicker.regional['nl-BE'];
-
 }));

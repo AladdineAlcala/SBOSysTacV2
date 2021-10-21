@@ -10,19 +10,16 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
 			"./widget"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 var mouseHandled = false;
 $( document ).mouseup( function() {
 	mouseHandled = false;
@@ -195,5 +192,4 @@ return $.widget("ui.mouse", {
 	_mouseStop: function(/* event */) {},
 	_mouseCapture: function(/* event */) { return true; }
 });
-
 }));

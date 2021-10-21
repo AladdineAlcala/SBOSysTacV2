@@ -39,7 +39,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * ZeroClipboard dependency
  */
@@ -144,7 +143,6 @@ var ZeroClipboard_TableTools = {
 };
 
 ZeroClipboard_TableTools.Client.prototype = {
-
 	id: 0, // unique ID for us
 	ready: false, // whether movie is ready to receive events or not
 	movie: null, // reference to movie object
@@ -463,8 +461,6 @@ ZeroClipboard_TableTools.hasFlash = function ()
 // object list
 window.ZeroClipboard_TableTools = ZeroClipboard_TableTools;
 
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Local (private) functions
  */
@@ -593,7 +589,6 @@ var _exportData = function ( dt, config )
 	};
 };
 
-
 // Basic initialisation for the buttons is common between them
 var flashButton = {
 	available: function () {
@@ -641,7 +636,6 @@ var flashButton = {
 
 	footer: false
 };
-
 
 /**
  * Convert from numeric position to letter for column names in Excel
@@ -756,7 +750,6 @@ function _excelColWidth( data, col ) {
     }
 
     var _ieExcel;
-
 
 /**
  * Convert XML documents in an object to strings
@@ -1073,8 +1066,6 @@ var _excelSpecials = [
 	{ match: /^[\d,]+\.\d{2}$/,     style: 64 }  // Numbers with 2d.p. and thousands separators
 ];
 
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables options and methods
  */
@@ -1091,7 +1082,6 @@ DataTable.Api.register( 'buttons.resize()', function () {
 		}
 	} );
 } );
-
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Button definitions
@@ -1209,7 +1199,6 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 				"worksheets": {
 					"sheet1.xml": rels
 				}
-
 			},
 			"[Content_Types].xml": $.parseXML( excelStrings['[Content_Types].xml'])
 		};
@@ -1396,11 +1385,9 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 	},
 
 	extension: '.xlsx',
-	
+
 	createEmptyCells: false
 } );
-
-
 
 // PDF export
 DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
@@ -1450,7 +1437,6 @@ DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 
 	newline: '\n'
 } );
-
 
 return DataTable.Buttons;
 }));

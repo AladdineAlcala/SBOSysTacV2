@@ -53,7 +53,6 @@
                 fill +
                 ' style="position:absolute;top:' + y + 'px; left:' + x + 'px; width:' + (radius * 2) + 'px; height:' + (radius * 2) + 'px"></v:oval>';
             return vel;
-
         },
 
         _drawPieSlice: function (shapeid, x, y, radius, startAngle, endAngle, lineColor, fillColor) {
@@ -162,4 +161,3 @@
             }
         }
     });
-

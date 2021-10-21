@@ -90,7 +90,7 @@ MochiKit.LoggingPane.LoggingPane = function (inline/* = false */, logger/* = Moc
     }
     var doc = win.document;
     this.doc = doc;
-    
+
     // Connect to the debug pane if it already exists (i.e. in a window orphaned by the page being refreshed)
     var debugPane = doc.getElementById(uid);
     var existing_pane = !!debugPane;
@@ -99,7 +99,7 @@ MochiKit.LoggingPane.LoggingPane = function (inline/* = false */, logger/* = Moc
         debugPane.loggingPane.buildAndApplyFilter();
         return debugPane.loggingPane;
     }
-    
+
     if (existing_pane) {
         // clear any existing contents
         var child;
@@ -230,7 +230,6 @@ MochiKit.LoggingPane.LoggingPane = function (inline/* = false */, logger/* = Moc
         this.logger.addListener(listenerId, messageFilter, addMessage);
     };
 
-
     var loadMessages = bind(function () {
         messages = this.logger.getMessages();
         filterMessages();
@@ -330,7 +329,6 @@ MochiKit.LoggingPane.LoggingPane.prototype = {
     }
 };
 
-
 MochiKit.LoggingPane.EXPORT_OK = [
     "LoggingPane"
 ];
@@ -344,11 +342,10 @@ MochiKit.LoggingPane.__new__ = function () {
         ":common": this.EXPORT,
         ":all": MochiKit.Base.concat(this.EXPORT, this.EXPORT_OK)
     };
-    
+
     MochiKit.Base.nameFunctions(this);
 
     MochiKit.LoggingPane._loggingPane = null;
-  
 };
 
 MochiKit.LoggingPane.__new__();

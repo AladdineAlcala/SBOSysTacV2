@@ -6,7 +6,6 @@ define( [
 	"../event",
 	"./trigger"
 ], function( jQuery, dataPriv, support ) {
-
 "use strict";
 
 // Support: Firefox <=44
@@ -19,7 +18,6 @@ define( [
 // Related ticket - https://bugs.chromium.org/p/chromium/issues/detail?id=449857
 if ( !support.focusin ) {
 	jQuery.each( { focus: "focusin", blur: "focusout" }, function( orig, fix ) {
-
 		// Attach a single capturing handler on the document while someone wants focusin/focusout
 		var handler = function( event ) {
 			jQuery.event.simulate( fix, event.target, jQuery.event.fix( event ) );
@@ -42,7 +40,6 @@ if ( !support.focusin ) {
 				if ( !attaches ) {
 					doc.removeEventListener( orig, handler, true );
 					dataPriv.remove( doc, fix );
-
 				} else {
 					dataPriv.access( doc, fix, attaches );
 				}

@@ -31,7 +31,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 // Used for namespacing events added to the document by each instance, so they
 // can be removed on destroy
 var _instCounter = 0;
@@ -50,9 +49,9 @@ var Buttons = function( dt, config )
 {
 	// If there is no config set it to an empty object
 	if ( typeof( config ) === 'undefined' ) {
-		config = {};	
+		config = {};
 	}
-	
+
 	// Allow a boolean true for defaults
 	if ( config === true ) {
 		config = {};
@@ -84,7 +83,6 @@ var Buttons = function( dt, config )
 
 	this._constructor();
 };
-
 
 $.extend( Buttons.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -199,7 +197,7 @@ $.extend( Buttons.prototype, {
 		// needed). Take a copy as the array is modified by `remove`
 		var buttons = this.s.buttons.slice();
 		var i, ien;
-		
+
 		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
 			this.remove( buttons[i].node );
 		}
@@ -350,7 +348,6 @@ $.extend( Buttons.prototype, {
 		return this;
 	},
 
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
@@ -398,7 +395,6 @@ $.extend( Buttons.prototype, {
 			}
 		} );
 	},
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
@@ -542,7 +538,7 @@ $.extend( Buttons.prototype, {
 			config.action.call( dt.button( button ), e, dt, button, config );
 
 			$(dt.table().node()).triggerHandler( 'buttons-action.dt', [
-				dt.button( button ), dt, button, config 
+				dt.button( button ), dt, button, config
 			] );
 		};
 
@@ -895,8 +891,6 @@ $.extend( Buttons.prototype, {
 	}
 } );
 
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Statics
  */
@@ -904,7 +898,7 @@ $.extend( Buttons.prototype, {
 /**
  * Show / hide a background layer behind a collection
  * @param  {boolean} Flag to indicate if the background should be shown or
- *   hidden 
+ *   hidden
  * @param  {string} Class to assign to the background
  * @static
  */
@@ -982,7 +976,7 @@ Buttons.instanceSelector = function ( group, buttons )
 			ret.push( buttons[ input ].inst );
 		}
 	};
-	
+
 	process( group );
 
 	return ret;
@@ -1114,7 +1108,6 @@ Buttons.buttonSelector = function ( insts, selector )
 		}
 	};
 
-
 	for ( var i=0, ien=insts.length ; i<ien ; i++ ) {
 		var inst = insts[i];
 
@@ -1123,7 +1116,6 @@ Buttons.buttonSelector = function ( insts, selector )
 
 	return ret;
 };
-
 
 /**
  * Buttons defaults. For full documentation, please refer to the docs/option
@@ -1164,7 +1156,6 @@ Buttons.defaults = {
  */
 Buttons.version = '1.5.2';
 
-
 $.extend( _dtButtons, {
 	collection: {
 		text: function ( dt ) {
@@ -1195,7 +1186,6 @@ $.extend( _dtButtons, {
 				.css( 'display', 'none' )
 				.insertAfter( insertPoint )
 				.fadeIn( config.fade );
-			
 
 			var position = config._collection.css( 'position' );
 
@@ -1215,12 +1205,12 @@ $.extend( _dtButtons, {
 				var tableBottom = tableContainer.offset().top + tableContainer.height();
 				var listBottom = hostPosition.top + host.outerHeight() + config._collection.outerHeight();
 				var bottomOverflow = listBottom - tableBottom;
-				
+
 				// calculate overflow when positioned above
 				var listTop = hostPosition.top - config._collection.outerHeight();
 				var tableTop = tableContainer.offset().top;
 				var topOverflow = tableTop - listTop;
-				
+
 				// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
 				if (bottomOverflow > topOverflow || config.dropup) {
 					config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
@@ -1390,7 +1380,6 @@ $.extend( _dtButtons, {
 		};
 	}
 } );
-
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables API
@@ -1637,8 +1626,6 @@ DataTable.Api.register( 'buttons.exportInfo()', function ( conf ) {
 	};
 } );
 
-
-
 /**
  * Get the file name for an exported file.
  *
@@ -1729,12 +1716,6 @@ var _message = function ( dt, option, position )
 	return message;
 };
 
-
-
-
-
-
-
 var _exportTextarea = $('<textarea/>')[0];
 var _exportData = function ( dt, inOpts )
 {
@@ -1795,7 +1776,6 @@ var _exportData = function ( dt, inOpts )
 		return str;
 	};
 
-
 	var header = dt.columns( config.columns ).indexes().map( function (idx) {
 		var el = dt.column( idx ).header();
 		return config.format.header( el.innerHTML, idx, el );
@@ -1807,7 +1787,7 @@ var _exportData = function ( dt, inOpts )
 			return config.format.footer( el ? el.innerHTML : '', idx, el );
 		} ).toArray() :
 		null;
-	
+
 	// If Select is available on this table, and any rows are selected, limit the export
 	// to the selected rows. If no rows are selected, all rows will be exported. Specify
 	// a `selected` modifier to control directly.
@@ -1856,7 +1836,6 @@ var _exportData = function ( dt, inOpts )
 	return data;
 };
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables interface
  */
@@ -1864,8 +1843,6 @@ var _exportData = function ( dt, inOpts )
 // Attach to DataTables objects for global access
 $.fn.dataTable.Buttons = Buttons;
 $.fn.DataTable.Buttons = Buttons;
-
-
 
 // DataTables creation - check if the buttons have been defined for this table,
 // they will have been if the `B` option was used in `dom`, otherwise we should
@@ -1894,7 +1871,6 @@ DataTable.ext.feature.push( {
 	},
 	cFeature: "B"
 } );
-
 
 return Buttons;
 }));

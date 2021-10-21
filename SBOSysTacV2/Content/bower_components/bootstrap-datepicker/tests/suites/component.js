@@ -16,7 +16,6 @@ module('Component', {
     }
 });
 
-
 test('Component gets date/viewDate from input value', function(){
     datesEqual(this.dp.getUTCDate(), UTCDate(2012, 1, 12));
     datesEqual(this.dp.viewDate, UTCDate(2012, 1, 12));
@@ -199,7 +198,6 @@ test('Does not block events', function(){
     equal(clicks, 1);
     $('#qunit-fixture').off('click', '.add-on', handler);
 });
-
 
 test('date and viewDate must be between startDate and endDate when setStartDate called', function() {
     this.dp.setDate(new Date(2013, 1, 1));

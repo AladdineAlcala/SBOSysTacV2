@@ -3,7 +3,6 @@ define( [
 	"../data/var/dataPriv",
 	"../css/var/isHiddenWithinTree"
 ], function( jQuery, dataPriv, isHiddenWithinTree ) {
-
 "use strict";
 
 var defaultDisplayMap = {};
@@ -46,7 +45,6 @@ function showHide( elements, show ) {
 
 		display = elem.style.display;
 		if ( show ) {
-
 			// Since we force visibility upon cascade-hidden elements, an immediate (and slow)
 			// check is required in this first loop unless we have a nonempty display value (either
 			// inline or about-to-be-restored)

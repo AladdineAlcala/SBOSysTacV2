@@ -1,4 +1,3 @@
-
 MochiKit.Base.update(MochiKit.Base, {
     isIE: function () {
         return /MSIE/.test(navigator.userAgent);
@@ -71,7 +70,7 @@ MochiKit.Base.update(MochiKit.DOM, {
         element = MochiKit.DOM.getElement(element);
         if (value == 1) {
             var cssText = element.style.cssText;
-            if(MochiKit.Base.isIE()) 
+            if(MochiKit.Base.isIE())
                 cssText = cssText.replace(/filter: ?alpha\([^\)]*\);?/gi, '');
 
             element.style.cssText = cssText.replace(/opacity: ?\d\.?\d*/gi, '');
@@ -362,4 +361,3 @@ MochiKit.Position = {
         return new MochiKit.Style.Coordinates(valueL, valueT);
     }
 };
-

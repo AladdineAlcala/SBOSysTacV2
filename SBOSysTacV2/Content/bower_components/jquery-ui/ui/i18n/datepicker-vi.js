@@ -2,16 +2,13 @@
 /* Translated by Le Thanh Huy (lthanhhuy@cit.ctu.edu.vn). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['vi'] = {
 	closeText: 'Đóng',
 	prevText: '&#x3C;Trước',
@@ -33,5 +30,4 @@ datepicker.regional['vi'] = {
 datepicker.setDefaults(datepicker.regional['vi']);
 
 return datepicker.regional['vi'];
-
 }));

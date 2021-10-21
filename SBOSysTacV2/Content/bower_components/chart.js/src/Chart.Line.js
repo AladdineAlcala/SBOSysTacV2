@@ -6,7 +6,6 @@
 		helpers = Chart.helpers;
 
 	var defaultConfig = {
-
 		///Boolean - Whether grid lines are shown across the chart
 		scaleShowGridLines : true,
 
@@ -51,9 +50,7 @@
 
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-
 	};
-
 
 	Chart.Type.extend({
 		name: "Line",
@@ -90,7 +87,6 @@
 
 			//Iterate through each of the datasets, and build this into a property of the chart
 			helpers.each(data.datasets,function(dataset){
-
 				var datasetObject = {
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
@@ -101,7 +97,6 @@
 				};
 
 				this.datasets.push(datasetObject);
-
 
 				helpers.each(dataset.data,function(dataPoint,index){
 					//Add a new point for each piece of data, passing any required data to draw.
@@ -118,7 +113,6 @@
 
 				this.buildScale(data.labels);
 
-
 				this.eachPoints(function(point, index){
 					helpers.extend(point, {
 						x: this.scale.calculateX(index),
@@ -126,9 +120,7 @@
 					});
 					point.save();
 				}, this);
-
 			},this);
-
 
 			this.render();
 		},
@@ -215,7 +207,6 @@
 				});
 			}
 
-
 			this.scale = new Chart.Scale(scaleOptions);
 		},
 		addData : function(valuesArray,label){
@@ -271,7 +262,6 @@
 
 			this.scale.draw(easingDecimal);
 
-
 			helpers.each(this.datasets,function(dataset){
 				var pointsWithValues = helpers.where(dataset.points, hasValue);
 
@@ -286,7 +276,6 @@
 						}, easingDecimal);
 					}
 				},this);
-
 
 				// Control points need to be calculated in a seperate loop, because we need to know the current x/y of the point
 				// This would cause issues when there is no animation, because the y of the next point would be 0, so beziers would be skewed
@@ -319,7 +308,6 @@
 						}
 					},this);
 				}
-
 
 				//Draw the line between all the points
 				ctx.lineWidth = this.options.datasetStrokeWidth;
@@ -369,6 +357,4 @@
 			},this);
 		}
 	});
-
-
 }).call(this);

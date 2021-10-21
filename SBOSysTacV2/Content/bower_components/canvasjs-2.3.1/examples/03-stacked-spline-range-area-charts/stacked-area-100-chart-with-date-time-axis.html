@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
-<head>  
-<meta charset="UTF-8">
-<script>
+<head>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -19,7 +19,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		shared: true
 	},
 	data: [
-	{        
+	{
 		type: "stackedArea100",
 		name: "Cars",
 		xValueFormatString: "MMM, YYYY",
@@ -37,7 +37,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 			{ x: new Date(2016, 09, 1), y: 1800 }
 		]
 	},
-	{        
+	{
 		type: "stackedArea100",
 		name: "Trucks",
 		showInLegend: "true",
@@ -54,7 +54,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 			{ x: new Date(2016, 09, 1), y: 151 }
 		]
 	},
-	{        
+	{
 		type: "stackedArea100",
 		name: "Bicycles",
 		showInLegend: "true",
@@ -71,7 +71,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 			{ x: new Date(2016, 09, 1), y: 40 }
 		]
 	},
-	{        
+	{
 		type: "stackedArea100",
 		name: "Motorcycles",
 		showInLegend: "true",
@@ -88,7 +88,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 			{ x: new Date(2016, 09, 1), y: 659 }
 		]
 	},
-	{        
+	{
 		type: "stackedArea100",
 		name: "Pedistrians",
 		showInLegend: "true",
@@ -110,11 +110,11 @@ var chart = new CanvasJS.Chart("chartContainer", {
 chart.render();
 
 }
-</script>
-<script src="../../canvasjs.min.js"></script>
+    </script>
+    <script src="../../canvasjs.min.js"></script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;">
-</div>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;">
+    </div>
 </body>
 </html>

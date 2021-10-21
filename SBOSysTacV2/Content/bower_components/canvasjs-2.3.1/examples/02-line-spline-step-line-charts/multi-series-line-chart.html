@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
-<head>  
-<meta charset="UTF-8">
-<script>
+<head>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -34,7 +34,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		showInLegend: true,
 		markerSize: 0,
 		yValueFormatString: "$#,###k",
-		dataPoints: [		
+		dataPoints: [
 			{ x: new Date(2014, 00, 01), y: 850 },
 			{ x: new Date(2014, 01, 01), y: 889 },
 			{ x: new Date(2014, 02, 01), y: 890 },
@@ -248,10 +248,10 @@ function toogleDataSeries(e){
 }
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

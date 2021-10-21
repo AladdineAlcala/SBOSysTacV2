@@ -19,19 +19,19 @@ bobj.crv.newSeparator = function(kwArgs) {
     }, kwArgs);
     var o = newWidget(kwArgs.id);
 
-    bobj.fillIn(o, kwArgs);  
+    bobj.fillIn(o, kwArgs);
     o.widgetType = 'Separator';
-    
-    // Attach member functions 
+
+    // Attach member functions
     UPDATE(o, bobj.crv.Separator);
-    
-    return o;    
+
+    return o;
 };
 
 bobj.crv.Separator.getHTML = function() {
     var HTML = bobj.html;
     var htmlStr = '';
-    if (bobj.isBorderBoxModel()) { 
+    if (bobj.isBorderBoxModel()) {
         htmlStr = HTML.IMG({
             id: this.id,
             src: bobj.skinUri('sep.gif'),
@@ -56,8 +56,6 @@ bobj.crv.Separator.getHTML = function() {
                 'background-image': 'url(' + bobj.skinUri('sep.gif') + ')',
                 'background-repeat': 'repeat-x',
                 'overflow': 'hidden'
-    
-
         }});
     }
     return htmlStr + bobj.crv.getInitHTML(this.widx);

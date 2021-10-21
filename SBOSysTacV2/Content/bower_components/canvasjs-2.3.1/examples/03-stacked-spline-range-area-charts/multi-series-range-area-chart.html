@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">
-<script>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -18,7 +18,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	},
 	axisY: {
 		suffix: " °C"
-	},     
+	},
 	toolTip: {
 		shared: true
 	},
@@ -63,7 +63,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 			{ x: new Date(2017, 03, 27), y: [07, 24] },
 			{ x: new Date(2017, 03, 28), y: [10, 27] },
 			{ x: new Date(2017, 03, 29), y: [10, 26] },
-			{ x: new Date(2017, 03, 30), y: [12, 27] } 
+			{ x: new Date(2017, 03, 30), y: [12, 27] }
 		]
 	},
 	{
@@ -118,10 +118,10 @@ function toggleDataSeries(e) {
 }
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

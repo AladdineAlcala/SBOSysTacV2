@@ -16,7 +16,6 @@ bobj.crv.PanelNavigator.prototype = {
         var DIV = bobj.html.DIV;
         var style = { width : bobj.isBorderBoxModel() ? '37px' : '35px'};
 
-
         return DIV ( {
             'class' : 'panelNavigator',
             id : this.id,
@@ -34,13 +33,13 @@ bobj.crv.PanelNavigator.prototype = {
         this.layer = getLayer (this.id);
         this._innerBorder = getLayer(this.id + "_innerBorder");
         this.css = this.layer.style;
-        
+
         if(this._children.length == 0) {
             this.css.display = "none";
         }
         else {
             for ( var i = 0; i < this._children.length; i++)
-                this._children[i].init ();   
+                this._children[i].init ();
         }
     },
 
@@ -54,7 +53,7 @@ bobj.crv.PanelNavigator.prototype = {
             child.setSelected (child.getName () == childName);
         }
     },
-    
+
     getChild : function (childName) {
         for ( var i = 0; i < this._children.length; i++) {
             var child = this._children[i];
@@ -63,28 +62,27 @@ bobj.crv.PanelNavigator.prototype = {
         }
         return null;
     },
-    
+
     hasChildren : function () {
        return (this._children.length > 0);
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getGroupTreeButton : function () {
         return this.getChild (bobj.crv.ToolPanelType.GroupTree);
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getParamPanelButton : function () {
         return this.getChild (bobj.crv.ToolPanelType.ParameterPanel);
     },
-    
-    
+
     /**
-     * 
+     *
      * @param kwArgs [JSON] creates PanelNavigatorItem with properties specified in kwArgs and connects signals
      * @return
      */
@@ -113,12 +111,11 @@ bobj.crv.PanelNavigator.prototype = {
     getBestFitHeight : function () {
         var height = 0;
         for ( var i = 0; i < this._children.length; i++)
-            height += this._children[i].getHeight();   
-        
+            height += this._children[i].getHeight();
+
         return height;
     },
-    
+
     move : Widget_move,
     getWidth : Widget_getWidth
-
 };

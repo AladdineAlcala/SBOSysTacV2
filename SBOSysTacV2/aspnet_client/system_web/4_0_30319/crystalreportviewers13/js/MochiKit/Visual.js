@@ -1677,7 +1677,6 @@ MochiKit.Visual.blindDown = function (element, /* optional */ options) {
 //    return new v.Scale(element, 5, options);
 //};
 
-
 // Compatibility with MochiKit 1.0
 MochiKit.Visual.Color = MochiKit.Color.Color;
 MochiKit.Visual.getElementsComputedStyle = MochiKit.DOM.computedStyle;
@@ -1693,7 +1692,6 @@ MochiKit.Visual.__new__ = function () {
         ":common": this.EXPORT,
         ":all": m.concat(this.EXPORT, this.EXPORT_OK)
     };
-
 };
 
 MochiKit.Visual.EXPORT = [

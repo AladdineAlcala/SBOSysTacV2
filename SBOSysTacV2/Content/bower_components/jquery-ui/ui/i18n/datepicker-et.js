@@ -2,16 +2,13 @@
 /* Written by Mart Sõmermaa (mrts.pydev at gmail com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['et'] = {
 	closeText: 'Sulge',
 	prevText: 'Eelnev',
@@ -33,5 +30,4 @@ datepicker.regional['et'] = {
 datepicker.setDefaults(datepicker.regional['et']);
 
 return datepicker.regional['et'];
-
 }));

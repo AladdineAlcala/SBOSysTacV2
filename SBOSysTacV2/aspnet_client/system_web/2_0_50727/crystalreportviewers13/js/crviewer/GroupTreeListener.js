@@ -6,7 +6,7 @@ bobj.crv.GroupTreeListener = function(groupTree) {
     this._futreNodesPlaceHolder = null;
     this.actionIDs = [];
     this.addFutureNodesPlaceHolder ();
-    
+
     MochiKit.Signal.connect(groupTree.layer, "onscroll", bobj.bindFunctionToObject(this.detectTreeChanges, this));
     MochiKit.Signal.connect(groupTree, "refreshed", this, this.reset);
     MochiKit.Signal.connect(groupTree, "resized", this, this.detectTreeChanges);
@@ -14,7 +14,7 @@ bobj.crv.GroupTreeListener = function(groupTree) {
 
 bobj.crv.GroupTreeListener.prototype = {
     /**
-     * 
+     *
      * @return number of nodes rendered by group tree
      */
     getNumberOfNodesRendered : function() {
@@ -22,7 +22,7 @@ bobj.crv.GroupTreeListener.prototype = {
     },
 
     /**
-     * 
+     *
      * @return number of nodes that have not been rendered yet
      */
     getNumberOfNodesMissing : function() {
@@ -38,7 +38,7 @@ bobj.crv.GroupTreeListener.prototype = {
     },
 
     /**
-     * 
+     *
      * @return number of nodes required to be rendered to fill up the group tree height
      */
     getNumberOfNodesToRender : function() {
@@ -60,7 +60,7 @@ bobj.crv.GroupTreeListener.prototype = {
     },
 
     /**
-     * 
+     *
      * @return a single node height
      */
     getNodeHeight : function() {
@@ -76,8 +76,8 @@ bobj.crv.GroupTreeListener.prototype = {
     },
 
     /**
-     * 
-     *  Adds as many nodes as it can to fill up the grouptree's height 
+     *
+     *  Adds as many nodes as it can to fill up the grouptree's height
      */
     updateTreeChildren : function() {
         var numNodesToRender = this.getNumberOfNodesToRender ();
@@ -94,17 +94,17 @@ bobj.crv.GroupTreeListener.prototype = {
                     this._lastNodeRendererd  = i;
                 }
             }
-            
+
             this._groupTree.appendChildrenHTML(childrenHTML);
             this._groupTree.initChildren();
         }
-        
+
         this.updateFutureNodesPlaceHolderHeight ();
     },
-    
+
     /**
      * Detects if the tree UI has changed and calls update function
-     * 
+     *
      */
     detectTreeChanges : function() {
         if (this.isTreeStateChanged ())
@@ -124,7 +124,7 @@ bobj.crv.GroupTreeListener.prototype = {
     },
 
     /**
-     * 
+     *
      * Results listener's internal state when grouptree is refreshed
      */
     reset : function() {
@@ -133,7 +133,7 @@ bobj.crv.GroupTreeListener.prototype = {
         this.clearActions ();
         this.updateFutureNodesPlaceHolderHeight ();
     },
-    
+
     clearActions : function () {
         while(this.actionIDs.length > 0) {
             clearTimeout(this.actionIDs.pop());
@@ -160,6 +160,5 @@ bobj.crv.GroupTreeListener.prototype = {
             }
         });
         this._groupTree.layer.appendChild (this._futreNodesPlaceHolder);
-
     }
 }

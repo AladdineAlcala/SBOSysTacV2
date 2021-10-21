@@ -5,7 +5,6 @@ define( [
 	"./data/var/dataPriv",
 	"./data/var/dataUser"
 ], function( jQuery, access, camelCase, dataPriv, dataUser ) {
-
 "use strict";
 
 //	Implementation Summary
@@ -107,7 +106,6 @@ jQuery.fn.extend( {
 				if ( elem.nodeType === 1 && !dataPriv.get( elem, "hasDataAttrs" ) ) {
 					i = attrs.length;
 					while ( i-- ) {
-
 						// Support: IE 11 only
 						// The attrs elements can be null (#14894)
 						if ( attrs[ i ] ) {
@@ -141,7 +139,6 @@ jQuery.fn.extend( {
 			// will result in `undefined` for elem = this[ 0 ] which will
 			// throw an exception if an attempt to read a data cache is made.
 			if ( elem && value === undefined ) {
-
 				// Attempt to get data from the cache
 				// The key will always be camelCased in Data
 				data = dataUser.get( elem, key );
@@ -162,7 +159,6 @@ jQuery.fn.extend( {
 
 			// Set the data...
 			this.each( function() {
-
 				// We always store the camelCased key
 				dataUser.set( this, key, value );
 			} );

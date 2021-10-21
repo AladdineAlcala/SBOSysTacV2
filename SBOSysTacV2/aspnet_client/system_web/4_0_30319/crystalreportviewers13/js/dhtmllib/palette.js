@@ -1,4 +1,3 @@
-
 // <script>
 
 /*
@@ -9,7 +8,7 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
@@ -84,7 +83,7 @@ function LabelWidget_getHTML()
 // OBJECT newIconWidget (Constructor)
 //
 // Display a clickable icon with optional text. It can be used in a palette fo
-// instance. The image can be a sub-part of a bigger image 
+// instance. The image can be a sub-part of a bigger image
 // (use dx and dy to define offset)
 //
 // ================================================================================
@@ -115,10 +114,10 @@ function newIconWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,isTabEnable
 	o.width=null
 	o.txtAlign="left"
 	o.border=4
-	o.txtNoPadding=false	
-	
+	o.txtNoPadding=false
+
 	o.allowDblClick=false
-	
+
 	if (src)
 	{
 		o.w=(w!=null)?w:16
@@ -130,18 +129,18 @@ function newIconWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,isTabEnable
 	}
 	else
 	{
-		o.w=1		
+		o.w=1
 		o.h=16
 	}
 
 	o.dis=false
 	o.disp=true
 	o.margin=1
-	o.extraHTML=''	
-	
+	o.extraHTML=''
+
 	o.imgLayer=null
 	o.txtLayer=null
-	
+
 	o.overCB="IconWidget_overCB"
 	o.outCB="IconWidget_outCB"
 
@@ -170,13 +169,13 @@ function newIconWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,isTabEnable
 	_allBOIcons[o.index]=o
 	o.outEnable=true
 	o.setCrs=IconWidget_setCrs
-	
+
 	o.oldRes=o.resize
 	o.resize=IconWidget_resize
-	
+
 	o.iconOldInit=o.init
 	o.init=IconWidget_init
-	
+
 	return o
 }
 
@@ -208,10 +207,10 @@ function newIconMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,isColor
 // disDy    : [int - optional]      vertical offset for disabled state
 {
 	var o=newWidget(id)
-	
+
 	if ( typeof(menuType) == 'undefined' )
 		menuType=isColor?_menuType_color:_menuType_simple
-		
+
 	o.menuItemType = isColor? _isColor:_isNotColor;
 	var tooltip = _openMenu.replace("{0}", (text?text:(alt?alt:"")));
 	o.icon=newIconWidget("iconMenu_icon_"+id,src,IconMenuWidget_iconClickCB,text,alt,w,h,dx,dy,disDx,disDy,false)
@@ -228,7 +227,7 @@ function newIconMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,isColor
 		case _menuType_simple:
 			o.menu=newMenuWidget("iconMenu_menu_"+id,IconMenuWidget_hideCB,beforeShowCB)
 			break
-	}	
+	}
 
 	o.icon.par=o
 	o.arrow.par=o
@@ -254,24 +253,23 @@ function newIconMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,isColor
 	o.removeAllMenuItems=IconMenuWidget_removeAllMenuItems;
 
 	o.index=_allBOIconsMenus.length++
-	_allBOIconsMenus[o.index]=o	
-	
+	_allBOIconsMenus[o.index]=o
+
 	o.setDisabled=IconMenuWidget_setDisabled
 	o.isDisabled=IconMenuWidget_isDisabled
 	o.disableMenu=IconMenuWidget_disableMenu
 	o.changeText=IconMenuWidget_changeText
-	
+
 	o.imwpResize=o.resize
 	o.resize=IconMenuWidget_resize
 	o.focus=IconMenuWidget_focus
-	
+
 	o.changeArrowTooltip=IconMenuWidget_changeArrowTooltip
-	
+
 	o.disp=true
 	o.isDisplayed=IconWidget_isDisplayed
 	o.setDisplay=IconWidget_setDisplay
 
-	
 	return o
 }
 
@@ -289,7 +287,6 @@ function IconMenuWidget_changeText(s)
 {
 	this.icon.changeText(s)
 }
-
 
 // ================================================================================
 
@@ -325,10 +322,10 @@ function IconMenuWidget_setDisabled(dis)
 	var o=this
 	if (dis) {
 		if (o.menu.isShown()) {
-			o.menu.show(false)	
+			o.menu.show(false)
 		}
-		IconMenuWidgetOutCB(o.index)			
-	}	
+		IconMenuWidgetOutCB(o.index)
+	}
 	o.icon.setDisabled(dis)
 	o.arrow.setDisabled(dis)
 }
@@ -337,7 +334,7 @@ function IconMenuWidget_setDisabled(dis)
 
 function IconMenuWidget_isDisabled()
 {
-	return (this.icon.dis == true)	
+	return (this.icon.dis == true)
 }
 // ================================================================================
 
@@ -348,16 +345,16 @@ function IconMenuWidget_internalCB()
 	if (o.id!=null)
 	{
 		col = (o.menuItemType != _isLastUsedColor)? o.id.slice(6) : o.color // "color".length=6
-	}	
+	}
 
 	var icon=o.par.parIcon
 
 	icon.oldColor=icon.curColor
 	icon.curColor=col
-	
+
 	if (icon.curColor!=null)
 		icon.showSample()
-	
+
 	if (icon.clickColor)
 		icon.clickColor()
 }
@@ -365,7 +362,7 @@ function IconMenuWidget_internalCB()
 function IconMenuWidget_focus()
 {
 	var o=this
-	o.arrow.focus()	
+	o.arrow.focus()
 }
 
 // ================================================================================
@@ -387,7 +384,6 @@ function IconMenuWidget_getMenu()
 
 function IconWidget_none()
 {
-
 }
 
 // ================================================================================
@@ -451,7 +447,7 @@ function IconMenuWidgetOutCB(i)
 	{
 		IconWidget_overCB(o.icon.index)
 		IconWidget_overCB(o.arrow.index)
-	}	
+	}
 }
 
 // ================================================================================
@@ -518,9 +514,9 @@ function newSingleIconMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,i
 //disDy    : [int - optional]      vertical offset for disabled state
 {
     var tooltip = _openMenu.replace("{0}", (text?text:(alt?alt:"")));
-    
+
     var o=newIconWidget(id,src,SingleIconMenuWidget_clickCB,null,tooltip,w,h,dx,dy,disDx,disDy,true);
- 
+
     o.icon=newIconWidget("singleIconMenu_icon_"+id,src,null,text,null,w,h,dx,dy,disDx,disDy,false);
     o.arrow=newIconWidget("singleIcon_arrow_"+id,_skin+"menus.gif",SingleIconMenuWidget_iconClickCB,null,tooltip,7,16,0,81,0,97,false);
     o.menu=newMenuWidget("singleIconMenu_menu_"+id,SingleIconMenuWidget_hideCB,beforeShowCB);
@@ -548,18 +544,18 @@ function newSingleIconMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,i
     o.removeAllMenuItems=IconMenuWidget_removeAllMenuItems;
 
     o.index=_allBOIconsMenus.length++;
-    _allBOIconsMenus[o.index]=o; 
- 
+    _allBOIconsMenus[o.index]=o;
+
     o.setDisabled=IconMenuWidget_setDisabled;
     o.isDisabled=IconMenuWidget_isDisabled;
     o.disableMenu=IconMenuWidget_disableMenu;
     o.changeText=IconMenuWidget_changeText;
- 
+
     o.imwpResize=o.resize;
     o.resize=IconMenuWidget_resize;
- 
+
     o.changeArrowTooltip=IconMenuWidget_changeArrowTooltip;
- 
+
     o.disp=true;
     o.isDisplayed=IconWidget_isDisplayed;
     o.setDisplay=IconWidget_setDisplay;
@@ -574,7 +570,7 @@ function SingleIconMenuWidget_init()
     var o=this;
     o.menIcnOldInit();
     o.menu.init();
-    
+
     var l=o.layer;
     l.onmouseover=SingleIconMenuWidget_OverCB;
     l.onmouseout=SingleIconMenuWidget_OutCB;
@@ -647,7 +643,7 @@ function SingleIconMenuWidget_clickCB()
 function SingleIconMenuWidget_iconClickCB()
 {
     // do nothing
-    
+
     // this is needed to show the hand cursor on the arrow icon widget
 }
 
@@ -690,18 +686,17 @@ function newRadioIconMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,ra
 	var o=newIconMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,false)
 	o.defDx=dx
 	o.defDy=dy
-	o.attachMenuCB=null	
+	o.attachMenuCB=null
 	if (attachMenuCB) {
 		o.attachMenuCB=attachMenuCB
 		o.arrow.clickCB=RadioIconMenuWidget_arrowClickCB
-	}	
+	}
 	o.attachMenu=RadioIconMenuWidget_attachMenu
 	o.updateButton=RadioIconMenuWidget_updateButton
 	o.radioIdx=radioIdx?radioIdx:-1
 	o.checked=radioIdx?true:false
 	return o
 }
-
 
 // ================================================================================
 
@@ -717,28 +712,28 @@ function RadioIconMenuWidget_updateButton(idx)
 {
 	var o=this
 	o.icon.dis=false
-	if ((idx != null) &&  (idx > 0)) {		
+	if ((idx != null) &&  (idx > 0)) {
 		if (o.radioIdx == idx) return
 		o.radioIdx=idx
-		o.checked=true		
+		o.checked=true
 		dx=idx*16
 		dy=0
-		cn=o.icon.checkClass				
+		cn=o.icon.checkClass
 	} else {
 		o.checked=false
 		dx=16
 		dy=0
 		cn=o.icon.nocheckClass
-		o.radioIdx=0	
+		o.radioIdx=0
 	}
-	
+
 	if (o.icon)
 	{
 		var lyr=o.icon.layer
 		if (lyr)
 		{
 			o.icon.changeImg(dx,dy)
-			lyr.className=cn			
+			lyr.className=cn
 		}
 	}
 	if (idx==null) o.setDisabled(true)
@@ -755,7 +750,7 @@ function RadioIconMenuWidget_attachMenu(menu)
 	o.par=null
 	o.menu=menu
 	menu.par=null
-	menu.container=o	
+	menu.container=o
 	//menu.par=o
 	//menu.zIndex=o.par.zIndex+2
 
@@ -769,18 +764,18 @@ function RadioIconMenuWidget_attachMenu(menu)
 function newIconColorMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy, lastUsedColorsAr)
 {
 	var o=newIconMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,true)
-	
+
 	o.setColor=IconColorMenuWidget_setColor
 	o.getColor=IconColorMenuWidget_getColor
-	
+
 	o.icon.extraHTML='<div id="colSample_'+o.id+'" style="position:relative;top:-6px;left:2px;width:16px;height:4px;overflow:hidden;margin:0px"></div>'
 
 	o.curColor=null
 	o.sampleLayer=null
-	
+
 	o.clickColor=clickCB
 	o.clickCB=null
-	
+
 	o.colOldSetDis=o.setDisabled
 	o.setDisabled=IconColorMenuWidget_setDisabled
 	o.showSample=IconColorMenuWidget_showSample
@@ -789,15 +784,15 @@ function newIconColorMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy, l
 	var m=o.menu
 	m.ac=m.addColor
 	var cb=IconMenuWidget_internalCB
-	
+
 	var c1=m.addCheck("color_-1,-1,-1",_default,cb)
 	c1.leftZoneClass="menuLeftPartColor"
 	c1.leftZoneSelClass="menuLeftPartSel"
 
 	_colorsArr = new Array()
-	
+
 	_colorsArr["0,0,0"]=_black
-	
+
 	_colorsArr["148,52,0"]=_brown
 	_colorsArr["49,52,0"]=_oliveGreen
 	_colorsArr["0,52,0"]=_darkGreen
@@ -814,7 +809,7 @@ function newIconColorMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy, l
 	_colorsArr["0,0,255"]=_blue
 	_colorsArr["99,101,148"]=_blueGray
 	_colorsArr["132,130,132"]=_mediumGray
-	
+
 	_colorsArr["255,0,0"]=_red
 	_colorsArr["255,195,66"]=_lightOrange
 	_colorsArr["148,199,0"]=_lime
@@ -841,22 +836,22 @@ function newIconColorMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy, l
 	_colorsArr["148,199,255"]=_paleBlue
 	_colorsArr["198,150,255"]=_lavender
 	_colorsArr["255,255,255"]=_white
-			
+
 	with (m)
 	{
 		for (var i in _colorsArr) {
 			ac(_colorsArr[i],i,cb)
-		}	
+		}
 	}
 
-	if (lastUsedColorsAr) 
+	if (lastUsedColorsAr)
 	{
 		m.addLastUsed(_lastUsed,lastUsedColorsAr, cb)
 	}
 	c1=m.add(null,_moreColors,cb)
 	c1.leftZoneClass="menuLeftPartColor"
 	c1.leftZoneSelClass="menuLeftPartSel"
-	
+
 	return o
 }
 
@@ -867,12 +862,12 @@ function IconColorMenuWidget_setColor(color)
 	var o=this,menu=o.menu
 	menu.uncheckAll()
 	o.curColor=color
-	
+
 	if (color!=null)
 	{
 		var id="color_"+color
 		var items=menu.items
-	
+
 		for (var i in items)
 		{
 			var item=items[i]
@@ -880,7 +875,7 @@ function IconColorMenuWidget_setColor(color)
 				item.check(true)
 				break
 			}
-		}	
+		}
 	}
 	o.showSample()
 }
@@ -892,11 +887,11 @@ function IconColorMenuWidget_showSample()
 	var o=this
 	if (o.layer)
 	{
-		if (o.sampleLayer==null)		
+		if (o.sampleLayer==null)
 			o.sampleLayer=getLayer('colSample_'+o.id)
-			
+
 		o.sampleLayer.style.backgroundColor=((o.curColor!='-1,-1,-1')&&(o.curColor!=null)) ? 'rgb('+o.curColor+')' : ''
-	}	
+	}
 }
 
 // ================================================================================
@@ -920,9 +915,9 @@ function IconColorMenuWidget_getColor()
 function IconColorMenuWidget_changeTooltip(s)
 {
 	var o=this
-	
+
 	if (s==null) return;
-		
+
 	if (o.icon && o.arrow) {
 		o.icon.alt=s;
 		o.icon.changeTooltip(s);
@@ -938,7 +933,7 @@ function IconColorMenuWidget_changeTooltip(s)
 // OBJECT newIconCheckWidget (Constructor)
 //
 // Display an icon with check box behaviour. It can be used in a palette for
-// instance. The image can be a sub-part of a bigger image 
+// instance. The image can be a sub-part of a bigger image
 // (use dx and dy to define offset)
 //
 // ================================================================================
@@ -963,9 +958,9 @@ function newIconCheckWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy)
 	o.internalUpCB=IconCheckWidget_internalUpCB
 	o.internalDownCB=IconCheckWidget_internalDownCB
 	o.check=IconCheckWidget_check
-	o.isChecked=IconCheckWidget_isChecked	
+	o.isChecked=IconCheckWidget_isChecked
 	//o.setIcon=IconCheckWidget_setIcon
-	
+
 	o.oldInit=o.init
 	o.init=IconCheckWidget_init
 
@@ -974,15 +969,13 @@ function newIconCheckWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy)
 	return o
 }
 
-
-
 // ================================================================================
 // ================================================================================
 //
 // OBJECT newIconToggleWidget (Constructor)
 //
 // Display an icon with toggle behaviour, ie. if selected  a different images is shown. It can be used in a palette for
-// instance. The image can be a sub-part of a bigger image 
+// instance. The image can be a sub-part of a bigger image
 // (use dx and dy to define offset)
 //
 // ================================================================================
@@ -1011,9 +1004,9 @@ function newIconToggleWidget(id,src,clickCB,text,alt,w,h,dx,dy,togX,togY,disDx,d
 	o.internalUpCB=IconToggleWidget_internalUpCB
 	o.internalDownCB=IconToggleWidget_internalDownCB
 	o.check=IconToggleWidget_check
-	o.isChecked=IconCheckWidget_isChecked	
+	o.isChecked=IconCheckWidget_isChecked
 	//o.setIcon=IconCheckWidget_setIcon
-	
+
 	o.oldInit=o.init
 	o.init=IconCheckWidget_init
 
@@ -1028,7 +1021,7 @@ function newIconToggleWidget(id,src,clickCB,text,alt,w,h,dx,dy,togX,togY,disDx,d
 // OBJECT newIconRadioWidget (Constructor)
 //
 // Display an icon with radio button behaviour. It can be used in a palette for
-// instance. The image can be a sub-part of a bigger image 
+// instance. The image can be a sub-part of a bigger image
 // (use dx and dy to define offset)
 //
 // ================================================================================
@@ -1117,11 +1110,11 @@ function newPaletteWidget(id,height)
 	o.height=height
 
 	o.rightZoneIndex=-1
-	
+
 	o.sepCount=0
 	o.vertPadding=4
 	o.isLeftTableFixed=false
-	
+
 	return o
 }
 
@@ -1156,7 +1149,6 @@ function newPaletteVerticalSepWidget(id)
 	o.isSeparator=true
 	return o
 }
-
 
 function PaletteVerticalSepWidget_getHTML()
 {
@@ -1253,10 +1245,10 @@ function PaletteWidget_getHTML()
 // return [String] the HTML
 {
 	var o=this,items=o.items,len=items.length,fields=new Array;j=0
-	
+
 	fields[j++]='<table style="position:relative;overflow:hidden" id="'+o.id+'" '+attr("height",o.height)+' cellspacing="0" cellpadding="0" width="100%"><tbody><tr valign="middle">'
 	fields[j++]='<td width="100%" align="left" style="padding-left:'+o.vertPadding+'px;padding-right:4px"><table cellspacing="0" cellpadding="0"'+(o.isLeftTableFixed?'style="table-layout:fixed;width:100%"':"")+'><tbody><tr valign="middle">'
-	
+
 	var haveRightZone=false
 	for (var i=0;i<len;i++)
 	{
@@ -1265,15 +1257,15 @@ function PaletteWidget_getHTML()
 			fields[j++]='</tr></tbody></table></td><td align="right" style="padding-right:'+o.vertPadding+'px"><table cellspacing="0" cellpadding="0"><tbody><tr valign="middle">'
 			haveRightZone=true
 		}
-	
+
 		var it=items[i]
 		//fields[j++]='<td>'+(it?it.getHTML():getPaletteSep())+'</td>'
 		fields[j++]='<td>'+it.getHTML()+'</td>'
 	}
-	
+
 	if (!haveRightZone)
 		fields[j++]='</tr></tbody></table></td><td align="right" style="padding-right:4px"><table cellspacing="0" cellpadding="0"><tbody><tr valign="middle"><td></td>'
-	
+
 	fields[j++]='</tr></tbody></table></td></tr></tbody></table>'
 	return fields.join("")
 }
@@ -1295,7 +1287,6 @@ function PaletteWidget_add(item)
 
 // ================================================================================
 
-
 function PaletteWidget_disableChildren(dis)
 {
 	var items=this.items
@@ -1306,7 +1297,6 @@ function PaletteWidget_disableChildren(dis)
 			item.setDisabled(dis)
 	}
 }
-
 
 // ================================================================================
 
@@ -1336,7 +1326,7 @@ function IconWidget_isDisplayed()
 function IconWidget_setDisplay(d)
 {
 	var o=this
-	
+
 	if (o.css)
 	{
 		var ds=d?"block":"none"
@@ -1356,7 +1346,7 @@ function IconWidget_getTxtWidth()
 		w=w-(o.margin*2) // remove table margin
 		w=w-(o.src?o.w+o.border:1) // Image size
 		w=w-(o.txtNoPadding?0:((o.src?4:2)+2))
-		
+
 		if (_ie)
 			w-=2
 		else
@@ -1374,19 +1364,19 @@ function IconWidget_init()
 	var o=this,dblClick=false
 	o.iconOldInit()
 	var l=o.layer
-			
-	//manage focus for 508	
+
+	//manage focus for 508
 	l.tabIndex=o.dis?-1:0
-	
+
 	//manage tooltip for 508
 	l.title=(o.alt?o.alt:(o.text?o.text:""))
-	
+
 	// attach callbacks
 	if (o.clickCB)
 	{
 		l.onclick=IconWidget_upCB
-		l.onmousedown=IconWidget_downCB		
-		
+		l.onmousedown=IconWidget_downCB
+
 		if (o.allowDblClick&&(_ie||_saf))
 		{
 			dblClick=true
@@ -1401,7 +1391,7 @@ function IconWidget_init()
 		addDblClickCB(l,IconWidget_retFalse)
 
 	l.onselectstart=IconWidget_retFalse
-	
+
 	var d=o.disp?"block":"none"
 	if (o.css.display!=d)
 		o.css.display=d
@@ -1414,15 +1404,14 @@ function IconWidget_getHTML()
 {
 	var o=this,imgCode=o.src?'<div style="overflow:hidden;height:'+(o.h+o.border)+'px;width:'+(o.w+o.border)+'px;cursor:'+(o.clickCB ? (!o.acceptClick() ? 'default' : _hand):'default')+'">'+simpleImgOffset(o.src,o.w,o.h,o.dis?o.disDx:o.dx,o.dis?o.disDy:o.dy,'IconImg_'+o.id,null,o.alt,'margin:2px;')+o.extraHTML+'</div>':'<div class="iconText" style="width:1px;height:'+(o.h+o.border)+'px"></div>'
 
-
 	var txtAtt='style="white-space:nowrap;',txtW=o.getTxtWidth()
 	if (txtW>=0)
 		txtAtt+='text-overflow:ellipsis;overflow:hidden;width:'+txtW+'px'
 
 	txtAtt+='"'
-	
+
 	var d=o.disp?"":"display:none;"
-	
+
 	return '<table style="'+d+'height:'+(o.h+o.border+(_moz?2:0))+'px;'+(o.width!=null?"width:"+o.width+"px;":"")+'margin:'+o.margin+'px" id="'+o.id+'"  class="' + o.nocheckClass + '" cellspacing="0" cellpadding="0" border="0" role="button" '+(o.ariaHasPopUp?'aria-haspopup="true"':'')+'><tr valign="middle">'+
 			'<td>'+ ((o.clickCB&&_ie)?lnk(imgCode,null,null,null, ' tabIndex="-1"' ):imgCode)+'</td>'+
 			(o.text?'<td align="'+o.txtAlign+'" style="padding-left:'+(o.txtNoPadding?0:(o.src?4:2))+'px;padding-right:'+(o.txtNoPadding?0:2)+'px"><div id="IconImg_Txt_'+o.id+'" class="iconText'+(o.dis?"Dis":"")+'" '+txtAtt+'>'+convStr(o.text)+'</div></td>':'')+
@@ -1459,32 +1448,31 @@ function IconWidget_retFalse()
 function IconWidget_resize(w,h)
 {
 	var o=this
-	
+
 	if (o.layer)
 		o.oldRes(w,h)
-	
+
 	if (o.txtLayer==null)
 		o.txtLayer=getLayer("IconImg_Txt_"+o.id)
-	
+
 	if (w!=null)
 	{
-		o.width=w		
+		o.width=w
 		var txtW=o.getTxtWidth()
-		
+
 		if (o.txtLayer&&(txtW>=0))
 		{
-			o.txtLayer.style.width=''+txtW+'px'			
-		}		
+			o.txtLayer.style.width=''+txtW+'px'
+		}
 	}
 	if (h!=null)
-	{		
+	{
 		o.h=h?(h-o.border):o.h
-		
+
 		if (o.txtLayer&&(o.h>=0))
 		{
 			o.txtLayer.style.height=''+o.h+'px'
 		}
-		
 	}
 }
 
@@ -1495,17 +1483,17 @@ function IconWidget_changeTooltip(s,isTemporary)
 // s : [String] the new tooltip string.
 {
 	var o=this
-	
+
 	if (s==null) return;
-	
+
 	if(!isTemporary)
 		o.alt=s;
 	if(o.layer)
 		o.layer.title=s
 	if (o.imgLayer==null)
 		o.imgLayer = getLayer('IconImg_'+this.id);
-	if (o.imgLayer)	
-		changeSimpleOffset(o.imgLayer,null,null,null,s)	
+	if (o.imgLayer)
+		changeSimpleOffset(o.imgLayer,null,null,null,s)
 }
 
 // ================================================================================
@@ -1537,7 +1525,6 @@ function IconWidget_changeImg(dx,dy,src)
 	if (o.imgLayer)
 		changeSimpleOffset(o.imgLayer,dx,dy,o.src)
 }
-
 
 // ================================================================================
 
@@ -1583,7 +1570,7 @@ function IconWidget_downCB()
 	{
 		o.internalDownCB()
 		o.layer.className=o.currentHoverClass
-		
+
 		// If user mouse down on the icon of the one and only one menu
 		// being shown (i.e. _globMenuCaptured), then release _globMenuCaptured
 		// which prevent MenuWidget_globalClick in menu.js from closing the menu
@@ -1601,7 +1588,7 @@ function IconWidget_downCB()
 
 function IconWidget_upCB()
 // PRIVATE
-{	
+{
 	var o=getWidget(this)
 	if ((o.layer)&&(o.acceptClick()))
 	{
@@ -1613,7 +1600,7 @@ function IconWidget_upCB()
 }
 // ================================================================================
 function IconWidget_keydownCB(e)
-{	
+{
 	if(eventGetKey(e)==13 || eventGetKey(e)==32) //enter or spacebar
 	{
 		var o=getWidget(this)
@@ -1638,7 +1625,6 @@ function delayedClickCB(index)
 	if (o.beforeClickCB)
 		o.beforeClickCB()
 
-
 	if (o.clickCB)
 		o.clickCB()
 }
@@ -1649,9 +1635,9 @@ function IconWidget_overCB(index)
 // PRIVATE
 {
 	var o=_allBOIcons[index]
-	
+
 	o.setCrs()
-	
+
 	if ((o.layer)&&(!o.dis)&&!(o.par && o.par.checked)) // if not button container and it is checked
 	{
 		o.isHover=true
@@ -1713,7 +1699,7 @@ function IconToggleWidget_internalDownCB()
 	var o=this
 	if (o.acceptClick()) {
 		//o.currentHoverClass=o.checked?o.hoverClass:o.checkhoverClass
-	}	
+	}
 }
 
 // ================================================================================
@@ -1728,13 +1714,13 @@ function IconToggleWidget_internalUpCB()
 			o.imgLayer = getLayer('IconImg_'+this.id);
 
 		if (!o.imgLayer) return
-		
+
 		o.checked=!o.checked
 		if (o.checked)
-		{			
+		{
 			changeSimpleOffset(o.imgLayer,o.togX,o.togY,o.src)
-		} else {		
-			changeSimpleOffset(o.imgLayer,o.dx,o.dy,o.src)			
+		} else {
+			changeSimpleOffset(o.imgLayer,o.dx,o.dy,o.src)
 		}
 	}
 }
@@ -1751,14 +1737,14 @@ function IconCheckWidget_check(checked,force)
 	if ((o.checked!=checked)||force)
 	{
 		o.checked=checked
-		
+
 		if (o.layer)
 		{
 			o.layer.className=o.currentClass=o.checked?this.checkClass:this.nocheckClass
 			o.currentHoverClass=o.checked?this.checkhoverClass:this.hoverClass
 		}
 	}
-	
+
 	if (o.checked&&o.beforeClickCB)
 	{
 		if (o.layer)
@@ -1779,17 +1765,17 @@ function IconToggleWidget_check(checked,force)
 		o.checked=checked
 		if (o.layer&&(o.imgLayer==null))
 			o.imgLayer = getLayer('IconImg_'+this.id);
-		
+
 		if (!o.imgLayer) return
-			
+
 		if (o.checked)
-		{			
+		{
 			changeSimpleOffset(o.imgLayer,o.togX,o.togY,o.src)
-		} else {		
-			changeSimpleOffset(o.imgLayer,o.dx,o.dy,o.src)			
+		} else {
+			changeSimpleOffset(o.imgLayer,o.dx,o.dy,o.src)
 		}
-	}	
-	
+	}
+
 	if (o.checked&&o.beforeClickCB)
 	{
 		if (o.layer)
@@ -1850,9 +1836,9 @@ function IconWidget_setDisabled(dis)
 				if (o.txtLayer==null)
 					o.txtLayer=getLayer("IconImg_Txt_"+o.id)
 				o.txtLayer.className="iconText"+(dis?"Dis":"")
-	
+
 				if (dis)
-					o.layer.className=o.currentClass				
+					o.layer.className=o.currentClass
 			}
 			//manage focus for 508
 
@@ -1863,7 +1849,7 @@ function IconWidget_setDisabled(dis)
 }
 
 // return treu if the Widget is disabled
-// 
+//
 function IconWidget_isDisabled()
 {
 	return this.dis?this.dis:false
@@ -1891,14 +1877,14 @@ function newCustomCombo(id,changeCB,noMargin,width,tooltip,url,w,h,dx,dy,disDx,d
 {
 	var o=newIconMenuWidget(id,url,null," ",tooltip,w,h,dx,dy,disDx,disDy)
 	o.icon.width=width!=null?Math.max(0,width-13):50-(2*o.margin)
-	
+
 	o.icon.setClasses("combonocheck", "combocheck", "combohover", "combocheck")
 	o.icon.clip
 	o.arrow.setClasses("iconnocheck", "combobtnhover", "combobtnhover", "combobtnhover")
-	
+
 	o.spc=0
-	o.margin=2	
-	
+	o.margin=2
+
 	if (url==null)
 	{
 		o.icon.h=12
@@ -1906,7 +1892,7 @@ function newCustomCombo(id,changeCB,noMargin,width,tooltip,url,w,h,dx,dy,disDx,d
 		o.arrow.dy+=2
 		o.arrow.disDy+=2
 	}
-	
+
 	// Private attributes
 	o.counter=0
 	o.changeCB=changeCB
@@ -1914,7 +1900,6 @@ function newCustomCombo(id,changeCB,noMargin,width,tooltip,url,w,h,dx,dy,disDx,d
 	o.setOldDid=o.setDisabled
 	o.disabled=false
 	o.ccomboOldInit=o.init
-	
 
 	// Public methods
 	o.init=CustomCombo_init
@@ -1924,13 +1909,13 @@ function newCustomCombo(id,changeCB,noMargin,width,tooltip,url,w,h,dx,dy,disDx,d
 	o.select=CustomCombo_select
 	o.getSelection=CustomCombo_getSelection
 	o.valueShow=CustomCombo_valueShow
-	
+
 	o.valueSelect=CustomCombo_valueSelect
 	o.setUndefined=CustomCombo_setUndefined
 	o.setDisabled=CustomCombo_setDisabled
-	
+
 	o.getVisibleItemsCount=CustomCombo_getVisibleItemsCount
-	
+
 	// Private methods
 	o.selectItem=CustomCombo_selectItem
 	o.getItemByIndex=CustomCombo_getItemByIndex
@@ -1944,10 +1929,10 @@ function newCustomCombo(id,changeCB,noMargin,width,tooltip,url,w,h,dx,dy,disDx,d
 
 function CustomCombo_init()
 {
-	var o=this	
-	
+	var o=this
+
 	o.ccomboOldInit()
-	
+
 	if(o.disabled) o.icon.changeTooltip(o.icon.alt?o.icon.alt:"",true);
 	var arrowToolTip = _openMenu.replace("{0}", (o.icon.alt?o.icon.alt:""));
 	o.arrow.changeTooltip(arrowToolTip);
@@ -1957,11 +1942,11 @@ function CustomCombo_add(s,val,selected)
 {
 	var o=this
 	var item=o.menu.addCheck(o.id+"_it_"+(o.counter++),s,CustomCombo_internalCB)
-	
+
 	item.val=""+val
 	item.parCombo=o
 	item.isComboVal=true
-	
+
 	if ((o.selectedItem==null)||selected)
 		o.selectItem(item)
 }
@@ -2014,7 +1999,7 @@ function CustomCombo_getItemIndex(item)
 		{
 			if (it.id==item.id)
 				return j
-		
+
 			j++
 		}
 	}
@@ -2027,26 +2012,26 @@ function CustomCombo_selectItem(item)
 // PRIVATE
 {
 	var o=this
-	
+
 	if (o.selectedItem)
 		o.selectedItem.check(false)
-	
+
 	if (item)
 	{
 		o.val=item.val
-		o.icon.changeText(o.disabled?"":item.text)		
+		o.icon.changeText(o.disabled?"":item.text)
 		o.selectedItem=item
 		item.check(true)
 		if(o.disabled)
-			o.icon.changeTooltip(o.icon.alt?o.icon.alt:"",true)		
+			o.icon.changeTooltip(o.icon.alt?o.icon.alt:"",true)
 		else
-			o.icon.changeTooltip(o.icon.alt?(o.icon.alt+' ('+item.text)+')':(item.text),true)		
+			o.icon.changeTooltip(o.icon.alt?(o.icon.alt+' ('+item.text)+')':(item.text),true)
 	}
 	else
 	{
 		o.val=null
 		o.icon.changeText("")
-		o.icon.changeTooltip(o.icon.alt?o.icon.alt:"",true)		
+		o.icon.changeTooltip(o.icon.alt?o.icon.alt:"",true)
 		o.selectedItem=null
 	}
 }
@@ -2087,7 +2072,6 @@ function CustomCombo_setItemDisabled(idx,disabled)
 		item.setDisabled(disabled)
 }
 
-
 // ================================================================================
 
 function CustomCombo_getSelection()
@@ -2102,7 +2086,7 @@ function CustomCombo_getSelection()
 // ================================================================================
 //return true if selection can be done
 function CustomCombo_valueSelect(v)
-{	
+{
 	v=""+v
 	var o=this,items=o.menu.items,len=items.length
 	for (var i=0;i<len;i++)
@@ -2114,7 +2098,7 @@ function CustomCombo_valueSelect(v)
 			return true
 		}
 	}
-	
+
 	return false
 }
 
@@ -2133,7 +2117,6 @@ function CustomCombo_valueShow(v,show)
 			return
 		}
 	}
-
 }
 
 // ================================================================================
@@ -2148,7 +2131,7 @@ function CustomCombo_setUndefined(u)
 // ================================================================================
 //by default, return the count of shown elements of type isComboVal
 function CustomCombo_getVisibleItemsCount()
-{	
+{
 	var o=this,items=o.menu.items,len=items.length,n=0
 	for (var i=0;i<len;i++)
 	{
@@ -2174,9 +2157,9 @@ function CustomCombo_getVisibleItemsCount()
 function newComboTextFieldWidget(id,changeCB,maxChar,keyUpCB,enterCB,noMargin,tooltip,width,focusCB,blurCB)
 {
 	var o=newTextFieldWidget(id,changeCB,maxChar,keyUpCB,enterCB,noMargin,tooltip,width,focusCB,blurCB)
-	
+
 	o.par=null
-		
+
 	o.oldInit=o.init
 	o.init=ComboTextFieldWidget_init
 	o.setContentEditable=ComboTextFieldWidget_setContentEditable
@@ -2184,7 +2167,7 @@ function newComboTextFieldWidget(id,changeCB,maxChar,keyUpCB,enterCB,noMargin,to
 	o.getHTML=ComboTextFieldWidget_getHTML
 	o.oldSetDisabled=o.setDisabled
 	o.setDisabled=ComboTextFieldWidget_setDisabled
-	
+
 	return o
 }
 
@@ -2193,9 +2176,9 @@ function newComboTextFieldWidget(id,changeCB,maxChar,keyUpCB,enterCB,noMargin,to
 function ComboTextFieldWidget_init()
 {
 	var o=this
-	
+
 	o.oldInit()
-	
+
 	var l=o.layer
 	if (l!=null)
 	{
@@ -2217,7 +2200,7 @@ function ComboTextFieldWidget_setContentEditable(d)
 			l.readOnly = !d
 		else
 			l.contentEditable=d
-			
+
 		l.style.cursor=d?'text':_hand
 		l.className=d?'comboEditable':'combo'
 	}
@@ -2236,10 +2219,10 @@ function ComboTextFieldWidget_isContentEditable()
 function ComboTextFieldWidget_onClick()
 {
 	var o=getWidget(this)
-	
+
 	if (o.contentEditable)
 		return
-		
+
 	if (o.par!=null)
 		o.par.clickCB()
 }
@@ -2248,7 +2231,7 @@ function ComboTextFieldWidget_onClick()
 
 function ComboTextFieldWidget_getHTML()
 {
-	var o=this	
+	var o=this
 	return '<input'+(o.disabled?' disabled':'')+' oncontextmenu="event.cancelBubble=true;return true" style="'+sty("width",this.width)+(_moz?'margin-top:1px;margin-bottom:1px;padding-left:5px;padding-right:2px;':'')+ (_isQuirksMode ? 'height:20px;' : 'height:16px;') + 'margin-left:'+(this.noMargin?0:10)+'px" onfocus="'+_codeWinName+'.TextFieldWidget_focus(this)" onblur="'+_codeWinName+'.TextFieldWidget_blur(this)" onchange="'+_codeWinName+'.TextFieldWidget_changeCB(event,this)" onkeydown=" return '+_codeWinName+'.TextFieldWidget_keyDownCB(event,this);" onkeyup=" return '+_codeWinName+'.TextFieldWidget_keyUpCB(event,this);" onkeypress=" return '+_codeWinName+'.TextFieldWidget_keyPressCB(event,this);" type="text" '+attr('maxLength',this.maxChar)+' ondragstart="event.cancelBubble=true;return true" onselectstart="event.cancelBubble=true;return true" class="combo" id="'+this.id+'" name="'+this.id+'"'+attr('title',this.tooltip)+' value="">'
 }
 
@@ -2257,8 +2240,8 @@ function ComboTextFieldWidget_getHTML()
 function ComboTextFieldWidget_setDisabled(d)
 {
 	var o=this
-	
-	o.oldSetDisabled(d)	
+
+	o.oldSetDisabled(d)
 	//o.layer.className=d?'comboDisabled':'combo'
 }
 
@@ -2290,10 +2273,10 @@ function newTextComboWidget(id,maxChar,tooltip,w,changeCB,checkCB,beforeShowCB,f
 	o.text=newComboTextFieldWidget((formName?formName:"text_"+id),TextComboWidget_checkCB,maxChar,null/*keyUpCB*/,TextComboWidget_enterCB,true,tooltip,w-13)
 	var tooltipText = _openMenu.replace("{0}", (tooltip?tooltip:""));
 	o.arrow=newIconWidget("arrow_"+id,_skin+"menus.gif",TextComboWidget_arrowClickCB,null,tooltipText,7,16,0,81,0,97,true,true)
-	o.menu=newMenuWidget("menu_"+id,TextComboWidget_hideCB,beforeShowCB)	
-	
+	o.menu=newMenuWidget("menu_"+id,TextComboWidget_hideCB,beforeShowCB)
+
 	o.arrow.setClasses("iconnocheck", "combobtnhover", "combobtnhover", "combobtnhover")
-	
+
 	// set the parent
 	o.text.par=o
 	o.arrow.par=o
@@ -2306,18 +2289,18 @@ function newTextComboWidget(id,maxChar,tooltip,w,changeCB,checkCB,beforeShowCB,f
 
 	o.margin=0
 	o.spc=0
-	
+
 	o.counter=0
 
 	// to align the text field and arrow icon
 	o.arrow.h=12
 	o.arrow.dy+=2
 	o.arrow.disDy+=2
-	
+
 	o.index=_allBOIconsMenus.length++
 	_allBOIconsMenus[o.index]=o
 
-	// public methods		
+	// public methods
 	o.menIcnOldInit=o.init
 	o.init=TextComboWidget_init
 	o.imwpResize=o.resize
@@ -2325,18 +2308,18 @@ function newTextComboWidget(id,maxChar,tooltip,w,changeCB,checkCB,beforeShowCB,f
 	o.getHTML=TextComboWidget_getHTML
 	o.setDisabled=TextComboWidget_setDisabled
 	o.isDisabled=TextComboWidget_isDisabled
-	
+
 	o.add=TextComboWidget_add
 	o.addSeparator=TextComboWidget_addSeparator
 	o.addMenuItem=TextComboWidget_addMenuItem
 	o.select=TextComboWidget_select
 	o.getSelection=TextComboWidget_getSelection
-	o.valueShow=TextComboWidget_valueShow	
+	o.valueShow=TextComboWidget_valueShow
 	o.valueSelect=TextComboWidget_valueSelect
 	o.setUndefined=TextComboWidget_setUndefined
 	o.setContentEditable=TextComboWidget_setContentEditable
 	o.isContentEditable=TextComboWidget_isContentEditable
-	
+
 	// private methods
 	o.changeCB=changeCB
 	o.checkCB=checkCB
@@ -2345,7 +2328,7 @@ function newTextComboWidget(id,maxChar,tooltip,w,changeCB,checkCB,beforeShowCB,f
 	o.getItemByIndex=TextComboWidget_getItemByIndex
 	o.getItemIndex=TextComboWidget_getItemIndex
 	o.setItemDisabled=TextComboWidget_setItemDisabled
-	
+
 	o.text.enterCancelBubble=false
 
 	return o
@@ -2360,7 +2343,7 @@ function TextComboWidget_init()
 	o.text.init()
 	o.arrow.init()
 	o.menu.init()
-	
+
 	var l=o.layer
 	l.onmouseover=TextCombo_OverCB
 	l.onmouseout=TextCombo_OutCB
@@ -2369,14 +2352,14 @@ function TextComboWidget_init()
 // ================================================================================
 function TextComboWidget_getHTML()
 // Return the HTML of the TextIconMenuWidget
-{	
+{
 	var o=this, s=''
-	
+
 	s+='<table id="'+o.id+'" cellspacing="0" cellpadding="0" border="0" style="cursor:default;margin:'+o.margin+'px"><tbody><tr>'
 	s+='<td>'+o.text.getHTML()+'</td>'
 	s+='<td style="padding-left:'+o.spc+'px" width="'+(13+o.spc)+'">'+o.arrow.getHTML()+'</td>'
 	s+='</tr></tbody></table>'
-	
+
 	return s
 }
 
@@ -2408,11 +2391,11 @@ function TextComboWidget_add(s,val,selected)
 {
 	var o=this
 	var item=o.menu.addCheck(o.id+"_it_"+(o.counter++),s,TextComboWidget_internalCB)
-	
+
 	item.val=""+val
 	item.parCombo=o
 	item.isComboVal=true
-	
+
 	if ((o.selectedItem==null)||selected)
 		o.selectItem(item)
 }
@@ -2436,7 +2419,7 @@ function TextComboWidget_setDisabled(d)
 // Enable/Disable the TextIconMenuWidget
 {
 	var o=this
-	
+
 /*  if (o.selectedItem)
 		o.text.setValue(d?"":o.selectedItem.text)*/
 	o.text.setDisabled(d)
@@ -2453,7 +2436,7 @@ function TextComboWidget_setDisabled(d)
 function TextComboWidget_isDisabled()
 {
 	var o=this
-	
+
 	return o.disabled
 }
 
@@ -2482,7 +2465,7 @@ function TextComboWidget_setItemDisabled(idx,disabled)
 // ================================================================================
 function TextComboWidget_getSelection()
 // Return the value selected in the TextIconMenuWidget
-// It is either a value selected from the menu or the 
+// It is either a value selected from the menu or the
 // value type in the textfield
 {
 	var o=this,it=o.selectedItem
@@ -2540,7 +2523,7 @@ function TextComboWidget_setUndefined(u)
 function TextComboWidget_setContentEditable(d)
 {
 	var o=this
-	
+
 	o.text.setContentEditable(d)
 }
 
@@ -2548,7 +2531,7 @@ function TextComboWidget_setContentEditable(d)
 function TextComboWidget_isContentEditable()
 {
 	var o=this
-	
+
 	return o.text.isContentEditable()
 }
 
@@ -2557,26 +2540,26 @@ function TextComboWidget_selectItem(item)
 // PRIVATE
 {
 	var o=this
-	
+
 	if (o.selectedItem)
 		o.selectedItem.check(false)
-	
+
 	if (item)
 	{
 		o.val=item.val
-		o.text.setValue(/*o.disabled?"":*/item.text)		
+		o.text.setValue(/*o.disabled?"":*/item.text)
 		o.selectedItem=item
 		item.check(true)
 /*		if(o.disabled)
-			o.text.changeTooltip(o.icon.alt?o.icon.alt:"",true)		
+			o.text.changeTooltip(o.icon.alt?o.icon.alt:"",true)
 		else
-			o.text.changeTooltip(o.icon.alt?(o.icon.alt+' ('+item.text)+')':(item.text),true)	*/	
+			o.text.changeTooltip(o.icon.alt?(o.icon.alt+' ('+item.text)+')':(item.text),true)	*/
 	}
 	else
 	{
 		o.val=null
 		o.text.setValue("")
-//		o.text.changeTooltip(o.icon.alt?o.icon.alt:"",true)		
+//		o.text.changeTooltip(o.icon.alt?o.icon.alt:"",true)
 		o.selectedItem=null
 	}
 }
@@ -2601,7 +2584,7 @@ function TextComboWidget_getItemIndex(item)
 		{
 			if (it.id==item.id)
 				return j
-		
+
 			j++
 		}
 	}
@@ -2613,17 +2596,16 @@ function TextComboWidget_changeCB()
 // PRIVATE
 {
 	var p=this.par
-	
+
 	var b=true
 	if (p.checkCB)
 		b=p.checkCB()
-		
+
 	if (!b)
 		return
-		
+
 	if (p.changeCB)
 		p.changeCB()
-
 }
 
 // ================================================================================
@@ -2631,23 +2613,23 @@ function TextComboWidget_enterCB()
 // PRIVATE
 {
 	var p=this.par
-	
+
 	// 1st : Unselect any selected element from the menu
 	if (p.selectedItem)
 	{
 		p.selectedItem.check(false)
 		p.selectedItem=null
 	}
-	
+
 	//2nd : Call the callBack function
 	var b=true
 	if (p.checkCB)
 		b=p.checkCB()
-		
+
 	if (!b)
 		return
-		
-	if (p.changeCB) 
+
+	if (p.changeCB)
 		p.changeCB()
 }
 
@@ -2656,8 +2638,8 @@ function TextComboWidget_checkCB()
 // PRIVATE
 {
 	var p=this.par
-	
-	if (p.checkCB) 
+
+	if (p.checkCB)
 		p.checkCB()
 }
 
@@ -2683,7 +2665,7 @@ function TextComboWidget_clickCB()
 // PRIVATE
 {
 	var o=this,l=o.layer
-	
+
 	o.menu.show(!o.menu.isShown(),getPosScrolled(l).x,getPosScrolled(l).y+o.getHeight()+1,null,null,o)
 	TextComboOverCB(o.index)
 }
@@ -2696,7 +2678,6 @@ function TextCombo_OverCB()
 	TextComboOverCB(getWidget(this).index)
 	return true
 }
-
 
 // ================================================================================
 
@@ -2780,14 +2761,14 @@ function newIconScrollMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,
 // keyUpCB		[Function - optional]	calback when a key
 // showLabel	[boolean - optional]	if true a label is displayed
 // label		[boolean - optional]	text of the label
-// convBlanks	[int - optional]	
+// convBlanks	[int - optional]
 // beforeShowCB [Function - optional]	callback called before showing the menu
 {
 	var o=newIconMenuWidget(id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy)
 
 	o.menu=newScrollMenuWidget("iconMenu_menu_"+id,changeCB,multi,width,lines,tooltip,dblClickCB,keyUpCB,showLabel,label,convBlanks,beforeShowCB)
 	o.add=IconScrollMenu_add
-	
+
 	return o
 }
 
@@ -2804,7 +2785,7 @@ function IconScrollMenu_add(s,val,sel,id)
 // OBJECT newPaneWidget (Constructor)
 //
 // creates a pane with multiple switchable zones
-// 
+//
 //
 // ================================================================================
 // ================================================================================
@@ -2835,13 +2816,13 @@ function newPaneWidget(id,tooltip,w,h,x,y,changeCB)
 	o.tooltip=tooltip
 	o.iframe=newWidget("_iframe"+o.id)
 	o.title=newWidget("paneTitleB_"+o.id)
-	
+
 	// Methods
 	o.add = PaneWidget_add
 	o.valueSelect = PaneWidget_valueSelect
 	o.valueShow = PaneWidget_valueShow
 	o.getSelection = PaneWidget_getSelection
-			
+
 	// Standard widget methods
 	o.getHTML=PaneWidget_getHTML
 	o.oldInit=o.init
@@ -2885,12 +2866,12 @@ function PaneWidget_resizePalette()
 // PRIVATE
 {
 	var o=this,nbButton=0,panes=o.panes,len=panes.length;maxVisible=Math.floor((o.w-22)/24),j=0,hasMenu=false
-	
+
 	for (var i=0;i<len;i++)
 	{
 		var pane=panes[i],isVis=j<maxVisible,menu=o.menu
 		pane.button.setDisplay(pane.shown&&(isVis))
-		
+
 		if (menu)
 		{
 			var menuItem=menu.getItem(i),show=pane.shown&&(!isVis)
@@ -2898,7 +2879,7 @@ function PaneWidget_resizePalette()
 			if (show)
 				hasMenu=true
 		}
-		
+
 		if (pane.shown) j++
 	}
 	o.panemenu.setDisplay(hasMenu)
@@ -2909,7 +2890,7 @@ function PaneWidget_resizePalette()
 function PaneWidget_init()
 {
 	var o=this
-	
+
 	o.oldInit()
 	o.pal.init()
 	o.panemenu.init()
@@ -2939,7 +2920,7 @@ function PaneWidget_valueShow(value,show)
 			break
 		}
 	}
-	
+
 	if (pane)
 	{
 		//pane.button.setDisplay(show)
@@ -2964,7 +2945,7 @@ function PaneWidget_valueSelect(value)
 			break
 		}
 	}
-	
+
 	// Deselect prev
 	if (o.selection>=0)
 	{
@@ -2975,7 +2956,7 @@ function PaneWidget_valueSelect(value)
 			oldPane.button.check(false)
 		}
 	}
-	
+
 	if (index>=0)
 	{
 		pane.menuItem.check(true)
@@ -2984,7 +2965,7 @@ function PaneWidget_valueSelect(value)
 
 		var hasChanged=(o.selection!=index)
 		o.selection=index
-		
+
 		if (hasChanged)
 		{
 			if ((oldSel!=-1)&&(o.changeCB))
@@ -3007,7 +2988,7 @@ function PaneWidget_valueSelect(value)
 function PaneWidget_getHTML()
 {
 	var o=this,panes=o.panes,pal=o.pal
-	
+
 	if (o.panemenu == null)
 	{
 		pal.beginRightZone()
@@ -3015,7 +2996,7 @@ function PaneWidget_getHTML()
 		pm.isPaneMenu=true
 		pm.parPane=o
 		pal.add(pm)
-		
+
 		var menu=o.menu = newMenuWidget("panemenu_"+o.id);
 		for (var i=0; i<panes.length; i++)
 		{
@@ -3026,7 +3007,7 @@ function PaneWidget_getHTML()
 		}
 	}
 	o.resizePalette()
-	
+
 	var absSty = ((o.x!=null)&&(o.y!=null)) ? "position:absolute;left:"+o.x+"px;top:"+o.y+"px;" : ""
 
 	return '<div class="treeZone" id="'+o.id+'" style="'+absSty+'overflow:hidden;width:'+(o.w+(_ie?0:-2))+'px;height:'+(o.h+(_ie?0:-2))+'px">' +
@@ -3048,7 +3029,7 @@ function PaneWidget_add(value,name,icon,dx,dy,url)
 function PaneWidget_buttonCB()
 {
 	var o=this
-	
+
 	if (o.isPaneMenu)
 	{
 		var m = o.parPane.panemenu,l = m.layer
@@ -3067,7 +3048,7 @@ function PaneWidget_buttonCB()
 // OBJECT newPaneElementWidget (Constructor)
 //
 // creates a pane with multiple switchable zones
-// 
+//
 //
 // ================================================================================
 // ================================================================================
@@ -3075,7 +3056,7 @@ function PaneWidget_buttonCB()
 function newPaneElement(par,id,value,name,icon,dx,dy,url)
 {
 	var o=new Object
-	
+
 	o.par=par
 	par.panes[par.panes.length]=o
 	o.value=value
@@ -3096,17 +3077,17 @@ function newPaneElement(par,id,value,name,icon,dx,dy,url)
 //
 // ================================================================================
 // ================================================================================
- 
+
 function newButtonMenuWidget(id,label,width,tooltip,beforeShowCB,tabIndex)
 {
     var o=newButtonWidget(id,label,ButtonMenuWidget_clickCB,width,null,tooltip,tabIndex,0,_skin+"menus.gif",7,16,0,81,true,0,97)
- 
+
     o.menu = newMenuWidget("buttonMenu_menu_"+id,null,beforeShowCB);
     o.getMenu=IconMenuWidget_getMenu
- 
+
     return o;
 }
- 
+
 // ================================================================================
 
 function ButtonMenuWidget_clickCB()
@@ -3119,14 +3100,14 @@ function ButtonMenuWidget_clickCB()
 _scrollW=20
 _scrollH=20
 _margin=2
-	
+
 // ================================================================================
 // ================================================================================
 //
 // OBJECT newIconTableWidgetElem (Constructor)
 //
 // Display a clickable icon with optional text. It can be used in a palette fo
-// instance. The image can be a sub-part of a bigger image 
+// instance. The image can be a sub-part of a bigger image
 // (use dx and dy to define offset)
 //
 // ================================================================================
@@ -3135,18 +3116,18 @@ _margin=2
 function newIconTableWidgetElem(parid,id,src,clickCB,text,alt,w,h,dx,dy,disDx,disDy,maxW,maxH)
 {
 	var o=newIconRadioWidget(id,src,clickCB,text,alt,"grp_"+parid,w,h,dx,dy,disDx,disDy)
-	
+
 	// Properties
 	o.txtNoPadding=true
 	o.txtAlign='center'
 	o.margin=0
-	
+
 	o.maxW=maxW
 	o.maxH=maxH
-	
+
 	o.imgW=w+o.border
 	o.imgH=h+o.border
-	
+
 	o.txtW=maxW-2*_margin
 
 	// Methods
@@ -3154,7 +3135,7 @@ function newIconTableWidgetElem(parid,id,src,clickCB,text,alt,w,h,dx,dy,disDx,di
 	o.getHTML=IconTableWidgetElem_getHTML
 	o.oldResize=o.resize
 	o.resize=IconTableWidgetElem_resize
-	
+
 	return o
 }
 
@@ -3168,9 +3149,9 @@ function IconTableWidgetElem_getHTML()
 	var txtAtt='style="white-space:normal;'
 	txtAtt+='text-overflow:ellipsis;overflow:hidden;width:'+o.txtW+'px;'
 	txtAtt+='"'
-	
+
 	var d=o.disp?"":"display:none;"
-	
+
 	return '<table style="'+d+'width:'+o.maxW+'px;height:'+o.maxH+'margin:0px" id="'+o.id+'" class="' + o.nocheckClass + '" cellspacing="0" cellpadding="0" border="0"><tr valign="middle">'+
 			'<td align="center">'+ ((o.clickCB&&_ie)?lnk(imgCode,null,null,null, ' tabIndex="-1"' ):imgCode)+'</td></tr><tr>'+
 			(o.text?'<td align="center"><div id="IconImg_Txt_'+o.id+'" class="iconTableText'+(o.dis?"Dis":"")+'" '+txtAtt+'>'+convStr(o.text)+'</div></td>':'')+
@@ -3182,7 +3163,7 @@ function IconTableWidgetElem_getHTML()
 function IconTableWidgetElem_resize(w,h)
 {
 	var o=this
-	
+
 	if (w!=null)
 		o.oldResize(w-2*_margin,null)
 	if (h!=null)
@@ -3208,24 +3189,24 @@ function newIconTableWidget(id,horiz,w,h)
 // h		: [int]					height
 {
 	var o=newScrolledZoneWidget(id,0,0,w,h)
-	
+
 	// Properties
 	o.horiz=horiz
 	o.padding=2
 	o.icnTblLayer=null
 	o.contCSS=null
-	
+
 	o.elems=new Array
-	
+
 	// Methods
 	o.oldInit=o.init
 	o.init=IconTableWidget_init
 	o.oldResize2=o.resize
 	o.resize=IconTableWidget_resize
-	o.getHTML=IconTableWidget_getHTML	
+	o.getHTML=IconTableWidget_getHTML
 	o.add=IconTableWidget_add
 	o.select=IconTableWidget_select
-	
+
 	return o
 }
 
@@ -3234,12 +3215,12 @@ function newIconTableWidget(id,horiz,w,h)
 function IconTableWidget_init()
 {
 	var o=this, len=o.elems.length
-	
+
 	//o.oldInit()
-	
+
 	for (var i=0;i<len;i++)
 		o.elems[i].init()
-	
+
 	o.icnTblLayer=getLayer(_codeWinName+'icnTbl'+o.id)
 	o.contCSS=o.icnTblLayer.style
 }
@@ -3249,14 +3230,14 @@ function IconTableWidget_init()
 function IconTableWidget_resize(w,h)
 {
 	var o=this
-	
+
 	//o.oldResize2(w,h)
 	if (w!=null)
 	{
 		if (o.contCSS!=null)
 			o.contCSS.width=''+w+'px'
 	}
-	
+
 	if (h!=null)
 	{
 		if (o.contCSS!=null)
@@ -3269,27 +3250,27 @@ function IconTableWidget_resize(w,h)
 function IconTableWidget_getHTML()
 {
 	var o=this, s=''
-	
+
 //	s+= o.beginHTML()
-	s+=	'<table id="'+_codeWinName+'icnTbl'+o.id+'" width="'+o.w+'" height="'+o.h+'px" class="iconTableZone" cellspacing="0" cellpadding="0"><tbody>'	
+	s+=	'<table id="'+_codeWinName+'icnTbl'+o.id+'" width="'+o.w+'" height="'+o.h+'px" class="iconTableZone" cellspacing="0" cellpadding="0"><tbody>'
 	s+= '<tr valign="top"><td>'
-	
-	s+=	'<table cellspacing="0" cellpadding="'+o.padding+'px"><tbody>'	
+
+	s+=	'<table cellspacing="0" cellpadding="'+o.padding+'px"><tbody>'
 	if (o.horiz)
 	{
 		s+= '<tr>'
-		
+
 		for (var i=0;i<o.elems.length;i++)
 		{
 			s+= '<td align="center">'
 			s+= o.elems[i].getHTML()
 			s+= '</td>'
 		}
-				
+
 		s+= '</tr>'
 	}
 	else
-	{		
+	{
 		for (var i=0;i<o.elems.length;i++)
 		{
 			s+= '<tr><td align="center">'
@@ -3299,10 +3280,10 @@ function IconTableWidget_getHTML()
 	}
 	s+=	'</tbody></table>'
 	s+= '</td><tr>'
-		
+
 	s+=	'</tbody></table>'
 //	s+= o.endHTML()
-	
+
 	return s
 }
 
@@ -3311,15 +3292,15 @@ function IconTableWidget_getHTML()
 function IconTableWidget_add(src,clickCB,text,alt,w,h,dx,dy,disDx,disDy)
 {
 	var o=this, len=o.elems.length, icn=null
-	
+
 	var maxW=o.horiz?o.h:o.w
 	maxW-=2*_margin
 	var maxH=maxW
-	
+
 	icn=newIconTableWidgetElem(o.id,"iconTable_icon_"+len+o.id,src,clickCB,text,alt,
 		w,h,dx,dy,disDx,disDy,maxW,maxH)
 	icn.par=this
-	
+
 	o.elems[len]=icn
 }
 
@@ -3328,11 +3309,11 @@ function IconTableWidget_add(src,clickCB,text,alt,w,h,dx,dy,disDx,disDy)
 function IconTableWidget_select(index)
 {
 	var o=this
-	
+
 	var e=o.elems[index]
 	if ( e==null )
 		return
-		
+
 	e.check(true)
 }
 
@@ -3343,26 +3324,26 @@ function IconTableWidget_select(index)
 function newIconBordersMenuWidget(id,clickCB,beforeShowCB)
 {
 	var o=newIconMenuWidget(id,_skin+'../borders.gif',IconBordersMenuWidget_iconInternalClickCB,null,null,16,16,0,0,0,16,false,beforeShowCB,_menuType_border)
-		
+
 	// properties
 	o.selectedBorder=new Object
 	o.selectedBorder.top=0
 	o.selectedBorder.bot=0
 	o.selectedBorder.left=0
 	o.selectedBorder.right=0
-	
+
 	o.lastSelectedBorder=new Object
 	o.lastSelectedBorder.top=0
 	o.lastSelectedBorder.bot=0
 	o.lastSelectedBorder.left=0
 	o.lastSelectedBorder.right=0
-	
+
 	o.bordersClickCB=clickCB
-		
+
 	// methods
 	o.getSelectedBorder=IconBordersMenuWidget_getSelectedBorder
 	o.getLastSelectedBorder=IconBordersMenuWidget_getLastSelectedBorder
-	
+
 	return o
 }
 
@@ -3371,7 +3352,7 @@ function newIconBordersMenuWidget(id,clickCB,beforeShowCB)
 function IconBordersMenuWidget_getSelectedBorder()
 {
 	var o=this
-	
+
 	return o.selectedBorder
 }
 
@@ -3380,7 +3361,7 @@ function IconBordersMenuWidget_getSelectedBorder()
 function IconBordersMenuWidget_getLastSelectedBorder()
 {
 	var o=this
-	
+
 	return o.lastSelectedBorder
 }
 
@@ -3389,12 +3370,12 @@ function IconBordersMenuWidget_getLastSelectedBorder()
 function IconBordersMenuWidget_iconInternalClickCB()
 {
 	var o=this
-	
+
 	o.selectedBorder.top=o.lastSelectedBorder.top
 	o.selectedBorder.bot=o.lastSelectedBorder.bot
 	o.selectedBorder.left=o.lastSelectedBorder.left
 	o.selectedBorder.right=o.lastSelectedBorder.right
-	
+
 	if (o.bordersClickCB)
 		o.bordersClickCB()
 }
@@ -3404,9 +3385,9 @@ function IconBordersMenuWidget_iconInternalClickCB()
 function IconBordersMenuWidget_internalClickCB()
 {
 	var o=this
-	
+
 	var top=bot=left=right=-1
-	
+
 	switch (o.id)
 	{
 		case "border_0":
@@ -3420,7 +3401,7 @@ function IconBordersMenuWidget_internalClickCB()
 			break;
 		case "border_3":
 			right=1
-			break;		
+			break;
 		case "border_4":
 			bot=2
 			break;
@@ -3444,7 +3425,7 @@ function IconBordersMenuWidget_internalClickCB()
 			break;
 		case "border_11":
 			top=bot=left=right=3
-			break;			
+			break;
 		case "border_12":
 			top=bot=left=right=-2
 			break;
@@ -3452,17 +3433,17 @@ function IconBordersMenuWidget_internalClickCB()
 
 	// Set the selection
 	var pp=o.par.parIcon
-	
+
 	pp.selectedBorder.top=top
 	pp.selectedBorder.bot=bot
 	pp.selectedBorder.left=left
 	pp.selectedBorder.right=right
-			
+
 	if (o.id!="border_12")
 	{
 		// Update the menu icon
 		pp.icon.changeImg(16*o.idx,0)
-	
+
 		// Save the previous border
 		pp.lastSelectedBorder.top=top
 		pp.lastSelectedBorder.bot=bot

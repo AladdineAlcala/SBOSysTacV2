@@ -6,7 +6,6 @@ define( [
 	"../var/rnothtmlwhite",
 	"../selector"
 ], function( jQuery, access, nodeName, support, rnothtmlwhite ) {
-
 "use strict";
 
 var boolHook,
@@ -107,7 +106,6 @@ jQuery.extend( {
 boolHook = {
 	set: function( elem, value, name ) {
 		if ( value === false ) {
-
 			// Remove boolean attributes when set to false
 			jQuery.removeAttr( elem, name );
 		} else {
@@ -125,7 +123,6 @@ jQuery.each( jQuery.expr.match.bool.source.match( /\w+/g ), function( i, name ) 
 			lowercaseName = name.toLowerCase();
 
 		if ( !isXML ) {
-
 			// Avoid an infinite loop by temporarily removing this function from the getter
 			handle = attrHandle[ lowercaseName ];
 			attrHandle[ lowercaseName ] = ret;
@@ -137,5 +134,4 @@ jQuery.each( jQuery.expr.match.bool.source.match( /\w+/g ), function( i, name ) 
 		return ret;
 	};
 } );
-
 } );

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
-<head>  
-<meta charset="UTF-8">
-<script>
+<head>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -40,7 +40,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 			{ y: 20.26, x: new Date(2016,0) }
 		]
 		},
-		{        
+		{
 			type: "stackedColumn",
 			showInLegend: true,
 			name: "Q2",
@@ -55,7 +55,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 				{ y: 21.5, x: new Date(2016,0) }
 			]
 		},
-		{        
+		{
 			type: "stackedColumn",
 			showInLegend: true,
 			name: "Q3",
@@ -70,7 +70,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 				{ y: 22.45, x: new Date(2016,0) }
 			]
 		},
-		{        
+		{
 			type: "stackedColumn",
 			showInLegend: true,
 			name: "Q4",
@@ -93,21 +93,21 @@ function toolTipContent(e) {
 	var total = 0;
 	var str2, str3;
 	for (var i = 0; i < e.entries.length; i++){
-		var  str1 = "<span style= 'color:"+e.entries[i].dataSeries.color + "'> "+e.entries[i].dataSeries.name+"</span>: $<strong>"+e.entries[i].dataPoint.y+"</strong>bn<br/>";
+		var  str1 = "<span style= 'color:"+e.entries[i].dataSeries.color + "'> "+e.entries[i].dataSeries.name+"</span>: $<strong>"+e.entries[i].dataPoint.y+"</strong>bn<br />";
 		total = e.entries[i].dataPoint.y + total;
 		str = str.concat(str1);
 	}
-	str2 = "<span style = 'color:DodgerBlue;'><strong>"+(e.entries[0].dataPoint.x).getFullYear()+"</strong></span><br/>";
+	str2 = "<span style = 'color:DodgerBlue;'><strong>"+(e.entries[0].dataPoint.x).getFullYear()+"</strong></span><br />";
 	total = Math.round(total * 100) / 100;
-	str3 = "<span style = 'color:Tomato'>Total:</span><strong> $"+total+"</strong>bn<br/>";
+	str3 = "<span style = 'color:Tomato'>Total:</span><strong> $"+total+"</strong>bn<br />";
 	return (str2.concat(str)).concat(str3);
 }
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

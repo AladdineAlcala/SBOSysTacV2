@@ -1,12 +1,12 @@
 /**
  * Copyright 2006 Tim Down.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -68,7 +68,7 @@ if (!Array.prototype.splice) {
 		for (var i = 0; i < arguments.length; i++) {
 			argumentsArray[i] = arguments[i];
 		}
-		var itemsToAppend = (argumentsArray.length > 2) ? 
+		var itemsToAppend = (argumentsArray.length > 2) ?
 			itemsAfterDeleted = argumentsArray.slice(2).concat(itemsAfterDeleted) : itemsAfterDeleted;
 		for (i = 0; i < itemsToAppend.length; i++) {
 			this.push(itemsToAppend[i]);
@@ -134,7 +134,7 @@ var SimpleDateFormat;
 			var previousSunday = new Date(this.getTime() - this.getDay() * ONE_DAY);
 			previousSunday = new Date(previousSunday.getFullYear(), previousSunday.getMonth(), previousSunday.getDate());
 			var startOfYear = new Date(this.getFullYear(), 0, 1);
-			var numberOfSundays = previousSunday.isBefore(startOfYear) ? 
+			var numberOfSundays = previousSunday.isBefore(startOfYear) ?
 				0 : 1 + Math.floor((previousSunday.getTime() - startOfYear.getTime()) / ONE_WEEK);
 			var numberOfDaysInFirstWeek =  7 - startOfYear.getDay();
 			var weekInYear = numberOfSundays;
@@ -151,7 +151,7 @@ var SimpleDateFormat;
 			var previousSunday = new Date(this.getTime() - this.getDay() * ONE_DAY);
 			previousSunday = new Date(previousSunday.getFullYear(), previousSunday.getMonth(), previousSunday.getDate());
 			var startOfMonth = new Date(this.getFullYear(), this.getMonth(), 1);
-			var numberOfSundays = previousSunday.isBefore(startOfMonth) ? 
+			var numberOfSundays = previousSunday.isBefore(startOfMonth) ?
 				0 : 1 + Math.floor((previousSunday.getTime() - startOfMonth.getTime()) / ONE_WEEK);
 			var numberOfDaysInFirstWeek =  7 - startOfMonth.getDay();
 			var weekInMonth = numberOfSundays;
@@ -416,7 +416,7 @@ var SimpleDateFormat;
 	function urlEncode(str) {
 		return escape(str).replace(/\+/g, "%2B").replace(/"/g, "%22").replace(/'/g, "%27").replace(/\//g, "%2F");
 	}
-	
+
 	function bool(obj) {
 		return Boolean(obj);
 	}
@@ -815,7 +815,7 @@ var SimpleDateFormat;
 
 	/* --------------------------------------------------------------------- */
 
-	// SimpleLayout 
+	// SimpleLayout
 	var SimpleLayout = function() {
 		this.customFields = [];
 	};
@@ -834,7 +834,7 @@ var SimpleDateFormat;
 
 	/* --------------------------------------------------------------------- */
 
-	// NullLayout 
+	// NullLayout
 	var NullLayout = function() {
 		this.customFields = [];
 	};
@@ -853,7 +853,7 @@ var SimpleDateFormat;
 
 	/* --------------------------------------------------------------------- */
 
-	// XmlLayout 
+	// XmlLayout
 	var XmlLayout = function() {
 		this.customFields = [];
 	};
@@ -900,7 +900,7 @@ var SimpleDateFormat;
 
 	/* --------------------------------------------------------------------- */
 
-	// JsonLayout 
+	// JsonLayout
 	var JsonLayout = function(readable, loggerKey, timeStampKey,
 			levelKey, messageKey, exceptionKey, urlKey) {
 		this.readable = bool(readable);
@@ -963,7 +963,7 @@ var SimpleDateFormat;
 
 	/* --------------------------------------------------------------------- */
 
-	// HttpPostDataLayout 
+	// HttpPostDataLayout
 	var HttpPostDataLayout = function(loggerKey, timeStampKey,
 			levelKey, messageKey, exceptionKey, urlKey) {
 		this.setKeys(loggerKey, timeStampKey, levelKey, messageKey,
@@ -995,7 +995,7 @@ var SimpleDateFormat;
 
 	/* --------------------------------------------------------------------- */
 
-	// PatternLayout 
+	// PatternLayout
 	var PatternLayout = function(pattern) {
 		if (pattern) {
 			this.pattern = pattern;
@@ -2875,7 +2875,7 @@ var SimpleDateFormat;
 
 				// Create init, getConsoleWindow and safeToAppend functions
 				init = function() {
-					var initErrorMessage = "InPageAppender.init: unable to create console iframe"; 
+					var initErrorMessage = "InPageAppender.init: unable to create console iframe";
 					function finalInit() {
 						try {
 							getConsoleWindow().setNewestAtTop(newestMessageAtTop);
@@ -3052,7 +3052,7 @@ var SimpleDateFormat;
 
 				safeToAppend = function() {
 					if (isSupported && !isUndefined(popUp) && !consoleClosed) {
-						if (popUp.closed || 
+						if (popUp.closed ||
 								(consoleWindowLoaded && isUndefined(popUp.closed))) { // Extra check for Opera
 							consoleClosed = true;
 							logLog.debug("PopUpAppender: pop-up closed");
@@ -3080,7 +3080,6 @@ var SimpleDateFormat;
 				useOldPopUp, complainAboutPopUpBlocking, newestMessageAtTop,
 				scrollToLatestMessage, reopenWhenClosed, width, height,
 				maxMessages) {
-
 			var focusConsoleWindow = extractBooleanFromParam(focusPopUp, this.defaults.focusPopUp);
 
 			this.create(false, null, layout, lazyInit, focusConsoleWindow,
@@ -3116,7 +3115,6 @@ var SimpleDateFormat;
 		var InPageAppender = function(containerElement, lazyInit,
 				layout, initiallyMinimized, newestMessageAtTop,
 				scrollToLatestMessage, width, height, maxMessages) {
-
 			this.create(true, containerElement, layout, lazyInit, false,
 				null, null, newestMessageAtTop, scrollToLatestMessage,
 				initiallyMinimized, width, height, null, maxMessages);

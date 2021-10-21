@@ -7,7 +7,6 @@ define( [
 
 	"../traversing/findFilter"
 ], function( jQuery, document, isFunction, rsingleTag ) {
-
 "use strict";
 
 // A central reference to the root jQuery(document)
@@ -36,17 +35,14 @@ var rootjQuery,
 			if ( selector[ 0 ] === "<" &&
 				selector[ selector.length - 1 ] === ">" &&
 				selector.length >= 3 ) {
-
 				// Assume that strings that start and end with <> are HTML and skip the regex check
 				match = [ null, selector, null ];
-
 			} else {
 				match = rquickExpr.exec( selector );
 			}
 
 			// Match html or make sure no context is specified for #id
 			if ( match && ( match[ 1 ] || !context ) ) {
-
 				// HANDLE: $(html) -> $(array)
 				if ( match[ 1 ] ) {
 					context = context instanceof jQuery ? context[ 0 ] : context;
@@ -62,7 +58,6 @@ var rootjQuery,
 					// HANDLE: $(html, props)
 					if ( rsingleTag.test( match[ 1 ] ) && jQuery.isPlainObject( context ) ) {
 						for ( match in context ) {
-
 							// Properties of context are called as methods if possible
 							if ( isFunction( this[ match ] ) ) {
 								this[ match ]( context[ match ] );
@@ -81,7 +76,6 @@ var rootjQuery,
 					elem = document.getElementById( match[ 2 ] );
 
 					if ( elem ) {
-
 						// Inject the element directly into the jQuery object
 						this[ 0 ] = elem;
 						this.length = 1;
@@ -125,5 +119,4 @@ init.prototype = jQuery.fn;
 rootjQuery = jQuery( document );
 
 return init;
-
 } );

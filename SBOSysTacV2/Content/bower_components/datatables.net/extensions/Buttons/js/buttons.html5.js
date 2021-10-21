@@ -48,7 +48,6 @@ function _pdfMake () {
 	return pdfmake || window.pdfMake;
 }
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * FileSaver.js dependency
  */
@@ -218,11 +217,9 @@ var _saveAs = (function(view) {
 	|| this.content
 ));
 
-
 // Expose file saver on the DataTables API. Can't attach to `DataTables.Buttons`
 // since this file can be loaded before Button's core!
 DataTable.fileSave = _saveAs;
-
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Local (private) functions
@@ -766,8 +763,6 @@ var _excelSpecials = [
 	{ match: /^\-?[\d,]+\.\d{2}$/,  style: 64 }  // Numbers with 2 d.p. and thousands separators
 ];
 
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Buttons
  */
@@ -1015,7 +1010,6 @@ DataTable.ext.buttons.excelHtml5 = {
 				"worksheets": {
 					"sheet1.xml": rels
 				}
-
 			},
 			"[Content_Types].xml": getXml('[Content_Types].xml')
 		};
@@ -1401,7 +1395,6 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 	download: 'download'
 };
-
 
 return DataTable.Buttons;
 }));

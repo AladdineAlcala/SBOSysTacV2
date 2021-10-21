@@ -2,16 +2,13 @@
 /* Written by Haukur H. Thorsson (haukur@eskill.is). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['is'] = {
 	closeText: 'Loka',
 	prevText: '&#x3C; Fyrri',
@@ -33,5 +30,4 @@ datepicker.regional['is'] = {
 datepicker.setDefaults(datepicker.regional['is']);
 
 return datepicker.regional['is'];
-
 }));

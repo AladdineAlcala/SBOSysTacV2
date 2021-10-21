@@ -125,14 +125,13 @@ MochiKit.DOM.DEPRECATED = [
     ['Dimensions', 'MochiKit.Style.Dimensions', '1.4'] // FIXME: broken
 ];
 
-MochiKit.DOM.getViewportDimensions = new Function('' + 
-    'if (!MochiKit["Style"]) {' + 
-    '    throw new Error("This function has been deprecated and depends on MochiKit.Style.");' + 
-    '}' + 
+MochiKit.DOM.getViewportDimensions = new Function('' +
+    'if (!MochiKit["Style"]) {' +
+    '    throw new Error("This function has been deprecated and depends on MochiKit.Style.");' +
+    '}' +
     'return MochiKit.Style.getViewportDimensions.apply(this, arguments);');
 
 MochiKit.Base.update(MochiKit.DOM, {
-
     currentWindow: function () {
         return MochiKit.DOM._window;
     },
@@ -193,19 +192,19 @@ MochiKit.Base.update(MochiKit.DOM, {
                         values.push("");
                         return null;
                     } else {
-                        var opts = elem.options; 
+                        var opts = elem.options;
                         if (!opts.length) {
                             names.push(name);
                             values.push("");
                             return null;
                         }
-                        for (var i = 0; i < opts.length; i++) { 
+                        for (var i = 0; i < opts.length; i++) {
                             var opt = opts[i];
-                            if (!opt.selected) { 
-                                continue; 
-                            } 
-                            names.push(name); 
-                            values.push((opt.value) ? opt.value : opt.text); 
+                            if (!opt.selected) {
+                                continue;
+                            }
+                            names.push(name);
+                            values.push((opt.value) ? opt.value : opt.text);
                         }
                         return null;
                     }
@@ -311,7 +310,7 @@ MochiKit.Base.update(MochiKit.DOM, {
         // mozilla warnings aren't too bright
         return undefined;
     },
-        
+
     setNodeAttribute: function (node, attr, value) {
         var o = {};
         o[attr] = value;
@@ -577,7 +576,6 @@ MochiKit.Base.update(MochiKit.DOM, {
     addLoadEvent: function (func) {
         var self = MochiKit.DOM;
         self.addToCallStack(self._window, "onload", func, true);
-        
     },
 
     focusOnLoad: function (element) {
@@ -589,7 +587,7 @@ MochiKit.Base.update(MochiKit.DOM, {
             }
         });
     },
-            
+
     setElementClass: function (element, className) {
         var self = MochiKit.DOM;
         var obj = self.getElement(element);
@@ -599,7 +597,7 @@ MochiKit.Base.update(MochiKit.DOM, {
             obj.setAttribute("className", className);
         }
     },
-            
+
     toggleElementClass: function (className/*, element... */) {
         var self = MochiKit.DOM;
         for (var i = 1; i < arguments.length; i++) {
@@ -777,7 +775,7 @@ MochiKit.Base.update(MochiKit.DOM, {
         } else {
             return rval.join("");
         }
-    },    
+    },
 
     removeEmptyTextNodes: function (element) {
         element = MochiKit.DOM.getElement(element);
@@ -790,7 +788,6 @@ MochiKit.Base.update(MochiKit.DOM, {
     },
 
     __new__: function (win) {
-
         var m = MochiKit.Base;
         if (typeof(document) != "undefined") {
             this._document = document;
@@ -799,8 +796,8 @@ MochiKit.Base.update(MochiKit.DOM, {
         }
         this._window = win;
 
-        this.domConverters = new m.AdapterRegistry(); 
-        
+        this.domConverters = new m.AdapterRegistry();
+
         var __tmpElement = this._document.createElement("span");
         var attributeArray;
         if (__tmpElement && __tmpElement.attributes &&
@@ -831,7 +828,7 @@ MochiKit.Base.update(MochiKit.DOM, {
         } else {
             attributeArray = function (node) {
                 /***
-                    
+
                     Return an array of attributes for a given node,
                     filtering out attributes that don't belong for
                     that are inserted by "Certain Browsers".
@@ -849,13 +846,13 @@ MochiKit.Base.update(MochiKit.DOM, {
             var modules = arr[1].split('.');
             var str = '';
             var obj = {};
-            
+
             str += 'if (!MochiKit.' + modules[1] + ') { throw new Error("';
             str += 'This function has been deprecated and depends on MochiKit.';
             str += modules[1] + '.");}';
             str += 'return MochiKit.' + modules[1] + '.' + arr[0];
             str += '.apply(this, arguments);';
-            
+
             obj[modules[2]] = new Function(str);
             MochiKit.Base.update(MochiKit[fromModule], obj);
         }
@@ -908,10 +905,8 @@ MochiKit.Base.update(MochiKit.DOM, {
         };
 
         m.nameFunctions(this);
-
     }
 });
-
 
 MochiKit.DOM.__new__(((typeof(window) == "undefined") ? this : window));
 

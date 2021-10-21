@@ -46,26 +46,26 @@ bobj.crv.LeftPanel.prototype = {
         var w = 0;
         if (this._panelNavigator)
             w += this._panelNavigator.getWidth ();
-        
+
         if (this._toolPanel && this._toolPanel.isDisplayed())
             w += this._toolPanel.getWidth();
         else
             w += 5; //The padding between navigator and reportAlbum when no toolpanel exist
-        
+
         return w;
     },
-    
+
     getBestFitHeight : function () {
         var toolPanelHeight = 0;
         var panelNavigatorHeight = 0;
-        
+
         if(this._panelHeader)
             toolPanelHeight += this._panelHeader.getHeight()
         if(this._toolPanel)
             toolPanelHeight += this._toolPanel.getBestFitHeight();
         if(this._panelNavigator)
             panelNavigatorHeight = this._panelNavigator.getBestFitHeight();
-        
+
         return Math.max (toolPanelHeight, panelNavigatorHeight);
     },
 
@@ -95,7 +95,7 @@ bobj.crv.LeftPanel.prototype = {
     init : function() {
         this.layer = getLayer (this.id);
         this.css = this.layer.style;
-        
+
         if (this._toolPanel)
             this._toolPanel.init ();
 
@@ -125,9 +125,9 @@ bobj.crv.LeftPanel.prototype = {
             }, this);
         }
 
-        if (this._panelNavigator) 
+        if (this._panelNavigator)
             connect (this._panelNavigator, "switchPanel", this, '_switchPanel');
-        
+
         if(this._panelHeader)
             connect (this._panelHeader, "switchPanel", this, '_switchPanel');
     },
@@ -138,7 +138,7 @@ bobj.crv.LeftPanel.prototype = {
     isToolPanelDisplayed : function() {
         return this._toolPanel && this._toolPanel.isDisplayed ();
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
@@ -157,16 +157,16 @@ bobj.crv.LeftPanel.prototype = {
             }
         }
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     hideToolPanel : function () {
         this._switchPanel (bobj.crv.ToolPanelType.None);
     },
-    
+
     /**
-     * 
+     *
      * @param panelType [bobj.crv.ToolPanelType]
      * @return
      */
@@ -190,10 +190,10 @@ bobj.crv.LeftPanel.prototype = {
 
         if (this._panelNavigator)
             this._panelNavigator.selectChild (panelType);
-        
+
         MochiKit.Signal.signal (this, 'switchPanel', panelType);
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
@@ -219,7 +219,6 @@ bobj.crv.LeftPanel.prototype = {
      */
     updateChildren : function() {
         if (this._toolPanel) {
-
             this._panelNavigator = new bobj.crv.PanelNavigator ();
             this._panelHeader = new bobj.crv.PanelHeader ();
             var newChild = null;
@@ -240,12 +239,12 @@ bobj.crv.LeftPanel.prototype = {
                 };
                 this._panelNavigator.addChild (newChild);
             }
-            
+
             this._lastViewedPanel = this._toolPanel.initialViewType;
 
             this._panelNavigator.selectChild (this._toolPanel.initialViewType);
             this._panelHeader.setTitle (bobj.crv.ToolPanelTypeDetails[this._toolPanel.initialViewType].title);
-            
+
             if (!this._panelNavigator.hasChildren())
             {
             	this._panelHeader.hideCloseButton();
@@ -253,12 +252,12 @@ bobj.crv.LeftPanel.prototype = {
             }
         }
     },
-    
+
     resize : function(w, h) {
         bobj.setOuterSize (this.layer, w, h);
         this._doLayout ();
     },
-    
+
     /**
     * Layouts children where PanelHeader appears on top of toolPanel and panelNavigator to left of both header and toolpanel
     * @return
@@ -266,18 +265,18 @@ bobj.crv.LeftPanel.prototype = {
    _doLayout : function() {
        if(!this._toolPanel || !this._panelNavigator || !this._panelHeader)
            return;
-       
+
        var w = this.getWidth ();
        var h = this.getHeight ();
        var navigatorW = this._panelNavigator.getWidth ();
        var newToolPanelWidth = w - navigatorW;
        var newToolPanelHeight = h - this._panelHeader.getHeight ();
-       
+
        if (this._toolPanel.isDisplayed()) {
            this._toolPanel.resize (newToolPanelWidth, newToolPanelHeight);
            this._toolPanel.move (navigatorW, this._panelHeader.getHeight ());
        }
-       
+
        this._panelHeader.resize (newToolPanelWidth, null);
        this._panelHeader.move (navigatorW, 0);
        this._panelNavigator.resize(navigatorW, h);

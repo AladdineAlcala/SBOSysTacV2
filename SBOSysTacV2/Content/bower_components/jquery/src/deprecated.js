@@ -9,11 +9,9 @@ define( [
 
 	"./event/alias"
 ], function( jQuery, nodeName, camelCase, toType, isFunction, isWindow, slice ) {
-
 "use strict";
 
 jQuery.fn.extend( {
-
 	bind: function( types, data, fn ) {
 		return this.on( types, null, data, fn );
 	},
@@ -25,7 +23,6 @@ jQuery.fn.extend( {
 		return this.on( types, selector, data, fn );
 	},
 	undelegate: function( selector, types, fn ) {
-
 		// ( namespace ) or ( selector, types [, fn] )
 		return arguments.length === 1 ?
 			this.off( selector, "**" ) :
@@ -82,7 +79,6 @@ jQuery.type = toType;
 jQuery.now = Date.now;
 
 jQuery.isNumeric = function( obj ) {
-
 	// As of jQuery 3.0, isNumeric is limited to
 	// strings and numbers (primitives or objects)
 	// that can be coerced to finite numbers (gh-2662)
@@ -94,5 +90,4 @@ jQuery.isNumeric = function( obj ) {
 		// subtraction forces infinities to NaN
 		!isNaN( obj - parseFloat( obj ) );
 };
-
 } );

@@ -2,16 +2,13 @@
 /* Written by Yvonne Gienal (yvonne.gienal@educa.ch). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['rm'] = {
 	closeText: 'Serrar',
 	prevText: '&#x3C;Suandant',
@@ -31,5 +28,4 @@ datepicker.regional['rm'] = {
 datepicker.setDefaults(datepicker.regional['rm']);
 
 return datepicker.regional['rm'];
-
 }));

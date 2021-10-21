@@ -140,12 +140,11 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
 File: labels.js
-
 
 =============================================================
 */
@@ -227,7 +226,7 @@ _closeDialog="Zavřít okno"
 
 _lstMoveUpLab="Přesunout nahoru"
 _lstMoveDownLab="Přesunout dolů"
-_lstMoveLeftLab="Přesunout doleva" 
+_lstMoveLeftLab="Přesunout doleva"
 _lstMoveRightLab="Přesunout doprava"
 _lstNewNodeLab="Přidat vnořený filtr"
 _lstAndLabel="AND"
@@ -275,7 +274,7 @@ _calendarSelectionLab="Vybraný den"
 
 _menuCheckLab="Zaškrtnuto"
 _menuDisableLab="Zakázáno"
-	
+
 _level="Úroveň"
 _closeTab="Zavřít kartu"
 _of="z"

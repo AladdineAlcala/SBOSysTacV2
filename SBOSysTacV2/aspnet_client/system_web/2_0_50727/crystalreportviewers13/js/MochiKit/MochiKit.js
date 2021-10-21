@@ -82,7 +82,6 @@ if (typeof(JSAN) != 'undefined' || typeof(dojo) != 'undefined') {
         self.EXPORT_OK = EXPORT_OK;
         self.EXPORT_TAGS = EXPORT_TAGS;
     }());
-    
 } else {
     if (typeof(MochiKit.__compat__) == 'undefined') {
         MochiKit.__compat__ = true;

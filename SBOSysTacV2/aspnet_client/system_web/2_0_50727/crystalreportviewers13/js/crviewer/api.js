@@ -19,15 +19,14 @@
 
 if (typeof (CRViewer) == "undefined") {
     CRViewer = {
-        
         getViewer : function (/* optional */ viewerName) {
             return this._getViewer(viewerName);
         },
-        
+
         Events : {
     		HyperlinkClicked : "hyperlinkClicked"
         },
-        
+
         _viewersMap : [],
         _getViewer : function (viewerName) {
         	var map = this._viewersMap;
@@ -40,10 +39,10 @@ if (typeof (CRViewer) == "undefined") {
             } else if (map.length > 0) {
                 return map[0];
             }
-            
+
             return this._createViewer(viewerName);
         },
-        
+
         _getRealViewer : function (viewerName)
         {
         	if (viewerName) {
@@ -58,24 +57,24 @@ if (typeof (CRViewer) == "undefined") {
                 }
             }
         },
-        
+
         _createViewer : function (viewerName)
         {
             var realViewer = this._getRealViewer(viewerName);
-            
+
             if (realViewer && realViewer.widgetType == "Viewer") {
                 var o = {};
                 o.id = realViewer.id;
                 o.realViewer = realViewer;
-                
+
                 o.addEventListener = function (event, listener) {
                     this.realViewer.addViewerEventListener(event, listener);
                 }
-                
+
                 o.removeEventListener = function (event, listener) {
                     this.realViewer.removeViewerEventListener(event, listener);
                 }
-                
+
                 this._viewersMap[this._viewersMap.length] = o;
                 return o;
             }

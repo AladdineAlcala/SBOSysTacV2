@@ -39,7 +39,6 @@ MochiKit.Test.toString = function () {
     return this.__repr__();
 };
 
-
 MochiKit.Test.EXPORT = ["runTests"];
 MochiKit.Test.EXPORT_OK = [];
 
@@ -99,7 +98,7 @@ MochiKit.Test.Suite.prototype = {
     testResult: function (pass, msg, failures) {
         this.testIndex += 1;
         if (pass) {
-            this.print("ok " + this.testIndex + " - " + msg); 
+            this.print("ok " + this.testIndex + " - " + msg);
             return;
         }
         this.print("not ok " + this.testIndex + " - " + msg);
@@ -109,13 +108,13 @@ MochiKit.Test.Suite.prototype = {
             }
         }
     },
-            
+
     isDeeply: function (got, expected, /* optional */message) {
         var m = MochiKit.Base;
         var res = 1;
         try {
             res = m.compare(got, expected);
-        } catch (e) { 
+        } catch (e) {
             // pass
         }
         if (res === 0) {
@@ -150,15 +149,13 @@ MochiKit.Test.Suite.prototype = {
                 }
                 (cmp[k] == "got" ? gotkeys : expkeys).push(k);
             }
-
-
         }
-        
+
         return this.testResult((!res), msg,
             (msg ? [["got:", got], ["expected:", expected]] : undefined)
         );
     },
-    
+
     ok: function (res, message) {
         return this.testResult(res, message);
     }
@@ -173,7 +170,6 @@ MochiKit.Test.__new__ = function () {
     };
 
     m.nameFunctions(this);
-
 };
 
 MochiKit.Test.__new__();

@@ -10,19 +10,16 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
 			"./effect"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.effects.effect.blind = function( o, done ) {
 	// Create element
 	var el = $( this ),
@@ -86,5 +83,4 @@ return $.effects.effect.blind = function( o, done ) {
 		}
 	});
 };
-
 }));

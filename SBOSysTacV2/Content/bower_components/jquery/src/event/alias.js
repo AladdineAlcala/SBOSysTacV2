@@ -4,14 +4,12 @@ define( [
 	"../event",
 	"./trigger"
 ], function( jQuery ) {
-
 "use strict";
 
 jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
 	function( i, name ) {
-
 	// Handle event binding
 	jQuery.fn[ name ] = function( data, fn ) {
 		return arguments.length > 0 ?
@@ -25,5 +23,4 @@ jQuery.fn.extend( {
 		return this.mouseenter( fnOver ).mouseleave( fnOut || fnOver );
 	}
 } );
-
 } );

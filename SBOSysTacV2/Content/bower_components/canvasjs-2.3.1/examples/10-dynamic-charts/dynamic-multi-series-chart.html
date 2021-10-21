@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">	
-<script>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var dataPoints1 = [];
@@ -19,7 +19,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	axisY:{
 		prefix: "$",
 		includeZero: false
-	}, 
+	},
 	toolTip: {
 		shared: true
 	},
@@ -30,7 +30,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		fontColor: "dimGrey",
 		itemclick : toggleDataSeries
 	},
-	data: [{ 
+	data: [{
 		type: "line",
 		xValueType: "dateTime",
 		yValueFormatString: "$####.00",
@@ -39,7 +39,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		name: "Company A",
 		dataPoints: dataPoints1
 		},
-		{				
+		{
 			type: "line",
 			xValueType: "dateTime",
 			yValueFormatString: "$####.00",
@@ -61,7 +61,7 @@ function toggleDataSeries(e) {
 
 var updateInterval = 3000;
 // initial value
-var yValue1 = 600; 
+var yValue1 = 600;
 var yValue2 = 605;
 
 var time = new Date;
@@ -79,7 +79,7 @@ function updateChart(count) {
 		deltaY1 = .5 + Math.random() *(-.5-.5);
 		deltaY2 = .5 + Math.random() *(-.5-.5);
 
-	// adding random value and rounding it to two digits. 
+	// adding random value and rounding it to two digits.
 	yValue1 = Math.round((yValue1 + deltaY1)*100)/100;
 	yValue2 = Math.round((yValue2 + deltaY2)*100)/100;
 
@@ -94,20 +94,20 @@ function updateChart(count) {
 	});
 	}
 
-	// updating legend text with  updated with y Value 
+	// updating legend text with  updated with y Value
 	chart.options.data[0].legendText = " Company A  $" + yValue1;
-	chart.options.data[1].legendText = " Company B  $" + yValue2; 
+	chart.options.data[1].legendText = " Company B  $" + yValue2;
 	chart.render();
 }
-// generates first set of dataPoints 
-updateChart(100);	
+// generates first set of dataPoints
+updateChart(100);
 setInterval(function(){updateChart()}, updateInterval);
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

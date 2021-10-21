@@ -2,16 +2,13 @@
 /* Written by Sergey Kartashov (ebishkek@yandex.ru). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['ky'] = {
 	closeText: 'Жабуу',
 	prevText: '&#x3c;Мур',
@@ -34,5 +31,4 @@ datepicker.regional['ky'] = {
 datepicker.setDefaults(datepicker.regional['ky']);
 
 return datepicker.regional['ky'];
-
 }));

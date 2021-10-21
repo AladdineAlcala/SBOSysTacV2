@@ -1,17 +1,17 @@
 <html>
-	<head>
-		<script language="javascript" src="../dom.js"></script>
-		<script language="javascript" src="../treeview.js"></script>
-		<script language="javascript" src="../palette.js"></script>
-		<script language="javascript">
+<head>
+    <script language="javascript" src="../dom.js"></script>
+    <script language="javascript" src="../treeview.js"></script>
+    <script language="javascript" src="../palette.js"></script>
+    <script language="javascript">
 			var skin=parent._skin?parent._skin:"skin_standard";
 			var lang=parent._lang?parent._lang:"en";
-			
+
 			initDom("../images/"+skin+"/",lang)
 			styleSheet()
-		</script>
-			
-		<script language="javascript">
+    </script>
+
+    <script language="javascript">
 
 			var frmZoneWidth	= 200
 			var frmZoneHeight	= 400
@@ -23,11 +23,11 @@
 			MemberDim1 = newTreeWidgetElem(6, "North Europe", "mem2", "tooltip", 7)
 			MemberDim1.isCheck=true
 			MemberDim1.checkCB=checkCB
-			
+
 			memRoot.add(MemberDim1)
 
 			MemberDim1.add(newTreeWidgetElem(1, "England", "mem2_1", "tooltip"))
-			
+
 			temp=newTreeWidgetElem(1, "Germany", "mem2_2", "tooltip")
 			MemberDim1.add(temp)
 			temp.isCheck=true
@@ -59,39 +59,43 @@
 			function changeMemberCB()
 			{
 			}
-			
+
 			function dblClickMemberCB()
 			{
 			}
-			
+
 			function loadCB()
 			{
 				theMemberTree.init()
 			}
-			
+
 			function checkCB()
 			{
 				alert(this.id+" checked="+this.isChecked())
 			}
-			
-			
-		</script>
-	</head>
-	<body onload="loadCB()" onselectstart="return false">
-	
-		<table width="100%"><tr><td align="center" valign="middle">
-			<div class="insetBorder"><div class="dialogzone" style="padding:15px">
-	
-				<u><b>Tree View with check boxes</b></u><br><br>
-				<table border="0"><tr valign="top"><td class="dialogzone">
-					<script language="javascript">theMemberTree.write()</script>
-				</td>
-				</tr></table>
-			</div>	
-				<!--<a href="javascript:temp.check(true)"> Check Germany</a>-->
-			</div>			
-		</td></tr></table>
-		
-	</body>
-	
+    </script>
+</head>
+<body onload="loadCB()" onselectstart="return false">
+
+    <table width="100%">
+        <tr>
+            <td align="center" valign="middle">
+                <div class="insetBorder">
+                    <div class="dialogzone" style="padding:15px">
+
+                        <u><b>Tree View with check boxes</b></u><br><br>
+                        <table border="0">
+                            <tr valign="top">
+                                <td class="dialogzone">
+                                    <script language="javascript">theMemberTree.write()</script>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--<a href="javascript:temp.check(true)"> Check Germany</a>-->
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
 </html>

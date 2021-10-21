@@ -86,7 +86,6 @@ export function configFromStringAndFormat(config) {
     checkOverflow(config);
 }
 
-
 function meridiemFixWrap (locale, hour, meridiem) {
     var isPm;
 

@@ -38,7 +38,6 @@ MochiKit.Logging.toString = function () {
     return this.__repr__();
 };
 
-
 MochiKit.Logging.EXPORT = [
     "LogLevel",
     "LogMessage",
@@ -52,13 +51,11 @@ MochiKit.Logging.EXPORT = [
     "logWarning"
 ];
 
-
 MochiKit.Logging.EXPORT_OK = [
     "logLevelAtLeast",
     "isLogMessage",
     "compareLogMessage"
 ];
-
 
 MochiKit.Logging.LogMessage = function (num, level, info) {
     this.num = num;
@@ -70,7 +67,7 @@ MochiKit.Logging.LogMessage = function (num, level, info) {
 MochiKit.Logging.LogMessage.prototype = {
     repr: function () {
         var m = MochiKit.Base;
-        return 'LogMessage(' + 
+        return 'LogMessage(' +
             m.map(
                 m.repr,
                 [this.num, this.level, this.info]
@@ -115,7 +112,6 @@ MochiKit.Base.update(MochiKit.Logging, {
             "\ninfo: " + msg.info.join(" ")
         );
     }
-
 });
 
 MochiKit.Logging.Logger = function (/* optional */maxSize) {
@@ -138,7 +134,7 @@ MochiKit.Logging.Logger.prototype = {
         if (typeof(window) != "undefined" && window.console
                 && window.console.log) {
             // Safari and FireBug 0.4
-            // Percent replacement is a workaround for cute Safari crashing bug 
+            // Percent replacement is a workaround for cute Safari crashing bug
             window.console.log(msg.replace(/%/g, '\uFF05'));
         } else if (typeof(opera) != "undefined" && opera.postError) {
             // Opera
@@ -156,7 +152,7 @@ MochiKit.Logging.Logger.prototype = {
             debug.trace(msg);
         }
     },
-    
+
     dispatchListeners: function (msg) {
         for (var k in this.listeners) {
             var pair = this.listeners[k];
@@ -212,7 +208,7 @@ MochiKit.Logging.Logger.prototype = {
         var messages = this.getMessages(howMany);
         if (messages.length) {
             var lst = map(function (m) {
-                return '\n  [' + m.num + '] ' + m.level + ': ' + m.info.join(' '); 
+                return '\n  [' + m.num + '] ' + m.level + ': ' + m.info.join(' ');
             }, messages);
             lst.unshift('LAST ' + messages.length + ' MESSAGES:');
             return lst.join('');
@@ -228,7 +224,6 @@ MochiKit.Logging.Logger.prototype = {
         }
     }
 };
-
 
 MochiKit.Logging.__new__ = function () {
     this.LogLevel = {
@@ -279,7 +274,6 @@ MochiKit.Logging.__new__ = function () {
     };
 
     m.nameFunctions(this);
-
 };
 
 if (typeof(printfire) == "undefined" &&

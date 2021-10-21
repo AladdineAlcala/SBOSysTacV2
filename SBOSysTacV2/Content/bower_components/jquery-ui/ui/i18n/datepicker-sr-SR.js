@@ -2,16 +2,13 @@
 /* Written by Dejan Dimić. */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['sr-SR'] = {
 	closeText: 'Zatvori',
 	prevText: '&#x3C;',
@@ -33,5 +30,4 @@ datepicker.regional['sr-SR'] = {
 datepicker.setDefaults(datepicker.regional['sr-SR']);
 
 return datepicker.regional['sr-SR'];
-
 }));

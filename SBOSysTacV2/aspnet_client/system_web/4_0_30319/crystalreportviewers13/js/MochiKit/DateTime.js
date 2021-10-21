@@ -15,7 +15,7 @@ if (typeof(dojo) != 'undefined') {
 if (typeof(MochiKit) == 'undefined') {
     MochiKit = {};
 }
-       
+
 if (typeof(MochiKit.DateTime) == 'undefined') {
     MochiKit.DateTime = {};
 }
@@ -187,7 +187,7 @@ MochiKit.DateTime.__new__ = function () {
             } catch (e) {
                 // pass
             }
-        }   
+        }
     }
 };
 
@@ -201,8 +201,8 @@ if (typeof(MochiKit.Base) != "undefined") {
             || (MochiKit.__export__ === false)) {
             var all = module.EXPORT_TAGS[":all"];
             for (var i = 0; i < all.length; i++) {
-                globals[all[i]] = module[all[i]]; 
+                globals[all[i]] = module[all[i]];
             }
-        }   
-    })(this, MochiKit.DateTime);  
+        }
+    })(this, MochiKit.DateTime);
 }

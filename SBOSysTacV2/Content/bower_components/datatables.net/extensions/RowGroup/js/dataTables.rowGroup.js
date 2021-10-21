@@ -50,7 +50,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 var RowGroup = function ( dt, opts ) {
 	// Sanity check that we are using DataTables 1.10 or newer
 	if ( ! DataTable.versionCheck || ! DataTable.versionCheck( '1.10.8' ) ) {
@@ -73,7 +72,6 @@ var RowGroup = function ( dt, opts ) {
 
 	// DOM items
 	this.dom = {
-
 	};
 
 	// Check if row grouping has already been initialised on this table
@@ -86,7 +84,6 @@ var RowGroup = function ( dt, opts ) {
 	settings.rowGroup = this;
 	this._constructor();
 };
-
 
 $.extend( RowGroup.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -138,7 +135,6 @@ $.extend( RowGroup.prototype, {
 		return this;
 	},
 
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
@@ -152,7 +148,7 @@ $.extend( RowGroup.prototype, {
 		rows.every( function () {
 			var d = this.data();
 			var group = that.s.dataFn( d );
-			
+
 			if ( groups.indexOf(group) == -1 ) {
 				groups.push( group );
 			}
@@ -172,7 +168,6 @@ $.extend( RowGroup.prototype, {
 			dt.off( '.dtrg' );
 		} );
 	},
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
@@ -218,12 +213,12 @@ $.extend( RowGroup.prototype, {
 			if ( group === null || group === undefined ) {
 				group = that.c.emptyDataGroup;
 			}
-			
+
 			if ( last === undefined || group !== last ) {
 				groupedRows.push( [] );
 				last = group;
 			}
-			
+
 			groupedRows[ groupedRows.length - 1 ].push( this.index() );
 		} );
 
@@ -263,7 +258,7 @@ $.extend( RowGroup.prototype, {
 	_rowWrap: function ( display, className )
 	{
 		var row;
-		
+
 		if ( display === null || display === undefined || display === '' ) {
 			display = this.c.emptyDataGroup;
 		}
@@ -271,7 +266,7 @@ $.extend( RowGroup.prototype, {
 		if ( display === null ) {
 			return null;
 		}
-		
+
 		if ( typeof display === 'object' && display.nodeName && display.nodeName.toLowerCase() === 'tr') {
 			row = $(display);
 		}
@@ -292,7 +287,6 @@ $.extend( RowGroup.prototype, {
 			.addClass( className );
 	}
 } );
-
 
 /**
  * RowGroup default settings for initialisation
@@ -354,13 +348,10 @@ RowGroup.defaults = {
 	}
 };
 
-
 RowGroup.version = "1.0.3";
-
 
 $.fn.dataTable.RowGroup = RowGroup;
 $.fn.DataTable.RowGroup = RowGroup;
-
 
 DataTable.Api.register( 'rowGroup()', function () {
 	return this;
@@ -394,7 +385,6 @@ DataTable.Api.register( 'rowGroup().dataSrc()', function ( val ) {
 	} );
 } );
 
-
 // Attach a listener to the document which listens for DataTables initialisation
 // events so we can automatically initialise
 $(document).on( 'preInit.dt.dtrg', function (e, settings, json) {
@@ -414,7 +404,5 @@ $(document).on( 'preInit.dt.dtrg', function (e, settings, json) {
 	}
 } );
 
-
 return RowGroup;
-
 }));

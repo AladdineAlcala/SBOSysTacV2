@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">
-<script>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -14,7 +14,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		suffix: " °C"
 	},
 	data: [{
-		type: "column",	
+		type: "column",
 		yValueFormatString: "#,### °C",
 		indexLabel: "{y}",
 		dataPoints: [
@@ -37,7 +37,7 @@ function updateChart() {
 		boilerColor = yVal > 200 ? "#FF2500" : yVal >= 170 ? "#FF6000" : yVal < 170 ? "#6B8E23 " : null;
 		dps[i] = {label: "Boiler "+(i+1) , y: yVal, color: boilerColor};
 	}
-	chart.options.data[0].dataPoints = dps; 
+	chart.options.data[0].dataPoints = dps;
 	chart.render();
 };
 updateChart();
@@ -45,10 +45,10 @@ updateChart();
 setInterval(function() {updateChart()}, 500);
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

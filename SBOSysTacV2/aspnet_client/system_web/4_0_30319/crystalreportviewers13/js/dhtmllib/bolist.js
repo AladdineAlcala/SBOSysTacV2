@@ -8,7 +8,7 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
@@ -21,7 +21,6 @@ _horiBOList=0
 _vertBOList=1
 _wrapBOList=2
 _andOrBOList=3
-
 
 _lstNobord="3px solid #FFFFFF"
 _lstBord="3px solid #C00000"
@@ -56,13 +55,13 @@ function newBOListContainerWidget(id,w,h,image,layout,changeCB,dblClickCB,moveCB
 // Return     [AndOrBOListWidget] the instance
 {
 	var o=newWidget(id),v=layout==_vertBOList,l=null
-	
+
 	o.w=w
 	o.h=h
 	o.andOrList=newBOListWidget("andOrList_"+id,Math.max(0,w-18),h,image,layout,changeCB,dblClickCB,moveCB,deleteCB,focusCB,help)
-	
+
 	o.noText=noText?noText:false
-	
+
 	l=(v?_lstMoveUpLab:_lstMoveLeftLab)
 	o.up=newButtonWidget("andOrList_up_"+id,noText?null:l,AndOrContainerWidget_upDownCb,null,null,noText?l:null,null,null,_skin+'buttonIcons.gif',16,16,0,v?64:32,null,16,v?64:32)
 	l=(v?_lstMoveDownLab:_lstMoveRightLab)
@@ -72,14 +71,14 @@ function newBOListContainerWidget(id,w,h,image,layout,changeCB,dblClickCB,moveCB
 	o.down.lst=o
 	o.down.isUp=false
 	o.down.extraStyle=o.up.extraStyle="margin-top:2px;"
-		
+
 	if(addQuickFilterCB)
 	{
 		l=_lstQuickFilterLab
 		o.quickFilter=newButtonWidget("andOrList_quickFilter_"+id,noText?null:l,addQuickFilterCB,null,null,noText?l:null,null,null,_skin+'buttonIcons.gif',16,16,0,160,null,16,160)
 		o.quickFilter.lst=o
 		o.quickFilter.extraStyle="margin-top:2px;"
-	}	
+	}
 	o.getList=AndOrContainerWidget_getList
 	o.getHTML=AndOrContainerWidget_getHTML
 	o.oldResize=o.resize
@@ -88,7 +87,7 @@ function newBOListContainerWidget(id,w,h,image,layout,changeCB,dblClickCB,moveCB
 	o.prvInit=o.init
 	o.init=AndOrContainerWidget_init
 	o.chgLayout=BOListContainerWidget_chgLayout
-	return o	
+	return o
 }
 
 //
@@ -99,11 +98,11 @@ function BOListContainerWidget_chgLayout(layout)
 	var o=this, v=(layout==_vertBOList),noTxt=o.noText
 	if (o.layer==null) return
 	l=(v?_lstMoveUpLab:_lstMoveLeftLab)
-	if (!noTxt)	o.up.setText(l)	
+	if (!noTxt)	o.up.setText(l)
 	o.up.changeImg(0,v?64:32,16,v?64:32,null,l)
-	
+
 	l=(v?_lstMoveDownLab:_lstMoveRightLab)
-	if (!noTxt) o.down.setText(l)	
+	if (!noTxt) o.down.setText(l)
 	o.down.changeImg(0,v?80:48,16,v?80:48,null,l)
 }
 
@@ -132,7 +131,7 @@ function newBOListWidget(id,w,h,image,layout,changeCB,dblClickCB,moveCB,deleteCB
 // Return     [BOListWidget] the instance
 {
 	var o=newScrolledZoneWidget(id,2,4,w,h)
-	
+
 	o.image=image
 	o.layout=layout
 	o.autofit=true
@@ -147,17 +146,17 @@ function newBOListWidget(id,w,h,image,layout,changeCB,dblClickCB,moveCB,deleteCB
 	o.moveCB=moveCB
 	o.deleteCB=deleteCB
 	o.focusCB=focusCB
-	
+
 	o.getHTML=BOListWidget_getHTML
 	o.add=BOListWidget_add
 	o.genericAdd=BOListWidget_genericAdd
 
 	o.setDragDrop=AndOrBOListWidget_setDragDrop
-	
+
 	o.unselect=AndOrBOListWidget_unselect
 	o.getSelection=BOListWidget_getSelection
 	o.getChildIndex=AndOrNodeWidget_getChildIndex
-	
+
 	o.select=BOListWidget_select
 	o.selectByVal=BOListWidget_selectByVal
 	o.remove=BOListWidget_remove
@@ -172,10 +171,10 @@ function newBOListWidget(id,w,h,image,layout,changeCB,dblClickCB,moveCB,deleteCB
 
 	o.selection=null
 	o.htmlWritten=false
-	
+
 	o.move=BOListWidget_move
 	o.getContentTag=BOListWidget_getContentTag
-	
+
 	o.showOrhideHelp=BOListWidget_showOrhideHelp
 	o.oldresize=o.resize
 	o.resize=BOListWidget_resize
@@ -197,7 +196,7 @@ function newBOListWidget(id,w,h,image,layout,changeCB,dblClickCB,moveCB,deleteCB
 			o.createCell=true
 			break
 	}
-	
+
 	return o
 }
 
@@ -216,15 +215,15 @@ function BOListWidget_getHTML(noWriteParent)
 // Returns : [String] the HTML
 {
 	var o=this,items=o.items,len=items.length,a=new Array(len+3),j=0
-	
+
 	o.htmlWritten=true
 
 	a[j++]=(noWriteParent?'':o.beginHTML())+'<table id="boListCont_'+o.id+'" cellpadding="0" cellspacing="0" border="0"><tbody>'+o.lBegin
-		
+
 	//a[j++]=o.iBegin+'<div id="boListCont_help_'+o.id+'" class="bgzone" style="overflow:visible" ><i>'+(o.help?o.help:'')+'</i></div>'+o.iEnd
-	
+
 	for (var i in items) a[j++]=o.iBegin+items[i].getHTML()+o.iEnd
-			
+
 	a[j++]=o.lEnd+'</tbody></table>'//+(noWriteParent?'':o.endHTML())
 	//regression: do not put the help in the table because we use insertBefore(idx)
 	a[j++]='<div id="boListCont_help_'+o.id+'" class="bgzone" style="overflow:visible" ><i>'+(o.help?o.help:'')+'</i></div>'
@@ -245,17 +244,17 @@ function BOListWidget_init()
 		o.layer.innerHTML=o.getHTML(true)
 		o.oldAONodeInit()
 	}
-	
+
 	if (o.layer._counter !=null)
 		o.counter=o.layer._counter
 	else
 		o.layer._counter=o.counter
-		
+
 	o.layer.onmousedown=BOListWidget_focusCB
-	
+
 	for (var i in items)
 		items[i].init()
-	
+
 	var dd=o.dragDrop
 	if (_ie&&dd)
 	{
@@ -277,7 +276,7 @@ function BOListWidget_showOrhideHelp()
 			o.helpZone.setDisplay(true)
 		else
 			o.helpZone.setDisplay(false)
-			
+
 		//resize if necessary
 		BOListWidget_resizeHelp(o,o.getWidth())
 	}
@@ -289,7 +288,6 @@ function BOListWidget_resizeHelp(list,w)
 	{
 		list.helpZone.resize(Math.max(0,w-20),null)
 	}
-	
 }
 // ================================================================================
 
@@ -309,11 +307,11 @@ function BOListWidget_getSelection()
 				break
 			}
 		}
-	
+
 		ret=new Object;
 		ret.index=i
 		ret.value=sel.value
-		
+
 		return ret
 	}
 	else
@@ -344,7 +342,7 @@ function BOListWidget_genericAdd(nodeOrItem,idx)
 
 	nodeOrItem.par=o
 	nodeOrItem.list=o.list
-	
+
 	if (o.layer)
 	{
 		var parNode=o.getContentTag()
@@ -354,7 +352,7 @@ function BOListWidget_genericAdd(nodeOrItem,idx)
 		{
 			var theCell=_curDoc.createElement('td')
 			theCell.innerHTML=s
-			
+
 			if (idx==(items.length-1))
 				parNode.appendChild(theCell)
 			else
@@ -369,9 +367,9 @@ function BOListWidget_genericAdd(nodeOrItem,idx)
 		}
 
 		nodeOrItem.init()
-	}	
+	}
 	o.showOrhideHelp();
-	
+
 	return nodeOrItem
 }
 
@@ -388,7 +386,7 @@ function BOListWidget_add(text,imgIndex,value,tooltip,idx)
 	var o=this,last=o.getLastItem()
 	var ret=o.genericAdd(newAndOrNodeItem(o.id+'_item-'+(o.counter++),text,imgIndex,value,tooltip),idx)
 	var last2=o.getLastItem()
-	
+
 	if (o.layer)
 	{
 		if (last&&(last2.id!=last.id))
@@ -401,7 +399,7 @@ function BOListWidget_add(text,imgIndex,value,tooltip,idx)
 
 		o.layer._counter=o.counter
 	}
-	
+
 	return ret
 }
 
@@ -486,7 +484,7 @@ function BOListWidget_removeChild(nodeOrItem)
 // Return [void]
 {
 	var o=this,items=o.items,len=items.length,list=o.list
-	
+
 	for (var i=0;i<len;i++)
 	{
 		var item=items[i]
@@ -496,11 +494,11 @@ function BOListWidget_removeChild(nodeOrItem)
 
 			if (item.selected)
 				item.select(false)
-			
+
 			if (l)
 			{
 				var p=l.parentNode
-				
+
 				if (o.createCell)
 				{
 					l=p
@@ -509,10 +507,10 @@ function BOListWidget_removeChild(nodeOrItem)
 
 				p.removeChild(l)
 			}
-			
+
 			arrayRemove(o,"items",i)
 			items=o.items
-			
+
 			var newSel=Math.min(i,items.length-1)
 			if (newSel>=0)
 			{
@@ -533,10 +531,10 @@ function BOListWidget_removeChild(nodeOrItem)
 				}
 			}
 			else o.select(true)
-			
+
 			break
 		}
-	}	
+	}
 	o.showOrhideHelp();
 }
 
@@ -544,7 +542,6 @@ function BOListWidget_removeChild(nodeOrItem)
 
 function BOListWidget_move(e,node,destIdx)
 {
-
 	var o=this
 	e.select(false)
 	var n=o.add(e.text,e.imgIndex,e.value,e.tooltip,destIdx)
@@ -555,9 +552,9 @@ function BOListWidget_move(e,node,destIdx)
 // ================================================================================
 function BOListWidget_resize(w,h)
 {
-	var o=this	
-	BOListWidget_resizeHelp(o,w)	
-	o.oldresize(w,h)	
+	var o=this
+	BOListWidget_resizeHelp(o,w)
+	o.oldresize(w,h)
 }
 
 // ================================================================================
@@ -585,7 +582,7 @@ function newAndOrContainerWidget(id,w,h,image,changeCB,dblClickCB,andOrCB,moveCB
 // Return     [AndOrBOListWidget] the instance
 {
 	var o=newWidget(id),l
-	
+
 	o.w=w
 	o.h=h
 	o.andOrList=newAndOrBOListWidget("andOrList_"+id,10,h,image,changeCB,dblClickCB,andOrCB,moveCB,newNodeCB,deleteCB,help)
@@ -595,28 +592,28 @@ function newAndOrContainerWidget(id,w,h,image,changeCB,dblClickCB,andOrCB,moveCB
 	o.down=newButtonWidget("andOrList_down_"+id,noText?null:l,AndOrContainerWidget_upDownCb,null,null,noText?l:null,null,null,_skin+'buttonIcons.gif',16,16,0,80,null,16,80)
 	l=_lstNewNodeLab
 	o.newNode=newButtonWidget("andOrList_newNode_"+id,noText?null:l,AndOrContainerWidget_nodeCb,null,null,noText?l:null,null,null,_skin+'buttonIcons.gif',16,16,0,96,null,16,96)
-	
+
 	o.down.extraStyle="margin-top:2px;"
 	o.newNode.extraStyle="margin-top:2px;"
-	
+
 	o.up.lst=o
 	o.up.isUp=true
 	o.down.lst=o
 	o.down.isUp=false
 
 	o.newNode.lst=o
-	
+
 	o.getList=AndOrContainerWidget_getList
 	o.getHTML=AndOrContainerWidget_getHTML
-	
+
 	o.oldResize=o.resize
 	o.resize=AndOrContainerWidget_resize
 	o.moveElem=AndOrContainerWidget_moveElem
 	o.canBeMoved=AndOrContainerWidget_canBeMoved
 	o.prvInit=o.init
 	o.init=AndOrContainerWidget_init
-	
-	return o	
+
+	return o
 }
 
 // ================================================================================
@@ -642,7 +639,7 @@ function AndOrContainerWidget_getHTML()
 // Returns the widget HTML
 {
 	var o=this,list=o.andOrList
-	
+
 	return '<table id="'+o.id+'" style="overflow:hidden;width:'+o.w+'px;height='+o.h+'px" cellpadding="0" cellspacing="0" border="0"><tbody><tr>'+
 		'<td  style="padding-right:5px" width="100%">'+list.getHTML()+'</td>'+
 		'<td id="rightZone_'+o.id+'" align="center" valign="top">'+o.up.getHTML()+o.down.getHTML()+(o.newNode?o.newNode.getHTML():'')+(o.quickFilter?o.quickFilter.getHTML():'')+'</td>'+
@@ -669,23 +666,22 @@ function AndOrContainerWidget_resize(w,h)
 	var o=this
 	o.oldResize(w,h)
 	var butnW=o.rightZone.offsetWidth
-	o.andOrList.resize(w!=null?Math.max(0,w-butnW-5):null,h)		
+	o.andOrList.resize(w!=null?Math.max(0,w-butnW-5):null,h)
 	o.up.resize(butnW)
 	o.down.resize(butnW)
-	
+
 	if(o.quickFilter)
 		o.quickFilter.resize(butnW)
 	if (o.newNode)
 		o.newNode.resize(butnW)
-	
+
 	var d=o.layer.display!="none"
-	
+
 	if (d&_moz&&!_saf)
 		o.setDisplay(false)
 	o.oldResize(w,h)
 	if (d&_moz&&!_saf)
 		o.setDisplay(true)
-
 }
 
 // ================================================================================
@@ -710,7 +706,7 @@ function AndOrContainerWidget_nodeCb()
 // return [void]
 {
 	var o=this.lst.andOrList,sel=o.getSelection()
-	
+
 	if (sel)
 	{
 		var n=null
@@ -718,7 +714,7 @@ function AndOrContainerWidget_nodeCb()
 			n=sel.addNode(!sel.isAnd,"")
 		else
 			n=sel.par.addNode(!sel.par.isAnd,"",sel.getIndexInParent()+1)
-		
+
 		n.select(true)
 		if (o.newNodeCB)
 			o.newNodeCB()
@@ -729,26 +725,25 @@ function AndOrContainerWidget_nodeCb()
 
 function AndOrContainerWidget_canBeMoved(elem,up)
 {
-	
 	var o=this,node=elem.par
 	if (node)
 	{
 		var idx=node.getChildIndex(elem),itemIdx=idx
 		if (idx!=-1)
 		{
-			if (up&&(idx>0))							
-				return true;			
-			else if (!up&&(idx<(node.items.length-1)))		
-				return true;		
+			if (up&&(idx>0))
+				return true;
+			else if (!up&&(idx<(node.items.length-1)))
+				return true;
 			else
 			{
 				idx+=(up?-1:2)
 				if ((idx<0)||(idx>node.items.length))
-				{						
-					if (node.par)					
-						return true;							
+				{
+					if (node.par)
+						return true;
 				}
-			}			
+			}
 		}
 	}
 	return false;
@@ -825,7 +820,7 @@ function newAndOrBOListWidget(id,w,h,image,changeCB,dblClickCB,andOrCB,moveCB,ne
 // Return     [AndOrBOListWidget] the instance
 {
 	var o=newScrolledZoneWidget(id,2,4,w,h)
-	
+
 	o.image=image
 	o.changeCB=changeCB
 	o.dblClickCB=dblClickCB
@@ -834,8 +829,8 @@ function newAndOrBOListWidget(id,w,h,image,changeCB,dblClickCB,andOrCB,moveCB,ne
 	o.newNodeCB=newNodeCB
 	o.deleteCB=deleteCB
 	o.layout=_andOrBOList
-	
-	o.root=newAndOrNodeWidget(id+"_rootOperator",true,"")	
+
+	o.root=newAndOrNodeWidget(id+"_rootOperator",true,"")
 	//o.root.isDisplayed=true
 	o.root.list=o
 	o.selection=o.root
@@ -845,21 +840,21 @@ function newAndOrBOListWidget(id,w,h,image,changeCB,dblClickCB,andOrCB,moveCB,ne
 
 	o.getHTML=AndOrBOListWidget_getHTML
 	o.getRoot=AndOrBOListWidget_getRoot
-	
+
 	o.setDragDrop=AndOrBOListWidget_setDragDrop
 	o.unselect=AndOrBOListWidget_unselect
 	o.getSelection=AndOrBOListWidget_getSelection
 	o.select=AndOrBOListWidget_select
 	o.getElementByValue=AndOrBOListWidget_getElementByValue
-	o.showOrhideRoot=AndOrBOListWidget_showOrhideRoot	
+	o.showOrhideRoot=AndOrBOListWidget_showOrhideRoot
 	o.oldAOListInit=o.init
 	o.init=AndOrBOListWidget_init
 	o.move=AndOrBOListWidget_move
 	o.htmlWritten=false
-	
+
 	o.oldresize=o.resize
 	o.resize=AndOrBOListWidget_resize
-	
+
 	return o
 }
 
@@ -884,7 +879,7 @@ function AndOrBOListWidget_move(e,destNode,destIdx)
 				n=destNode.addAdvFilterItem(e.text,e.imgIndex,e.value,e.tooltip,destIdx)
 			else
 				n=destNode.addItem(e.text,e.imgIndex,e.value,e.tooltip,destIdx)
-		}	
+		}
 		e.remove()
 		n.select(true)
 	}
@@ -924,18 +919,17 @@ function AndOrBOListWidget_init()
 {
 	var o=this
 	o.oldAOListInit()
-	
+
 	if (!o.htmlWritten)
 	{
 		o.layer.innerHTML=o.getHTML(true)
 		o.oldAOListInit()
 	}
 
-	
 	o.root.init()
 	o.helpZone.init();
 	o.showOrhideRoot()
-	
+
 	var dd=o.dragDrop
 	if (_ie&&dd)
 	{
@@ -961,12 +955,12 @@ function AndOrBOListWidget_getHTML(noWriteParent)
 {
 	var o=this
 	o.htmlWritten=true
-	
+
 	var a=new Array(3), j=0, len = o.root.items.length
 	a[j++]=(noWriteParent?'':o.beginHTML())
 	a[j++]='<div id="andOrCont_'+o.id+'">'+'<div id="andOrCont_help_'+o.id+'" class="bgzone" style="overflow:visible"><i>'+(o.help?o.help:'')+'</i></div>'+o.root.getHTML()+'</div>'
-	a[j++]=(noWriteParent?'':o.endHTML())	
-	
+	a[j++]=(noWriteParent?'':o.endHTML())
+
 	return a.join("")
 	//return (noWriteParent?'':o.beginHTML())+'<div id="andOrCont_'+o.id+'">'+o.root.getHTML()+'</div>'+(noWriteParent?'':o.endHTML())
 }
@@ -989,8 +983,8 @@ function AndOrBOListWidget_showOrhideHelp(list)
 			list.helpZone.setDisplay(true)
 		else
 			list.helpZone.setDisplay(false)
-	
-		//resize 
+
+		//resize
 		AndOrBOListWidget_resizeHelp(list,list.getWidth())
 	}
 }
@@ -998,7 +992,7 @@ function AndOrBOListWidget_showOrhideHelp(list)
 function AndOrBOListWidget_resizeHelp(list,w)
 {
 	if(list.help && list.helpZone.isDisplayed())
-	{		
+	{
 		list.helpZone.resize(Math.max(0,w-20),null)
 	}
 }
@@ -1006,17 +1000,17 @@ function AndOrBOListWidget_resizeHelp(list,w)
 // ================================================================================
 function AndOrBOListWidget_showOrhideRoot()
 // hide/show the root widget
-{	
+{
 	var o=this, root= o.root, len = root.items.length, show = true
-	
+
 	if (o.layer)
 	{
 		if((len == 0) || ((len==1) && (!root.items[0].isNode()) )) show=false
-		
-		root.operLayer.parentNode.style.display=show?"":"none"		
-		
+
+		root.operLayer.parentNode.style.display=show?"":"none"
+
 		//show or hide the help zone
-		AndOrBOListWidget_showOrhideHelp(o)	
+		AndOrBOListWidget_showOrhideHelp(o)
 	}
 }
 
@@ -1026,7 +1020,7 @@ function AndOrBOListWidget_resize(w,h)
 {
 	var o=this
 	AndOrBOListWidget_resizeHelp(o,w)
-	o.oldresize(w,h);	
+	o.oldresize(w,h);
 }
 
 // ================================================================================
@@ -1065,13 +1059,13 @@ function EBLWidget_getDropInfo(layer)
 		case "andorlist":
 			_dropParentWidget=o.items?o:o.root
 			_dropFeebackWidget=_dropParentWidget.getLastItem()
-			
+
 			if ((layer.BODDType=="nodebg")&&(_dropFeebackWidget==null))
 				_dropFeebackWidget=_dropParentWidget
-			
+
 			_dropPosition=-1
 			break
-		
+
 		case "node":
 		case "item":
 			_dropParentWidget=o.par
@@ -1122,10 +1116,9 @@ function EBLWidget_acceptDropCB(source,target,ctrl,shift,layer,enter)
 
 	target.dropWidget=_dropParentWidget
 	target.dropIndex=_dropPosition
-	
 
 	var accepted=target.acceptDropCB(source,target,ctrl,shift)
-	
+
 	if (accepted&&o)
 	{
 		if (source&&(source.id==target.id))
@@ -1138,7 +1131,7 @@ function EBLWidget_acceptDropCB(source,target,ctrl,shift,layer,enter)
 				o.setInsertFeedback(false,shift)
 				return false
 			}
-			
+
 			if (!shift&&!ctrl&&o.par&&(o.par==s.par))
 			{
 				var srcIdx=s.getIndexInParent()
@@ -1148,7 +1141,6 @@ function EBLWidget_acceptDropCB(source,target,ctrl,shift,layer,enter)
 					return false
 				}
 			}
-			
 		}
 		o.setInsertFeedback(true,shift)
 	}
@@ -1205,10 +1197,10 @@ function newAndOrNodeWidget(id,isAnd,value)
 	o.value=value
 	o.par=null
 	o.list=null
-	
+
 	o.counter=0
 	o.operLayer=null
-	
+
 	o.getHTML=AndOrNodeWidget_getHTML
 	o.getInnerHTML=AndOrNodeWidget_getInnerHTML
 	o.getDynamicHTML=AndOrNodeWidget_getDynamicHTML
@@ -1226,7 +1218,7 @@ function newAndOrNodeWidget(id,isAnd,value)
 	o.getLastItem=AndOrNodeWidget_getLastItem
 	o.getLength=AndOrNodeWidget_getLength
 
-	o.getParentNode=AndOrNodeWidget_getParentNode	
+	o.getParentNode=AndOrNodeWidget_getParentNode
 	o.getChildIndex=AndOrNodeWidget_getChildIndex
 	o.getIndexInParent=AndOrNodeWidget_getIndexInParent
 	o.getItem=AndOrNodeWidget_getItem
@@ -1288,7 +1280,7 @@ function AndOrNodeWidget_getElementByValue(value)
 	var o=this,items=o.items
 	if (o.value==value)
 		return o
-		
+
 	for (var i in items)
 	{
 		var item=items[i]
@@ -1336,8 +1328,8 @@ function AndOrNodeWidget_getHTML()
 // Returns : [String] the HTML
 {
 	var o=this
-	
-	return  '<table id="'+o.id+'" style="border-top:'+_lstNobord+';" cellpadding="0" cellspacing="0" border="0">' + 
+
+	return  '<table id="'+o.id+'" style="border-top:'+_lstNobord+';" cellpadding="0" cellspacing="0" border="0">' +
 		o.getInnerHTML() +
 		'</table>'
 }
@@ -1350,7 +1342,7 @@ function AndOrNodeWidget_getInnerHTML()
 {
 	var o=this,items=o.items,len=items.length,a=new Array(len+2),j=0
 	var lab=o.isAnd?o.andLabel:o.orLabel
-		
+
 	//lab=elasticZone(lab,_skin+'bolist.gif',3,26,o.selected?234:156,'oper_'+o.id,'treeNormal',null,0,0,'width="30" align="center"','operTxt_'+o.id)+getSpace(40,1)
 	lab=elasticZone(lab,_skin+'bolist.gif',3,28,o.selected?252:168,'oper_'+o.id,'treeNormal',null,0,0,'width="30" align="center"','operTxt_'+o.id)+getSpace(40,1)
 
@@ -1358,7 +1350,7 @@ function AndOrNodeWidget_getInnerHTML()
 		'<td class="treeNormal" style="border-right:1px solid #A0A0A0;" align="center" valign="middle">'+lab+'</td><td style="width:70px;padding-bottom:2px;padding-left:4px">'
 	for (var i in items) a[j++]=items[i].getHTML()
 	a[j++]='</td></tr></tbody>'
-	
+
 	return a.join("")
 }
 
@@ -1371,14 +1363,14 @@ function AndOrNodeWidget_getDynamicHTML()
 	var o=this
 
 	var theTable=_curDoc.createElement('table')
-	
+
 	theTable.id = o.id
 	theTable.style.borderTop = _lstNobord
 	theTable.cellPadding = 0
 	theTable.cellSpacing = 0
 	theTable.border = 0
 	theTable.innerHTML= o.getInnerHTML()
-	
+
 	return theTable
 }
 
@@ -1390,40 +1382,40 @@ function AndOrNodeWidget_init()
 {
 	var o=this,items=o.items
 	o.oldAONodeInit()
-	
+
 	if (o.layer._counter !=null)
 		o.counter=o.layer._counter
 	else
 		o.layer._counter=o.counter
-	
+
 	var l=o.operLayer=getLayer('oper_'+o.id)
-		
+
 	o.operLayerTxt=getLayer('operTxt_'+o.id)
-	
+
 	l.onmousedown=AndOrNodeWidget_clickCB
 	l.onmouseup=AndOrNodeWidget_mouseUp
-	
+
 	if (_ie)
 		l.onmousemove=AndOrNodeWidget_triggerDD
-	
+
 	l.onkeydown=AndOrNodeWidget_keyDownCB
 	addDblClickCB(l,AndOrNodeWidget_dblClickCB)
-	
+
 	if (o.isDisplayed!=null)
 		o.setDisplay(o.isDisplayed)
-	
+
 	var dd=o.list.dragDrop
 	if (_ie&&dd)
 	{
 		var rl=o.layer.childNodes[0].childNodes[0].childNodes[1]
-		
+
 		dd.attachCallbacks(rl)
 		dd.attachCallbacks(o.layer)
-	
+
 		o.layer.BODDType=o.par?"node":"root"
 		rl.BODDType="nodebg"
 	}
-	
+
 	for (var i in items)
 		items[i].init()
 }
@@ -1434,10 +1426,10 @@ function AndOrNodeWidget_clickCB(e)
 {
 	var o=getWidget(this),list=o.list
 	o.clicked=true
-	
+
 	o.initialX=eventGetX(e)
 	o.initialY=eventGetY(e)
-	
+
 	o.select(true)
 
 	if (list.changeCB)
@@ -1465,7 +1457,7 @@ function AndOrNodeWidget_triggerDD(e)
 		if (o.initialX!=null)
 		{
 			var x=eventGetX(e),y=eventGetY(e),threshold=3
-			
+
 			if ((x<(o.initialX-threshold))||(x>(o.initialX+threshold))||(y<(o.initialY-threshold))||(y>(o.initialY+threshold)))
 			{
 				this.dragDrop()
@@ -1480,21 +1472,21 @@ function AndOrNodeWidget_triggerDD(e)
 function AndOrNodeWidget_keyDownCB(e)
 {
 	var o=getWidget(this),list=o.list
-	var key=eventGetKey(e);	
-	
+	var key=eventGetKey(e);
+
 	if (key==46)
 	{
 		if (list.deleteCB)
 			list.deleteCB()
 	}
-	if(key==13)	
-	{	
+	if(key==13)
+	{
 		eventCancelBubble(e);
-			
+
 		if(o.selected)//already selected
-		{		
-			// Change operator	
-			o.setIsAnd(!o.isAnd)	
+		{
+			// Change operator
+			o.setIsAnd(!o.isAnd)
 			if (o.list.andOrCB)
 				o.list.andOrCB()
 		}
@@ -1512,12 +1504,12 @@ function AndOrNodeWidget_keyDownCB(e)
 function AndOrNodeWidget_dblClickCB()
 {
 	var o=getWidget(this),list=o.list
-	// Change operator	
+	// Change operator
 	o.setIsAnd(!o.isAnd)
-	
+
 	if (o.list.andOrCB)
 		o.list.andOrCB()
-	
+
 	return false
 }
 
@@ -1543,13 +1535,12 @@ function AndOrNodeWidget_select(sel)
 		list.unselect()
 	list.selection=sel?o:null
 	o.selected=sel
-	
+
 	if (o.layer)
 	{
 		var dy=6+(sel?3:0)
 		elasticZoneSetImg(o.operLayer,28,dy,dy+1,dy+2)
-		
-		
+
 		if(sel&&o.operLayer.focus&&(!isHidden(o.operLayer)))
 			o.operLayer.focus()
 	}
@@ -1568,16 +1559,16 @@ function AndOrNodeWidget_genericAdd(nodeOrItem,idx)
 
 	nodeOrItem.par=o
 	nodeOrItem.list=o.list
-	
+
 	if (o.layer)
 	{
 		var parNode=o.layer.childNodes[0].childNodes[0].childNodes[1]
-		
+
 		if ((idx==-1)||(idx==(items.length-1)))
 			append(parNode,nodeOrItem.getHTML())
 		else
 		{
-			if (_saf)	
+			if (_saf)
 				parNode.insertBefore(nodeOrItem.getDynamicHTML(),parNode.childNodes[idx])
 			else
 				insBefore(parNode.childNodes[idx],nodeOrItem.getHTML())
@@ -1585,24 +1576,24 @@ function AndOrNodeWidget_genericAdd(nodeOrItem,idx)
 
 		nodeOrItem.init()
 	}
-	
+
 	list.showOrhideRoot()
-	
+
 	return nodeOrItem
 }
 
 // ================================================================================
 
 function AndOrNodeWidget_addNode(isAnd,value,idx)
-// Adds a node 
+// Adds a node
 // Returns : [AndOrNodeWidget] the new node
 {
 	var o=this
 	var ret= o.genericAdd(newAndOrNodeWidget(o.id+'_item-'+(o.counter++), isAnd, value),idx)
-	
+
 	if (o.layer)
 		o.layer._counter=o.counter
-	
+
 	return ret
 }
 
@@ -1611,7 +1602,7 @@ function AndOrNodeWidget_addNode(isAnd,value,idx)
 function AndOrNodeWidget_addCopyNode(src,idx)
 {
 	var o=this,n=o.addNode(src.isAnd,src.value,idx),srcItems=src.items
-	
+
 	for (var i in srcItems)
 	{
 		var item=srcItems[i]
@@ -1631,13 +1622,13 @@ function AndOrNodeWidget_addCopyNode(src,idx)
 // ================================================================================
 
 function AndOrNodeWidget_addItem(text,imgIndex,value,tooltip,idx)
-// Adds a node 
+// Adds a node
 // Returns : [void]
 {
 	var o=this,last=o.getLastItem()
-	var ret=o.genericAdd(newAndOrNodeItem(o.id+'_item-'+(o.counter++),text,imgIndex,value,tooltip),idx)	
+	var ret=o.genericAdd(newAndOrNodeItem(o.id+'_item-'+(o.counter++),text,imgIndex,value,tooltip),idx)
 	var last2=o.getLastItem()
-	
+
 	if (o.layer)
 	{
 		if (last&&(last2.id!=last.id))
@@ -1645,18 +1636,18 @@ function AndOrNodeWidget_addItem(text,imgIndex,value,tooltip,idx)
 
 		o.layer._counter=o.counter
 	}
-	
+
 	return ret
 }
 
 function AndOrNodeWidget_AdvFilterItem(text,imgIndex,value,tooltip,idx)
-// Adds a node 
+// Adds a node
 // Returns : [void]
 {
 	var o=this,last=o.getLastItem()
 	var ret=o.genericAdd(newAndOrFilter(o.id+'_item-'+(o.counter++),text,imgIndex,value,tooltip),idx)
 	var last2=o.getLastItem()
-	
+
 	if (o.layer)
 	{
 		if (last&&(last2.id!=last.id))
@@ -1664,7 +1655,7 @@ function AndOrNodeWidget_AdvFilterItem(text,imgIndex,value,tooltip,idx)
 
 		o.layer._counter=o.counter
 	}
-	
+
 	return ret
 }
 
@@ -1674,7 +1665,7 @@ function AndOrNodeWidget_removeChild(nodeOrItem)
 // Removes a direct child
 {
 	var o=this,items=o.items,len=items.length,list=o.list
-	
+
 	for (var i=0;i<len;i++)
 	{
 		var item=items[i]
@@ -1684,13 +1675,13 @@ function AndOrNodeWidget_removeChild(nodeOrItem)
 
 			if (item.selected)
 				item.select(false)
-			
+
 			if (l)
 				l.parentNode.removeChild(l)
-			
+
 			arrayRemove(o,"items",i)
 			items=o.items
-			
+
 			var newSel=Math.min(i,items.length-1)
 			if (newSel>=0)
 			{
@@ -1700,9 +1691,9 @@ function AndOrNodeWidget_removeChild(nodeOrItem)
 					last.css.borderBottom=_lstNobord
 			}
 			else o.select(true)
-			
+
 			list.showOrhideRoot()
-			
+
 			return true;
 		}
 		if (item.isNode())
@@ -1722,16 +1713,15 @@ function AndOrNodeWidget_remove()
 	var o=this
 	if (o.par)
 		o.par.removeChild(o)
-	else 
-	{ 	
-		//delete all child of root	
-		var items=o.items,len=items.length		
+	else
+	{
+		//delete all child of root
+		var items=o.items,len=items.length
 		for (var i=len-1;i>=0;i--)
-		{				
+		{
 			o.removeChild(items[i])
 		}
 	}
-	
 }
 
 // ================================================================================
@@ -1773,7 +1763,7 @@ function newAndOrNodeItem(id,text,imgIndex,value,tooltip)
 	o.setText=AndOrNodeItem_setText
 	o.setInsertFeedback=AndOrNodeItem_setInsertFeedback
 	o.isChildOf=AndOrNodeItem_isChildOf
-	
+
 	o.fullW=false
 
 	return o
@@ -1789,8 +1779,7 @@ function AndOrNodeItem_setInsertFeedback(show,isAll)
 	if (isAll)
 	{
 		st.borderTopColor=st.borderLeftColor=st.borderBottomColor=st.borderRightColor="#FFFFFF"
-		
-		
+
 		if (node)
 		{
 			var dy=show?15:(6+(o.selected?3:0))
@@ -1801,8 +1790,8 @@ function AndOrNodeItem_setInsertFeedback(show,isAll)
 			var dy=show?12:(o.selected?3:0)
 			elasticZoneSetImg(o.layer,28,dy,dy+1,dy+1,dy+2)
 		}
-	}	
-	else 
+	}
+	else
 	{
 		var isVert=((o.list.layout==_vertBOList)||(o.list.layout==_andOrBOList))
 
@@ -1829,7 +1818,7 @@ function AndOrNodeItem_setInsertFeedback(show,isAll)
 				else
 					st.borderRightColor=b
 			}
-		
+
 			if (node)
 			{
 				var dy=6+(o.selected?3:0)
@@ -1841,10 +1830,8 @@ function AndOrNodeItem_setInsertFeedback(show,isAll)
 				elasticZoneSetImg(o.layer,28,dy,dy+1,dy+1,dy+2)
 			}
 		}
-
 	}
 }
-
 
 // ================================================================================
 
@@ -1875,9 +1862,9 @@ function AndOrNodeItem_init()
 	if (_ie)
 		o.layer.onmousemove=AndOrNodeWidget_triggerDD
 
-	o.layer.onkeydown=AndOrNodeItem_keyDownCB	
+	o.layer.onkeydown=AndOrNodeItem_keyDownCB
 	addDblClickCB(o.layer,AndOrNodeItem_dblClickCB)
-	
+
 	o.layer.title=o.tooltip
 
 	var dd=o.list.dragDrop
@@ -1896,13 +1883,13 @@ function AndOrNodeItem_getHTML()
 	var o=this, list=o.list;
 	var topBorder=((list.layout==_vertBOList)||(list.layout==_andOrBOList))
 	var bottomBorder=(o.par.getLastItem().id==o.id)?topBorder:null
-	
+
 	//only display 10 first caracters of the name
 	var text=o.text
 	if(list.layout!=_andOrBOList && !list.autofit)
-	{		
-		if(text.length>10)	text=text.slice(0,10)+"..."					
-	}	
+	{
+		if(text.length>10)	text=text.slice(0,10)+"..."
+	}
 	return elasticZone(text,_skin+'bolist.gif',3,28,o.selected?84:0,o.id,'treeNormal',o.list.image,0,o.imgIndex*16,null,'AndOrItemTxt_'+o.id,o.fullW,topBorder,bottomBorder)
 }
 
@@ -1914,13 +1901,13 @@ function AndOrNodeItem_getDynamicHTML()
 	var o=this
 	var topBorder=((this.list.layout==_vertBOList)||(this.list.layout==_andOrBOList))
 	var bottomBorder=(o.par.getLastItem().id==o.id)?topBorder:null
-	
+
 	//only display 10 first caracters of the name
 	var text=o.text
 	if(this.list.layout!=_andOrBOList)
-	{		
-		if(text.length>10)	text=text.slice(0,10)+"..."					
-	}	
+	{
+		if(text.length>10)	text=text.slice(0,10)+"..."
+	}
 	return dynamicElasticZone(text,_skin+'bolist.gif',3,28,o.selected?84:0,o.id,'treeNormal',o.list.image,0,o.imgIndex*16,null,'AndOrItemTxt_'+o.id,o.fullW,topBorder,bottomBorder)
 }
 
@@ -1938,7 +1925,7 @@ function AndOrNodeItem_clickCB(e)
 
 	if (list.changeCB)
 		list.changeCB()
-	
+
 	return false
 }
 
@@ -1954,22 +1941,22 @@ function AndOrNodeItem_mouseupCB()
 function AndOrNodeItem_keyDownCB(e)
 {
 	var o=getWidget(this),list=o.list
-	var key=eventGetKey(e);	
-	
+	var key=eventGetKey(e);
+
 	if (key==46)
-	{		
+	{
 		if (list.deleteCB)
 			list.deleteCB()
 	}
-	if(key==13)	
+	if(key==13)
 	{
 		eventCancelBubble(e);
-		
+
 		o.select(true)
 
 		if (list.changeCB)
 			list.changeCB()
-	}	
+	}
 }
 // ================================================================================
 
@@ -1980,7 +1967,7 @@ function AndOrNodeItem_dblClickCB()
 
 	if (list.dblClickCB)
 		list.dblClickCB()
-	
+
 	return false
 }
 
@@ -1994,17 +1981,17 @@ function AndOrNodeItem_select(sel)
 		list.unselect()
 	list.selection=sel?o:null
 	o.selected=sel
-	
+
 	if (o.layer)
 	{
 		var dy=sel?3:0
 		elasticZoneSetImg(o.layer,28,dy,dy+1,dy+1,dy+2)
-		
+
 		if(sel)
 			o.layer.title=_lstSelectedLabel+" "+o.tooltip
 		else
 			o.layer.title=o.tooltip
-		
+
 		if(sel&&o.layer.focus&&(!isHidden(o.layer)))
 			o.layer.focus()
 	}
@@ -2035,12 +2022,12 @@ function AndOrNodeItem_setText(text)
 // Remove itself
 {
 	var o=this
-	if (o.txtLayer==null)	
-		o.txtLayer=getLayer("AndOrItemTxt_"+o.id)		
-	
+	if (o.txtLayer==null)
+		o.txtLayer=getLayer("AndOrItemTxt_"+o.id)
+
 	o.text=text
 	o.txtLayer.innerHTML=convStr(o.text,true)
-	
+
 	o.tooltip=text
 	o.layer.title=o.tooltip
 }
@@ -2064,35 +2051,34 @@ function AndOrNodeItem_isChildOf(node)
 // ================================================================================
 
 function elasticZoneInner(text,url,w,h,dy,id,cls,img,imgDx,imgDy,att,txtId,fullW,topBorder,bottomBorder,crs,extraHTML)
-// Create a zone with a left image, a 
-{	
+// Create a zone with a left image, a
+{
 	var bodyHTML ='';
 	if(extraHTML)
 		//bodyHTML = '<div '+attr("id",txtId)+' class="'+cls+'" style="width:0px">'+extraHTML+'</div>'
 		bodyHTML = '<table '+attr("id",txtId)+' class="'+cls+'" cellpadding="0" cellspacing="0" border="0"><tr valign="middle"><td>'+extraHTML+'</td></tr></table>'
 	else
 		bodyHTML = '<nobr '+attr("id",txtId)+' class="'+cls+'">'+convStr(text,true)+'</nobr>'
-		
+
 	return '<tbody><tr valign="middle"><td width="'+w+'">'+imgOffset(url,w,h,0,dy)+'</td>'+
 				(img?('<td style="padding-left:2px;'+backImgOffset(url,0,dy+h)+'">'+imgOffset(img,16,16,imgDx,imgDy)+'</td>'):'')+
 				'<td '+(att?att:'')+'  '+(fullW? 'width="100%"':'')+' style="padding-left:2px;padding-right:'+(img?8:4)+'px;'+backImgOffset(url,0,dy+h)+'">'+bodyHTML+'</td><td width="'+w+'">'+imgOffset(url,w,h,0,dy+(2*h))+'</td></tr></tbody>'
 }
 
-
 // ================================================================================
 
 function elasticZone(text,url,w,h,dy,id,cls,img,imgDx,imgDy,att,txtId,fullW,topBorder,bottomBorder,crs,extraHTML)
-// Create a zone with a left image, a 
+// Create a zone with a left image, a
 {
 	var s=""
 	if (topBorder!=null)
 		s+=(topBorder?"border-top:":"border-left:")+_lstNobord+";"
-		
+
 	if (bottomBorder!=null)
 		s+=(bottomBorder?"border-bottom:":"border-right:")+_lstNobord+";"
 
 	crs=crs?crs:_hand
-	
+
 	return '<table '+attr("id",id)+' boelastic="1" tabIndex="0" '+(fullW?'width="100%"':'')+' cellpadding="0" cellspacing="0" border="0"  style="'+s+'cursor:'+crs+'" height="'+h+'">' +
 				elasticZoneInner(text,url,w,h,dy,id,cls,img,imgDx,imgDy,att,txtId,fullW,topBorder,bottomBorder,crs,extraHTML) +
 			'</table>'
@@ -2101,12 +2087,12 @@ function elasticZone(text,url,w,h,dy,id,cls,img,imgDx,imgDy,att,txtId,fullW,topB
 // ================================================================================
 
 function dynamicElasticZone(text,url,w,h,dy,id,cls,img,imgDx,imgDy,att,txtId,fullW,topBorder,bottomBorder,crs,extraHTML)
-// Create a zone with a left image, a 
+// Create a zone with a left image, a
 {
 	crs=crs?crs:_hand
-	
+
 	var theTable=_curDoc.createElement('table')
-	
+
 	if (topBorder!=null)
 	{
 		if (topBorder)
@@ -2122,19 +2108,18 @@ function dynamicElasticZone(text,url,w,h,dy,id,cls,img,imgDx,imgDy,att,txtId,ful
 		else
 			theTable.style.borderRight = _lstNobord
 	}
-		
-	
+
 	theTable.id = id
 	theTable.setAttribute("boelastic","1")
 	theTable.tabIndex = 0
 
 	if (fullW)
 		theTable.width="100%"
-	
+
 	theTable.cellPadding = 0
 	theTable.cellSpacing = 0
 	theTable.border = 0
-	
+
 	theTable.style.cursor = crs
 	theTable.height = h
 	theTable.innerHTML= elasticZoneInner(text,url,w,h,dy,id,cls,img,imgDx,imgDy,att,txtId,fullW,topBorder,bottomBorder,crs,extraHTML)
@@ -2149,7 +2134,7 @@ function elasticZoneSetImg(lyr,h,dy1,dy2,dy3,dy4)
 	if (lyr&&(lyr.getAttribute("boelastic")!=null))
 	{
 		var c=lyr.childNodes[0].childNodes[0].childNodes,j=1,len=c.length
-		
+
  		for (var i=0;i<len;i++)
  		{
  			var ce=c[i]
@@ -2160,7 +2145,6 @@ function elasticZoneSetImg(lyr,h,dy1,dy2,dy3,dy4)
 }
 
 // ================================================================================
-
 
 // ================================================================================
 // ================================================================================
@@ -2184,22 +2168,22 @@ function newAndOrFilter(id,text,imgIndex,value,tooltip)
 	var o=newWidget(id)
 	o.text=text
 	o.isAdvFilter=true;
-	
+
 	o.value=value
 	o.tooltip=tooltip?tooltip:''
 	o.imgIndex=imgIndex?imgIndex:0
 	o.par=null
 	o.txtLayer=null
-	
+
 	o.operatorCombo=newCustomCombo('AndOrFilterOperator_'+id,operator_changeCB,true,null);
 	o.operatorCombo.par=o
 	AndOrFilter_initOpCombo(o.operatorCombo);
-	
+
 	o.defZone=newAdvFilterDef('AndOrFilterDefinition_'+id);
 	o.defZone2=newAdvFilterDef('AndOrFilterDefinition2_'+id);
 	o.defZone.par=o
 	o.defZone2.par=o
-	
+
 	o.getHTML=AndOrFilter_getHTML
 	o.getExtraHTML=AndOrFilter_getExtraHTML
 	o.getDynamicHTML=AndOrFilter_getDynamicHTML
@@ -2213,9 +2197,9 @@ function newAndOrFilter(id,text,imgIndex,value,tooltip)
 	o.setText=AndOrFilter_setText
 	o.setInsertFeedback=AndOrFilter_setInsertFeedback
 	o.isChildOf=AndOrFilter_isChildOf
-	
+
 	o.getDefinition=AndOrFilter_getDefinition
-	
+
 	o.fullW=false
 
 	return o
@@ -2231,8 +2215,7 @@ function AndOrFilter_setInsertFeedback(show,isAll)
 	if (isAll)
 	{
 		st.borderTopColor=st.borderLeftColor=st.borderBottomColor=st.borderRightColor="#FFFFFF"
-		
-		
+
 		if (node)
 		{
 			var dy=show?15:(6+(o.selected?3:0))
@@ -2243,8 +2226,8 @@ function AndOrFilter_setInsertFeedback(show,isAll)
 			var dy=show?12:(o.selected?3:0)
 			elasticZoneSetImg(o.layer,28,dy,dy+1,dy+1,dy+2)
 		}
-	}	
-	else 
+	}
+	else
 	{
 		var isVert=((o.list.layout==_vertBOList)||(o.list.layout==_andOrBOList))
 
@@ -2271,7 +2254,7 @@ function AndOrFilter_setInsertFeedback(show,isAll)
 				else
 					st.borderRightColor=b
 			}
-		
+
 			if (node)
 			{
 				var dy=6+(o.selected?3:0)
@@ -2283,10 +2266,8 @@ function AndOrFilter_setInsertFeedback(show,isAll)
 				elasticZoneSetImg(o.layer,28,dy,dy+1,dy+1,dy+2)
 			}
 		}
-
 	}
 }
-
 
 // ================================================================================
 
@@ -2312,20 +2293,20 @@ function AndOrFilter_init()
 {
 	var o=this
 	o.oldAOItemInit()
-	
+
 	o.operatorCombo.init();
 	o.defZone.init();
 	o.defZone2.init();
 	o.defZone2.setDisplay(false);
-	
+
 	o.layer.onmousedown=AndOrFilter_clickCB
 	o.layer.onmouseup=AndOrFilter_mouseupCB
 	if (_ie)
 		o.layer.onmousemove=AndOrNodeWidget_triggerDD
 
-	o.layer.onkeydown=AndOrFilter_keyDownCB	
+	o.layer.onkeydown=AndOrFilter_keyDownCB
 	addDblClickCB(o.layer,AndOrFilter_dblClickCB)
-	
+
 	o.layer.title=o.tooltip
 
 	var dd=o.list.dragDrop
@@ -2338,14 +2319,14 @@ function AndOrFilter_init()
 // ================================================================================
 
 function AndOrFilter_getExtraHTML()
-{	
+{
 	var o=this,s="";
-	s+='<table class="treeNormal" border="0" cellspacing="0" cellpadding="0"><tr valign="middle"><td>';	
-	s+=o.text+'</td><td>';	
-	s+=o.operatorCombo.getHTML();	
-	s+='</td><td>';		
+	s+='<table class="treeNormal" border="0" cellspacing="0" cellpadding="0"><tr valign="middle"><td>';
+	s+=o.text+'</td><td>';
+	s+=o.operatorCombo.getHTML();
+	s+='</td><td>';
 	s+=o.defZone.getHTML();
-	s+='</td><td>';		
+	s+='</td><td>';
 	s+=o.defZone2.getHTML();
 	s+='</td></tr></table>';
 	return s;
@@ -2359,13 +2340,13 @@ function AndOrFilter_getHTML()
 	var o=this, list=o.list;
 	var topBorder=((list.layout==_vertBOList)||(list.layout==_andOrBOList))
 	var bottomBorder=(o.par.getLastItem().id==o.id)?topBorder:null
-	
+
 	//only display 10 first caracters of the name
 	var text=o.text
 	if(list.layout!=_andOrBOList && !list.autofit)
 	{
-		if(text.length>10)	text=text.slice(0,10)+"..."					
-	}	
+		if(text.length>10)	text=text.slice(0,10)+"..."
+	}
 	return elasticZone(text,_skin+'bolist.gif',3,28,o.selected?84:0,o.id,'treeNormal',o.list.image,0,o.imgIndex*16,null,'AndOrFilterTxt_'+o.id,o.fullW,topBorder,bottomBorder,null,o.getExtraHTML())
 }
 
@@ -2377,13 +2358,13 @@ function AndOrFilter_getDynamicHTML()
 	var o=this
 	var topBorder=((this.list.layout==_vertBOList)||(this.list.layout==_andOrBOList))
 	var bottomBorder=(o.par.getLastItem().id==o.id)?topBorder:null
-	
+
 	//only display 10 first caracters of the name
 	var text=o.text
 	if(this.list.layout!=_andOrBOList)
-	{		
-		if(text.length>10)	text=text.slice(0,10)+"..."					
-	}	
+	{
+		if(text.length>10)	text=text.slice(0,10)+"..."
+	}
 	return dynamicElasticZone(text,_skin+'bolist.gif',3,28,o.selected?84:0,o.id,'treeNormal',o.list.image,0,o.imgIndex*16,null,'AndOrFilterTxt_'+o.id,o.fullW,topBorder,bottomBorder,null,o.getExtraHTML())
 }
 
@@ -2401,7 +2382,7 @@ function AndOrFilter_clickCB(e)
 
 	if (list.changeCB)
 		list.changeCB()
-	
+
 	return false
 }
 
@@ -2417,22 +2398,22 @@ function AndOrFilter_mouseupCB()
 function AndOrFilter_keyDownCB(e)
 {
 	var o=getWidget(this),list=o.list
-	var key=eventGetKey(e);	
-	
+	var key=eventGetKey(e);
+
 	if (key==46)
-	{		
+	{
 		if (list.deleteCB)
 			list.deleteCB()
 	}
-	if(key==13)	
+	if(key==13)
 	{
 		eventCancelBubble(e);
-		
+
 		o.select(true)
 
 		if (list.changeCB)
 			list.changeCB()
-	}	
+	}
 }
 // ================================================================================
 
@@ -2443,7 +2424,7 @@ function AndOrFilter_dblClickCB()
 
 	if (list.dblClickCB)
 		list.dblClickCB()
-	
+
 	return false
 }
 
@@ -2457,17 +2438,17 @@ function AndOrFilter_select(sel)
 		list.unselect()
 	list.selection=sel?o:null
 	o.selected=sel
-	
+
 	if (o.layer)
 	{
 		var dy=sel?3:0
 		elasticZoneSetImg(o.layer,28,dy,dy+1,dy+1,dy+2)
-		
+
 		if(sel)
 			o.layer.title=_lstSelectedLabel+" "+o.tooltip
 		else
 			o.layer.title=o.tooltip
-		
+
 		if(sel&&o.layer.focus&&(!isHidden(o.layer)))
 			o.layer.focus()
 	}
@@ -2498,12 +2479,12 @@ function AndOrFilter_setText(text)
 // Remove itself
 {
 	var o=this
-	if (o.txtLayer==null)	
-		o.txtLayer=getLayer("AndOrFilterTxt_"+o.id)		
-	
+	if (o.txtLayer==null)
+		o.txtLayer=getLayer("AndOrFilterTxt_"+o.id)
+
 	o.text=text
 	o.txtLayer.innerHTML=convStr(o.text,true)
-	
+
 	o.tooltip=text
 	o.layer.title=o.tooltip
 }
@@ -2534,20 +2515,20 @@ function AndOrFilter_getDefinition()
 // ================================================================================
 function AndOrFilter_initOpCombo(fope)
 {
-	fope.icon.setClasses("iconnochecknobg", "iconchecknobg", "iconhovernobg", "iconcheckhovernobg")	
+	fope.icon.setClasses("iconnochecknobg", "iconchecknobg", "iconhovernobg", "iconcheckhovernobg")
 	fope.arrow.setClasses("iconnochecknobg", "iconchecknobg", "iconhovernobg", "iconcheckhovernobg")
 	fope.arrow.overCB="IconWidget_overCB"
-	fope.arrow.outCB="IconWidget_outCB"	
+	fope.arrow.outCB="IconWidget_outCB"
 	fope.icon.overCB="IconWidget_overCB"
 	fope.icon.outCB="IconWidget_outCB"
 	fope.icon.width=null;
 /*
 	for (var i=_topfs._firstFilter;i<=_topfs._lastFilter;i++)
-	{									
-		fope.add(_topfs._labFil[i],""+i);	
+	{
+		fope.add(_topfs._labFil[i],""+i);
 	}
 */
-	
+
 	fope.add("EQUAL","EQUAL");
 	fope.add("NOT_EQUAL","NOT_EQUAL");
 	fope.add("GREATER","GREATER");
@@ -2555,11 +2536,11 @@ function AndOrFilter_initOpCombo(fope)
 	fope.add("LESS","LESS");
 	fope.add("LESS_OR_EQUAL","LESS_OR_EQUAL");
 	fope.add("BETWEEN","BETWEEN");
-	fope.add("NOT_BETWEEN","NOT_BETWEEN");		
+	fope.add("NOT_BETWEEN","NOT_BETWEEN");
 	fope.add("IN_LIST","IN_LIST",true);
 	fope.add("NOT_IN_LIST","NOT_IN_LIST");
 	fope.add("IS_NULL","IS_NULL");
-	fope.add("NOT_IS_NULL","NOT_IS_NULL");	
+	fope.add("NOT_IS_NULL","NOT_IS_NULL");
 	fope.add("LIKE","LIKE");
 	fope.add("NOT_LIKE","NOT_LIKE");
 	fope.add("BOTH","BOTH");
@@ -2568,7 +2549,7 @@ function AndOrFilter_initOpCombo(fope)
 
 // ================================================================================
 function operator_changeCB()
-{	
+{
 	var o=this, sel = o.getSelection()
 	var advflt= o.par;
 	if(sel && advflt)
@@ -2588,9 +2569,8 @@ function operator_changeCB()
 			default :
 				advflt.defZone.setDisplay(true);
 				advflt.defZone2.setDisplay(false);
-			break;			
-		}	
-		
+			break;
+		}
 	}
 }
 
@@ -2606,20 +2586,20 @@ _filterDefObj=4
 function newAdvFilterDef(id)
 {
 	var o=newWidget(id);
-	
+
 	o.type=_filterDefPrompt;
 	o.obj=null;
 	o.input="prompt by default ?";
-	
+
 	o.objLabel= newWidget(id+"_objlabel");
 	o.inputTxt= newTextFieldWidget(id+"_input",null,null,null,null);
-	
-	o.propertyIcn=newIconWidget(id+"_property",_skin+"promptProp.gif",clickPropCB,null,null,16,16,0,0);	
-	o.typeIcn=newIconWidget(id+"_type",_skin+"filterType.gif",clickTypeCB,null,null,16,16,0,0);		
+
+	o.propertyIcn=newIconWidget(id+"_property",_skin+"promptProp.gif",clickPropCB,null,null,16,16,0,0);
+	o.typeIcn=newIconWidget(id+"_type",_skin+"filterType.gif",clickTypeCB,null,null,16,16,0,0);
 	o.propertyIcn.setClasses("iconnochecknobg", "iconchecknobg", "iconhovernobg", "iconcheckhovernobg");
 	o.typeIcn.setClasses("iconnochecknobg", "iconchecknobg", "iconhovernobg", "iconcheckhovernobg");
-	
-	var m=o.typeMenu=newMenuWidget(id+"_type_menu");	
+
+	var m=o.typeMenu=newMenuWidget(id+"_type_menu");
 
 	//build filter type menu
 	m.addCheck("advf_constant","Constant",changeFTypeCB);
@@ -2632,24 +2612,23 @@ function newAdvFilterDef(id)
 	o.typeIcn.afPar=o;
 	o.typeMenu.afPar=o;
 
-	
 	o.oldInit=o.init
 	o.init=AdvFilterDef_init
 	o.getHTML=AdvFilterDef_getHTML
 	o.updateUI=AdvFilterDef_updateUI
-	
+
 	return o;
 }
 
 function AdvFilterDef_getHTML()
 {
 	var o=this;
-	
+
 	return(
 	'<table id="'+o.id+'" border="0" cellspacing="0" cellpadding="0"><tbody>'+
 		'<tr>'+
-			'<td id="'+o.id+'_objlabel">'+				
-				'<table class="treeNormal" border="0" cellspacing="0" cellpadding="0"><tr><td>'+imgOffset(_skin+"qualification.gif",16,16,0,0)+'</td><td><nobr>my object</nobr></td></tr></table>'+					
+			'<td id="'+o.id+'_objlabel">'+
+				'<table class="treeNormal" border="0" cellspacing="0" cellpadding="0"><tr><td>'+imgOffset(_skin+"qualification.gif",16,16,0,0)+'</td><td><nobr>my object</nobr></td></tr></table>'+
 			'</td><td>'+
 				o.inputTxt.getHTML()+
 			'</td><td>'+
@@ -2664,14 +2643,14 @@ function AdvFilterDef_getHTML()
 function AdvFilterDef_init()
 {
 	var o=this;
-	
+
 	//init widget
 	o.oldInit();
 	o.objLabel.init();
 	o.inputTxt.init();
 	o.propertyIcn.init();
 	o.typeIcn.init();
-		
+
 	//update UI depending on the type of filter
 	o.updateUI();
 }
@@ -2681,39 +2660,39 @@ function changeFTypeCB()
 	var id = this.id;
 	var menu=this.par,items=menu.items
 	var o=menu.afPar;//AdvFilterDef objet
-	
+
 	for (var i in items)
 	{
 		var item=items[i]
 		item.check(item.id==id)
 	}
-	
+
 	switch(id)
 	{
 		case "advf_constant" :
-			o.type	= _filterDefConst;	
+			o.type	= _filterDefConst;
 		break;
 		case "advf_fromList" :
-			o.type	= _filterDefFromList;	
+			o.type	= _filterDefFromList;
 			alert("lov dialog");
 		break;
 		case "advf_prompt" :
-			o.type	= _filterDefPrompt;	
+			o.type	= _filterDefPrompt;
 		break;
 		case "advf_object" :
-			o.type	= _filterDefObj;	
-			alert("universe dimensions dialog");			
-		break;		
-	}	
+			o.type	= _filterDefObj;
+			alert("universe dimensions dialog");
+		break;
+	}
 	o.updateUI();
 }
 
 function AdvFilterDef_updateUI()
 {
 	var o=this;
-	
+
 	switch(o.type)
-	{		
+	{
 		case _filterDefConst :
 			o.objLabel.setDisplay(false);
 			o.inputTxt.setDisplay(true);
@@ -2721,18 +2700,18 @@ function AdvFilterDef_updateUI()
 			o.propertyIcn.setDisplay(false);
 			o.typeMenu.getItemByID("advf_constant").check(true);
 		break;
-		case _filterDefFromList :		
+		case _filterDefFromList :
 			o.objLabel.setDisplay(false);
 			o.inputTxt.setDisplay(true);
 			o.inputTxt.setValue("");
 			o.propertyIcn.setDisplay(false);
-			o.typeMenu.getItemByID("advf_fromList").check(true);				
+			o.typeMenu.getItemByID("advf_fromList").check(true);
 		break;
 		case _filterDefPrompt :
 			o.objLabel.setDisplay(false);
 			o.inputTxt.setDisplay(true);
-			o.inputTxt.setValue(o.input);			
-			o.propertyIcn.setDisplay(true);	
+			o.inputTxt.setValue(o.input);
+			o.propertyIcn.setDisplay(true);
 			o.typeMenu.getItemByID("advf_prompt").check(true);
 		break;
 		case _filterDefObj :
@@ -2740,7 +2719,7 @@ function AdvFilterDef_updateUI()
 			o.inputTxt.setDisplay(false);
 			o.propertyIcn.setDisplay(false);
 			o.typeMenu.getItemByID("advf_object").check(true);
-		break;	
+		break;
 	}
 }
 
@@ -2754,8 +2733,4 @@ function clickTypeCB()
 	var o=this.afPar, icn = this, l=icn.layer,menu=o.typeMenu;
 	menu.show(true,getPosScrolled(l).x  + (menu.alignLeft?icn.getWidth():0) ,getPosScrolled(l).y+icn.getHeight()+1);
 	IconWidget_overCB(icn.index)
-
 }
-
-
-

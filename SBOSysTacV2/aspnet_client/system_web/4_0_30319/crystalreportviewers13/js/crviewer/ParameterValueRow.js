@@ -2,7 +2,7 @@
 ================================================================================
 ParameterValueRow
 
-Internal class for use by ParameterUI. Darws a UI for a single parameter value. 
+Internal class for use by ParameterUI. Darws a UI for a single parameter value.
 ================================================================================
 */
 
@@ -16,7 +16,7 @@ bobj.crv.params.newParameterValueRow = function(kwArgs) {
         isRangeValue : false,
         allowCustom: false,
         isPassword: false,
-        calendarProperties : {displayValueFormat : '' , isTimeShown : false, hasButton : false, iconUrl : '', clickCB : null}, 
+        calendarProperties : {displayValueFormat : '' , isTimeShown : false, hasButton : false, iconUrl : '', clickCB : null},
         changeCB: null,
         enterCB: null,
         defaultValuesMenu: null,
@@ -24,17 +24,17 @@ bobj.crv.params.newParameterValueRow = function(kwArgs) {
         canOpenAdvDialog : false
     }, kwArgs);
 
-    var o = newWidget(kwArgs.id);   
+    var o = newWidget(kwArgs.id);
     o.widgetType = 'ParameterValueRow';
     o._prevValueString = kwArgs.value;
     o._warning = null;
-    
+
     // Update instance with constructor arguments
-    bobj.fillIn(o, kwArgs); 
-    
+    bobj.fillIn(o, kwArgs);
+
     // Update instance with member functions
     MochiKit.Base.update(o, bobj.crv.params.ParameterValueRow);
-    
+
     return o;
 };
 
@@ -46,7 +46,7 @@ bobj.crv.params.ParameterValueRow = {
         if (this._calendarButton)
             bobj.disableTabbingKey (this._calendarButton.layer, dis);
     },
-    
+
     /**
      * Resets widget, Restores old value, hides warning and adv dialog icons
      */
@@ -55,13 +55,13 @@ bobj.crv.params.ParameterValueRow = {
         this._prevValueString = value;
         this.setWarning(null);
         /* Removing Red border color if previous value was errorneous */
-        MochiKit.DOM.removeElementClass(this.layer, "hasError"); 
-        
+        MochiKit.DOM.removeElementClass(this.layer, "hasError");
+
         if(this._valueWidget) {
             this._valueWidget.reset(value);
         }
     },
-    
+
     init : function() {
         Widget_init.call (this);
         this._valueWidget.init ();
@@ -82,12 +82,12 @@ bobj.crv.params.ParameterValueRow = {
             }
         }
     },
-    
+
     calendarSetValue : function(value) {
         this.setValue (value);
         this.changeCB ();
     },
-    
+
     getHTML : function() {
         if (!this._valueWidget) {
             this._valueWidget = this._getValueWidget ();
@@ -121,7 +121,6 @@ bobj.crv.params.ParameterValueRow = {
             'class' : cssClass
         }, this.calendarProperties.hasButton ? this._getValueAndCalendarHTML () : this._getValueHTML ());
     },
-    
 
     /**
      * @return [String] Returns HTML for the the value
@@ -142,7 +141,7 @@ bobj.crv.params.ParameterValueRow = {
             style : style
         }, this._valueWidget.getHTML ());
     },
-    
+
     /**
      * @return [String] Returns HTML for the value and a button beside it
      */
@@ -174,7 +173,7 @@ bobj.crv.params.ParameterValueRow = {
 
         return html;
     },
-    
+
     getNewValueWidgetConstructor : function() {
         var showDefVals = this.defaultValuesMenu !== null && !this.isReadOnlyParam && this.canChangeOnPanel;
 
@@ -201,10 +200,10 @@ bobj.crv.params.ParameterValueRow = {
             canOpenAdvDialog : this.canOpenAdvDialog
         };
     },
-    
+
     /**
     * Creates a widget to display/edit the value.
-    * 
+    *
     * @return [Widget]
     */
     _getValueWidget : function() {
@@ -219,12 +218,12 @@ bobj.crv.params.ParameterValueRow = {
 
         return widget;
     },
-    
+
     onFocus : function() {
         this.refreshWarningPopup ();
         MochiKit.DOM.removeElementClass (this.layer, "hasError");
     },
-    
+
     refreshWarningPopup : function() {
         if (this._warning) {
             var pos = getPosScrolled (this.layer);
@@ -243,30 +242,29 @@ bobj.crv.params.ParameterValueRow = {
         if (this._valueWidget)
             this._valueWidget.setTooltip (tooltipText);
     },
-    
+
     onBlur : function() {
         if (this._warning) {
             bobj.crv.WarningPopup.getInstance ().hide ();
             MochiKit.DOM.addElementClass (this.layer, "hasError");
         }
     },
-    
+
     getValue : function() {
         return this.value;
     },
-    
+
     setValue : function(value) {
         this.value = value;
         if (this._valueWidget)
             this._valueWidget.setValue (value);
     },
-    
+
     setCleanValue : function(value) {
-        if (this._valueWidget) 
-            this._valueWidget.setCleanValue(value);    
-            
+        if (this._valueWidget)
+            this._valueWidget.setCleanValue(value);
     },
-    
+
     /**
      * Set keyboard focus to the widget and mark it as selected
      */
@@ -276,10 +274,10 @@ bobj.crv.params.ParameterValueRow = {
         else
             this._valueWidget.focus ();
     },
-    
+
     /**
      * Display a warning icon with a tooltip message
-     * 
+     *
      * @param warning
      *        [String] Tooltip message. If null, warning is hidden.
      */
@@ -291,10 +289,10 @@ bobj.crv.params.ParameterValueRow = {
     getWarning : function() {
         return this._warning;
     },
-    
+
     /**
      * Change the outer dimensions of the widget
-     * 
+     *
      * @param w
      *        [int, optional] Width in pixels
      * @param h
@@ -303,14 +301,14 @@ bobj.crv.params.ParameterValueRow = {
     resize : function(w, h) {
         bobj.setOuterSize (this.layer, w, h);
     },
-    
+
     deleteValue : function() {
         this._valueWidget.setValue ('', true);
     },
-    
+
     /**
      * Handle keyUp events when editing values or using keyboard navigation.
-     * 
+     *
      * @param e
      *        [keyup event]
      */
@@ -347,23 +345,21 @@ bobj.crv.params.ParameterValueRow = {
     deleteValue : function() {
         this._valueWidget.setValue ('', true);
     },
-    
+
     _onChange : function() {
         this.value = this._valueWidget.getValue();
-        if (this.changeCB) 
-            this.changeCB();    
+        if (this.changeCB)
+            this.changeCB();
     },
-    
+
     /**
      * Handles Enter key press events.
      */
-    _onEnterPress : function() {  
+    _onEnterPress : function() {
         if(this.enterCB)
             this.enterCB();
     }
 };
-
-
 
 /*
 ================================================================================
@@ -391,13 +387,13 @@ bobj.crv.params.newCalendarButton = function(kwArgs) {
     var o = newIconWidget(
             kwArgs.id,
             kwArgs.calendarProperties.iconUrl,
-            null, 
+            null,
             null,
             L_bobj_crv_ParamsCalBtn,
-            14,14,0,0,0,0); 
-    
+            14,14,0,0,0,0);
+
     o.setClasses("", "", "", "iconcheckhover");
-    
+
     bobj.fillIn(o, kwArgs);
 
     // Update instance with member functions
@@ -431,35 +427,35 @@ bobj.crv.params.CalendarButton = {
         calendar.setShowTime (this.calendarProperties.isTimeShown);
         calendar.show (true, x, y);
     },
-    
+
     onClickCalendarOKButton : function(date) {
         var strValue = bobj.external.date.formatDate (date, this.calendarProperties.displayValueFormat);
         this.setValueCB (strValue);
     },
-    
+
     onClickCalendarCancelButton : function() {
         this.clearCalendarSignals ();
     },
-    
+
     clearCalendarSignals : function() {
         for ( var identName in this.calendarSignals) {
             bobj.crv.SignalDisposer.dispose(this.calendarSignals[identName], true);
             this.calendarSignals[identName] = null;
         }
     },
-    
+
     onHideCalendar : function() {
         this.clearCalendarSignals ();
         if (this.layer.focus)
             this.layer.focus ();
     },
-    
+
     init : function() {
         this.oldInit ();
         this.layer.onfocus = IconWidget_realOverCB;
         this.layer.onblur = IconWidget_realOutCB;
     },
-    
+
     getHTML : function() {
         var imgCode;
         var h = bobj.html;

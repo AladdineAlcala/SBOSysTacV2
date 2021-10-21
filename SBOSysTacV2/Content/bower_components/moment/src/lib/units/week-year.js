@@ -38,7 +38,6 @@ addUnitAlias('isoWeekYear', 'GG');
 addUnitPriority('weekYear', 1);
 addUnitPriority('isoWeekYear', 1);
 
-
 // PARSING
 
 addRegexToken('G',      matchSigned);

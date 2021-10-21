@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -19,12 +18,10 @@
 			"./widget"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.widget( "ui.slider", $.ui.mouse, {
 	version: "1.11.4",
 	widgetEventPrefix: "slide",
@@ -713,5 +710,4 @@ return $.widget( "ui.slider", $.ui.mouse, {
 		}
 	}
 });
-
 }));

@@ -2,16 +2,13 @@
 /* Written by SCCY (samuelcychan@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['zh-HK'] = {
 	closeText: '關閉',
 	prevText: '&#x3C;上月',
@@ -33,5 +30,4 @@ datepicker.regional['zh-HK'] = {
 datepicker.setDefaults(datepicker.regional['zh-HK']);
 
 return datepicker.regional['zh-HK'];
-
 }));

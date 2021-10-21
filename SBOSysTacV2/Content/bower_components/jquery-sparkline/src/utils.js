@@ -110,7 +110,6 @@
             } else { //even
                 vl = (values.length * q + 2) / 4;
                 return vl % 1 ? (values[Math.floor(vl)] + values[Math.floor(vl) - 1]) / 2 :  values[vl-1];
-
             }
         }
     };
@@ -221,4 +220,3 @@
             tag[(typeof document.body.style.WebkitAppearance == 'string') /* webkit only */ ? 'innerText' : 'innerHTML'] = css;
         }
     };
-

@@ -49,7 +49,6 @@
   };
 
   Timepicker.prototype = {
-
     constructor: Timepicker,
     _init: function() {
       var self = this;
@@ -252,7 +251,6 @@
       var input = this.$element.get(0);
 
       if ('selectionStart' in input) {// Standard-compliant browsers
-
         return input.selectionStart;
       } else if (document.selection) {// IE fix
         input.focus();
@@ -763,7 +761,6 @@
           this.meridian = meridian;
 
           this.update();
-
         } else if (defaultTime === false) {
           this.hour = 0;
           this.minute = 0;
@@ -1173,5 +1170,4 @@
       $this.timepicker();
     }
   );
-
 })(jQuery, window, document);

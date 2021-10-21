@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -20,12 +19,10 @@
 			"./draggable"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 $.widget( "ui.droppable", {
 	version: "1.11.4",
 	widgetEventPrefix: "drop",
@@ -46,7 +43,6 @@ $.widget( "ui.droppable", {
 		over: null
 	},
 	_create: function() {
-
 		var proportions,
 			o = this.options,
 			accept = o.accept;
@@ -76,7 +72,6 @@ $.widget( "ui.droppable", {
 		this._addToManager( o.scope );
 
 		o.addClasses && this.element.addClass( "ui-droppable" );
-
 	},
 
 	_addToManager: function( scope ) {
@@ -103,7 +98,6 @@ $.widget( "ui.droppable", {
 	},
 
 	_setOption: function( key, value ) {
-
 		if ( key === "accept" ) {
 			this.accept = $.isFunction( value ) ? value : function( d ) {
 				return d.is( value );
@@ -139,7 +133,6 @@ $.widget( "ui.droppable", {
 	},
 
 	_over: function( event ) {
-
 		var draggable = $.ui.ddmanager.current;
 
 		// Bail if draggable and droppable are same element
@@ -153,11 +146,9 @@ $.widget( "ui.droppable", {
 			}
 			this._trigger( "over", event, this.ui( draggable ) );
 		}
-
 	},
 
 	_out: function( event ) {
-
 		var draggable = $.ui.ddmanager.current;
 
 		// Bail if draggable and droppable are same element
@@ -171,11 +162,9 @@ $.widget( "ui.droppable", {
 			}
 			this._trigger( "out", event, this.ui( draggable ) );
 		}
-
 	},
 
 	_drop: function( event, custom ) {
-
 		var draggable = custom || $.ui.ddmanager.current,
 			childrenIntersection = false;
 
@@ -210,7 +199,6 @@ $.widget( "ui.droppable", {
 		}
 
 		return false;
-
 	},
 
 	ui: function( c ) {
@@ -221,7 +209,6 @@ $.widget( "ui.droppable", {
 			offset: c.positionAbs
 		};
 	}
-
 });
 
 $.ui.intersect = (function() {
@@ -230,7 +217,6 @@ $.ui.intersect = (function() {
 	}
 
 	return function( draggable, droppable, toleranceMode, event ) {
-
 		if ( !droppable.offset ) {
 			return false;
 		}
@@ -277,14 +263,12 @@ $.ui.ddmanager = {
 	current: null,
 	droppables: { "default": [] },
 	prepareOffsets: function( t, event ) {
-
 		var i, j,
 			m = $.ui.ddmanager.droppables[ t.options.scope ] || [],
 			type = event ? event.type : null, // workaround for #2317
 			list = ( t.currentItem || t.element ).find( ":data(ui-droppable)" ).addBack();
 
 		droppablesLoop: for ( i = 0; i < m.length; i++ ) {
-
 			// No disabled and non-accepted
 			if ( m[ i ].options.disabled || ( t && !m[ i ].accept.call( m[ i ].element[ 0 ], ( t.currentItem || t.element ) ) ) ) {
 				continue;
@@ -310,16 +294,12 @@ $.ui.ddmanager = {
 
 			m[ i ].offset = m[ i ].element.offset();
 			m[ i ].proportions({ width: m[ i ].element[ 0 ].offsetWidth, height: m[ i ].element[ 0 ].offsetHeight });
-
 		}
-
 	},
 	drop: function( draggable, event ) {
-
 		var dropped = false;
 		// Create a copy of the droppables in case the list changes during the drop (#9116)
 		$.each( ( $.ui.ddmanager.droppables[ draggable.options.scope ] || [] ).slice(), function() {
-
 			if ( !this.options ) {
 				return;
 			}
@@ -332,10 +312,8 @@ $.ui.ddmanager = {
 				this.isover = false;
 				this._deactivate.call( this, event );
 			}
-
 		});
 		return dropped;
-
 	},
 	dragStart: function( draggable, event ) {
 		// Listen for scrolling so that if the dragging causes scrolling the position of the droppables can be recalculated (see #5003)
@@ -346,7 +324,6 @@ $.ui.ddmanager = {
 		});
 	},
 	drag: function( draggable, event ) {
-
 		// If you have a highly dynamic page, you might try this option. It renders positions every time you move the mouse.
 		if ( draggable.options.refreshPositions ) {
 			$.ui.ddmanager.prepareOffsets( draggable, event );
@@ -354,7 +331,6 @@ $.ui.ddmanager = {
 
 		// Run through all droppables and check their positions based on specific tolerance options
 		$.each( $.ui.ddmanager.droppables[ draggable.options.scope ] || [], function() {
-
 			if ( this.options.disabled || this.greedyChild || !this.visible ) {
 				return;
 			}
@@ -397,7 +373,6 @@ $.ui.ddmanager = {
 				parentInstance._over.call( parentInstance, event );
 			}
 		});
-
 	},
 	dragStop: function( draggable, event ) {
 		draggable.element.parentsUntil( "body" ).unbind( "scroll.droppable" );
@@ -409,5 +384,4 @@ $.ui.ddmanager = {
 };
 
 return $.ui.droppable;
-
 }));

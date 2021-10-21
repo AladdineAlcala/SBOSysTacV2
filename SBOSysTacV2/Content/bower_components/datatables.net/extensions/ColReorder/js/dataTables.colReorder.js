@@ -49,7 +49,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 /**
  * Switch the key value pairing of an index array to be value key (i.e. the old value is now the
  * key). For example consider [ 2, 0, 1 ] this would be returned as [ 1, 2, 0 ].
@@ -67,7 +66,6 @@ function fnInvertKeyValues( aIn )
 	return aRet;
 }
 
-
 /**
  * Modify an array by switching the position of two elements
  *  @method  fnArraySwitch
@@ -81,7 +79,6 @@ function fnArraySwitch( aArray, iFrom, iTo )
 	var mStore = aArray.splice( iFrom, 1 )[0];
 	aArray.splice( iTo, 0, mStore );
 }
-
 
 /**
  * Switch the positions of nodes in a parent node (note this is specifically designed for
@@ -113,7 +110,6 @@ function fnDomSwitch( nParent, iFrom, iTo )
 		nParent.appendChild( nStore );
 	}
 }
-
 
 /**
  * Plug-in for DataTables which will reorder the internal column structure by taking the column
@@ -174,7 +170,6 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo, drop, in
 	}
 	fnArraySwitch( aiMapping, iFrom, iTo );
 	var aiInvertMapping = fnInvertKeyValues( aiMapping );
-
 
 	/*
 	 * Convert all internal indexing to the new column order indexes
@@ -345,7 +340,6 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo, drop, in
 		this.oApi._fnSortAttachListener( oSettings, oSettings.aoColumns[i].nTh, i );
 	}
 
-
 	/* Fire an event so other plug-ins can update */
 	$(oSettings.oInstance).trigger( 'column-reorder.dt', [ oSettings, {
 		from: iFrom,
@@ -387,7 +381,6 @@ var ColReorder = function( dt, opts )
 		camelToHungarian( ColReorder.defaults, ColReorder.defaults, true );
 		camelToHungarian( ColReorder.defaults, opts || {} );
 	}
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public class variables
@@ -470,7 +463,6 @@ var ColReorder = function( dt, opts )
 		"aoTargets": []
 	};
 
-
 	/**
 	 * @namespace Common and useful DOM elements for the class instance
 	 */
@@ -500,8 +492,6 @@ var ColReorder = function( dt, opts )
 
 	return this;
 };
-
-
 
 $.extend( ColReorder.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -630,7 +620,6 @@ $.extend( ColReorder.prototype, {
 		return this;
 	},
 
-
 	/**
 	 * Convert from the original column index, to the original
 	 *
@@ -665,7 +654,6 @@ $.extend( ColReorder.prototype, {
 				} );
 		}
 	},
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods (they are of course public in JS, but recommended as private)
@@ -779,7 +767,6 @@ $.extend( ColReorder.prototype, {
 		} );
 	},
 
-
 	/**
 	 * Set the column order from an array
 	 *  @method  _fnOrderColumns
@@ -836,7 +823,6 @@ $.extend( ColReorder.prototype, {
 			this.s.reorderCallback.call( this );
 		}
 	},
-
 
 	/**
 	 * Because we change the indexes of columns in the table, relative to their starting point
@@ -899,7 +885,6 @@ $.extend( ColReorder.prototype, {
 		}
 	},
 
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Mouse drop and drag
 	 */
@@ -927,7 +912,6 @@ $.extend( ColReorder.prototype, {
 				}
 			} );
 	},
-
 
 	/**
 	 * Mouse down on a TH element in the table header
@@ -969,7 +953,6 @@ $.extend( ColReorder.prototype, {
 				that._fnMouseUp.call( that, e );
 			} );
 	},
-
 
 	/**
 	 * Deal with a mouse move event while dragging a node
@@ -1041,7 +1024,6 @@ $.extend( ColReorder.prototype, {
 		}
 	},
 
-
 	/**
 	 * Finish off the mouse drag and insert the column where needed
 	 *  @method  _fnMouseUp
@@ -1082,7 +1064,6 @@ $.extend( ColReorder.prototype, {
 			}
 		}
 	},
-
 
 	/**
 	 * Calculate a cached array with the points of the column inserts, and the
@@ -1140,7 +1121,6 @@ $.extend( ColReorder.prototype, {
 		}
 	},
 
-
 	/**
 	 * Copy the TH element that is being drags so the user has the idea that they are actually
 	 * moving it around the page.
@@ -1193,7 +1173,6 @@ $.extend( ColReorder.prototype, {
 			.appendTo( 'body' );
 	},
 
-
 	/**
 	 * Add a data attribute to the column headers, so we know the index of
 	 * the row to be reordered. This allows fast detection of the index, and
@@ -1206,7 +1185,6 @@ $.extend( ColReorder.prototype, {
 			$(column.nTh).attr('data-column-index', i);
 		} );
 	},
-
 
 	/**
 	 * Get cursor position regardless of mouse or touch input
@@ -1222,14 +1200,9 @@ $.extend( ColReorder.prototype, {
 	}
 } );
 
-
-
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Static parameters
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 
 /**
  * ColReorder default settings for initialisation
@@ -1294,8 +1267,6 @@ ColReorder.defaults = {
 	fnReorderCallback: null
 };
 
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Constants
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1308,8 +1279,6 @@ ColReorder.defaults = {
  */
 ColReorder.version = "1.5.1";
 
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables interfaces
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1317,7 +1286,6 @@ ColReorder.version = "1.5.1";
 // Expose
 $.fn.dataTable.ColReorder = ColReorder;
 $.fn.DataTable.ColReorder = ColReorder;
-
 
 // Register a new feature with DataTables
 if ( typeof $.fn.dataTable == "function" &&
@@ -1348,7 +1316,6 @@ else {
 	alert( "Warning: ColReorder requires DataTables 1.10.8 or greater - www.datatables.net/download");
 }
 
-
 // Attach a listener to the document which listens for DataTables initialisation
 // events so we can automatically initialise
 $(document).on( 'preInit.dt.colReorder', function (e, settings) {
@@ -1367,7 +1334,6 @@ $(document).on( 'preInit.dt.colReorder', function (e, settings) {
 		}
 	}
 } );
-
 
 // API augmentation
 $.fn.dataTable.Api.register( 'colReorder.reset()', function () {
@@ -1416,7 +1382,6 @@ $.fn.dataTable.Api.register( 'colReorder.disable()', function() {
 		}
 	} );
 } );
-
 
 return ColReorder;
 }));

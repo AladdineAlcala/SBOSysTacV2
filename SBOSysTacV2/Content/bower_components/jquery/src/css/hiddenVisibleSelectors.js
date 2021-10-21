@@ -2,7 +2,6 @@ define( [
 	"../core",
 	"../selector"
 ], function( jQuery ) {
-
 "use strict";
 
 jQuery.expr.pseudos.hidden = function( elem ) {
@@ -11,5 +10,4 @@ jQuery.expr.pseudos.hidden = function( elem ) {
 jQuery.expr.pseudos.visible = function( elem ) {
 	return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
 };
-
 } );

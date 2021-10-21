@@ -2,7 +2,6 @@ define( [
 	"../core",
 	"../var/rcssNum"
 ], function( jQuery, rcssNum ) {
-
 "use strict";
 
 function adjustCSS( elem, prop, valueParts, tween ) {
@@ -23,7 +22,6 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 			rcssNum.exec( jQuery.css( elem, prop ) );
 
 	if ( initialInUnit && initialInUnit[ 3 ] !== unit ) {
-
 		// Support: Firefox <=54
 		// Halve the iteration target value to prevent interference from CSS upper bounds (gh-2144)
 		initial = initial / 2;
@@ -35,7 +33,6 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		initialInUnit = +initial || 1;
 
 		while ( maxIterations-- ) {
-
 			// Evaluate and update our best guess (doubling guesses that zero out).
 			// Finish if the scale equals or crosses 1 (making the old*new product non-positive).
 			jQuery.style( elem, prop, initialInUnit + unit );
@@ -43,7 +40,6 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 				maxIterations = 0;
 			}
 			initialInUnit = initialInUnit / scale;
-
 		}
 
 		initialInUnit = initialInUnit * 2;

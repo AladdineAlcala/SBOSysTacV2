@@ -36,7 +36,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 $.extend( DataTable.ext.buttons, {
 	// A collection of column visibility buttons
 	colvis: function ( dt, conf ) {
@@ -154,7 +153,6 @@ $.extend( DataTable.ext.buttons, {
 		}
 	},
 
-
 	colvisRestore: {
 		className: 'buttons-colvisRestore',
 
@@ -181,7 +179,6 @@ $.extend( DataTable.ext.buttons, {
 		}
 	},
 
-
 	colvisGroup: {
 		className: 'buttons-colvisGroup',
 
@@ -197,7 +194,6 @@ $.extend( DataTable.ext.buttons, {
 		hide: []
 	}
 } );
-
 
 return DataTable.Buttons;
 }));

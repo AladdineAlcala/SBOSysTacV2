@@ -2,16 +2,13 @@
 /* Written by Abdurahmon Saidov (saidovab@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['tj'] = {
 	closeText: 'Идома',
 	prevText: '&#x3c;Қафо',
@@ -33,5 +30,4 @@ datepicker.regional['tj'] = {
 datepicker.setDefaults(datepicker.regional['tj']);
 
 return datepicker.regional['tj'];
-
 }));

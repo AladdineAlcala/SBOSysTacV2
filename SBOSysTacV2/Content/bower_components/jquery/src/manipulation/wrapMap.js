@@ -1,10 +1,8 @@
 define( function() {
-
 "use strict";
 
 // We have to close these tags to support XHTML (#13200)
 var wrapMap = {
-
 	// Support: IE <=9 only
 	option: [ 1, "<select multiple='multiple'>", "</select>" ],
 

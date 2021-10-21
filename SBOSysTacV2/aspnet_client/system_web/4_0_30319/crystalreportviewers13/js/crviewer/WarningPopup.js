@@ -55,7 +55,6 @@ bobj.crv.WarningPopup.Class.prototype = {
                 padding : "5px"
             }
         }));
-
     },
     init : function() {
         append2(document.body, this.getHTML());

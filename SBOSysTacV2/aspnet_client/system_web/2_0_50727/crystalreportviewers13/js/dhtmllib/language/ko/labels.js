@@ -7,12 +7,11 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
 File: labels.js
-
 
 =============================================================
 */
@@ -94,7 +93,7 @@ _closeDialog="창 닫기"
 
 _lstMoveUpLab="위로 이동"
 _lstMoveDownLab="아래로 이동"
-_lstMoveLeftLab="왼쪽으로 이동" 
+_lstMoveLeftLab="왼쪽으로 이동"
 _lstMoveRightLab="오른쪽으로 이동"
 _lstNewNodeLab="중첩된 필터 추가"
 _lstAndLabel="AND"
@@ -142,7 +141,7 @@ _calendarSelectionLab="선택한 날짜"
 
 _menuCheckLab="선택됨"
 _menuDisableLab="사용 안 함"
-	
+
 _level="수준"
 _closeTab="탭 닫기"
 _of=" /"

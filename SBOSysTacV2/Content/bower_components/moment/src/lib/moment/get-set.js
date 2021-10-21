@@ -43,7 +43,6 @@ export function stringGet (units) {
     return this;
 }
 
-
 export function stringSet (units, value) {
     if (typeof units === 'object') {
         units = normalizeObjectUnits(units);

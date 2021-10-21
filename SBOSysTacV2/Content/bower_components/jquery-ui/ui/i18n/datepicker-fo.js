@@ -2,16 +2,13 @@
 /* Written by Sverri Mohr Olsen, sverrimo@gmail.com */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['fo'] = {
 	closeText: 'Lat aftur',
 	prevText: '&#x3C;Fyrra',
@@ -33,5 +30,4 @@ datepicker.regional['fo'] = {
 datepicker.setDefaults(datepicker.regional['fo']);
 
 return datepicker.regional['fo'];
-
 }));

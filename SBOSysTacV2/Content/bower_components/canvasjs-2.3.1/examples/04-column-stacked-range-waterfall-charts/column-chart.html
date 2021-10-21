@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
-<head>  
-<meta charset="UTF-8">
-<script>
+<head>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -14,12 +14,12 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	axisY: {
 		title: "Reserves(MMbbl)"
 	},
-	data: [{        
-		type: "column",  
-		showInLegend: true, 
+	data: [{
+		type: "column",
+		showInLegend: true,
 		legendMarkerColor: "grey",
 		legendText: "MMbbl = one million barrels",
-		dataPoints: [      
+		dataPoints: [
 			{ y: 300878, label: "Venezuela" },
 			{ y: 266455,  label: "Saudi" },
 			{ y: 169709,  label: "Canada" },
@@ -34,10 +34,10 @@ var chart = new CanvasJS.Chart("chartContainer", {
 chart.render();
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

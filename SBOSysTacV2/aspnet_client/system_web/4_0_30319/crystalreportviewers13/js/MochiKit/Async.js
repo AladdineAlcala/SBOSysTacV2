@@ -80,7 +80,7 @@ MochiKit.Async.Deferred.prototype = {
             this.results[0].cancel();
         }
     },
-            
+
     _resback: function (res) {
         /***
 
@@ -300,7 +300,6 @@ MochiKit.Base.update(MochiKit.Async, {
         req.abort();
     },
 
-    
     sendXMLHttpRequest: function (req, /* optional */ sendContent) {
         if (typeof(sendContent) == "undefined" || sendContent === null) {
             sendContent = "";
@@ -309,7 +308,7 @@ MochiKit.Base.update(MochiKit.Async, {
         var m = MochiKit.Base;
         var self = MochiKit.Async;
         var d = new self.Deferred(m.partial(self._xhr_canceller, req));
-        
+
         try {
             req.onreadystatechange = m.bind(self._xhr_onreadystatechange,
                 req, d);
@@ -324,7 +323,6 @@ MochiKit.Base.update(MochiKit.Async, {
         }
 
         return d;
-
     },
 
     doSimpleXMLHttpRequest: function (url/*, ...*/) {
@@ -376,7 +374,6 @@ MochiKit.Base.update(MochiKit.Async, {
     }
 });
 
-
 MochiKit.Async.DeferredLock = function () {
     this.waiting = [];
     this.locked = false;
@@ -416,14 +413,12 @@ MochiKit.Async.DeferredLock.prototype = {
         return 'DeferredLock(' + this.id + ', ' + state + ')';
     },
     toString: MochiKit.Base.forwardCall("repr")
-
 };
 
 MochiKit.Async.DeferredList = function (list, /* optional */fireOnOneCallback, fireOnOneErrback, consumeErrors, canceller) {
-
     // call parent constructor
     MochiKit.Async.Deferred.apply(this, [canceller]);
-    
+
     this.list = list;
     var resultList = [];
     this.resultList = resultList;
@@ -444,7 +439,6 @@ MochiKit.Async.DeferredList = function (list, /* optional */fireOnOneCallback, f
     if (list.length === 0 && !fireOnOneCallback) {
         this.callback(this.resultList);
     }
-    
 };
 
 MochiKit.Async.DeferredList.prototype = new MochiKit.Async.Deferred();
@@ -497,7 +491,6 @@ MochiKit.Async.maybeDeferred = function (func) {
     return result;
 };
 
-
 MochiKit.Async.EXPORT = [
     "AlreadyCalledError",
     "CancelledError",
@@ -518,7 +511,7 @@ MochiKit.Async.EXPORT = [
     "gatherResults",
     "maybeDeferred"
 ];
-    
+
 MochiKit.Async.EXPORT_OK = [
     "evalJSONRequest"
 ];
@@ -526,7 +519,7 @@ MochiKit.Async.EXPORT_OK = [
 MochiKit.Async.__new__ = function () {
     var m = MochiKit.Base;
     var ne = m.partial(m._newNamedError, this);
-    ne("AlreadyCalledError", 
+    ne("AlreadyCalledError",
         function (deferred) {
             /***
 
@@ -563,7 +556,7 @@ MochiKit.Async.__new__ = function () {
         }
     );
 
-    ne("GenericError", 
+    ne("GenericError",
         function (msg) {
             this.message = msg;
         }
@@ -587,14 +580,12 @@ MochiKit.Async.__new__ = function () {
         }
     );
 
-
     this.EXPORT_TAGS = {
         ":common": this.EXPORT,
         ":all": m.concat(this.EXPORT, this.EXPORT_OK)
     };
 
     m.nameFunctions(this);
-
 };
 
 MochiKit.Async.__new__();

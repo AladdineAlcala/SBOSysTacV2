@@ -96,21 +96,20 @@ function TreePromptElem_change(name,values)
 
 	if (o.domElem!=null)
 	{
-		o.domElem.innerHTML=convStr(o.name)+(o.values!=null?('<b><span style="color:red">&nbsp;:&nbsp;</span>'+convStr(o.values)+'</b>'):'')		
-					
+		o.domElem.innerHTML=convStr(o.name)+(o.values!=null?('<b><span style="color:red">&nbsp;:&nbsp;</span>'+convStr(o.values)+'</b>'):'')
+
 		if (o.par==null)
 		{
-
 			if (o.checkIcn==null)
 				o.checkIcn=getLayer(_codeWinName+o.id+"_checkIcn")
 
-			changeSimpleOffset(o.checkIcn,0,o.isChecked()?0:17,null,o.isChecked()?_checkedPromptLab:_nocheckedPromptLab)					
+			changeSimpleOffset(o.checkIcn,0,o.isChecked()?0:17,null,o.isChecked()?_checkedPromptLab:_nocheckedPromptLab)
 		}
 		//cf updatetooltip in treeview.js
 		if(o.values)
 			o.advTooltip=_selectionPromptLab +' '+ o.values
 		else
-			o.advTooltip=_noselectionPromptLab		
+			o.advTooltip=_noselectionPromptLab
 	}
 }
 
@@ -139,7 +138,6 @@ function TreePromptElem_select(setFocus,ev)
 
 				var arrowL=prevIcn.childNodes[0]
 				changeSimpleOffset(arrowL,prev.selected?15:0,prev.sub.length==0?17*4:(prev.expanded?17*2:17*3))
-
 			}
 
 			treeView.selId=id;
@@ -158,8 +156,6 @@ function TreePromptElem_select(setFocus,ev)
 
 			var arrowL=this.icnLyr.childNodes[0]
 			changeSimpleOffset(arrowL,this.selected?15:0,this.sub.length==0?17*4:(this.expanded?17*2:17*3))
-
-
 
 			if (setFocus)
 				de.focus()
@@ -194,7 +190,7 @@ function TreePromptElem_getHTML(indent,isFirst)
 		o.treeView.isFirst=false
 		bord=""
 	}
-	
+
 	var isLast=false
 	if (o.par)
 	{
@@ -202,7 +198,7 @@ function TreePromptElem_getHTML(indent,isFirst)
 		if (plen>0)
 			isLast = (psub[plen-1].id==o.id)
 	}
-	
+
 	if ((o.par!=null)&&isLast)
 		bord+="border-bottom:0px;"
 
@@ -225,7 +221,6 @@ function TreePromptElem_getHTML(indent,isFirst)
 		a[i++]='&nbsp;<a class="promptNormal" id="'+_codeWinName+'trLstElt'+o.id+'" href="javascript:void(0)" onfocus="'+_codeWinName+'.treeFCCB(this,'+o.id+',true)" onblur="'+_codeWinName+'.treeFCCB(this,'+o.id+',false)">'
 		a[i++]=''+convStr(o.name)+(o.values!=null?('<b><span style="color:red">&nbsp;:&nbsp;</span>'+convStr(o.values)+'</b>'):'')+'</a>'
 		a[i++]='</nobr>'
-
 
 		// child nodes
 		if (exp)
@@ -255,8 +250,8 @@ function TreePromptElem_getHTML(indent,isFirst)
 	if(o.values)
 		o.advTooltip=_selectionPromptLab +' '+ o.values
 	else
-		o.advTooltip=_noselectionPromptLab	
-			
+		o.advTooltip=_noselectionPromptLab
+
 	return a.join("");
 }
 
@@ -284,4 +279,3 @@ function dispIcnPrompt(eId)
 		changeSimpleOffset(arrowL,selected?15:0,expanded?17*2:17*3)
 	}
 }
-

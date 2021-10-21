@@ -1,42 +1,39 @@
 /* Copyright (c) Business Objects 2006. All rights reserved. */
 
-
-
-
 /**
- * Abstract base class. IOAdapters allow the ViewerListener to request data from 
+ * Abstract base class. IOAdapters allow the ViewerListener to request data from
  * a server without knowing the details of how a particular framework requires
  * the request to be made.
  */
 bobj.crv.IOAdapterBase = {
     /**
      * Send a viewer request to the Server.
-     * 
+     *
      * @param pageState   [Object] The composite view state for all viewers on the page
      * @param viewerName  [String] The name of the viewer that should handle the request
      * @param eventArgs   [Object] Event arguements
      * @param allowAsynch [bool]   True if asynchronous requests are allowed
-     * 
+     *
      * @return [MochiKit.Async.Deferred] Returns a Deferred if an asynchronous
      *       request is pending.
      */
     request: function() {},
-    
+
     /**
      * Add a parameter to server requests.
-     * 
+     *
      * @param fldName  [String]  Name of the parameter
      * @param fldValue [String]  Value of the parameter
      */
     addRequestField: function(fldName, fldValue) {},
-    
+
      /**
      * Remove a parameter from server requests.
-     * 
+     *
      * @param fldName  [String]  Name of the parameter
      */
     removeRequestField: function(fldName) {},
-    
+
     /**
      * Save the page state. Persist the state in a manner apropriate
      * for the framework.
@@ -45,7 +42,7 @@ bobj.crv.IOAdapterBase = {
      * @param viewerName  [String] The name of the viewer that making the request
      */
     saveViewState: function(pageState, viewerName) {},
-    
+
     /**
      * Get the postback data queryString to use for Active X print control
      *
@@ -59,7 +56,7 @@ bobj.crv.IOAdapterBase = {
      * Allows the IOAdapter to manipulate the error before the Viewer processes it for display to the user.
      */
     processError: function(response) {return response;},
-    
+
     canUseAjax: function() {
         try {
             return (MochiKit.Async.getXMLHttpRequest() !== null);
@@ -68,7 +65,7 @@ bobj.crv.IOAdapterBase = {
             return false;
         }
     },
-    
+
     /**
      * Ensures that there is a hidden iframe to be used for postbacks.
      */
@@ -88,10 +85,10 @@ bobj.crv.IOAdapterBase = {
             if (!ifrm.contentWindow.name) {
                 ifrm.contentWindow.name = ifrm.id;
             }
-            
+
             this._iframe = ifrm;
         }
-        
+
         return this._iframe;
     }
 };
@@ -103,9 +100,9 @@ ServletAdapter. ServletAdapter issues requests to the Java DHTML viewer.
 */
 
 /**
- * Constructor for ServletAdapter. 
+ * Constructor for ServletAdapter.
  *
- * @param pageUrl [string]  URL of the page 
+ * @param pageUrl [string]  URL of the page
  * @param servletUrl [string]  URL to which requests to a servlet should be made
  *                             It doubles as the url for all asyncronous requests
  */
@@ -120,22 +117,20 @@ bobj.crv.ServletAdapter._requestParams = {
     TARGET: 'CRVEventTarget',
     ARGUMENT: 'CRVEventArgument'
 };
-    
 
 bobj.crv.ServletAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, {
-    
     request: function(pageState, viewerName, eventArgs, allowAsync, useIframe) {
         if (!this._form) {
             this._createForm();
         }
-        
+
         var rp = bobj.crv.ServletAdapter._requestParams;
         var toJSON = MochiKit.Base.serializeJSON;
-        
-        this._form[rp.STATE].value = encodeURIComponent(toJSON(pageState));  
+
+        this._form[rp.STATE].value = encodeURIComponent(toJSON(pageState));
         this._form[rp.TARGET].value = encodeURIComponent(viewerName);
         this._form[rp.ARGUMENT].value = encodeURIComponent(toJSON(eventArgs));
-        
+
         var deferred = null;
         if (allowAsync && this._servletUrl) {
             var req = MochiKit.Async.getXMLHttpRequest();
@@ -152,7 +147,7 @@ bobj.crv.ServletAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, 
         }
 
         // once the form is submitted it is not intended to be reused.
-        
+
         MochiKit.DOM.removeElement(this._form);
         this._form = null;
         return deferred;
@@ -169,9 +164,9 @@ bobj.crv.ServletAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, 
     _createForm: function() {
         var d = MochiKit.DOM;
         var rp = bobj.crv.ServletAdapter._requestParams;
-        
+
         this._form = d.FORM({
-                name: bobj.uniqueId(), 
+                name: bobj.uniqueId(),
                 style: 'display:none',
                 method: 'POST',
                 enctype: 'application/x-www-form-urlencoded;charset=utf-8',
@@ -179,16 +174,16 @@ bobj.crv.ServletAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, 
             d.INPUT({type: 'hidden', name: rp.STATE}),
             d.INPUT({type: 'hidden', name: rp.TARGET}),
             d.INPUT({type: 'hidden', name: rp.ARGUMENT}));
-            
+
         document.body.appendChild(this._form);
     },
-    
+
     addRequestField: function(fldName, fldValue) {
         if (fldName && fldValue) {
             if (!this._form) {
                 this._createForm();
             }
-            
+
             var existingElem = this._form[fldName];
             if (existingElem) {
                 existingElem.value = fldValue;
@@ -198,12 +193,12 @@ bobj.crv.ServletAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, 
             }
         }
     },
-    
+
     removeRequestField: function(fldName) {
         if (fldName) {
             var form = this._form;
-            
-            if (form) {            
+
+            if (form) {
                 var existingElem = form[fldName];
                 if (existingElem) {
                     MochiKit.DOM.removeElement(existingElem);
@@ -211,17 +206,17 @@ bobj.crv.ServletAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, 
                         form[fldName] = null;
                     }
                 }
-                
+
                 existingElem = null;
             }
         }
     },
-  
+
     getPostDataForPrinting: function(pageState, viewerName) {
         var toJSON = MochiKit.Base.serializeJSON;
         var rp = bobj.crv.ServletAdapter._requestParams;
         var state = toJSON(pageState);
-        
+
         var postData = {};
         postData[rp.STATE] = encodeURIComponent(state);
         postData[rp.TARGET] = encodeURIComponent(viewerName);
@@ -229,15 +224,15 @@ bobj.crv.ServletAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, 
         if(document.getElementById('com.sun.faces.VIEW')) {
             postData['com.sun.faces.VIEW'] = encodeURIComponent(document.getElementById('com.sun.faces.VIEW').value);
         }
-        
+
         return MochiKit.Base.queryString(postData);
     },
-    
-    processError: function(response) { 
+
+    processError: function(response) {
         if (!(typeof(response.number) == 'undefined') && response.number == 404) {
             return L_bobj_crv_ServletMissing;
         }
-        
+
         return response;
     }
 });
@@ -249,11 +244,11 @@ AspDotNetAdapter. AspDotNetAdapter issues requests to the WebForm DHTML viewer.
 */
 
 /**
- * Constructor for AspDotNetAdapter. 
+ * Constructor for AspDotNetAdapter.
  *
  * @param postbackEventReference [string]  The full functiona call to the ASP.NET dopostback function
  * @param replacementParameter [string] the string to replace in the dopostback function
- * @param stateID [string] the name of the input field to save the state to 
+ * @param stateID [string] the name of the input field to save the state to
  */
 bobj.crv.AspDotNetAdapter = function(postbackEventReference, replacementParameter, stateID, callbackEventReference, aspnetVersion) {
     this._postbackEventReference = postbackEventReference;
@@ -267,22 +262,20 @@ bobj.crv.AspDotNetAdapter = function(postbackEventReference, replacementParamete
     if (tmpState) {
         this._form = tmpState.form;
     }
-    
+
     if(this._isAspNetVersionPriorToVersion4()) {
         WebForm_CallbackComplete = this.WebForm_CallbackComplete;
     }
 };
 
-
 bobj.crv.AspDotNetAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, {
-    
     request: function(pageState, viewerName, eventArgs, allowAsync, useIframe, callbackHandler, errbackHandler) {
         var toJSON = MochiKit.Base.serializeJSON;
         if (eventArgs && this._additionalReqFlds) {
             eventArgs = MochiKit.Base.update(eventArgs, this._additionalReqFlds);
         }
         this._additionalReqFlds = null;
-        
+
         var jsonEventArgs = toJSON(eventArgs);
         this.saveViewState(pageState, viewerName);
 
@@ -302,7 +295,7 @@ bobj.crv.AspDotNetAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase
             if (useIframe) {
                 this._form.target = this._getPostbackIframe().id;
             }
-            
+
             var postbackCall;
             if(this._postbackEventReference.indexOf("'" + this._replacementParameter + "'") >= 0){
                 postbackCall = this._postbackEventReference.replace("'" + this._replacementParameter + "'", "jsonEventArgs");
@@ -315,20 +308,20 @@ bobj.crv.AspDotNetAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase
             this._form.target = ""; //Give back the target of the form after using, or the form cannot get focused
         }
     },
-    
+
     /**
      * @return true if aspnet verion is prior to version 4
      */
     _isAspNetVersionPriorToVersion4 : function () {
         if(this._aspnetVersion != null) {
             var sep = this._aspnetVersion.split(".");
-            if(eval(sep[0]) < 4) 
+            if(eval(sep[0]) < 4)
                 return true;
         }
-        
+
         return false;
     },
-    
+
     saveViewState: function(pageState, viewerName) {
         var toJSON = MochiKit.Base.serializeJSON;
         var viewState = pageState[viewerName];
@@ -337,7 +330,7 @@ bobj.crv.AspDotNetAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase
             state.value = toJSON(viewState);
         }
     },
-    
+
     getPostDataForPrinting: function(pageState, viewerName) {
         this.saveViewState(pageState, viewerName);
         var nv = MochiKit.DOM.formContents(this.form);
@@ -348,13 +341,13 @@ bobj.crv.AspDotNetAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase
         var queryString = MochiKit.Base.queryString(names, values);
         return queryString;
     },
-    
+
     addRequestField: function(fldName, fldValue) {
         if (!this._additionalReqFlds) {
             this._additionalReqFlds = {};
         }
         this._additionalReqFlds[fldName] = fldValue;
-        
+
         /*if (fldName && fldValue) {
             var existingElem = this._form[fldName];
             if (existingElem) {
@@ -365,10 +358,10 @@ bobj.crv.AspDotNetAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase
             }
         }*/
     },
-        
+
     _clearRequestField: function(fldName) {
         if (fldName) {
-            if (this._form) {            
+            if (this._form) {
                 var existingElem = this._form[fldName];
                 if (existingElem) {
                     existingElem.value = "";
@@ -376,12 +369,12 @@ bobj.crv.AspDotNetAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase
             }
         }
     },
-    
+
     _clearEventFields: function() {
         this._clearRequestField("__EVENTTARGET");
         this._clearRequestField("__EVENTARGUMENT");
     },
-    
+
     /*
      * Overriding WebForm_CallbackComplete provided by .Net framework 2(WebResource.asx) as it was incorrect.
      * The code below is taken from .Net 4 copy of this function
@@ -403,18 +396,17 @@ bobj.crv.AspDotNetAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase
                 WebForm_ExecuteCallback(callbackObject);
             }
         }
-
     }
 });
 
 /*
 ================================================================================
-FacesAdapter. FacesAdapter issues requests to a JSF viewer component. 
+FacesAdapter. FacesAdapter issues requests to a JSF viewer component.
 ================================================================================
 */
 
 /**
- * Constructor for FacesAdapter. 
+ * Constructor for FacesAdapter.
  *
  * @param formName [string]  Name of the form to submit
  * @param servletUrl [string]  URL to which requests to a servlet should be made
@@ -424,7 +416,7 @@ bobj.crv.FacesAdapter = function(formName, servletUrl) {
     this._formName = formName;
     this._servletUrl = servletUrl;
     this._useServlet = false;
-    if (!bobj.crv.FacesAdapter._hasInterceptedSubmit) { 
+    if (!bobj.crv.FacesAdapter._hasInterceptedSubmit) {
         this._interceptSubmit();
         bobj.crv.FacesAdapter._hasInterceptedSubmit = true;
     }
@@ -437,35 +429,33 @@ bobj.crv.FacesAdapter._requestParams = {
 };
 
 bobj.crv.FacesAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, {
-    
     request: function(pageState, viewerName, eventArgs, allowAsync, useIframe) {
-        
         var rp = bobj.crv.FacesAdapter._requestParams;
         var toJSON = MochiKit.Base.serializeJSON;
         var INPUT =  MochiKit.DOM.INPUT;
-        
+
         var deferred = null;
-        
+
         var form = this._getForm();
         if (!form) {
             return;
         }
-        
+
         if (!form[rp.TARGET]) {
-            form.appendChild( INPUT({type: 'hidden', name: rp.TARGET}) );    
+            form.appendChild( INPUT({type: 'hidden', name: rp.TARGET}) );
         }
         form[rp.TARGET].value = encodeURIComponent(viewerName);
-        
+
         if (!form[rp.ARGUMENT]) {
             form.appendChild( INPUT({type: 'hidden', name: rp.ARGUMENT}) );
         }
         form[rp.ARGUMENT].value = encodeURIComponent(toJSON(eventArgs));
-        
+
         if (!form[rp.STATE]) {
             form.appendChild( INPUT({type: 'hidden', name: rp.STATE}) );
         }
-        form[rp.STATE].value = encodeURIComponent(toJSON(pageState));  
-        
+        form[rp.STATE].value = encodeURIComponent(toJSON(pageState));
+
         if (allowAsync && this._servletUrl) {
             var req = MochiKit.Async.getXMLHttpRequest();
             req.open("POST", this._servletUrl, true);
@@ -478,39 +468,39 @@ bobj.crv.FacesAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, {
             if (this._useServlet === true) {
                 form.action = this._servletUrl;
             }
-            
+
             var origTarget = form.target;
             if (useIframe) {
                 form.target = this._getPostbackIframe().id;
             }
-            
+
             form.submit();
-            
+
             form.action = pageUrl;
             form.target = origTarget;
             this._useServlet = false;
         }
-        
+
         // clear out the request fields so that the form can be reused
         form[rp.TARGET].value = "";
         form[rp.ARGUMENT].value = "";
         form[rp.STATE].value = "";
-        
+
         // TODO Post Titan: we shouldn't need to have explicit knowledge of this parameter
         this.removeRequestField ('ServletTask');
-        
+
         return deferred;
     },
-    
+
     redirectToServlet: function () {
         this._useServlet = true;
     },
-    
+
     addRequestField: function(fldName, fldValue) {
         if (fldName && fldValue) {
             var form = this._getForm();
-            
-            if (form) {            
+
+            if (form) {
                 var existingElem = form[fldName];
                 if (existingElem) {
                     existingElem.value = fldValue;
@@ -521,12 +511,12 @@ bobj.crv.FacesAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, {
             }
         }
     },
-    
+
     removeRequestField: function(fldName) {
         if (fldName) {
             var form = this._getForm();
-            
-            if (form) {            
+
+            if (form) {
                 var existingElem = form[fldName];
                 if (existingElem) {
                     MochiKit.DOM.removeElement(existingElem);
@@ -534,12 +524,12 @@ bobj.crv.FacesAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, {
                         form[fldName] = null;
                     }
                 }
-                
+
                 existingElem = null;
             }
         }
     },
-    
+
     saveViewState: function(pageState, viewerName) {
         if (!bobj.crv.FacesAdapter._isStateSaved) {
             var form = this._getForm();
@@ -547,20 +537,20 @@ bobj.crv.FacesAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, {
                 var rp = bobj.crv.FacesAdapter._requestParams;
                 var toJSON = MochiKit.Base.serializeJSON;
                 var INPUT =  MochiKit.DOM.INPUT;
-                
+
                 if (!form[rp.STATE]) {
                     form.appendChild( INPUT({type: 'hidden', name: rp.STATE}) );
                 }
-                form[rp.STATE].value = encodeURIComponent(toJSON(pageState));  
+                form[rp.STATE].value = encodeURIComponent(toJSON(pageState));
             }
             bobj.crv.FacesAdapter._isStateSaved = true;
         }
     },
-    
+
     _getForm: function() {
-        return document.forms[this._formName];   
+        return document.forms[this._formName];
     },
-    
+
     _interceptSubmit: function() {
         var form = this._getForm();
         if (form) {
@@ -572,12 +562,12 @@ bobj.crv.FacesAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, {
             };
         }
     },
-      
+
     getPostDataForPrinting: function(pageState, viewerName) {
         var toJSON = MochiKit.Base.serializeJSON;
         var rp = bobj.crv.ServletAdapter._requestParams;
         var state = toJSON(pageState);
-        
+
         var postData = {};
         postData[rp.STATE] = encodeURIComponent(state);
         postData[rp.TARGET] = encodeURIComponent(viewerName);
@@ -585,15 +575,15 @@ bobj.crv.FacesAdapter.prototype = MochiKit.Base.merge(bobj.crv.IOAdapterBase, {
         if(document.getElementById('com.sun.faces.VIEW')) {
             postData['com.sun.faces.VIEW'] = encodeURIComponent(document.getElementById('com.sun.faces.VIEW').value);
         }
-        
+
         return MochiKit.Base.queryString(postData);
     },
-    
-    processError: function(response) { 
+
+    processError: function(response) {
         if (!(typeof(response.number) == 'undefined') && response.number == 404) {
             return L_bobj_crv_ServletMissing;
         }
-        
+
         return response;
-    }      
+    }
 });

@@ -21,7 +21,6 @@ test('Autoclose', function(){
         picker = dp.picker,
         target;
 
-
     input.focus();
     ok(picker.is(':visible'), 'Picker is visible');
     target = picker.find('.datepicker-days tbody td:nth(7)');
@@ -740,7 +739,6 @@ test('DatesDisabled as attribute', function(){
 });
 
 test('BeforeShowDay', function(){
-
     var beforeShowDay = function(date) {
         switch (date.getDate()){
             case 25:
@@ -811,7 +809,6 @@ test('BeforeShowMonth regress .day content', function() {
 });
 
 test('BeforeShowMonth', function () {
-
     var beforeShowMonth = function (date) {
         switch (date.getMonth()) {
             case 0:
@@ -855,9 +852,7 @@ test('BeforeShowMonth', function () {
     ok(!target.hasClass('disabled'), 'July is enabled');
 });
 
-
 test('BeforeShowYear', function () {
-
     var beforeShowYear = function (date) {
         switch (date.getFullYear()) {
             case 2013:
@@ -992,7 +987,6 @@ test('beforeShowCentury', function () {
 });
 
 test('Orientation: values are parsed correctly', function(){
-
     var input = $('<input />')
                 .appendTo('#qunit-fixture')
                 .val('2012-10-26')
@@ -1232,9 +1226,7 @@ test('Multidate Separator', function(){
     equal(input.val(), '2012-03-05 2012-03-04 2012-03-12');
 });
 
-
 test("Picker is shown on input focus when showOnFocus is not defined", function () {
-
     var input = $('<input />')
             .appendTo('#qunit-fixture')
             .val('2014-01-01')
@@ -1246,11 +1238,9 @@ test("Picker is shown on input focus when showOnFocus is not defined", function 
     input.focus();
 
     ok(picker.is(":visible"), "Datepicker is visible");
-
 });
 
 test("Picker is shown on input focus when showOnFocus is true", function () {
-
     var input = $('<input />')
             .appendTo('#qunit-fixture')
             .val('2014-01-01')
@@ -1263,11 +1253,9 @@ test("Picker is shown on input focus when showOnFocus is true", function () {
     input.focus();
 
     ok(picker.is(":visible"), "Datepicker is visible");
-
 });
 
 test("Picker is hidden on input focus when showOnFocus is false", function () {
-
     var input = $('<input />')
             .appendTo('#qunit-fixture')
             .val('2014-01-01')
@@ -1280,7 +1268,6 @@ test("Picker is hidden on input focus when showOnFocus is false", function () {
     input.focus();
 
     ok(picker.is(":hidden"), "Datepicker is hidden");
-
 });
 
 test('Container', function(){

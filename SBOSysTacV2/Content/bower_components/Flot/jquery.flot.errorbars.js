@@ -105,7 +105,6 @@ shadowSize and lineWidth are derived as well from the points series.
     }
 
     function parseErrors(series, i){
-
         var points = series.datapoints.points;
 
         // read errors from points array
@@ -160,7 +159,6 @@ shadowSize and lineWidth are derived as well from the points series.
     }
 
     function drawSeriesErrors(plot, ctx, s){
-
         var points = s.datapoints.points,
                 ps = s.datapoints.pointsize,
                 ax = [s.xaxis, s.yaxis],
@@ -185,18 +183,15 @@ shadowSize and lineWidth are derived as well from the points series.
         }
 
         for (var i = 0; i < s.datapoints.points.length; i += ps) {
-
             //parse
             var errRanges = parseErrors(s, i);
 
             //cycle xerr & yerr
             for (var e = 0; e < err.length; e++){
-
                 var minmax = [ax[e].min, ax[e].max];
 
                 //draw this error?
                 if (errRanges[e * err.length]){
-
                     //data coordinates
                     var x = points[i],
                         y = points[i + 1];
@@ -273,7 +268,6 @@ shadowSize and lineWidth are derived as well from the points series.
     }
 
     function drawError(ctx,err,x,y,upper,lower,drawUpper,drawLower,radius,offset,minmax){
-
         //shadow offset
         y += offset;
         upper += offset;

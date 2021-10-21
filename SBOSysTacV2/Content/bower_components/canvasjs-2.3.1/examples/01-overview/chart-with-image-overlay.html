@@ -1,18 +1,18 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">
-<style>
-img{
-	pointer-events: none;
-}
-</style>
-<script>
+    <meta charset="UTF-8">
+    <style>
+        img {
+            pointer-events: none;
+        }
+    </style>
+    <script>
 window.onload = function () {
 
-var chart = new CanvasJS.Chart("chartContainer", {            
+var chart = new CanvasJS.Chart("chartContainer", {
 	title:{
-		text: "Weekly Weather Forecast"              
+		text: "Weekly Weather Forecast"
 	},
 	axisY: {
 		includeZero: false,
@@ -42,7 +42,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 });
 chart.render();
 
-var images = [];    
+var images = [];
 
 addImages(chart);
 
@@ -73,21 +73,21 @@ function positionImage(image, index) {
 }
 
 $( window ).resize(function() {
-	var cloudyCounter = 0, rainyCounter = 0, sunnyCounter = 0;    
+	var cloudyCounter = 0, rainyCounter = 0, sunnyCounter = 0;
 	var imageCenter = 0;
 	for(var i=0;i<chart.data[0].dataPoints.length;i++) {
 		imageCenter = chart.axisX[0].convertValueToPixel(chart.data[0].dataPoints[i].x) - 20;
-		if(chart.data[0].dataPoints[i].name == "cloudy") {					
+		if(chart.data[0].dataPoints[i].name == "cloudy") {
 			$(".cloudy").eq(cloudyCounter++).css({ "left": imageCenter});
 		} else if(chart.data[0].dataPoints[i].name == "rainy") {
-			$(".rainy").eq(rainyCounter++).css({ "left": imageCenter});  
+			$(".rainy").eq(rainyCounter++).css({ "left": imageCenter});
 		} else if(chart.data[0].dataPoints[i].name == "sunny") {
-			$(".sunny").eq(sunnyCounter++).css({ "left": imageCenter});  
-		}                
+			$(".sunny").eq(sunnyCounter++).css({ "left": imageCenter});
+		}
 	}
 });
 
-function formatter(e) { 
+function formatter(e) {
 	if(e.index === 0 && e.dataPoint.x === 0) {
 		return " Min " + e.dataPoint.y[e.index] + "°";
 	} else if(e.index == 1 && e.dataPoint.x === 0) {
@@ -95,14 +95,14 @@ function formatter(e) {
 	} else{
 		return e.dataPoint.y[e.index] + "°";
 	}
-} 
+}
 
 }
-</script>	
+    </script>
 </head>
 <body>
-<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>  
-<script src="../../jquery.canvasjs.min.js"></script>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="../../jquery.canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
 </body>
 </html>

@@ -1,8 +1,8 @@
 /**
- * 
+ *
  * @param name [String] Name of itme
  * @param img [String] uri location of icon image
- * @param title [String] tooltip 
+ * @param title [String] tooltip
  */
 bobj.crv.PanelNavigatorItem = function(name, img, title, topOffset) {
     this._name = name;
@@ -11,7 +11,7 @@ bobj.crv.PanelNavigatorItem = function(name, img, title, topOffset) {
     this._title = title;
     this.topOffset = topOffset;
     this.widgetType = 'PanelNavigatorItem';
-    
+
     this.id = bobj.uniqueId () + "_navItem_" + name;
 };
 
@@ -46,22 +46,22 @@ bobj.crv.PanelNavigatorItem.prototype = {
         connect (this.layer, "onmouseout", this, this._onMouseOut);
         connect (this.layer, "onfocus", this, this._onFocus);
         connect (this.layer, "onblur", this, this._onBlur);
-        
+
         this.setSelected (this._isSelected);
     },
-    
+
     _onFocus : function () {
         MochiKit.DOM.addElementClass (this.layer, "highlighted");
     },
-    
+
     _onBlur : function () {
         MochiKit.DOM.removeElementClass (this.layer, "highlighted");
     },
-    
+
     _onMouseOver : function () {
         MochiKit.DOM.addElementClass (this.layer, "highlighted");
     },
-    
+
     _onMouseOut : function () {
         MochiKit.DOM.removeElementClass (this.layer, "highlighted");
     },
@@ -74,7 +74,7 @@ bobj.crv.PanelNavigatorItem.prototype = {
     _onClick : function() {
         this._signalSwitchPanel ();
     },
-    
+
     /**
      * Signals switch panel if it's not currently selected
      * @return

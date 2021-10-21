@@ -45,7 +45,6 @@
     } ());
     if (!Function.prototype.bind) {
         Function.prototype.bind = function bind(that) {
-
             var target = this;
             var slice = [].slice;
 
@@ -55,9 +54,7 @@
 
             var args = slice.call(arguments, 1),
                 bound = function () {
-
                     if (this instanceof bound) {
-
                         var F = function(){};
                         F.prototype = target.prototype;
                         var self = new F();
@@ -70,16 +67,12 @@
                             return result;
                         }
                         return self;
-
                     } else {
-
                         return target.apply(
                             that,
                             args.concat(slice.call(arguments))
                         );
-
                     }
-
                 };
 
             return bound;
@@ -114,8 +107,6 @@
         };
     }
 
-
-
     // =================================================================================================================
     // Template
 
@@ -141,8 +132,6 @@
 
     var disable_html =
         '<span class="irs-disable-mask"></span>';
-
-
 
     // =================================================================================================================
     // Core
@@ -261,8 +250,6 @@
             p_single_left: 0
         };
 
-
-
         /**
          * get and validate config
          */
@@ -333,12 +320,10 @@
             onUpdate: null
         };
 
-
         // check if base element is input
         if ($inp[0].nodeName !== "INPUT") {
             console && console.warn && console.warn("Base element should be <input>!", $inp[0]);
         }
-
 
         // config from data-attributes extends js config
         config_from_data = {
@@ -404,7 +389,6 @@
             }
         }
 
-
         // input value extends default config
         if (val !== undefined && val !== "") {
             val = val.split(config_from_data.input_values_separator || options.input_values_separator || ";");
@@ -425,23 +409,16 @@
             }
         }
 
-
-
         // js config extends default config
         $.extend(config, options);
-
 
         // data config extends config
         $.extend(config, config_from_data);
         this.options = config;
 
-
-
         // validate config, to be sure that all data types are correct
         this.update_check = {};
         this.validate();
-
-
 
         // default result object, returned to callbacks
         this.result = {
@@ -460,13 +437,10 @@
             to_value: null
         };
 
-
-
         this.init();
     };
 
     IonRangeSlider.prototype = {
-
         /**
          * Starts or updates the plugin instance
          *
@@ -803,7 +777,7 @@
             if ($.contains(this.$cache.cont[0], e.target) || this.dragging) {
                 this.callOnFinish();
             }
-            
+
             this.dragging = false;
         },
 
@@ -988,8 +962,6 @@
             }
         },
 
-
-
         // =============================================================================================================
         // Calculations
 
@@ -1018,7 +990,6 @@
 
             this.calcPointerPercent();
             var handle_x = this.getHandleX();
-
 
             if (this.target === "both") {
                 this.coords.p_gap = 0;
@@ -1194,7 +1165,6 @@
             this.calcLabels();
         },
 
-
         /**
          * calculates pointer X in percent
          */
@@ -1286,14 +1256,11 @@
             }
 
             if (this.options.type === "single") {
-
                 this.labels.w_single = this.$cache.single.outerWidth(false);
                 this.labels.p_single_fake = this.labels.w_single / this.coords.w_rs * 100;
                 this.labels.p_single_left = this.coords.p_single_fake + (this.coords.p_handle / 2) - (this.labels.p_single_fake / 2);
                 this.labels.p_single_left = this.checkEdges(this.labels.p_single_left, this.labels.p_single_fake);
-
             } else {
-
                 this.labels.w_from = this.$cache.from.outerWidth(false);
                 this.labels.p_from_fake = this.labels.w_from / this.coords.w_rs * 100;
                 this.labels.p_from_left = this.coords.p_from_fake + (this.coords.p_handle / 2) - (this.labels.p_from_fake / 2);
@@ -1311,11 +1278,8 @@
                 this.labels.p_single_left = ((this.labels.p_from_left + this.labels.p_to_left + this.labels.p_to_fake) / 2) - (this.labels.p_single_fake / 2);
                 this.labels.p_single_left = this.toFixed(this.labels.p_single_left);
                 this.labels.p_single_left = this.checkEdges(this.labels.p_single_left, this.labels.p_single_fake);
-
             }
         },
-
-
 
         // =============================================================================================================
         // Drawings
@@ -1383,7 +1347,6 @@
             }
 
             if (this.old_from !== this.result.from || this.old_to !== this.result.to || this.force_redraw || this.is_key) {
-
                 this.drawLabels();
 
                 this.$cache.bar[0].style.left = this.coords.p_bar_x + "%";
@@ -1461,7 +1424,6 @@
             }
 
             if (this.options.type === "single") {
-
                 if (values_num) {
                     text_single = this.decorate(p_values[this.result.from]);
                     this.$cache.single.html(text_single);
@@ -1485,11 +1447,8 @@
                 } else {
                     this.$cache.max[0].style.visibility = "visible";
                 }
-
             } else {
-
                 if (values_num) {
-
                     if (this.options.decorate_both) {
                         text_single = this.decorate(p_values[this.result.from]);
                         text_single += this.options.values_separator;
@@ -1503,7 +1462,6 @@
                     this.$cache.single.html(text_single);
                     this.$cache.from.html(text_from);
                     this.$cache.to.html(text_to);
-
                 } else {
                     from_pretty = this._prettify(this.result.from);
                     to_pretty = this._prettify(this.result.to);
@@ -1521,7 +1479,6 @@
                     this.$cache.single.html(text_single);
                     this.$cache.from.html(text_from);
                     this.$cache.to.html(text_to);
-
                 }
 
                 this.calcLabels();
@@ -1569,7 +1526,6 @@
                 } else {
                     this.$cache.max[0].style.visibility = "visible";
                 }
-
             }
         },
 
@@ -1635,8 +1591,6 @@
             }
         },
 
-
-
         /**
          * Write values to input element
          */
@@ -1658,8 +1612,6 @@
                 this.$cache.input.data("to", this.result.to);
             }
         },
-
-
 
         // =============================================================================================================
         // Callbacks
@@ -1708,9 +1660,6 @@
                 }
             }
         },
-
-
-
 
         // =============================================================================================================
         // Service methods
@@ -1776,7 +1725,6 @@
             if (percent === 100) {
                 return this.options.max;
             }
-
 
             if (min_decimals) {
                 min_length = min_decimals.length;
@@ -1860,17 +1808,13 @@
             next = this.convertToValue(p_next);
 
             if (type === "from") {
-
                 if (next - current < o.min_interval) {
                     current = next - o.min_interval;
                 }
-
             } else {
-
                 if (current - next < o.min_interval) {
                     current = next + o.min_interval;
                 }
-
             }
 
             return this.convertToPercent(current);
@@ -1889,17 +1833,13 @@
             next = this.convertToValue(p_next);
 
             if (type === "from") {
-
                 if (next - current > o.max_interval) {
                     current = next - o.max_interval;
                 }
-
             } else {
-
                 if (current - next > o.max_interval) {
                     current = next + o.max_interval;
                 }
-
             }
 
             return this.convertToPercent(current);
@@ -2020,12 +1960,9 @@
             }
 
             if (o.type === "single") {
-
                 if (o.from < o.min) o.from = o.min;
                 if (o.from > o.max) o.from = o.max;
-
             } else {
-
                 if (o.from < o.min) o.from = o.min;
                 if (o.from > o.max) o.from = o.max;
 
@@ -2033,19 +1970,16 @@
                 if (o.to > o.max) o.to = o.max;
 
                 if (this.update_check.from) {
-
                     if (this.update_check.from !== o.from) {
                         if (o.from > o.to) o.from = o.to;
                     }
                     if (this.update_check.to !== o.to) {
                         if (o.to < o.from) o.to = o.from;
                     }
-
                 }
 
                 if (o.from > o.to) o.from = o.to;
                 if (o.to < o.from) o.to = o.from;
-
             }
 
             if (typeof o.step !== "number" || isNaN(o.step) || !o.step || o.step < 0) {
@@ -2159,7 +2093,6 @@
             this.updateTo();
         },
 
-
         // =============================================================================================================
         // Grid
 
@@ -2184,12 +2117,9 @@
                 result,
                 html = '';
 
-
-
             this.calcGridMargin();
 
             if (o.grid_snap) {
-
                 if (total > 50) {
                     big_num = 50 / o.step;
                     big_p = this.toFixed(o.step / 0.5);
@@ -2197,7 +2127,6 @@
                     big_num = total / o.step;
                     big_p = this.toFixed(o.step / (total / 100));
                 }
-
             } else {
                 big_p = this.toFixed(100 / big_num);
             }
@@ -2249,8 +2178,6 @@
                 html += '<span class="irs-grid-text js-grid-text-' + i + '" style="left: ' + big_w + '%">' + result + '</span>';
             }
             this.coords.big_num = Math.ceil(big_num + 1);
-
-
 
             this.$cache.cont.addClass("irs-with-grid");
             this.$cache.grid.html(html);
@@ -2354,8 +2281,6 @@
             this.$cache.grid[0].style.left = this.coords.grid_gap + "%";
         },
 
-
-
         // =============================================================================================================
         // Public methods
 
@@ -2412,8 +2337,6 @@
         });
     };
 
-
-
     // =================================================================================================================
     // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
     // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
@@ -2446,5 +2369,4 @@
                 clearTimeout(id);
             };
     }());
-
 }));

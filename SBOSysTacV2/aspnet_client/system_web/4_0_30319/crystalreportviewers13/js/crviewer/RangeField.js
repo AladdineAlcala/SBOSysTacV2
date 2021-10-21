@@ -1,8 +1,7 @@
-
 /*
  * ================================================================================
  * Range Field
- * 
+ *
  * ================================================================================
  */
 
@@ -13,7 +12,7 @@ bobj.crv.params.newRangeField = function(kwArgs) {
 bobj.crv.params.RangeField = function(kwArgs) {
     kwArgs = MochiKit.Base.update( {
         id : bobj.uniqueId(),
-        cleanValue : {}, 
+        cleanValue : {},
         foreColor : 'black',
         isTextItalic: false,
         tooltip : ''
@@ -35,19 +34,19 @@ bobj.crv.params.RangeField.prototype = {
             }
         }
     },
-    
+
     setTooltip  : function(text) {
         if(this.layer) {
             this.layer.title = text;
         }
     },
-    
+
     setForeColor : function(color) {
         if(this.layer) {
             this.layer.style.color = color;
         }
     },
-    
+
     setTextItalic : function(isItalic) {
         if(this.layer) {
             this.layer.style.fontStyle = isItalic ? 'italic' : '';
@@ -67,7 +66,7 @@ bobj.crv.params.RangeField.prototype = {
         };
 
         var SPAN = "";
-        
+
         //[ADAPT01680961] In IE we should force the span to show the value in one line
         if (MochiKit.Base.isIE ()) {
             SPAN = bobj.html.SPAN( {
@@ -77,14 +76,13 @@ bobj.crv.params.RangeField.prototype = {
         else {
             SPAN = bobj.html.SPAN(null, value);
         }
-        
+
         return bobj.html.TD( {
             style : style,
             role : 'presentation'
         }, SPAN);
-
     },
-    
+
     isValueValidRange: function() {
         return this.value != null && this.value.lowerBound != null && this.value.upperBound != null;
     },
@@ -92,7 +90,7 @@ bobj.crv.params.RangeField.prototype = {
     getHTML : function() {
         var TR = "";
         var h =  bobj.html;
-        
+
         if(this.isValueValidRange()) {
             TR = h.TR(null, this.getValueHTML(this.getValue().lowerBound.value, true), this
                     .getMiddleImageHTML(), this.getValueHTML(this.getValue().upperBound.value, false))
@@ -100,7 +98,7 @@ bobj.crv.params.RangeField.prototype = {
         else {
             TR = h.TR(null, this.getValueHTML(this.getValue(), false))
         }
-        
+
         return h.TABLE( {
             id : this.id,
             'class' : 'iactRangeFieldTable',
@@ -109,13 +107,13 @@ bobj.crv.params.RangeField.prototype = {
             style : {color : this.foreColor, "font-style" : this.isTextItalic ? 'italic' :''}
         },  TR);
     },
-    
+
     _getRangeValueToolTip : function () {
         var str = "";
-        
+
         if(this.isValueValidRange()) {
             var RangeBoundTypes = bobj.crv.params.RangeBoundTypes;
-            
+
             switch (this.getValue().lowerBound.type) {
             case RangeBoundTypes.EXCLUSIVE:
                 str += "(" + this.getValue().lowerBound.value;
@@ -127,9 +125,9 @@ bobj.crv.params.RangeField.prototype = {
                 str += "( " ;
                 break;
             }
-            
+
             str += "..";
-    
+
             switch (this.getValue().upperBound.type) {
             case RangeBoundTypes.EXCLUSIVE:
                 str +=  this.getValue().upperBound.value + ")" ;
@@ -148,9 +146,9 @@ bobj.crv.params.RangeField.prototype = {
 
         return str;
     },
-    
+
     /**
-     * 
+     *
      * @return HTML for Range type (INCLUSIVE / EXCLUSIVE / UNBOUND)
      */
     getMiddleImageHTML : function() {
@@ -214,13 +212,13 @@ bobj.crv.params.RangeField.prototype = {
     },
 
     /**
-     * 
+     *
      * @return the evaluated width of lower bound TD
      */
     getLowerBoundValueWidth : function() {
         if(!this.isValueValidRange())
             return 0;
-        
+
         var value = this.getValue().lowerBound.value;
 
         var fontFamily = MochiKit.Style.computedStyle(this.layer, 'fontFamily');

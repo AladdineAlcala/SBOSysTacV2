@@ -1,5 +1,4 @@
 ;(function(){
-
 window.patch_date = function patch(f){
     var NativeDate = window.Date;
     var date = function date(y,m,d,h,i,s,j){
@@ -23,7 +22,6 @@ window.patch_date = function patch(f){
     };
 };
 
-
 window.patch_show_hide = function patch(f){
     var oldShow = $.fn.show,
         newShow = function () {
@@ -45,5 +43,4 @@ window.patch_show_hide = function patch(f){
         $.fn.hide = oldHide;
     };
 };
-
 }());

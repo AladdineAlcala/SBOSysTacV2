@@ -81,14 +81,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
-
 module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 
 /***/ }),
 /* 1 */,
 /* 2 */
 /***/ (function(module, exports) {
-
 /*
 derived from:
 https://github.com/Microsoft/tslib/blob/v1.6.0/tslib.js
@@ -106,17 +104,14 @@ exports.__extends = function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 
-
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
-
 module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var moment = __webpack_require__(0);
 var $ = __webpack_require__(3);
@@ -900,11 +895,9 @@ function debounce(func, wait, immediate) {
 }
 exports.debounce = debounce;
 
-
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var moment = __webpack_require__(0);
 var moment_ext_1 = __webpack_require__(10);
@@ -1050,11 +1043,9 @@ function compareUnzonedRanges(range1, range2) {
     return range1.startMs - range2.startMs; // earlier ranges go first
 }
 
-
 /***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -1169,11 +1160,9 @@ EventSource.defineStandardProps({
     eventDataTransform: true
 });
 
-
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
-
 /*
 Utility methods for easily listening to events on another object,
 and more importantly, easily unlistening from them.
@@ -1243,13 +1232,11 @@ var ListenerMixin = /** @class */ (function (_super) {
 }(Mixin_1.default));
 exports.default = ListenerMixin;
 
-
 /***/ }),
 /* 8 */,
 /* 9 */,
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var moment = __webpack_require__(0);
 var $ = __webpack_require__(3);
@@ -1490,11 +1477,9 @@ newMomentProto.utcOffset = function (tzo) {
     return oldMomentProto.utcOffset.apply(this, arguments);
 };
 
-
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
-
 /*
 USAGE:
   import { default as EmitterMixin, EmitterInterface } from './EmitterMixin'
@@ -1571,11 +1556,9 @@ var EmitterMixin = /** @class */ (function (_super) {
 }(Mixin_1.default));
 exports.default = EmitterMixin;
 
-
 /***/ }),
 /* 12 */
 /***/ (function(module, exports) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
 Meant to be immutable
@@ -1599,11 +1582,9 @@ var ComponentFootprint = /** @class */ (function () {
 }());
 exports.default = ComponentFootprint;
 
-
 /***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var EventDef_1 = __webpack_require__(34);
@@ -1667,11 +1648,9 @@ SingleEventDef.defineStandardProps({
     allDay: false
 });
 
-
 /***/ }),
 /* 14 */
 /***/ (function(module, exports) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var Mixin = /** @class */ (function () {
     function Mixin() {
@@ -1698,11 +1677,9 @@ var Mixin = /** @class */ (function () {
 }());
 exports.default = Mixin;
 
-
 /***/ }),
 /* 15 */
 /***/ (function(module, exports) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var Interaction = /** @class */ (function () {
     function Interaction(component) {
@@ -1719,11 +1696,9 @@ var Interaction = /** @class */ (function () {
 }());
 exports.default = Interaction;
 
-
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.version = '3.9.0';
 // When introducing internal API incompatibilities (where fullcalendar plugins would break),
@@ -1863,11 +1838,9 @@ exports.MonthView = MonthView_1.default;
 var ListView_1 = __webpack_require__(230);
 exports.ListView = ListView_1.default;
 
-
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var UnzonedRange_1 = __webpack_require__(5);
 /*
@@ -1951,11 +1924,9 @@ var EventDateProfile = /** @class */ (function () {
 }());
 exports.default = EventDateProfile;
 
-
 /***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var UnzonedRange_1 = __webpack_require__(5);
 var util_1 = __webpack_require__(35);
@@ -2017,11 +1988,9 @@ var EventInstanceGroup = /** @class */ (function () {
 }());
 exports.default = EventInstanceGroup;
 
-
 /***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var Theme = /** @class */ (function () {
@@ -2083,11 +2052,9 @@ Theme.prototype.iconClasses = {};
 Theme.prototype.baseIconClass = '';
 Theme.prototype.iconOverridePrefix = '';
 
-
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var PromiseStub = {
@@ -2136,11 +2103,9 @@ function attachImmediatelyRejectingThen(promise) {
     };
 }
 
-
 /***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var exportHooks = __webpack_require__(16);
@@ -2307,11 +2272,9 @@ exports.default = GlobalEmitter;
 ListenerMixin_1.default.mixInto(GlobalEmitter);
 EmitterMixin_1.default.mixInto(GlobalEmitter);
 
-
 /***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var exportHooks = __webpack_require__(16);
 exports.viewHash = {};
@@ -2325,11 +2288,9 @@ function getViewConfig(viewName) {
 }
 exports.getViewConfig = getViewConfig;
 
-
 /***/ }),
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var util_1 = __webpack_require__(4);
@@ -2488,7 +2449,6 @@ function isHitPropsWithin(subHit, superHit) {
     return true;
 }
 
-
 /***/ }),
 /* 24 */,
 /* 25 */,
@@ -2499,7 +2459,6 @@ function isHitPropsWithin(subHit, superHit) {
 /* 30 */,
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var moment = __webpack_require__(0);
@@ -2665,11 +2624,9 @@ exports.getMomentLocaleData = getMomentLocaleData;
 // Also, sets it as the default.
 locale('en', options_1.englishDefaults);
 
-
 /***/ }),
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(4);
 exports.globalDefaults = {
@@ -2779,11 +2736,9 @@ function mergeOptions(optionObjs) {
 }
 exports.mergeOptions = mergeOptions;
 
-
 /***/ }),
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var util_1 = __webpack_require__(4);
@@ -2813,11 +2768,9 @@ var Class = /** @class */ (function () {
 }());
 exports.default = Class;
 
-
 /***/ }),
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var ParsableModelMixin_1 = __webpack_require__(208);
@@ -2964,11 +2917,9 @@ EventDef.defineStandardProps({
     textColor: true
 });
 
-
 /***/ }),
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var EventRange_1 = __webpack_require__(211);
 var EventFootprint_1 = __webpack_require__(36);
@@ -3001,11 +2952,9 @@ function eventFootprintToComponentFootprint(eventFootprint) {
 }
 exports.eventFootprintToComponentFootprint = eventFootprintToComponentFootprint;
 
-
 /***/ }),
 /* 36 */
 /***/ (function(module, exports) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var EventFootprint = /** @class */ (function () {
     function EventFootprint(componentFootprint, eventDef, eventInstance) {
@@ -3022,11 +2971,9 @@ var EventFootprint = /** @class */ (function () {
 }());
 exports.default = EventFootprint;
 
-
 /***/ }),
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(4);
 var EventDateProfile_1 = __webpack_require__(17);
@@ -3136,11 +3083,9 @@ var EventDefMutation = /** @class */ (function () {
 }());
 exports.default = EventDefMutation;
 
-
 /***/ }),
 /* 38 */
 /***/ (function(module, exports) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     sourceClasses: [],
@@ -3160,11 +3105,9 @@ exports.default = {
     }
 };
 
-
 /***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -3248,11 +3191,9 @@ var Scroller = /** @class */ (function (_super) {
 }(Class_1.default));
 exports.default = Scroller;
 
-
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -3503,11 +3444,9 @@ var InteractiveDateComponent = /** @class */ (function (_super) {
 }(DateComponent_1.default));
 exports.default = InteractiveDateComponent;
 
-
 /***/ }),
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -3885,7 +3824,7 @@ var View = /** @class */ (function (_super) {
         if (dateMutation) {
             eventInstance.dateProfile = dateMutation.buildNewDateProfile(eventInstance.dateProfile, this.calendar);
         }
-        this.triggerEventDrop(eventInstance, 
+        this.triggerEventDrop(eventInstance,
         // a drop doesn't necessarily mean a date mutation (ex: resource change)
         (dateMutation && dateMutation.dateDelta) || moment.duration(), undoFunc, el, ev);
     };
@@ -4216,11 +4155,9 @@ View.watch('legacyDateProps', ['dateProfile'], function (deps) {
     this.intervalEnd = calendar.msToMoment(dateProfile.currentUnzonedRange.endMs, dateProfile.isRangeAllDay);
 });
 
-
 /***/ }),
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var util_1 = __webpack_require__(4);
@@ -4541,7 +4478,6 @@ var EventRenderer = /** @class */ (function () {
 }());
 exports.default = EventRenderer;
 
-
 /***/ }),
 /* 43 */,
 /* 44 */,
@@ -4549,7 +4485,6 @@ exports.default = EventRenderer;
 /* 46 */,
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var moment_ext_1 = __webpack_require__(10);
 // Plugin
@@ -4905,11 +4840,9 @@ function queryMostGranularFormatUnit(formatStr) {
 }
 exports.queryMostGranularFormatUnit = queryMostGranularFormatUnit;
 
-
 /***/ }),
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var Class_1 = __webpack_require__(33);
@@ -5175,11 +5108,9 @@ Model.prototype._globalWatchArgs = {}; // mutation protection in Model.watch
 EmitterMixin_1.default.mixInto(Model);
 ListenerMixin_1.default.mixInto(Model);
 
-
 /***/ }),
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var moment = __webpack_require__(0);
 var util_1 = __webpack_require__(4);
@@ -5197,11 +5128,9 @@ exports.default = {
     }
 };
 
-
 /***/ }),
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(4);
 var EventDateProfile_1 = __webpack_require__(17);
@@ -5335,11 +5264,9 @@ var EventDefDateMutation = /** @class */ (function () {
 }());
 exports.default = EventDefDateMutation;
 
-
 /***/ }),
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var StandardTheme_1 = __webpack_require__(213);
 var JqueryUiTheme_1 = __webpack_require__(214);
@@ -5361,11 +5288,9 @@ function getThemeSystemClass(themeSetting) {
 }
 exports.getThemeSystemClass = getThemeSystemClass;
 
-
 /***/ }),
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -5441,11 +5366,9 @@ ArrayEventSource.defineStandardProps({
     events: false // don't automatically transfer
 });
 
-
 /***/ }),
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var util_1 = __webpack_require__(4);
@@ -5638,11 +5561,9 @@ var CoordCache = /** @class */ (function () {
 }());
 exports.default = CoordCache;
 
-
 /***/ }),
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var util_1 = __webpack_require__(4);
@@ -6004,11 +5925,9 @@ var DragListener = /** @class */ (function () {
 exports.default = DragListener;
 ListenerMixin_1.default.mixInto(DragListener);
 
-
 /***/ }),
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var util_1 = __webpack_require__(4);
@@ -6359,11 +6278,9 @@ var DayTableMixin = /** @class */ (function (_super) {
 }(Mixin_1.default));
 exports.default = DayTableMixin;
 
-
 /***/ }),
 /* 56 */
 /***/ (function(module, exports) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var BusinessHourRenderer = /** @class */ (function () {
     /*
@@ -6411,11 +6328,9 @@ var BusinessHourRenderer = /** @class */ (function () {
 }());
 exports.default = BusinessHourRenderer;
 
-
 /***/ }),
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var util_1 = __webpack_require__(4);
@@ -6504,11 +6419,9 @@ var FillRenderer = /** @class */ (function () {
 }());
 exports.default = FillRenderer;
 
-
 /***/ }),
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var SingleEventDef_1 = __webpack_require__(13);
 var EventFootprint_1 = __webpack_require__(36);
@@ -6571,11 +6484,9 @@ var HelperRenderer = /** @class */ (function () {
 }());
 exports.default = HelperRenderer;
 
-
 /***/ }),
 /* 59 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var GlobalEmitter_1 = __webpack_require__(21);
@@ -6647,11 +6558,9 @@ var EventPointing = /** @class */ (function (_super) {
 }(Interaction_1.default));
 exports.default = EventPointing;
 
-
 /***/ }),
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var Mixin_1 = __webpack_require__(14);
@@ -6676,11 +6585,9 @@ StandardInteractionsMixin.prototype.eventDraggingClass = EventDragging_1.default
 StandardInteractionsMixin.prototype.eventResizingClass = EventResizing_1.default;
 StandardInteractionsMixin.prototype.externalDroppingClass = ExternalDropping_1.default;
 
-
 /***/ }),
 /* 61 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -7294,11 +7201,9 @@ DayGrid.prototype.fillRendererClass = DayGridFillRenderer_1.default;
 StandardInteractionsMixin_1.default.mixInto(DayGrid);
 DayTableMixin_1.default.mixInto(DayGrid);
 
-
 /***/ }),
 /* 62 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -7537,7 +7442,6 @@ function makeDayGridSubclass(SuperClass) {
     }(SuperClass));
 }
 
-
 /***/ }),
 /* 63 */,
 /* 64 */,
@@ -7685,7 +7589,6 @@ function makeDayGridSubclass(SuperClass) {
 /* 206 */,
 /* 207 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var UnzonedRange_1 = __webpack_require__(5);
 var ComponentFootprint_1 = __webpack_require__(12);
@@ -7935,11 +7838,9 @@ function isOverlapEventInstancesAllowed(overlapEventFootprints, subjectEventInst
     return true;
 }
 
-
 /***/ }),
 /* 208 */
 /***/ (function(module, exports, __webpack_require__) {
-
 /*
 USAGE:
   import { default as ParsableModelMixin, ParsableModelInterface } from './ParsableModelMixin'
@@ -8027,11 +7928,9 @@ var ParsableModelMixin = /** @class */ (function (_super) {
 exports.default = ParsableModelMixin;
 ParsableModelMixin.prototype.standardPropMap = {}; // will be cloned by defineStandardProps
 
-
 /***/ }),
 /* 209 */
 /***/ (function(module, exports) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var EventInstance = /** @class */ (function () {
     function EventInstance(def, dateProfile) {
@@ -8049,11 +7948,9 @@ var EventInstance = /** @class */ (function () {
 }());
 exports.default = EventInstance;
 
-
 /***/ }),
 /* 210 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -8148,11 +8045,9 @@ RecurringEventDef.defineStandardProps({
     dow: false
 });
 
-
 /***/ }),
 /* 211 */
 /***/ (function(module, exports) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var EventRange = /** @class */ (function () {
     function EventRange(unzonedRange, eventDef, eventInstance) {
@@ -8166,11 +8061,9 @@ var EventRange = /** @class */ (function () {
 }());
 exports.default = EventRange;
 
-
 /***/ }),
 /* 212 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var util_1 = __webpack_require__(35);
@@ -8235,11 +8128,9 @@ var BusinessHourGenerator = /** @class */ (function () {
 }());
 exports.default = BusinessHourGenerator;
 
-
 /***/ }),
 /* 213 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var Theme_1 = __webpack_require__(19);
@@ -8284,11 +8175,9 @@ StandardTheme.prototype.iconOverrideOption = 'buttonIcons';
 StandardTheme.prototype.iconOverrideCustomButtonOption = 'icon';
 StandardTheme.prototype.iconOverridePrefix = 'fc-icon-';
 
-
 /***/ }),
 /* 214 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var Theme_1 = __webpack_require__(19);
@@ -8334,11 +8223,9 @@ JqueryUiTheme.prototype.iconOverrideOption = 'themeButtonIcons';
 JqueryUiTheme.prototype.iconOverrideCustomButtonOption = 'themeIcon';
 JqueryUiTheme.prototype.iconOverridePrefix = 'ui-icon-';
 
-
 /***/ }),
 /* 215 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -8388,11 +8275,9 @@ FuncEventSource.defineStandardProps({
     events: false // don't automatically transfer
 });
 
-
 /***/ }),
 /* 216 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -8513,11 +8398,9 @@ JsonFeedEventSource.defineStandardProps({
     timezoneParam: true
 });
 
-
 /***/ }),
 /* 217 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var EmitterMixin_1 = __webpack_require__(11);
 var TaskQueue = /** @class */ (function () {
@@ -8583,11 +8466,9 @@ var TaskQueue = /** @class */ (function () {
 exports.default = TaskQueue;
 EmitterMixin_1.default.mixInto(TaskQueue);
 
-
 /***/ }),
 /* 218 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var TaskQueue_1 = __webpack_require__(217);
@@ -8700,11 +8581,9 @@ var RenderQueue = /** @class */ (function (_super) {
 }(TaskQueue_1.default));
 exports.default = RenderQueue;
 
-
 /***/ }),
 /* 219 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -9275,11 +9154,9 @@ function convertEventsPayloadToLegacyArray(eventsPayload) {
     return legacyEvents;
 }
 
-
 /***/ }),
 /* 220 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var moment = __webpack_require__(0);
@@ -10221,11 +10098,9 @@ function filterLegacyEventInstances(legacyEventInstances, legacyQuery) {
     }
 }
 
-
 /***/ }),
 /* 221 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var moment = __webpack_require__(0);
 var util_1 = __webpack_require__(4);
@@ -10487,11 +10362,9 @@ var DateProfileGenerator = /** @class */ (function () {
 }());
 exports.default = DateProfileGenerator;
 
-
 /***/ }),
 /* 222 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -10702,11 +10575,9 @@ function getDraggedElMeta(el) {
     return { eventProps: eventProps, startTime: startTime, duration: duration, stick: stick };
 }
 
-
 /***/ }),
 /* 223 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -10894,11 +10765,9 @@ var EventResizing = /** @class */ (function (_super) {
 }(Interaction_1.default));
 exports.default = EventResizing;
 
-
 /***/ }),
 /* 224 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var util_1 = __webpack_require__(4);
@@ -11168,11 +11037,9 @@ var EventDragging = /** @class */ (function (_super) {
 }(Interaction_1.default));
 exports.default = EventDragging;
 
-
 /***/ }),
 /* 225 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var util_1 = __webpack_require__(4);
@@ -11305,11 +11172,9 @@ var DateSelecting = /** @class */ (function (_super) {
 }(Interaction_1.default));
 exports.default = DateSelecting;
 
-
 /***/ }),
 /* 226 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var moment = __webpack_require__(0);
@@ -11635,11 +11500,9 @@ function groupEventFootprintsByAllDay(eventFootprints) {
     return { allDay: allDay, timed: timed };
 }
 
-
 /***/ }),
 /* 227 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -12137,11 +12000,9 @@ TimeGrid.prototype.fillRendererClass = TimeGridFillRenderer_1.default;
 StandardInteractionsMixin_1.default.mixInto(TimeGrid);
 DayTableMixin_1.default.mixInto(TimeGrid);
 
-
 /***/ }),
 /* 228 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var UnzonedRange_1 = __webpack_require__(5);
@@ -12170,11 +12031,9 @@ var BasicViewDateProfileGenerator = /** @class */ (function (_super) {
 }(DateProfileGenerator_1.default));
 exports.default = BasicViewDateProfileGenerator;
 
-
 /***/ }),
 /* 229 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var moment = __webpack_require__(0);
@@ -12204,11 +12063,9 @@ var MonthView = /** @class */ (function (_super) {
 exports.default = MonthView;
 MonthView.prototype.dateProfileGeneratorClass = MonthViewDateProfileGenerator_1.default;
 
-
 /***/ }),
 /* 230 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -12365,7 +12222,6 @@ exports.default = ListView;
 ListView.prototype.eventRendererClass = ListEventRenderer_1.default;
 ListView.prototype.eventPointingClass = ListEventPointing_1.default;
 
-
 /***/ }),
 /* 231 */,
 /* 232 */,
@@ -12374,7 +12230,6 @@ ListView.prototype.eventPointingClass = ListEventPointing_1.default;
 /* 235 */,
 /* 236 */
 /***/ (function(module, exports, __webpack_require__) {
-
 var $ = __webpack_require__(3);
 var exportHooks = __webpack_require__(16);
 var util_1 = __webpack_require__(4);
@@ -12435,11 +12290,9 @@ $.fn.fullCalendar = function (options) {
 };
 module.exports = exportHooks;
 
-
 /***/ }),
 /* 237 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var Model_1 = __webpack_require__(48);
@@ -12484,11 +12337,9 @@ var Component = /** @class */ (function (_super) {
 }(Model_1.default));
 exports.default = Component;
 
-
 /***/ }),
 /* 238 */
 /***/ (function(module, exports) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var Iterator = /** @class */ (function () {
     function Iterator(items) {
@@ -12510,11 +12361,9 @@ var Iterator = /** @class */ (function () {
 }());
 exports.default = Iterator;
 
-
 /***/ }),
 /* 239 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var util_1 = __webpack_require__(4);
@@ -12733,11 +12582,9 @@ var Toolbar = /** @class */ (function () {
 }());
 exports.default = Toolbar;
 
-
 /***/ }),
 /* 240 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -12834,11 +12681,9 @@ var OptionsManager = /** @class */ (function (_super) {
 }(Model_1.default));
 exports.default = OptionsManager;
 
-
 /***/ }),
 /* 241 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var moment = __webpack_require__(0);
 var $ = __webpack_require__(3);
@@ -12988,11 +12833,9 @@ var ViewSpecManager = /** @class */ (function () {
 }());
 exports.default = ViewSpecManager;
 
-
 /***/ }),
 /* 242 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var util_1 = __webpack_require__(4);
@@ -13250,11 +13093,9 @@ function isSourcesEquivalent(source0, source1) {
     return source0.getPrimitive() === source1.getPrimitive();
 }
 
-
 /***/ }),
 /* 243 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var util_1 = __webpack_require__(4);
@@ -13497,11 +13338,9 @@ var EventPeriod = /** @class */ (function () {
 exports.default = EventPeriod;
 EmitterMixin_1.default.mixInto(EventPeriod);
 
-
 /***/ }),
 /* 244 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = __webpack_require__(3);
 var util_1 = __webpack_require__(4);
@@ -13646,11 +13485,9 @@ var MouseFollower = /** @class */ (function () {
 exports.default = MouseFollower;
 ListenerMixin_1.default.mixInto(MouseFollower);
 
-
 /***/ }),
 /* 245 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var HitDragListener_1 = __webpack_require__(23);
@@ -13724,11 +13561,9 @@ var DateClicking = /** @class */ (function (_super) {
 }(Interaction_1.default));
 exports.default = DateClicking;
 
-
 /***/ }),
 /* 246 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var util_1 = __webpack_require__(4);
@@ -14038,11 +13873,9 @@ function isSlotSegCollision(seg1, seg2) {
     return seg1.bottom > seg2.top && seg1.top < seg2.bottom;
 }
 
-
 /***/ }),
 /* 247 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -14079,11 +13912,9 @@ var TimeGridHelperRenderer = /** @class */ (function (_super) {
 }(HelperRenderer_1.default));
 exports.default = TimeGridHelperRenderer;
 
-
 /***/ }),
 /* 248 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var FillRenderer_1 = __webpack_require__(57);
@@ -14115,11 +13946,9 @@ var TimeGridFillRenderer = /** @class */ (function (_super) {
 }(FillRenderer_1.default));
 exports.default = TimeGridFillRenderer;
 
-
 /***/ }),
 /* 249 */
 /***/ (function(module, exports, __webpack_require__) {
-
 /* A rectangular panel that is absolutely positioned over other content
 ------------------------------------------------------------------------------------------------------------------------
 Options:
@@ -14262,11 +14091,9 @@ var Popover = /** @class */ (function () {
 exports.default = Popover;
 ListenerMixin_1.default.mixInto(Popover);
 
-
 /***/ }),
 /* 250 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -14515,11 +14342,9 @@ function compareDaySegCols(a, b) {
     return a.leftCol - b.leftCol;
 }
 
-
 /***/ }),
 /* 251 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -14564,11 +14389,9 @@ var DayGridHelperRenderer = /** @class */ (function (_super) {
 }(HelperRenderer_1.default));
 exports.default = DayGridHelperRenderer;
 
-
 /***/ }),
 /* 252 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -14625,11 +14448,9 @@ var DayGridFillRenderer = /** @class */ (function (_super) {
 }(FillRenderer_1.default));
 exports.default = DayGridFillRenderer;
 
-
 /***/ }),
 /* 253 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var BasicViewDateProfileGenerator_1 = __webpack_require__(228);
@@ -14658,11 +14479,9 @@ var MonthViewDateProfileGenerator = /** @class */ (function (_super) {
 }(BasicViewDateProfileGenerator_1.default));
 exports.default = MonthViewDateProfileGenerator;
 
-
 /***/ }),
 /* 254 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var util_1 = __webpack_require__(4);
@@ -14738,11 +14557,9 @@ var ListEventRenderer = /** @class */ (function (_super) {
 }(EventRenderer_1.default));
 exports.default = ListEventRenderer;
 
-
 /***/ }),
 /* 255 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -14769,11 +14586,9 @@ var ListEventPointing = /** @class */ (function (_super) {
 }(EventPointing_1.default));
 exports.default = ListEventPointing;
 
-
 /***/ }),
 /* 256 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var EventSourceParser_1 = __webpack_require__(38);
 var ArrayEventSource_1 = __webpack_require__(52);
@@ -14783,11 +14598,9 @@ EventSourceParser_1.default.registerClass(ArrayEventSource_1.default);
 EventSourceParser_1.default.registerClass(FuncEventSource_1.default);
 EventSourceParser_1.default.registerClass(JsonFeedEventSource_1.default);
 
-
 /***/ }),
 /* 257 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var ThemeRegistry_1 = __webpack_require__(51);
 var StandardTheme_1 = __webpack_require__(213);
@@ -14799,11 +14612,9 @@ ThemeRegistry_1.defineThemeSystem('jquery-ui', JqueryUiTheme_1.default);
 ThemeRegistry_1.defineThemeSystem('bootstrap3', Bootstrap3Theme_1.default);
 ThemeRegistry_1.defineThemeSystem('bootstrap4', Bootstrap4Theme_1.default);
 
-
 /***/ }),
 /* 258 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var Theme_1 = __webpack_require__(19);
@@ -14848,11 +14659,9 @@ Bootstrap3Theme.prototype.iconOverrideOption = 'bootstrapGlyphicons';
 Bootstrap3Theme.prototype.iconOverrideCustomButtonOption = 'bootstrapGlyphicon';
 Bootstrap3Theme.prototype.iconOverridePrefix = 'glyphicon-';
 
-
 /***/ }),
 /* 259 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var Theme_1 = __webpack_require__(19);
@@ -14897,11 +14706,9 @@ Bootstrap4Theme.prototype.iconOverrideOption = 'bootstrapFontAwesome';
 Bootstrap4Theme.prototype.iconOverrideCustomButtonOption = 'bootstrapFontAwesome';
 Bootstrap4Theme.prototype.iconOverridePrefix = 'fa-';
 
-
 /***/ }),
 /* 260 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var ViewRegistry_1 = __webpack_require__(22);
 var BasicView_1 = __webpack_require__(62);
@@ -14925,11 +14732,9 @@ ViewRegistry_1.defineView('month', {
     }
 });
 
-
 /***/ }),
 /* 261 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var ViewRegistry_1 = __webpack_require__(22);
 var AgendaView_1 = __webpack_require__(226);
@@ -14950,11 +14755,9 @@ ViewRegistry_1.defineView('agendaWeek', {
     duration: { weeks: 1 }
 });
 
-
 /***/ }),
 /* 262 */
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var ViewRegistry_1 = __webpack_require__(22);
 var ListView_1 = __webpack_require__(230);
@@ -14997,13 +14800,10 @@ ViewRegistry_1.defineView('listYear', {
     }
 });
 
-
 /***/ }),
 /* 263 */
 /***/ (function(module, exports) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
-
 
 /***/ })
 /******/ ]);

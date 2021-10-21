@@ -1,19 +1,18 @@
 <html>
-	<head>
-		<script language="javascript" src="../dom.js"></script>
-		<script language="javascript" src="../palette.js"></script>
-		<script language="javascript" src="../menu.js"></script>
-		<script language="javascript" src="../calendar.js"></script>
-		<script language="javascript">
+<head>
+    <script language="javascript" src="../dom.js"></script>
+    <script language="javascript" src="../palette.js"></script>
+    <script language="javascript" src="../menu.js"></script>
+    <script language="javascript" src="../calendar.js"></script>
+    <script language="javascript">
 			var skin=parent._skin?parent._skin:"skin_standard";
 			var lang=parent._lang?parent._lang:"en";
-			
+
 			initDom("../images/"+skin+"/",lang)
 			styleSheet()
-		</script>
+    </script>
 
-		<script language="javascript">
-
+    <script language="javascript">
 
 			function changeCB()
 			{
@@ -33,14 +32,14 @@
 
 				cal.init()
 				cal.set(4,11,2005)
-				
+
 				calendarText.init()
 				calendarText.setValue("21/05/2003 10:52:00 Matin")
 			}
-			
+
 			var res=new Array(40,200,400)
 			var resIdx=1
-			
+
 			function resizeCB()
 			{
 				resIdx=(resIdx+1)%3
@@ -51,7 +50,6 @@
 			calendarText=newCalendarTextFieldButton("calendarText",null,changeTextCB,null,null,null,true,null,200)
 			cal=newCalendarWidget("cal",changeCB)
 
-
 			// Set the formats. These values are usually get from database/locale infos
 			arrMonth = new Array('January','February','March','April','May','June','July','August','September','October','November','December')
 			arrDays  = new Array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday')
@@ -61,35 +59,47 @@
 
 			calendarText.setFormatInfo(format,arrDays,arrMonth,AM,PM)
 
-
 			//newCalendarWidget("calendar",changeCB)
+    </script>
+</head>
+<body onload="loadCB()">
 
-		</script>
-	</head>
-	<body onload="loadCB()">
+    <table width="100%">
+        <tr>
+            <td align="center" valign="middle">
+                <div class="insetBorder">
+                    <div class="dialogzone" style="padding:15px">
 
-		<table width="100%"><tr><td align="center" valign="middle">
-			<div class="insetBorder"><div class="dialogzone" style="padding:15px">
-
-				<u><b>Calendar</b></u><br><br>
-				<table border="0"><tr valign="top"><td class="dialogzone">
-					<script language="javascript">calendar.write()</script>
-				</td></tr></table>
-				<br><br>
-				<table border="0"><tr valign="top"><td class="dialogzone">
-					<script language="javascript">calendarText.write()</script>
-				</td></tr></table>
-				<br><br>
-				<table border="0"><tr valign="top"><td class="menuFrame" style="position:relative">
-					<script language="javascript">cal.write()</script>
-				</td></tr></table>
-				<br><br>
-				<a href="javascript:resizeCB()">resize text</a>
-
-
-			</div></div>
-		</td></tr></table>
-
-	</body>
-
+                        <u><b>Calendar</b></u><br><br>
+                        <table border="0">
+                            <tr valign="top">
+                                <td class="dialogzone">
+                                    <script language="javascript">calendar.write()</script>
+                                </td>
+                            </tr>
+                        </table>
+                        <br><br>
+                        <table border="0">
+                            <tr valign="top">
+                                <td class="dialogzone">
+                                    <script language="javascript">calendarText.write()</script>
+                                </td>
+                            </tr>
+                        </table>
+                        <br><br>
+                        <table border="0">
+                            <tr valign="top">
+                                <td class="menuFrame" style="position:relative">
+                                    <script language="javascript">cal.write()</script>
+                                </td>
+                            </tr>
+                        </table>
+                        <br><br>
+                        <a href="javascript:resizeCB()">resize text</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
 </html>

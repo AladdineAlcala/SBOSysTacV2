@@ -71,7 +71,6 @@
     SHORT_DAYS[DAYS[i].substr(0, 3)] = i;
   }
 
-
   //Handle array indexOf in IE
   if (!Array.prototype.indexOf) {
     Array.prototype.indexOf = function (el) {
@@ -147,7 +146,6 @@
     , dt = null
     , tz = null
     , arr = [];
-
 
     //We support several different constructors, including all the ones from `Date` object
     // with a timezone string at the end.
@@ -409,7 +407,6 @@
     }
   };
 
-
   timezoneJS.timezone = new function () {
     var _this = this
       , regionMap = {'Etc':'etcetera','EST':'northamerica','MST':'northamerica','HST':'northamerica','EST5EDT':'northamerica','CST6CDT':'northamerica','MST7MDT':'northamerica','PST8PDT':'northamerica','America':'northamerica','Pacific':'australasia','Atlantic':'europe','Africa':'africa','Indian':'africa','Antarctica':'antarctica','Asia':'asia','Australia':'australasia','Europe':'europe','WET':'europe','CET':'europe','MET':'europe','EET':'europe'}
@@ -612,7 +609,6 @@
           EXACT_DATE_TIME[year][rule] = effectiveDate;
         }
 
-
         //If previous rule is given, correct for the fact that the starting time of the current
         // rule may be specified in local time.
         if (prevRule) {
@@ -690,7 +686,6 @@
         //The previous rule does not really apply, take the one before that.
         return applicableRules[pinpoint - 2][1];
       } else if (pinpoint > 0 && pinpoint < applicableRules.length - 1 && compareDates(date, applicableRules[pinpoint+1], applicableRules[pinpoint-1][1]) > 0) {
-
         //The next rule does already apply, take that one.
         return applicableRules[pinpoint + 1][1];
       } else if (pinpoint === 0) {

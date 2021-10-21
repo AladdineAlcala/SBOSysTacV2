@@ -2,16 +2,13 @@
 /* Based on the en-GB initialisation. */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['en-NZ'] = {
 	closeText: 'Done',
 	prevText: 'Prev',
@@ -33,5 +30,4 @@ datepicker.regional['en-NZ'] = {
 datepicker.setDefaults(datepicker.regional['en-NZ']);
 
 return datepicker.regional['en-NZ'];
-
 }));

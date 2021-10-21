@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">
-<script>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var dps = []; // dataPoints
@@ -12,7 +12,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	},
 	axisY: {
 		includeZero: false
-	},      
+	},
 	data: [{
 		type: "line",
 		dataPoints: dps
@@ -20,7 +20,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 });
 
 var xVal = 0;
-var yVal = 100; 
+var yVal = 100;
 var updateInterval = 1000;
 var dataLength = 20; // number of dataPoints visible at any point
 
@@ -48,10 +48,10 @@ updateChart(dataLength);
 setInterval(function(){updateChart()}, updateInterval);
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

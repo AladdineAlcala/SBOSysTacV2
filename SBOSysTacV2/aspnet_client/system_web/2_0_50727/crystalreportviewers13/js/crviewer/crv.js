@@ -1,63 +1,63 @@
 /* Copyright (c) Business Objects 2006. All rights reserved. */
 
 if (typeof(bobj) == 'undefined') {
-    bobj = {};    
+    bobj = {};
 }
 
 if (typeof(bobj.crv) == 'undefined') {
-    bobj.crv = {};    
-    
+    bobj.crv = {};
+
     // Constants used in the viewer
     bobj.crv.ActxPrintControl_CLSID = 'B7DA1CA9-1EF8-4831-868A-A767093EA685';
     bobj.crv.ActxPrintControl_Version = '13,0,20,2399';
-    
+
     // Configuration for ALL viewers in a page
     // TODO The dhtmllib doesn't currently suport widgets from different locales
     //   on the same page. We will need that support for the viewer.
     bobj.crv.config = {
-        isDebug : false, 
+        isDebug : false,
         scriptUri: null,  // The uri for the viewer script dir (that holds crv.js)
         skin: "skin_standard",
-        needFallback: true, 
+        needFallback: true,
         lang: "en",
         useCompressedScripts: true,
         useAsync : true,
         indicatorOnly: false,
-        resources : { 
-          'HTMLPromptingSDK' : {isLoaded: false, path : '../../promptengine-compressed.js'}, 
-          'ParameterControllerAndDeps' : {isLoaded: false, path: '../../parameterUIController-compressed.js'}  
+        resources : {
+          'HTMLPromptingSDK' : {isLoaded: false, path : '../../promptengine-compressed.js'},
+          'ParameterControllerAndDeps' : {isLoaded: false, path: '../../parameterUIController-compressed.js'}
         },
         logging: { enabled: false, id: 0}
     };
-    
+
     bobj.crv.logger = {
     	info: function(){ /* Do Nothing */}
     };
-    
+
     // Udate configuration with properties from crv_config, if it exists
     if (typeof(crv_config) == 'object') {
         for (var i in crv_config) {
-            bobj.crv.config[i] = crv_config[i];        
+            bobj.crv.config[i] = crv_config[i];
         }
     }
-    
-    // If the uri for the bobj.crv script dir wasn't set, try to figure it out 
+
+    // If the uri for the bobj.crv script dir wasn't set, try to figure it out
     if (!bobj.crv.config.scriptUri) {
         var scripts = document.getElementsByTagName("script");
         var reCrvJs = /(.*)crv\.js$/i;
-        
+
         for(var i = 0; i < scripts.length; i++) {
             var src = scripts[i].getAttribute("src");
             if(!src) { continue; }
-            
+
             var matches = src.match(reCrvJs);
-            
+
             if(matches && matches.length) {
                 bobj.crv.config.scriptUri = matches[1];
                 break;
             }
         }
-        
+
         if (!bobj.crv.config.scriptUri ) {
             bobj.crv.config.scriptUri = '';
             if (bobj.crv.config.isDebug) {
@@ -65,7 +65,7 @@ if (typeof(bobj.crv) == 'undefined') {
             }
         }
     }
-    
+
     /**
      * Parse a URI into its constitutents as defined in RFC2396
      *
@@ -85,11 +85,10 @@ if (typeof(bobj.crv) == 'undefined') {
         };
     };
 
-
     bobj.crvUri = function(uri) {
-        return  bobj.crv.config.scriptUri + uri;   
+        return  bobj.crv.config.scriptUri + uri;
     };
-    
+
     /**
      * A helper method for evaluating whether parent window is JSUnit test runner
      */
@@ -102,18 +101,18 @@ if (typeof(bobj.crv) == 'undefined') {
 
             return tempTop.jsUnitTestSuite !== undefined;
         }
-        
+
         catch(err){}
-        
+
         return false;
     };
-    
+
     bobj.skinUri = function(uri) {
         return bobj.crvUri("../dhtmllib/images/") + bobj.crv.config.skin + "/" + uri;
     };
-    
+
     /**
-     * Create a widget using json 
+     * Create a widget using json
      * eg.
      * createWidget({
      *     cons: bobj.crv.myWidget,
@@ -124,15 +123,15 @@ if (typeof(bobj.crv) == 'undefined') {
      * @param json [Object]  Object representing the widget
      * @return Returns the widget or null if creation failed
      */
-    bobj.crv.createWidget = function(json) { 
-        if (!bobj.isObject(json)){ 
-            return null;    
+    bobj.crv.createWidget = function(json) {
+        if (!bobj.isObject(json)){
+            return null;
         }
-        
+
         var constructor = json.cons;
-        if (bobj.isString(constructor)) {  
+        if (bobj.isString(constructor)) {
             try {
-                constructor = eval(constructor);           
+                constructor = eval(constructor);
             }
             catch (err) {
                 if (bobj.crv.config.isDebug) {
@@ -140,16 +139,16 @@ if (typeof(bobj.crv) == 'undefined') {
                 }
             }
         }
-        
+
         if (!bobj.isFunction(constructor)) {
             if (bobj.crv.config.isDebug) {
                 throw  "bobj.crv.createWidget: invalid constructor";
             }
-            return null;    
+            return null;
         }
-        
+
         var widget = constructor(json.args);
-        
+
         if (bobj.isArray(json.children)) {
             if (widget.delayedBatchAdd) {
                 widget.delayedBatchAdd(json.children);
@@ -161,10 +160,10 @@ if (typeof(bobj.crv) == 'undefined') {
                 }
             }
         }
-        
+
         return widget;
     };
-    
+
     /**
      * Create a widget using bobj.crv.createWidget and write it to the document.
      * If optional element is given, the innerHTML is written instead and scripts
@@ -174,7 +173,6 @@ if (typeof(bobj.crv) == 'undefined') {
      * @return Returns the widget or null if creation failed
      */
     bobj.crv.writeWidget = function(json, element) {
-       
         var widget = bobj.crv.createWidget(json);
         if (widget) {
             if(element){
@@ -185,12 +183,12 @@ if (typeof(bobj.crv) == 'undefined') {
                 for(var iLinks = 0, linksLen = links.length; iLinks < linksLen; ++iLinks){
                     bobj.includeLink(links[iLinks]);
                 }
-                
+
                 var scripts = ext.scripts;
                 for (var iScripts = 0, scriptsLen = scripts.length; iScripts < scriptsLen; ++iScripts) {
                     var script = scripts[iScripts];
                     if (!script) {continue;}
-                    
+
                     if (script.text) {
                         try {
                             bobj.evalInWindow(script.text);
@@ -198,15 +196,15 @@ if (typeof(bobj.crv) == 'undefined') {
                         catch(err) {}
                     }
                 }
-                
+
                 var styleText = "";
                 for (var i = 0, len = ext.styles.length; i < len ; i++) {
                     styleText += ext.styles[i].text + '\n';
-                }       
-                
+                }
+
                 if(styleText.length > 0) {
                     bobj.addStyleSheet(styleText);
-                }          
+                }
             }
             else {
                 widget.write();
@@ -214,18 +212,18 @@ if (typeof(bobj.crv) == 'undefined') {
         }
         return widget;
     };
-    
+
     /**
-     * Initialize a widget.  
+     * Initialize a widget.
      *
      * @param widx [Int]  Widget index
-     * @param initElt [DOM Node, opt]  The element that called the init event 
+     * @param initElt [DOM Node, opt]  The element that called the init event
      */
-    bobj.crv._initWidget = function(widx, initElt) { 
+    bobj.crv._initWidget = function(widx, initElt) {
         try {
             var widget = _widgets[widx];
             widget.init();
-            
+
             if (initElt) {
                 MochiKit.DOM.removeElement(initElt);
             }
@@ -246,11 +244,11 @@ if (typeof(bobj.crv) == 'undefined') {
                     msg += 'unknown';
                 }
                 msg += ' because: ' + err;
-                throw msg; 
+                throw msg;
             }
         }
     };
-    
+
     /**
      * Creates an hidden image tag that initializes a widget using its onload
      * event. The tag should be appended to the html of the widget.
@@ -265,7 +263,7 @@ if (typeof(bobj.crv) == 'undefined') {
      * @param widx [Int]  Widget index
      *
      * @return Returns html that initializes the widget with index == widx
-     
+
     bobj.crv.getInitHTML = function(widx) {
         return bobj.html.IMG({
             style: {display:'none'},
@@ -274,7 +272,7 @@ if (typeof(bobj.crv) == 'undefined') {
             src: bobj.crvUri("../dhtmllib/images/transp.gif")
         });
     }*/
-    
+
     /**
      * Returns HTML that auto-intializes a widget.
      */
@@ -284,37 +282,36 @@ if (typeof(bobj.crv) == 'undefined') {
             'bobj.crv._initWidget(' + widx + ',"' + scriptId + '");' +
             '</script>';
     };
-	
-    bobj.crv._preloadProcessingIndicatorImages = function() { 
+
+    bobj.crv._preloadProcessingIndicatorImages = function() {
     	var relativeImgPath = bobj.crvUri("../dhtmllib/images/" + bobj.crv.config.skin + "/");
         var images = [];
         var imgNames = [
-                "wait01.gif", 
-                "dialogtitle.gif", 
-                "dialogelements.gif", 
+                "wait01.gif",
+                "dialogtitle.gif",
+                "dialogelements.gif",
                 "../transp.gif"];
 
         for(var i = 0, len = imgNames.length; i < len; i++){
             images[i] = new Image();
             images[i].src = relativeImgPath + imgNames[i];
-        }        
+        }
     };
-    
+
 	bobj.crv._loadJavaScript = function(scriptFile) {
 		if (scriptFile) {
-			document.write('<script language="javascript" src="' 
+			document.write('<script language="javascript" src="'
 	                + bobj.crvUri(scriptFile)
 	                +'"></script>');
 		}
 	};
-	
+
     /**
-     * Include the viewer's scripts in the document. 
+     * Include the viewer's scripts in the document.
      */
     bobj.crv._includeAll = function() {
-    
         bobj.crv._includeLocaleStrings();
-        
+
         if (bobj.crv.config.useCompressedScripts) {
             if (bobj.crv.config.indicatorOnly) {
                 bobj.crv._loadJavaScript('../../processindicator.js');
@@ -351,13 +348,13 @@ if (typeof(bobj.crv) == 'undefined') {
             else {
                 scripts = [
                     '../MochiKit/Base.js',
-                    '../MochiKit/Async.js', 
-                    '../MochiKit/DOM.js',  
-                    '../MochiKit/Style.js',  
-                    '../MochiKit/Signal.js', 
-                    '../MochiKit/New.js', 
-                    '../MochiKit/Color.js',  
-                    '../MochiKit/Iter.js',  
+                    '../MochiKit/Async.js',
+                    '../MochiKit/DOM.js',
+                    '../MochiKit/Style.js',
+                    '../MochiKit/Signal.js',
+                    '../MochiKit/New.js',
+                    '../MochiKit/Color.js',
+                    '../MochiKit/Iter.js',
                     '../MochiKit/Visual.js',
                     '../log4javascript/log4javascript_uncompressed.js',
                     '../external/date.js',
@@ -423,31 +420,31 @@ if (typeof(bobj.crv) == 'undefined') {
                     'SignalDisposer.js'
                 ];
             }
-            
+
             if(bobj.isParentWindowTestRunner()) {
                 scripts.push('../jsunit/tests/crViewerTestSuite.js');
             }
-               
+
             for (var i = 0, len = scripts.length; i < len; i++) {
-                document.write('<script language="javascript" src="' 
-                    + bobj.crvUri(scripts[i]) 
+                document.write('<script language="javascript" src="'
+                    + bobj.crvUri(scripts[i])
                     +'"></script>');
             }
-            
+
             for(var i in bobj.crv.config.resources){
                 //all Resources are automatically loaded at initialization when useCompressedScripts is false (in debug mode)
                 bobj.crv.config.resources[i].isLoaded = true;
             }
         }
     };
-    
+
     bobj.crv.getLangCode = function () {
-    	var splitChar = '_';  // default to java's locale split character	
+    	var splitChar = '_';  // default to java's locale split character
         if (bobj.crv.config.lang.indexOf ('-') > 0) {
             splitChar = '-'; // must be .Net's locale split
         }
         var lang = bobj.crv.config.lang.split(splitChar);
-        
+
         // TODO (Julian): Java server side now handles the chinese variants due to language pack fix
         // We'll do the same for WebForm and then the following code can be removed.
         // For Chinese locales "zh" we only support "TW" & "CN"
@@ -464,10 +461,9 @@ if (typeof(bobj.crv) == 'undefined') {
                 lang[1] = "CN";
             }
         }
-	    
+
         // .NET webform viewers don't support variants from server side - until we fix this chop-off variant code for all other than "zh"
         if (lang.length > 1 && (!bobj.crv.config.needFallback || lang[0].toLowerCase() == "zh")) {
-
             lang = lang[0] + "_" + lang[1];
         }
         else {
@@ -476,7 +472,7 @@ if (typeof(bobj.crv) == 'undefined') {
 
 	return lang;
     };
-    
+
     bobj.crv._includeLocaleStrings = function() {
         var lang = bobj.crv.getLangCode ();
 
@@ -487,44 +483,43 @@ if (typeof(bobj.crv) == 'undefined') {
 
         bobj.crv._loadJavaScript('../../allStrings_' + lang + '.js');
     };
-    
-    
+
     if (typeof MochiKit == 'undefined') {
         MochiKit = {};
     }
     if (typeof MochiKit.__export__ == 'undefined') {
         MochiKit.__export__ = false; // don't export symbols into the global namespace
     }
-    
+
     if (!bobj.crv.config.useAsync) bobj.crv._preloadProcessingIndicatorImages();
     bobj.crv._includeAll();
-	
+
     bobj.crv.initLog = function(logLevel, handlerUri) {
-        bobj.crv.logger = log4javascript.getLogger();        
+        bobj.crv.logger = log4javascript.getLogger();
         log4javascript.setEnabled(bobj.crv.config.logging.enabled);
-        
-        if (bobj.crv.config.logging.enabled) {			
-            bobj.crv.logger.setLevel(logLevel);    
+
+        if (bobj.crv.config.logging.enabled) {
+            bobj.crv.logger.setLevel(logLevel);
             var uri = handlerUri + '?ServletTask=Log';
             var ajaxAppender = new log4javascript.AjaxAppender(uri);
             bobj.crv.logger.addAppender(ajaxAppender);
-			
+
             var oldLogFunc = bobj.crv.logger.log;
             bobj.crv.logger.log = function(level, message, exception) {
                 oldLogFunc(level, bobj.crv.config.logging.id + ' ' + message, exception);
             };
-			            
+
             bobj.crv.logger.info('Logging Initialized');
         }
     };
-    
+
     bobj.crv.invokeActionAdapter = function (args) {
         var n = "invokeAction";
         var f = window[n];
         if (!f && window.parent){
             f = window.parent[n];
         }
-        
+
         if (f){
             f(args.url, args.actionId, args.objectId, args.containerId, args.actionType, null);
         }

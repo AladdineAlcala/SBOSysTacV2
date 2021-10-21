@@ -1,6 +1,5 @@
 // <script>
 
-
 _menusZIndex=2000
 _menusItems=new Array
 _globMenuCaptured=null
@@ -49,14 +48,14 @@ function newMenuWidget(id,hideCB,beforeShowCB)
 	o.getHTML=MenuWidget_getHTML
 	//o.getShadowHTML=MenuWidget_getShadowHTML
 	o.show=MenuWidget_show
-	
+
 	o.setAccelEnabled=MenuWidget_setAccelEnabled
 	o.isAccelEnabled=MenuWidget_isAccelEnabled
 
 	o.internalAdd=o.add=MenuWidget_add
 	o.addCheck=MenuWidget_addCheck
-	o.addSeparator=MenuWidget_addSeparator	
-	
+	o.addSeparator=MenuWidget_addSeparator
+
 	o.insert=MenuWidget_insert
 	o.insertCheck=MenuWidget_insertCheck
 	o.insertSeparator=MenuWidget_insertSeparator
@@ -67,32 +66,32 @@ function newMenuWidget(id,hideCB,beforeShowCB)
 
 	o.remove=MenuWidget_remove
 	o.removeAll=MenuWidget_removeAll;
-	o.removeByID=MenuWidget_removeByID	
-	
+	o.removeByID=MenuWidget_removeByID
+
 	o.resetItemCount=MenuWidget_resetItemCount
 	o.resetTooltips=MenuWidget_resetTooltips
-	
+
 	// Private Methods
 	o.showSub=MenuWidget_showSub
 	o.captureClicks=MenuWidget_captureClicks
 	o.releaseClicks=MenuWidget_releaseClicks
 	o.focus=MenuWidget_focus
 	o.restoreFocus=MenuWidget_restoreFocus
-	o.hasVisibleItem=MenuWidget_hasVisibleItem	
+	o.hasVisibleItem=MenuWidget_hasVisibleItem
 	o.updateIndex=MenuWidget_updateIndex
 	o.getTotalNumItems=MenuWidget_getTotalNumItems
-	
+
 	// Click capture
 	o.clickCB=new Array
 	o.clickCBDocs=new Array
-	
+
 	// Disable direct write
 	o.write=MenuWidget_write
-	
+
 	o.alignLeft=false
 	o.sepCount=0
 	o.itemCount=0
-	
+
 	return o
 }
 
@@ -125,14 +124,14 @@ function MenuWidget_captureClicks(w)
 				_oldErrHandler=window.onerror
 				window.onerror=localErrHandler
 			}
-	
+
 			try
 			{
 				d=w.document
 				o.clickCB[o.clickCB.length]=d.onmousedown
 				o.clickCBDocs[o.clickCBDocs.length]=d
 				d.onmousedown=MenuWidget_globalClick
-			
+
 				var fr=w.frames,len=fr.length
 				for (var i=0;i<len;i++)
 					o.captureClicks(fr[i])
@@ -180,26 +179,26 @@ _menuItem=null;
 function MenuWidget_focus()
 //give focus to the first visible menuItem
 {
-	var o=this, items=o.items, len=items.length	
+	var o=this, items=o.items, len=items.length
 	for(var i=0; i<len;i++)
 	{
 		if(items[i].isShown && !items[i].isSeparator)
-		{	
-			_menuItem=items[i];		
+		{
+			_menuItem=items[i];
 			setTimeout("_menuItem.focus()",1);
 			if(o.endLink) o.endLink.show(true)
 			if(o.startLink) o.startLink.show(true)
-			
+
 			break;
 		}
-	}		
+	}
 }
 
 // ================================================================================
 
 function MenuWidget_keepFocus(id)
-{		
-	var o=getWidget(getLayer(id))		
+{
+	var o=getWidget(getLayer(id))
 	if (o) o.focus();
 }
 
@@ -208,12 +207,12 @@ function MenuWidget_keepFocus(id)
 function MenuWidget_restoreFocus()
 {
 	var o=this
-	
+
 	if(o.endLink) o.endLink.show(false)
 	if(o.startLink) o.startLink.show(false)
-	
+
 	if(o.parIcon) o.parIcon.focus()
-	else 
+	else
 		if (o.par)	o.par.focus()
 		else if(o.parCalendar) o.parCalendar.focus()
 }
@@ -221,30 +220,30 @@ function MenuWidget_restoreFocus()
 // ================================================================================
 
 function MenuWidget_keyDown(id,e)
-{	
+{
 	var o=getWidget(getLayer(id))
-	var key=eventGetKey(e)	
+	var key=eventGetKey(e)
 	if(key==27 && o)//escape
 	{
-		o.restoreFocus()		
-		o.show(false)	
+		o.restoreFocus()
+		o.show(false)
 		if (o.par && o.par.par)//case submenu
 		{
-			o.par.par.currentSub=-1	
+			o.par.par.currentSub=-1
 		}
-		o.currentSub=-1	
+		o.currentSub=-1
 		eventCancelBubble(e);//be careful ! usefull for dialog box close by Escape keypressed
 	}
 	else if(o && (key==109 || key==37))//collapse (- ou <-)
 	{
 		if (o.par && o.par.par)  //only for submenu
 		{
-			o.restoreFocus()		
-			o.show(false)			
-			o.par.par.currentSub=-1			
-			o.currentSub=-1	
+			o.restoreFocus()
+			o.show(false)
+			o.par.par.currentSub=-1
+			o.currentSub=-1
 		}
-	}	
+	}
 	else if(key==13)//enter
 	{
 		eventCancelBubble(e);//be careful ! usefull for dialog box close by Enter keypressed
@@ -297,7 +296,7 @@ function MenuWidget_add(id,text,cb,icon,dx,dy,disabled,disDx,disDy,alt)
 		o.itemCount++
 		itemNo=o.itemCount
 	}
-	
+
 	var ret=o.items[i]=newMenuItem(o,id,text,cb,itemNo,icon,dx,dy,disabled,disDx,disDy,false,alt)
 	ret.menuIndex=i
 	ret.dynHTML()
@@ -324,7 +323,7 @@ function MenuWidget_addCheck(id,text,cb,icon,dx,dy,disabled,disDx,disDy,alt)
 		o.itemCount++
 		itemNo=o.itemCount
 	}
-	
+
 	var ret=o.items[i]=newMenuItem(o,id,text,cb,itemNo,icon,dx,dy,disabled,disDx,disDy,true,alt)
 	ret.menuIndex=i
 	ret.dynHTML()
@@ -339,7 +338,7 @@ function MenuWidget_addSeparator()
 {
 	var s=this.internalAdd("_menusep_"+(this.sepCount++))
 	s.isSeparator=true
-	
+
 	return s
 }
 
@@ -347,20 +346,20 @@ function MenuWidget_addSeparator()
 
 function MenuWidget_insert(index,id,text,cb,icon,dx,dy,disabled,disDx,disDy,alt)
 // Return  [MenuItem] the new separator
-{	
+{
 	var o=this,i=o.items.length,itemNo=null
 	if (id.substr(0,9)!="_menusep_")
 	{
 		o.itemCount++
 		itemNo=o.itemCount
 	}
-	
-	var item = newMenuItem(o,id,text,cb,itemNo,icon,dx,dy,disabled,disDx,disDy,false,alt);			
+
+	var item = newMenuItem(o,id,text,cb,itemNo,icon,dx,dy,disabled,disDx,disDy,false,alt);
 	arrayAdd(o,'items',item,index);
 	o.updateIndex();
-	
+
 	item.dynHTML()
-	
+
 	return item
 }
 
@@ -368,23 +367,22 @@ function MenuWidget_insert(index,id,text,cb,icon,dx,dy,disabled,disDx,disDy,alt)
 
 function MenuWidget_insertCheck(index,id,text,cb,icon,dx,dy,disabled,disDx,disDy,alt)
 // Return  [MenuItem] the new separator
-{	
+{
 	var o=this,i=o.items.length,itemNo=null
 	if (id.substr(0,9)!="_menusep_")
 	{
 		o.itemCount++
 		itemNo=o.itemCount
 	}
-	
+
 	var item = newMenuItem(o,id,text,cb,itemNo,icon,dx,dy,disabled,disDx,disDy,true,alt);
 	arrayAdd(o,'items',item,index);
 	o.updateIndex();
-	
+
 	item.dynHTML()
-	
+
 	return item
 }
-
 
 // ================================================================================
 
@@ -394,12 +392,12 @@ function MenuWidget_insertSeparator(index)
 {
 	var item = newMenuItem(this,"_menusep_"+(this.sepCount++));
 	item.isSeparator=true;
-						
+
 	arrayAdd(this,'items',item,index);
-	this.updateIndex();	
-	
-	item.dynHTML()		
-	
+	this.updateIndex();
+
+	item.dynHTML()
+
 	return item
 }
 
@@ -414,7 +412,7 @@ function MenuWidget_init()
 // ================================================================================
 
 function MenuWidget_getItem(index)
-// Get an item in the menu 
+// Get an item in the menu
 // index [int] the item index
 // Return [MenuItem] the item (null if invalid index)
 {
@@ -429,7 +427,7 @@ function MenuWidget_getItem(index)
 // ================================================================================
 
 function MenuWidget_getItemByID(id)
-// Get an item in the menu 
+// Get an item in the menu
 // index [int] the item index
 // Return [MenuItem] the item (null if invalid index)
 {
@@ -437,9 +435,9 @@ function MenuWidget_getItemByID(id)
 
 	for(var i in items)
 	{
-		if(items[i].id == id)		
-			return items[i];		
-	}		
+		if(items[i].id == id)
+			return items[i];
+	}
 
 	return null
 }
@@ -451,15 +449,15 @@ function MenuWidget_removeByID(id)
 	var o=this;
 	var item = o.getItemByID(id);
 	if(item)
-	{	
+	{
 		//remove in items
-		arrayRemove(o,'items',item.menuIndex);	
+		arrayRemove(o,'items',item.menuIndex);
 		o.updateIndex();
-		
-		//remove in html		
+
+		//remove in html
 		if (o.layer==null)
 			return
-				
+
 		var tbody=o.layer.childNodes[0];
 		tbody.deleteRow(item.menuIndex);
 	}
@@ -477,19 +475,19 @@ function MenuWidget_remove(index)
 	var o=this;
 	if(index != null)
 	{
-		arrayRemove(o,'items',index);	
-		o.updateIndex();	
+		arrayRemove(o,'items',index);
+		o.updateIndex();
 	}
 	else //null = remove all
 	{
-		o.items.length = 0;		
+		o.items.length = 0;
 	}
-	//remove in html		
+	//remove in html
 	if (o.layer==null)
 		return
-	
+
 	var tbody=o.layer.childNodes[0];
-	if (index != null) {		
+	if (index != null) {
 		tbody.deleteRow(index);
 	}
 	else {
@@ -537,11 +535,11 @@ function MenuWidget_showSub()
 				var lyr=nextItem.layer
 				var x=parseInt(o.css.left)
 				var y=parseInt(o.css.top)
-				
+
 				for (var i=0;i<o.nextSub;i++)
 				{
 					var item=o.items[i]
-					
+
 					if (item.isShown)
 					{
 						if ((item.icon!=null)||(item.text!=null))
@@ -550,9 +548,9 @@ function MenuWidget_showSub()
 							y+=3
 					}
 				}
-				
+
 				var w=o.getWidth()
-				
+
 				x=x+w-4
 
 				nextItem.attachSubMenu(nextItem.sub)
@@ -589,7 +587,7 @@ function MenuWidget_justInTimeInit()
 {
 	var o=this
 	o.layer=getLayer(o.id)
-	
+
 	if (o.layer==null)
 	{
 		targetApp(o.getHTML())
@@ -597,15 +595,15 @@ function MenuWidget_justInTimeInit()
 	}
 
 	o.layer._widget=o.widx
-	o.css=o.layer.style	
-	
+	o.css=o.layer.style
+
 	o.endLink=newWidget("endLink_"+o.id)
-	o.endLink.init()	
+	o.endLink.init()
 	o.startLink=newWidget("startLink_"+o.id)
 	o.startLink.init()
 
 	var items=o.items
-	
+
 	for (var i in items)
 		items[i].init()
 }
@@ -644,51 +642,51 @@ function MenuWidget_show(show,x,y,parentPropagate,parentMenuW,buttonFrom)
 // Return [void]
 {
 	var o=this
-	
+
 	if (o.layer==null)
 		o.justInTimeInit()
 
-	var css=o.css 
-	
+	var css=o.css
+
 	if (show)
 	{
 		o.iframeLyr=getDynamicBGIFrameLayer()
 		o.iframeCss=o.iframeLyr.style
-		
+
 		if (o.beforeShowCB)
 			o.beforeShowCB()
-		
+
 		//User Rights: don't show menu if it contains no visible menu
 		if(!o.hasVisibleItem()) return;
-		
+
 		o.captureClicks()
-	
-		// Show and place menu	
+
+		// Show and place menu
 		css.display='block'
 		css.zIndex=(o.zIndex+1)
 		css.visibility="hidden"
 		css.left="-1000px"
 		css.top="-1000px"
-		
+
 		var w=o.getWidth()
 		var h=o.getHeight()
-		
+
 		if (o.alignLeft)
 			x-=w
 
 		// buttonFrom means that we a are in a menu triggered by a button
 		// (example : IconMenuWidget
-		
+
 		if (buttonFrom)
 		{
 			var buttonW=buttonFrom.getWidth()
-			
+
 			// Align the menu at the button right
 			// if the button is larger than the menu
 			if (buttonW>w)
 				x=x+buttonW-w
 		}
-	
+
 		// Change coordinates if the menu is out of the window
 		var x2=x+w+4,y2=y+h+4
 
@@ -706,10 +704,10 @@ function MenuWidget_show(show,x,y,parentPropagate,parentMenuW,buttonFrom)
 
 		if (y2-getScrollY()>winHeight())
 			y=Math.max(0,y-4-h+(parentMenuW!=null?30:0))
-	
+
 		css.left=""+x+"px"
 		css.top=""+y+"px"
-		
+
 		css.visibility="visible"
 
 		// Show and place menu shadow
@@ -720,28 +718,27 @@ function MenuWidget_show(show,x,y,parentPropagate,parentMenuW,buttonFrom)
 		iCss.height=""+h+"px"
 		iCss.zIndex=o.zIndex-1
 		iCss.display='block'
-		
+
 		if (_ie)
 		{
 			y-=2
 			x-=2
 		}
-			
-		
+
 		o.nextSub=-1
 		o.showSub()
-				
+
 		o.focus()
 	}
 	else
-	{											
+	{
 		if (parentPropagate && o.par && o.par.par)
-		{			
+		{
 			o.par.par.show(show,x,y,parentPropagate)
-		} 
+		}
 		if (o.iframeLyr) {
 			releaseBGIFrame(o.iframeLyr.id)
-		}	
+		}
 		css.display='none'
 		if (o.iframeCss) {
 			o.iframeCss.display='none'
@@ -749,8 +746,8 @@ function MenuWidget_show(show,x,y,parentPropagate,parentMenuW,buttonFrom)
 		o.nextSub=-1
 		o.showSub()
 		if (o.hideCB)
-			o.hideCB()				
-		
+			o.hideCB()
+
 		o.releaseClicks()
 	}
 }
@@ -786,15 +783,15 @@ function MenuWidget_isShown()
 function MenuWidget_hasVisibleItem()
 // Test if the menu contains shown items
 // Returns [boolean]
-{	
+{
 	var o=this
-	if(o.isMenuColor || o.isCalendar) return true;	
-	var items=o.items	
+	if(o.isMenuColor || o.isCalendar) return true;
+	var items=o.items
 	for (var i in items)
 	{
 		var item=items[i]
-		if (item && !(item.isSeparator==true) && item.isShown)						
-			return true;		
+		if (item && !(item.isSeparator==true) && item.isShown)
+			return true;
 	}
 	return false
 }
@@ -885,7 +882,7 @@ function newMenuItem(par,id,text,cb,itemNo,icon,dx,dy,disabled,disDx,disDy,isChe
 	o.isShown=true
 	o.alt=alt //icon alt att
 	o.needsRightPart=true
-	
+
 	o.index=_menusItems.length
 	_menusItems[o.index]=o
 	o.menuIndex=-1
@@ -896,7 +893,7 @@ function newMenuItem(par,id,text,cb,itemNo,icon,dx,dy,disabled,disDx,disDy,isChe
 
 	o.leftZoneClass="menuLeftPart"
 	o.leftZoneSelClass="menuLeftPartSel"
-		
+
 	o.totalNumItems=null
 
 	// Public methods
@@ -914,7 +911,7 @@ function newMenuItem(par,id,text,cb,itemNo,icon,dx,dy,disabled,disDx,disDy,isChe
 	o.focus=MenuItem_focus
 	o.setTextClass=MenuItem_setTextClass
 	o.updateTooltip=MenuItem_updateTooltip
-	
+
 	return o
 }
 
@@ -922,7 +919,7 @@ function MenuItem_setTextClass(cls)
 //change text of menu item
 {
 	var o=this;
-		
+
 	if (o.textOnlyLayer)
 	{
 		o.textOnlyLayer.className=cls;
@@ -952,13 +949,13 @@ function MenuItem_init()
 			o.textOnlyLayer=getLayer(id+'_span_text_'+o.id)
 			o.hiddenLabelLayer=getLayer(id+'_hiddenLabel_'+o.id)
 			o.accelLayer=getLayer(id+'_accel_'+o.id)
-			
+
 			// no need to create tooltip for checked menus here,
 			// it will be created in o.check
-			if (!o.isCheck)  
+			if (!o.isCheck)
 				o.updateTooltip()
 		}
-		
+
 		if (o.isCheck)
 		{
 			o.check(o.checked,true)
@@ -976,7 +973,7 @@ function MenuItem_attachSubMenu(menu)
 	o.sub=menu
 	menu.par=o
 	menu.zIndex=o.par.zIndex+2
-	
+
 	if (o.layer)
 	{
 		if (o.arrowLayer==null)
@@ -984,7 +981,7 @@ function MenuItem_attachSubMenu(menu)
 		var dis=o.disabled
 		changeSimpleOffset(o.arrowLayer,dis?7:0,dis?81:64)
 	}
-	
+
 	return menu
 }
 
@@ -996,11 +993,11 @@ function MenuItem_check(check,force)
 // Return [void]
 {
 	var o=this
-	
+
 	if ((o.checked!=check)||force)
 	{
 		o.checked=check
-	
+
 		if (o.par.layer)
 		{
 			// Dynamic check
@@ -1010,11 +1007,11 @@ function MenuItem_check(check,force)
 				if (o.icon==null)
 					changeSimpleOffset(o.iconLayer,0,(o.checked?48:0),null,(o.checked?_menuCheckLab:""))
 				changeOffset(o.iconTDLayer,0,(o.checked?0:0))
-				
+
 				if (o.checkFrame==null)
 					o.checkFrame=getLayer(o.par.id+'_item_check_'+o.id)
 				o.checkFrame.className='menuIcon'+(o.checked?"Check":"")
-				
+
 				o.updateTooltip()
 			}
 		}
@@ -1029,38 +1026,38 @@ function MenuItem_setDisabled(dis)
 // Return [void]
 {
 	var o=this
-	
+
 	if (o.disabled!=dis)
 	{
 		o.disabled=dis
-	
+
 		if (o.par.layer)
 		{
 			// Dynamic set disabled
-	
+
 			var lyr=o.layer
 			if (lyr)
 			{
 				lyr.style.cursor=dis?'default':_hand
-				
+
 				if (o.icon)
 					changeSimpleOffset(o.iconLayer,dis?o.disDx:o.dx,dis?o.disDy:o.dy)
-					
+
 				var cn='menuTextPart'+(o.disabled?'Disabled':'')
-				
+
 				if (cn!=o.textLayer.className)
 					o.textLayer.className=cn
-				
+
 				if (o.accel && (cn!=o.accelLayer.className))
 					o.accelLayer.className=cn
-									
+
 				if (o.sub)
 				{
 					if (o.arrowLayer==null)
 						o.arrowLayer=getLayer(o.par.id+'_item_arrow_'+o.id)
-					changeSimpleOffset(o.arrowLayer,dis?7:0,dis?81:64)					
+					changeSimpleOffset(o.arrowLayer,dis?7:0,dis?81:64)
 				}
-				
+
 				o.updateTooltip()
 			}
 		}
@@ -1078,7 +1075,7 @@ function _mii(lyr,inv)
 	var c=lyr.childNodes,y=0,len=c.length,idx=lyr._boIndex
 
 	var o=_menusItems[idx]
-	
+
 	if (o.disabled)
 		inv=0
 	else
@@ -1096,25 +1093,24 @@ function _mii(lyr,inv)
 			}
 		}
 	}
- 	
+
  	var realPart=0
- 	
+
  	for (var i=0;i<len;i++)
  	{
  		var ce=c[i]
  		if (ce.tagName!=null)
  		{
-
  			if (realPart==0)
  				ce.className=inv?o.leftZoneSelClass:o.leftZoneClass
  			else if (realPart==1)
  				ce.className="menuTextPart"+(inv?"Sel":"")+(o.disabled?"Disabled":"")
- 			else if (o.accel && (realPart==2)) 
+ 			else if (o.accel && (realPart==2))
  			{
  				ce.className="menuTextPart"+(inv?"Sel":"")+(o.disabled?"Disabled":"")
  				break
- 			}	
- 			else	
+ 			}
+ 			else
  				ce.className="menuRightPart"+(inv?"Sel":"")
 
  			 realPart++
@@ -1136,12 +1132,12 @@ function MenuItem_getHTMLPart(part)
 				im=simpleImgOffset(_skin+"menus.gif",16,16,0,o.checked?48:0,(o.par.id+'_item_icon_'+o.id),null,(o.checked?_menuCheckLab:""))
 			else
 				im=o.icon?simpleImgOffset(o.icon,16,16,o.disabled?o.disDx:o.dx,o.disabled?o.disDy:o.dy,(o.par.id+'_item_icon_'+o.id),null,o.alt?o.alt:''):(getSpace(16,16))
-			
+
 			if (o.isCheck)
 			{
 				im='<div id="'+o.par.id+'_item_check_'+o.id+'" class="menuIcon'+(o.checked?"Check":"")+'" style="width:16px;height:16px;padding:2px">'+im+'</div>'
 			}
-			
+
 			return im
 
 		case 1: // the text
@@ -1150,7 +1146,7 @@ function MenuItem_getHTMLPart(part)
 			var hiddenLabel = '<label for="' + spanID + '" id="'+(o.par.id+'_hiddenLabel_'+o.id)+'" style="display:none;" ></label>';
 			return '<span id="'+ spanID +'" ' + keysCbs + ' tabIndex="0" role="menuitem">'+convStr(o.text)+ '</span>' + hiddenLabel;
 		case 2:
-			return simpleImgOffset(_skin+"menus.gif",16,16,o.sub?(o.disabled?7:0):0,o.sub?(o.disabled?81:64):0,o.par.id+'_item_arrow_'+o.id, null, null, null,"right")			
+			return simpleImgOffset(_skin+"menus.gif",16,16,o.sub?(o.disabled?7:0):0,o.sub?(o.disabled?81:64):0,o.par.id+'_item_arrow_'+o.id, null, null, null,"right")
 		case 3:
 			return '<table width="100%" height="3" cellpadding="0" cellspacing="0" border="0" style="'+backImgOffset(_skin+"menus.gif",0,80)+';"><tbody><tr><td></td></tr></tbody></table>'
 		case 4:	// the accelerator
@@ -1164,27 +1160,27 @@ function MenuItem_getHTML()
 // Return [String] the HTML
 {
 	var o=this
-	
+
 	if ((o.icon!=null)||(o.text!=null))
-	{		
+	{
 		var invertCbs=' onclick="'+_codeWinName+'._micl(this,event);return true" oncontextmenu="'+_codeWinName+'._micl(this,event);return false" onmouseover="'+_codeWinName+'._mii(this,1)" onmouseout="'+_codeWinName+'._mii(this,0);" '
 		var keysCbs=' onkeydown="'+_codeWinName+'._mikd(this,event);return true" '
 		var ar=new Array(), i=0
 		ar[i++] = '<tr onmousedown="'+_codeWinName+'._minb(event)" onmouseup="'+_codeWinName+'._minb(event)" id="'+(o.par.id+'_item_'+o.id)+'" style="'+(!o.isShown?'display:none;':'')+'height:'+_mitemH+'px;width:24px;cursor:'+(o.disabled?'default':_hand)+'" '+invertCbs+keysCbs+' valign="middle">'
 		ar[i++] =	'<td id="'+(o.par.id+'_item_td_'+o.id)+'" style="width:23px;height:'+_mitemH+'px;" align="center" class="'+o.leftZoneClass+'">'
 		ar[i++] =		o.getHTMLPart(0)
-		ar[i++] =	'</td>'	
+		ar[i++] =	'</td>'
 		ar[i++] =	'<td ' +(o.centered?' align="center" ':'')+' style="height:'+_mitemH+'px" id="'+(o.par.id+'_text_'+o.id)+'" class="menuTextPart'+(o.disabled?'Disabled':'')+'">'
 		ar[i++] =		o.getHTMLPart(1)
 		ar[i++] =	'</td>'
-		if (o.needsRightPart) 
+		if (o.needsRightPart)
 		{
 			if (o.accel!=null)
 			{
 				ar[i++] = '<td class="menuTextPart'+(o.disabled?'Disabled':'') + '" id="'+(o.par.id+'_accel_'+o.id)+'" align="right"' +' style="height:'+_mitemH+'px"  tabIndex="-1">'
 				ar[i++] =	o.getHTMLPart(4)
 				ar[i++] = '</td>'
-			} else {			
+			} else {
 				ar[i++] = '<td class="menuRightPart" align="right" style="width:40px;height:'+_mitemH+'px;" >'
 				ar[i++] =	o.getHTMLPart(2)
 				ar[i++] = '</td>'
@@ -1218,11 +1214,11 @@ function MenuItem_dynHTML()
 		return
 
 	var tbody=o.par.layer.childNodes[0],tr=tbody.insertRow(o.menuIndex),st=tr.style
-	
+
 	tr.onmousedown=_minb
 	tr.onmouseup=_minb
 	tr.id=(o.par.id+'_item_'+o.id)
-	
+
 	if ((o.icon!=null)||(o.text!=null))
 	{
 		var td1=tr.insertCell(0),td2=tr.insertCell(1),td3=tr.insertCell(2),st1=td1.style,st2=td2.style,st3=td3.style
@@ -1235,7 +1231,7 @@ function MenuItem_dynHTML()
 		st.height=""+_mitemH+"px"
 		st.width="24px"
 		st.cursor=(o.disabled?'default':_hand)
-		
+
 		td1.id=(o.par.id+'_item_td_'+o.id)
 		st1.width="23px"
 		st1.height=""+_mitemH+"px"
@@ -1250,43 +1246,42 @@ function MenuItem_dynHTML()
 		td2.className="menuTextPart"+(o.disabled?'Disabled':'')
 		td2.innerHTML=o.getHTMLPart(1)
 
-		if (o.accel) 
+		if (o.accel)
 		{
 			td3.className="menuTextPart"+(o.disabled?'Disabled':'')
 			td3.align="right"
-			//st3.width="24px"						
+			//st3.width="24px"
 			st3.height=""+_mitemH+"px"
 			//st3.paddingLeft="4px"
-			//st3.paddingRight="4px"			
+			//st3.paddingRight="4px"
 			td3.innerHTML=o.getHTMLPart(4)
-		} else {		
+		} else {
 			td3.className="menuRightPart"
 			td3.align="right"
 			st3.width="40px"
-			st3.height=""+_mitemH+"px"		
+			st3.height=""+_mitemH+"px"
 			td3.innerHTML=o.getHTMLPart(2)
 		}
 
-		
 		o.init()
 	}
 	else
 	{
 		tr.onclick=_minb
 		tr.style.height="3px"
-		
+
 		var td1=tr.insertCell(0),td2=tr.insertCell(1),st1=td1.style,st2=td2.style
 
 		td1.className=o.leftZoneClass
 		st1.width="24px"
 		st1.height="3px"
 		st1.border="0px"
-		
+
 		td2.colSpan="2"
 		st2.paddingLeft="5px"
 		st2.paddingRight="5px"
 		td2.innerHTML=o.getHTMLPart(3)
-	}		
+	}
 }
 
 // ================================================================================
@@ -1298,14 +1293,13 @@ function MenuItem_isChecked()
 	return this.checked
 }
 
-
 // ================================================================================
 
 function MenuItem_setText(s)
 //change text of menu item
 {
 	var o=this,id=o.par.id
-	o.text=s	
+	o.text=s
 	if (o.textLayer)
 	{
 		o.textLayer.innerHTML=o.getHTMLPart(1)
@@ -1320,11 +1314,11 @@ function MenuItem_setAccelerator(keystroke, modifier)
 // modifier int _ctrl=0,_shift=1,_alt=2
 //add an accelerator(key combination) to the text of menu item
 {
-	var o=this,id=o.par.id	
-	o.accel= ((modifier != null)?_modifiers[modifier]:"") + keystroke	
+	var o=this,id=o.par.id
+	o.accel= ((modifier != null)?_modifiers[modifier]:"") + keystroke
 	if (o.accelLayer)
 	{
-		o.accelLayer.innerHTML=o.getHTMLPart(4)		
+		o.accelLayer.innerHTML=o.getHTMLPart(4)
 	}
 }
 
@@ -1339,11 +1333,10 @@ function MenuItem_setIcon(dx,dy,disDx,disDy,url)
 	o.dy = (dy != null) ? dy : o.dy
 	o.disDx = (disDx != null) ? disDx : o.disDx
 	o.disDy = (disDy != null) ? disDy : o.disDy
-		
+
 	if (o.icon && o.iconLayer)
 		changeSimpleOffset(o.iconLayer,o.disabled?o.disDx:o.dx, o.disabled?o.disDy:o.dy,o.url)
 }
-
 
 // ================================================================================
 
@@ -1354,7 +1347,7 @@ function MenuItem_show(sh)
 {
 	var o=this
 	o.isShown=sh
-	
+
 	if (o.layer!=null)
 		o.layer.style.display=sh?'':'none'
 }
@@ -1370,7 +1363,7 @@ function _micl(lyr,e)
 	eventCancelBubble(e)
 	var idx=lyr._boIndex,o=_menusItems[idx]
 	o.layer=lyr
-	
+
 	if (!o.disabled)
 	{
 		if (o.sub)
@@ -1402,40 +1395,40 @@ function _micl(lyr,e)
 // ================================================================================
 
 function _mikd(lyr,e)
-{	
+{
 	while(lyr && !lyr._boIndex)
 		lyr = lyr.parentNode;
-	
+
 	if(!lyr || !lyr._boIndex)
 		return;
-	
+
 	var idx=lyr._boIndex,o=_menusItems[idx]
-	o.layer=lyr		
-	var k=eventGetKey(e)	
+	o.layer=lyr
+	var k=eventGetKey(e)
 	switch(k)
 	{
 		case 32:
 		case 13://enter
 			_micl(lyr,e)
-		break;	
-		
-		case 107://expanded	(+ ou ->)			
-		case 39:	
+		break;
+
+		case 107://expanded	(+ ou ->)
+		case 39:
 			if (!o.disabled && o.sub )
 			{
 				_micl(lyr,e)
 			}
 		break;
-		case 109://collapse (- ou <-) 
+		case 109://collapse (- ou <-)
 		case 37:
 			//let menu does action
 		break;
-		case 40://next 
+		case 40://next
 			var items=o.par.items, len = items.length
 			for(var i=o.menuIndex+1;i<len;i++)
 			{
 				if(items[i].isShown && !items[i].isSeparator)
-				{			
+				{
 					items[i].focus()
 					break;
 				}
@@ -1446,14 +1439,14 @@ function _mikd(lyr,e)
 			for(var i=o.menuIndex-1;i>=0;i--)
 			{
 				if(items[i].isShown && !items[i].isSeparator)
-				{			
+				{
 					items[i].focus()
 					break;
 				}
 			}
-		break;		
-	}	
-}						
+		break;
+	}
+}
 
 // ================================================================================
 
@@ -1540,14 +1533,13 @@ function MenuItem_invertCall1(event)
 
 function MenuItem_focus()
 //give focus to menu item
-{	
+{
 	var o=this
-		
+
 	if(isLayerDisplayed(o.layer) && o.textOnlyLayer && o.textOnlyLayer.focus)
-	{			
-		o.textOnlyLayer.focus();	
+	{
+		o.textOnlyLayer.focus();
 	}
-		
 }
 
 //================================================================================
@@ -1556,15 +1548,15 @@ function MenuItem_updateTooltip()
 // update tooltip for menu item
 {
 	var o=this
-	
+
 	if (o.textOnlyLayer && !o.isSeparator)
 	{
 		if(o.textOnlyLayer.innerHTML)
 			o.textOnlyLayer.title=o.textOnlyLayer.innerHTML
-		o.textOnlyLayer.title+=o.checked?" "+_menuCheckLab:""			
-		if (o.disabled) 
+		o.textOnlyLayer.title+=o.checked?" "+_menuCheckLab:""
+		if (o.disabled)
 		    o.textOnlyLayer.title = (o.textOnlyLayer.title != null ? o.textOnlyLayer.title : "") + " " + _menuDisableLab
-		
+
 		if(o.hiddenLabelLayer) {
 			var tooltip = ((_moz && o.textOnlyLayer.title) ? o.textOnlyLayer.title : "") +  o.itemNo + _of + o.par.getTotalNumItems();
 			o.hiddenLabelLayer.innerHTML = tooltip;
@@ -1596,9 +1588,9 @@ function MenuItem_updateTooltip()
 //	o.addLastUsed=MenuColorWidget_addLastUsed
 //	o.getHTML=MenuColorWidget_getHTML
 //	o.uncheckAll=MenuColorWidget_uncheckAll
-//	
+//
 //	o.isMenuColor=true
-//		
+//
 //	return o
 //}
 //
@@ -1629,13 +1621,13 @@ function MenuItem_updateTooltip()
 //	colorsMax = 8
 //	len = o.items.length
 //	var it = null
-//	
+//
 //	for (var c = 0; c < colorsMax; c++)
-//	{					
+//	{
 //		it = newLastUsedColorMenuItem(o,c,lastUsedColorsAr[c],"",cb)
 //		it.isLast = (c == colorsMax-1) ? true : false // is it the last 'last used' color item in the item list
 //		o.items[len + c] = it
-//	}	
+//	}
 //}
 //
 //// ================================================================================
@@ -1665,38 +1657,38 @@ function MenuItem_updateTooltip()
 //			case _isColor:
 //				s[j++] = item.getHTML()
 //				break;
-//			
+//
 //			case _isLastUsedColor:
 //				lastUsedCol += item.getHTML()
 //				lastUsedCol += (lastUsedColIconsNb++ == lastUsedColIconsMaxLine)? "</tr><tr>":""
-//				
+//
 //				if (item.isLast)
 //				{
 //					s[j++] = sep
 //					s[j++] = '<tr><td colspan="8">'
-//					s[j++] =		'<table border="0" cellspacing="0" cellpadding="0" width="100%"><tbody><tr>'					
+//					s[j++] =		'<table border="0" cellspacing="0" cellpadding="0" width="100%"><tbody><tr>'
 //					s[j++] =			'<td width="50%" class="menuTextPart">' + convStr(o.lastUsedTxt) + '</td>'
 //					s[j++] =			'<td><table border="0" cellspacing="0" cellpadding="0"><tbody><tr>'
 //					s[j++] =				lastUsedCol
-//					s[j++] =			'</tr></tbody></table></td>'	
+//					s[j++] =			'</tr></tbody></table></td>'
 //					s[j++] =		'</tr></tbody></table>'
 //					s[j++] = '</td></tr>'
 //					s[j++] = sep
 //				}
 //				break;
-//			
+//
 //			case _isNotColor:
-//	
+//
 //				item.leftZoneClass="menuLeftPartColor"
 //				item.leftZoneSelClass="menuLeftPartSel"
 //				item.centered=true
 //				s[j++] ='<tr><td colspan="8"><table border="0" cellspacing="0" cellpadding="0" width="100%"><tbody><tr>'+item.getHTML()+'</tr></tbody></table></td></tr>'
 //				s[j++] = (i == 0 )? sep:""
-//		}	
+//		}
 //	}
 //
 //	s[j++] ='</tbody></table><a style="position:absolute;left:-30px;top:-30px; visibility:hidden" id="endLink_'+o.id+'" href="javascript:void(0)" onfocus="'+_codeWinName+'.MenuWidget_keepFocus(\''+o.id+'\');return false;" ></a>'
-//	
+//
 //	return s.join("")
 //}
 //
@@ -1716,25 +1708,25 @@ function MenuItem_updateTooltip()
 //	for (var i in o.items)
 //	{
 //		var item=o.items[i]
-//		if (item.menuItemType == _isLastUsedColor) 
-//		{						
+//		if (item.menuItemType == _isLastUsedColor)
+//		{
 //			if (j < lenLastUsed)
-//			{			
+//			{
 //				item.init()
 //				var c = o.lastUsedColorsAr[j++]
-//				item.color = c				
+//				item.color = c
 //				item.layer.childNodes[0].childNodes[0].style.backgroundColor = 'rgb(' + c + ')'
-//										
-//				var t = _colorsArr[""+c+""]				
+//
+//				var t = _colorsArr[""+c+""]
 //				item.text = (t)? t:(_RGBTxtBegin + c + _RGBTxtEnd)
 //				item.layer.childNodes[0].childNodes[0].childNodes[0].title = item.text
-//				
+//
 //				item.show(true)
 //			} else {
 //				item.show(false)
 //			}
-//		} 
-//	}	
+//		}
+//	}
 //}
 //
 //// ================================================================================
@@ -1782,7 +1774,7 @@ function MenuItem_updateTooltip()
 //		var item=items[i]
 //		if (item.checked)
 //			item.check(false)
-//	}	
+//	}
 //}
 //
 //// ================================================================================
@@ -1803,7 +1795,7 @@ function MenuItem_updateTooltip()
 //	o.par.show(false,0,0,true)
 //
 //	if (o.cb)
-//		setTimeout("MenuItem_delayedClick("+idx+")",1)	
+//		setTimeout("MenuItem_delayedClick("+idx+")",1)
 //}
 //
 //// ================================================================================
@@ -1842,11 +1834,11 @@ function MenuItem_updateTooltip()
 //// Return [void]
 //{
 //	var o=this
-//	
+//
 //	if (o.checked!=check)
 //	{
 //		o.checked=check
-//	
+//
 //		if (o.layer)
 //			MenuColor_invert(o.layer,o.checked?1:0)
 //	}
@@ -1868,12 +1860,12 @@ function MenuItem_updateTooltip()
 //{
 //	var o=this,s="",d=_moz?10:12,lenTotal=o.par.items.length,index=o.menuIndex - 1;col=index%8
 //	var len=0
-//	
+//
 //	for (var i = 0; i <lenTotal; i++)
 //	{
 //		if (o.par.items[i].menuItemType == _isColor) len++
 //	}
-//	
+//
 //	var first=(col==0)
 //	var last=(col==7)
 //	var firstL=(index<8)
@@ -1884,7 +1876,7 @@ function MenuItem_updateTooltip()
 //		s+='<tr valign="middle" align="center">'
 //
 //	s+='<td id="'+(o.par.id+'_item_'+o.id)+'" '+cbs+' style="padding-top:'+(firstL?2:0)+'px;padding-bottom:'+(lastL?2:0)+'px;padding-left:'+(first?3:1)+'px;padding-right:'+(last?3:1)+'px"><div class="menuColor'+(o.checked?'Sel':'')+'"><div style="cursor:'+_hand+';border:1px solid #4A657B;width:'+d+'px;height:'+d+'px;background-color:rgb('+o.color+');">'+img(_skin+'../transp.gif',10,10,null,null,o.text)+'</div></div></td>'
-//	
+//
 //	/*if (o.menuIndex==len-1)
 //	{
 //		for (var i=col;i<8;i++)
@@ -1921,7 +1913,7 @@ function MenuItem_updateTooltip()
 //
 //	// Public methods
 //	o.attachSubMenu=null
-//	o.check=ColorMenuItem_check		
+//	o.check=ColorMenuItem_check
 //	o.getHTML=LastUsedColorMenuItem_getHTML
 //	o.init=LastUsedColorMenuItem_init
 //	return o
@@ -1984,14 +1976,14 @@ function newScrollMenuWidget(id,changeCB,multi,width,lines,tooltip,dblClickCB,ke
 // lines		[int]				number of visible lines
 // tooltip		[String - optional] tooltip for 508
 // dblClickCB	[Function]			calback when an item is double-clicked
-// keyUpCB		[Function]			
+// keyUpCB		[Function]
 // showLabel	[boolean]			if true a label is displayed
 // label		[boolean - optional]text of the label
-// convBlanks	[int - optional]	
+// convBlanks	[int - optional]
 // beforeShowCB  [Function - Optional] callback called before menu is shown
 {
 	var o=newWidget(id)
-	
+
 	// Properties
 	o.list=newListWidget("list_"+id,ScrollMenuWidget_changeCB,multi,width,lines,tooltip,ScrollMenuWidget_dblClickCB,ScrollMenuWidget_keyUpCB,ScrollMenuWidget_clickCB)
 	o.list.par=o
@@ -2000,10 +1992,10 @@ function newScrollMenuWidget(id,changeCB,multi,width,lines,tooltip,dblClickCB,ke
 	o.changeCB=changeCB
 	o.menuClickCB=menuClickCB
 	o.dblClickCB=dblClickCB
-	o.keyUpCB=keyUpCB	
+	o.keyUpCB=keyUpCB
 	o.beforeShowCB=beforeShowCB
 	o.zIndex=_menusZIndex
-	
+
 	// Methods
 	o.init=ScrollMenuWidget_init
 	o.justInTimeInit=ScrollMenuWidget_justInTimeInit
@@ -2013,11 +2005,11 @@ function newScrollMenuWidget(id,changeCB,multi,width,lines,tooltip,dblClickCB,ke
 	o.getHTML=ScrollMenuWidget_getHTML
 	o.show=ScrollMenuWidget_show
 	o.add=ScrollMenuWidget_add
-	
+
 	o.del=ScrollMenuWidget_del
 	o.getSelection=ScrollMenuWidget_getSelection
 	o.select=ScrollMenuWidget_select
-	o.clearSelection=ScrollMenuWidget_clearSelection 
+	o.clearSelection=ScrollMenuWidget_clearSelection
 	o.valueSelect=ScrollMenuWidget_valueSelect
 	o.getCount=ScrollMenuWidget_getCount
 
@@ -2029,7 +2021,7 @@ function newScrollMenuWidget(id,changeCB,multi,width,lines,tooltip,dblClickCB,ke
 	// Click capture
 	o.clickCB=new Array
 	o.clickCBDocs=new Array
-	
+
 	return o
 }
 
@@ -2046,7 +2038,7 @@ function ScrollMenuWidget_init()
 function ScrollMenuWidget_clearSelection()
 {
     var o=this;
-    if(o.list) 
+    if(o.list)
         o.list.clearSelection();
 }
 
@@ -2058,7 +2050,7 @@ function ScrollMenuWidget_justInTimeInit()
 {
 	var o=this
 	o.layer=getLayer(o.id)
-	
+
 	if (o.layer==null)
 	{
 		append2(_curDoc.body,o.getHTML());
@@ -2068,10 +2060,10 @@ function ScrollMenuWidget_justInTimeInit()
 	o.layer._widget=o.widx
 	o.css=o.layer.style
 	o.css.visibility="hidden"
-	
+
 	//o.iframeLyr=getLayer("menuIframe_"+o.id)
 	//o.iframeCss=o.iframeLyr.style
-	
+
 	o.list.init()
 	o.label.init()
 }
@@ -2097,14 +2089,14 @@ function ScrollMenuWidget_getHTML()
 // Return [string]	the HTML sorce of this widget
 {
 	var o=this
-	
+
 	var s=''
 	//s+=o.getShadowHTML()
 	s+='<table dir="ltr" onmousedown="event.cancelBubble=true" id="'+o.id+'" style="display:none;" class="menuFrame" cellspacing="0" cellpadding="0" border="0"><tbody>'
 	s+='<tr><td align="center">'+o.list.getHTML()+'</td></tr>'
 	s+='<tr><td align="center">'+o.label.getHTML()+'</td></tr>'
 	s+='</tbody></table>'
-	
+
 	return s
 }
 
@@ -2117,32 +2109,32 @@ function ScrollMenuWidget_show(show,x,y)
 // Return	[void]
 {
 	var o=this
-	
+
 	if (o.layer==null)
 		o.justInTimeInit()
 
 	var css=o.css
-	
+
 	if (show)
 	{
 		if (o.beforeShowCB)
 			o.beforeShowCB()
-		
+
 		o.captureClicks()
-	
-		// Show and place menu	
+
+		// Show and place menu
 		css.display='block'
 		css.zIndex=(o.zIndex+1)
 		css.visibility="hidden"
 		css.left="-1000px"
 		css.top="-1000px"
-		
+
 		var w=o.getWidth()
 		var h=o.getHeight()
-		
+
 		if (o.alignLeft)
 			x-=w
-	
+
 		// Change coordinates if the menu is out of the window
 		var x2=x+w+4,y2=y+h+4
 
@@ -2151,12 +2143,12 @@ function ScrollMenuWidget_show(show,x,y)
 
 		if (y2>winHeight())
 			y=Math.max(0,y-4-h)
-	
+
 		css.left=""+x+"px"
 		css.top=""+y+"px"
-		
+
 		//hideAllInputs(x,y,w+4,h+4)
-		
+
 		css.visibility="visible"
 
 		// Show and place menu shadow
@@ -2169,18 +2161,17 @@ function ScrollMenuWidget_show(show,x,y)
 		iCss.height=""+h+"px"
 		iCss.zIndex=o.zIndex-1
 		iCss.display='block'
-		
+
 		if (_ie)
 		{
 			y-=2
 			x-=2
 		}
-			
 	}
 	else
 	{
 		releaseBGIFrame(o.iframeLyr.id)
-		
+
 		css.display='none'
 		iCss.display='none'
 		o.releaseClicks()
@@ -2194,14 +2185,14 @@ function ScrollMenuWidget_add(s,val,sel,id)
 // s		[string]	text displayed
 // val		[string]	value associated with the text
 // sel      [boolean]	if true, the <s> is selected
-// id       [int]		
+// id       [int]
 // Return	[void]
 {
 	var o=this
-	
+
 	if (o.layer==null)
 		o.justInTimeInit()
-		
+
 	o.list.add(s,val,sel,id)
 }
 
@@ -2213,11 +2204,11 @@ function ScrollMenuWidget_del(i)
 // Return	[void]
 {
 	var o=this
-	
+
 	if (o.layer==null)
 		o.justInTimeInit()
-	
-	o.list.del(i)			
+
+	o.list.del(i)
 }
 
 // ================================================================================
@@ -2226,10 +2217,10 @@ function ScrollMenuWidget_getSelection()
 // Return	[structure]	the item selected (index, value, text)
 {
 	var o=this
-	
+
 	if (o.layer==null)
 		o.justInTimeInit()
-	
+
 	return o.list.getSelection()
 }
 
@@ -2241,10 +2232,10 @@ function ScrollMenuWidget_select(i)
 // Return	[void]
 {
 	var o=this
-	
+
 	if (o.layer==null)
 		o.justInTimeInit()
-	
+
 	o.list.select(i)
 }
 
@@ -2256,10 +2247,10 @@ function ScrollMenuWidget_valueSelect(v)
 // Return	[void]
 {
 	var o=this
-	
+
 	if (o.layer==null)
 		o.justInTimeInit()
-	
+
 	o.list.valueSelect(v)
 }
 
@@ -2269,10 +2260,10 @@ function ScrollMenuWidget_getCount()
 // Return	[int]	the number of item in the menu
 {
 	var o=this
-	
+
 	if (o.layer==null)
 		o.justInTimeInit()
-		
+
 	return o.list.getCount()
 }
 
@@ -2283,11 +2274,11 @@ function ScrollMenuWidget_changeCB()
 // Return	[void]
 {
 	var o=this
-	
+
 	// Don't hide the menu whenever a different item is selected in the list.
 	// We want to keep the menu list visible. We'll hide it only when there's a mouse click or Enter key.
 	//o.par.show(false)
-	
+
 	if (o.par.changeCB)
 		o.par.changeCB()
 }
@@ -2298,9 +2289,9 @@ function ScrollMenuWidget_clickCB()
 // Return	[void]
 {
 	var o=this
-	
+
 	o.par.show(false)
-	
+
 	if (o.par.menuClickCB)
 		o.par.menuClickCB()
 }
@@ -2311,9 +2302,9 @@ function ScrollMenuWidget_dblClickCB()
 // Return	[void]
 {
 	var o=this
-	
+
 	o.par.show(false)
-	
+
 	if (o.par.dblClickCB)
 		o.par.dblClickCB()
 }
@@ -2327,10 +2318,10 @@ function ScrollMenuWidget_keyUpCB(e)
 	var ENTER=13, ESCAPE=27
 	var o=this
 	var k=eventGetKey(e)
-	
+
 	if (k==ENTER || k==ESCAPE)
 		o.par.show(false)
-	
+
 	if (o.par.keyUpCB)
 		o.par.keyUpCB()
 }
@@ -2355,7 +2346,7 @@ function ScrollMenuWidget_keyUpCB(e)
 //	o.add = ButtonScrollMenuWidget_add
 //	return o;
 //}
-// 
+//
 //
 //// ================================================================================
 //
@@ -2365,7 +2356,7 @@ function ScrollMenuWidget_keyUpCB(e)
 //	var o=this,l=o.layer;
 //	o.menu.show(!o.menu.isShown(),getPosScrolled(l).x,getPosScrolled(l).y+o.getHeight(),null,null,o)
 //}
-// 
+//
 //// ================================================================================
 //
 //function ButtonScrollMenuWidget_add(s,val,sel,id)
@@ -2392,7 +2383,7 @@ function ScrollMenuWidget_keyUpCB(e)
 //	o.idx=idx
 //	o.isLabel=isLabel?isLabel:false
 //	o.label=label?label:null
-//	
+//
 //	// Public methods
 //	o.attachSubMenu=null
 //	o.getHTML=BorderMenuItem_getHTML
@@ -2410,11 +2401,11 @@ function ScrollMenuWidget_keyUpCB(e)
 //// Return [void]
 //{
 //	var o=this
-//	
+//
 //	if (o.checked!=check)
 //	{
 //		o.checked=check
-//	
+//
 //		if (o.layer)
 //			BorderMenuItem_invert(o.layer,o.checked?1:0)
 //	}
@@ -2430,11 +2421,11 @@ function ScrollMenuWidget_keyUpCB(e)
 //
 //	var cspan=(o.isLabel?' colspan="4"':'')
 //	var cls="menuiconborders"+(o.checked?"Sel":"")
-//	
+//
 //	s+='<td '+cspan+' id="'+(o.par.id+'_item_'+o.id)+'" '+cbs+' align="center"><div class="'+cls+'">'
 //	s+=o.isLabel?convStr(o.label):simpleImgOffset(_skin+'../borders.gif',16,16,16*o.idx,0,'IconImg_'+o.id,null,_bordersTooltip[o.idx],'margin:2px;cursor:default')
 //	s+='</div></td>'
-//	
+//
 //	return s
 //}
 //
@@ -2469,21 +2460,21 @@ function ScrollMenuWidget_keyUpCB(e)
 //// Returns [MenuBordersWidget] the new instance
 //{
 //	var o=newMenuWidget(id,hideCB,beforeShowCB)
-//	
+//
 //	// properties
 //	o.items=new Array
 //	for (var i=0; i < 12; i++)
 //		o.items[i]=newBorderMenuItem(o,i,clickCB)
-//	
+//
 //	var len=o.items.length
 //	o.items[len]=newBorderMenuItem(o,12,clickCB,true,_bordersMoreColorsLabel)
 //	o.clickCB=clickCB
-//	
+//
 //	// methods
 //	o.getHTML=MenuBordersWidget_getHTML
 //	o.hasVisibleItem=MenuBordersWidget_hasVisibleItem
 //	o.uncheckAll=MenuBordersWidget_uncheckAll
-//				
+//
 //	return o
 //}
 //
@@ -2499,7 +2490,7 @@ function ScrollMenuWidget_keyUpCB(e)
 //	// we'll add the iframe with the show function
 //	var s='<a style="position:absolute;left:-30px;top:-30px; visibility:hidden" id="startLink_'+o.id+'" href="javascript:void(0)" onfocus="'+_codeWinName+'.MenuWidget_keepFocus(\''+o.id+'\');return false;" ></a>'
 //	s+='<table style="display:none;" class="menuFrame" id="'+o.id+'" cellspacing="0" cellpadding="0" border="0" '+keysCbs+'><tbody>'
-//	
+//
 //	s+='<tr>'
 //	for (var i=0; i<=3; i++)
 //		s+=items[i].getHTML()
@@ -2512,9 +2503,9 @@ function ScrollMenuWidget_keyUpCB(e)
 //	for (var i=8; i<=11; i++)
 //		s+=items[i].getHTML()
 //	s+='</tr>'
-//	
+//
 //	s+='<tr>'+items[12].getHTML()+'</tr>'
-//	
+//
 //	s+='</tbody></table><a style="position:absolute;left:-30px;top:-30px; visibility:hidden" id="endLink_'+o.id+'" href="javascript:void(0)" onfocus="'+_codeWinName+'.MenuWidget_keepFocus(\''+o.id+'\');return false;" ></a>'
 //
 //	return s
@@ -2540,7 +2531,7 @@ function ScrollMenuWidget_keyUpCB(e)
 //		var item=items[i]
 //		if (item.checked)
 //			item.check(false)
-//	}	
+//	}
 //}
 //
 //// ================================================================================
@@ -2561,7 +2552,7 @@ function ScrollMenuWidget_keyUpCB(e)
 //	o.par.show(false,0,0,true)
 //
 //	if (o.cb)
-//		setTimeout("MenuItem_delayedClick("+idx+")",1)	
+//		setTimeout("MenuItem_delayedClick("+idx+")",1)
 //}
 //
 //// ================================================================================
@@ -2579,4 +2570,3 @@ function ScrollMenuWidget_keyUpCB(e)
 //	l.onmouseout=MenuBordersWidget_out
 //	BorderMenuItem_invert(l,1)
 //}
-

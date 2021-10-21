@@ -9,7 +9,7 @@ var log4javascript;
 		}
 	}
 	var f = ff();
-		
+
 	// Loggers
 	var Logger = ff();
 	copy(Logger.prototype, {
@@ -30,7 +30,7 @@ var log4javascript;
 	var getLogger = function() {
 		return new Logger();
 	};
-	
+
 	log4javascript = {
 		isStub: true,
 		version: "dummy",
@@ -55,7 +55,7 @@ var log4javascript;
 		Layout: ff(),
 		Appender: ff()
 	};
-	
+
 	// LoggingEvents
 	log4javascript.LoggingEvent.prototype = {
 		getThrowableStrRep: f
@@ -78,7 +78,7 @@ var log4javascript;
 		FATAL: level,
 		OFF: level
 	});
-	
+
 	// Layouts
 	log4javascript.Layout.prototype = {
 		defaults: {},
@@ -100,7 +100,7 @@ var log4javascript;
 	log4javascript.XmlLayout = ff();
 	log4javascript.XmlLayout.prototype = new log4javascript.Layout();
 	log4javascript.XmlLayout.prototype.escapeCdata = f;
-	
+
 	// JsonLayout
 	log4javascript.JsonLayout = ff();
 	log4javascript.JsonLayout.prototype = new log4javascript.Layout();
@@ -109,14 +109,14 @@ var log4javascript;
 		isReadable: f
 	});
 
-	// HttpPostDataLayout 
+	// HttpPostDataLayout
 	log4javascript.HttpPostDataLayout = ff();
 	log4javascript.HttpPostDataLayout.prototype = new log4javascript.Layout();
-	
+
 	// PatternLayout
 	log4javascript.PatternLayout = ff();
 	log4javascript.PatternLayout.prototype = new log4javascript.Layout();
-	
+
 	// NullLayout
 	log4javascript.NullLayout = ff();
 	log4javascript.NullLayout.prototype = new log4javascript.Layout();
@@ -134,7 +134,7 @@ var log4javascript;
 		getThreshold: f,
 		toString: f
 	};
-	
+
 	// AlertAppender
 	log4javascript.AlertAppender = ff();
 	log4javascript.AlertAppender.prototype = new log4javascript.Appender();
@@ -163,7 +163,7 @@ var log4javascript;
 			failCallback: null
 		}
 	});
-	
+
 	// ConsoleAppender
 	function ConsoleAppender() {}
 	ConsoleAppender.prototype = new log4javascript.Appender();
@@ -180,7 +180,7 @@ var log4javascript;
 		getMaxMessages: f,
 		setMaxMessages: f
 	});
-	
+
 	// InPageAppender
 	log4javascript.InPageAppender = ff();
 	log4javascript.InPageAppender.prototype = new ConsoleAppender();
@@ -197,7 +197,7 @@ var log4javascript;
 		}
 	});
 	log4javascript.InlineAppender = log4javascript.InPageAppender;
-		
+
 	// PopUpAppender
 	log4javascript.PopUpAppender = ff();
 	log4javascript.PopUpAppender.prototype = new ConsoleAppender();
@@ -216,7 +216,7 @@ var log4javascript;
 			maxMessages: null
 		}
 	});
-	
+
 	// BrowserConsoleAppender
 	log4javascript.BrowserConsoleAppender = ff();
 	log4javascript.BrowserConsoleAppender.prototype = new log4javascript.Appender();

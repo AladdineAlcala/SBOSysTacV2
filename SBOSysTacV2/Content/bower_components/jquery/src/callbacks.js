@@ -4,7 +4,6 @@ define( [
 	"./var/isFunction",
 	"./var/rnothtmlwhite"
 ], function( jQuery, toType, isFunction, rnothtmlwhite ) {
-
 "use strict";
 
 // Convert String-formatted options into Object-formatted ones
@@ -39,7 +38,6 @@ function createOptions( options ) {
  *
  */
 jQuery.Callbacks = function( options ) {
-
 	// Convert options from String-formatted to Object-formatted if needed
 	// (we check in cache first)
 	options = typeof options === "string" ?
@@ -69,7 +67,6 @@ jQuery.Callbacks = function( options ) {
 
 		// Fire callbacks
 		fire = function() {
-
 			// Enforce single-firing
 			locked = locked || options.once;
 
@@ -79,11 +76,9 @@ jQuery.Callbacks = function( options ) {
 			for ( ; queue.length; firingIndex = -1 ) {
 				memory = queue.shift();
 				while ( ++firingIndex < list.length ) {
-
 					// Run callback and check for early termination
 					if ( list[ firingIndex ].apply( memory[ 0 ], memory[ 1 ] ) === false &&
 						options.stopOnFalse ) {
-
 						// Jump to end and forget the data so .add doesn't re-fire
 						firingIndex = list.length;
 						memory = false;
@@ -100,7 +95,6 @@ jQuery.Callbacks = function( options ) {
 
 			// Clean up if we're done firing for good
 			if ( locked ) {
-
 				// Keep an empty list if we have data for future add calls
 				if ( memory ) {
 					list = [];
@@ -114,11 +108,9 @@ jQuery.Callbacks = function( options ) {
 
 		// Actual Callbacks object
 		self = {
-
 			// Add a callback or a collection of callbacks to the list
 			add: function() {
 				if ( list ) {
-
 					// If we have memory from a past run, we should fire after adding
 					if ( memory && !firing ) {
 						firingIndex = list.length - 1;
@@ -132,7 +124,6 @@ jQuery.Callbacks = function( options ) {
 									list.push( arg );
 								}
 							} else if ( arg && arg.length && toType( arg ) !== "string" ) {
-
 								// Inspect recursively
 								add( arg );
 							}

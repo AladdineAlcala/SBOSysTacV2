@@ -2,7 +2,6 @@ define( [
 	"../var/document",
 	"../var/support"
 ], function( document, support ) {
-
 "use strict";
 
 ( function() {
@@ -31,5 +30,4 @@ define( [
 } )();
 
 return support;
-
 } );

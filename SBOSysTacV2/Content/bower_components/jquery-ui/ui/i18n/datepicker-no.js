@@ -3,16 +3,13 @@
 
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['no'] = {
 	closeText: 'Lukk',
 	prevText: '&#xAB;Forrige',
@@ -33,5 +30,4 @@ datepicker.regional['no'] = {
 datepicker.setDefaults(datepicker.regional['no']);
 
 return datepicker.regional['no'];
-
 }));

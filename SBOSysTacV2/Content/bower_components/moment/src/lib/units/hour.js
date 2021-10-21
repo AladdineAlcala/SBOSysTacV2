@@ -134,7 +134,6 @@ export function localeMeridiem (hours, minutes, isLower) {
     }
 }
 
-
 // MOMENTS
 
 // Setting the hour should keep the time, because the user explicitly

@@ -32,7 +32,6 @@ export function toISOString() {
     years  = absFloor(months / 12);
     months %= 12;
 
-
     // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
     var Y = years;
     var M = months;

@@ -35,7 +35,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 $.extend( true, DataTable.Buttons.defaults, {
 	dom: {
 		container: {
@@ -56,7 +55,6 @@ $.extend( true, DataTable.Buttons.defaults, {
 DataTable.ext.buttons.collection.text = function ( dt ) {
 	return dt.i18n('buttons.collection', 'Collection <span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-s"/>');
 };
-
 
 return DataTable.Buttons;
 }));

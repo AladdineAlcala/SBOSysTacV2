@@ -35,7 +35,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 $.extend( true, DataTable.Buttons.defaults, {
 	dom: {
 		container: {
@@ -51,7 +50,6 @@ $.extend( true, DataTable.Buttons.defaults, {
 		}
 	}
 } );
-
 
 return DataTable.Buttons;
 }));

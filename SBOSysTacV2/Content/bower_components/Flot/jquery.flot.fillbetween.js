@@ -30,7 +30,6 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 */
 
 (function ( $ ) {
-
 	var options = {
 		series: {
 			fillBetween: null	// or number
@@ -38,9 +37,7 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 	};
 
 	function init( plot ) {
-
 		function findBottomSeries( s, allseries ) {
-
 			var i;
 
 			for ( i = 0; i < allseries.length; ++i ) {
@@ -60,7 +57,6 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 		}
 
 		function computeFillBottoms( plot, s, datapoints ) {
-
 			if ( s.fillBetween == null ) {
 				return;
 			}
@@ -86,7 +82,6 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 				l, m;
 
 			while ( true ) {
-
 				if ( i >= points.length ) {
 					break;
 				}
@@ -94,7 +89,6 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 				l = newpoints.length;
 
 				if ( points[ i ] == null ) {
-
 					// copy gaps
 
 					for ( m = 0; m < ps; ++m ) {
@@ -102,9 +96,7 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 					}
 
 					i += ps;
-
 				} else if ( j >= otherpoints.length ) {
-
 					// for lines, we can't use the rest of the points
 
 					if ( !withlines ) {
@@ -114,9 +106,7 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 					}
 
 					i += ps;
-
 				} else if ( otherpoints[ j ] == null ) {
-
 					// oops, got a gap
 
 					for ( m = 0; m < ps; ++m ) {
@@ -125,9 +115,7 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 
 					fromgap = true;
 					j += otherps;
-
 				} else {
-
 					// cases where we actually got two points
 
 					px = points[ i ];
@@ -137,7 +125,6 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 					bottom = 0;
 
 					if ( px === qx ) {
-
 						for ( m = 0; m < ps; ++m ) {
 							newpoints.push( points[ i + m ] );
 						}
@@ -147,9 +134,7 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 
 						i += ps;
 						j += otherps;
-
 					} else if ( px > qx ) {
-
 						// we got past point below, might need to
 						// insert interpolated extra point
 
@@ -164,9 +149,7 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 						}
 
 						j += otherps;
-
 					} else { // px < qx
-
 						// if we come from a gap, we just skip this point
 
 						if ( fromgap && withlines ) {
@@ -222,5 +205,4 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 		name: "fillbetween",
 		version: "1.0"
 	});
-
 })(jQuery);

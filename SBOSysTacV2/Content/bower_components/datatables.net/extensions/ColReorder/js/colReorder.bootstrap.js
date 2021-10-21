@@ -32,7 +32,5 @@
 		factory( jQuery, window, document );
 	}
 }(function( $, window, document, undefined ) {
-
 return $.fn.dataTable;
-
 }));

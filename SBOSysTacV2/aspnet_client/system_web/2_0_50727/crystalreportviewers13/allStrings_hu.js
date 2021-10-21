@@ -140,12 +140,11 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
 File: labels.js
-
 
 =============================================================
 */
@@ -227,7 +226,7 @@ _closeDialog="Ablak bezárása"
 
 _lstMoveUpLab="Felfelé"
 _lstMoveDownLab="Lefelé"
-_lstMoveLeftLab="Balra" 
+_lstMoveLeftLab="Balra"
 _lstMoveRightLab="Jobbra"
 _lstNewNodeLab="Beágyazott szűrő beállítása"
 _lstAndLabel="ÉS"
@@ -275,7 +274,7 @@ _calendarSelectionLab="Kijelölt nap "
 
 _menuCheckLab="Bejelölve"
 _menuDisableLab="Letiltva"
-	
+
 _level="Szint"
 _closeTab="Lap bezárása"
 _of=" / "

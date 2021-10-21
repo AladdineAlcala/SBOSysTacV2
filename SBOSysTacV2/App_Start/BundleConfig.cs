@@ -1,6 +1,4 @@
-﻿using System.Web;
-using System.Web.Mvc.Ajax;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace SBOSysTacV2
 {
@@ -38,11 +36,10 @@ namespace SBOSysTacV2
                             "~/Scripts/jquery.validate.unobtrusive.js"
                             ));
 
-
             bundles.Add(new ScriptBundle("~/bundles/Charts").Include(
                 "~/Content/bower_components/chartjsvs2.8/Chart.min.js",
                 "~/Content/bower_components/chartjsvs2.8/chartjs-plugin-datalabels.min.js"
-             
+
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/PrintDatatable").Include(
@@ -52,7 +49,6 @@ namespace SBOSysTacV2
                 "~/Content/bower_components/datatablesPrint/js/pdfmake.min.js",
                 "~/Content/bower_components/datatablesPrint/js/vfs_fonts.js"
             ));
-
 
             bundles.Add(new StyleBundle("~/Content/css_styles").Include(
                       "~/Content/bower_components/bootstrap/dist/css/bootstrap.min.css",

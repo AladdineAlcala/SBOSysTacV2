@@ -5,8 +5,6 @@
 		Chart = root.Chart,
 		helpers = Chart.helpers;
 
-
-
 	Chart.Type.extend({
 		name: "Radar",
 		defaults:{
@@ -63,7 +61,6 @@
 
 			//String - A legend template
 			legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-
 		},
 
 		initialize: function(data){
@@ -98,7 +95,6 @@
 
 			//Iterate through each of the datasets, and build this into a property of the chart
 			helpers.each(data.datasets,function(dataset){
-
 				var datasetObject = {
 					label: dataset.label || null,
 					fillColor : dataset.fillColor,
@@ -128,7 +124,6 @@
 						highlightStroke : dataset.pointHighlightStroke || dataset.pointStrokeColor
 					}));
 				},this);
-
 			},this);
 
 			this.render();
@@ -215,7 +210,6 @@
 				return totalDataArray;
 			})();
 
-
 			var scaleSizes = (this.options.scaleOverride) ?
 				{
 					steps: this.options.scaleSteps,
@@ -235,7 +229,6 @@
 				this.scale,
 				scaleSizes
 			);
-
 		},
 		addData : function(valuesArray,label){
 			//Map the values array for each of the datasets
@@ -293,15 +286,12 @@
 			this.scale.draw();
 
 			helpers.each(this.datasets,function(dataset){
-
 				//Transition each point first so that the line and point drawing isn't out of sync
 				helpers.each(dataset.points,function(point,index){
 					if (point.hasValue()){
 						point.transition(this.scale.getPointPosition(index, this.scale.calculateCenterOffset(point.value)), easeDecimal);
 					}
 				},this);
-
-
 
 				//Draw the line between all the points
 				ctx.lineWidth = this.options.datasetStrokeWidth;
@@ -329,15 +319,7 @@
 						point.draw();
 					}
 				});
-
 			},this);
-
 		}
-
 	});
-
-
-
-
-
 }).call(this);

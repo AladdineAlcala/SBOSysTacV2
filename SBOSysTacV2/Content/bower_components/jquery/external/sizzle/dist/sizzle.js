@@ -9,7 +9,6 @@
  * Date: 2016-08-08
  */
 (function( window ) {
-
 var i,
 	support,
 	Expr,
@@ -155,7 +154,6 @@ var i,
 	rcssescape = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g,
 	fcssescape = function( ch, asCodePoint ) {
 		if ( asCodePoint ) {
-
 			// U+0000 NULL becomes U+FFFD REPLACEMENT CHARACTER
 			if ( ch === "\0" ) {
 				return "\uFFFD";
@@ -225,31 +223,25 @@ function Sizzle( selector, context, results, seed ) {
 	// Return early from calls with invalid selector or context
 	if ( typeof selector !== "string" || !selector ||
 		nodeType !== 1 && nodeType !== 9 && nodeType !== 11 ) {
-
 		return results;
 	}
 
 	// Try to shortcut find operations (as opposed to filters) in HTML documents
 	if ( !seed ) {
-
 		if ( ( context ? context.ownerDocument || context : preferredDoc ) !== document ) {
 			setDocument( context );
 		}
 		context = context || document;
 
 		if ( documentIsHTML ) {
-
 			// If the selector is sufficiently simple, try using a "get*By*" DOM method
 			// (excepting DocumentFragment context, where the methods don't exist)
 			if ( nodeType !== 11 && (match = rquickExpr.exec( selector )) ) {
-
 				// ID selector
 				if ( (m = match[1]) ) {
-
 					// Document context
 					if ( nodeType === 9 ) {
 						if ( (elem = context.getElementById( m )) ) {
-
 							// Support: IE, Opera, Webkit
 							// TODO: identify versions
 							// getElementById can match elements by name instead of ID
@@ -263,14 +255,12 @@ function Sizzle( selector, context, results, seed ) {
 
 					// Element context
 					} else {
-
 						// Support: IE, Opera, Webkit
 						// TODO: identify versions
 						// getElementById can match elements by name instead of ID
 						if ( newContext && (elem = newContext.getElementById( m )) &&
 							contains( context, elem ) &&
 							elem.id === m ) {
-
 							results.push( elem );
 							return results;
 						}
@@ -284,7 +274,6 @@ function Sizzle( selector, context, results, seed ) {
 				// Class selector
 				} else if ( (m = match[3]) && support.getElementsByClassName &&
 					context.getElementsByClassName ) {
-
 					push.apply( results, context.getElementsByClassName( m ) );
 					return results;
 				}
@@ -294,7 +283,6 @@ function Sizzle( selector, context, results, seed ) {
 			if ( support.qsa &&
 				!compilerCache[ selector + " " ] &&
 				(!rbuggyQSA || !rbuggyQSA.test( selector )) ) {
-
 				if ( nodeType !== 1 ) {
 					newContext = context;
 					newSelector = selector;
@@ -304,7 +292,6 @@ function Sizzle( selector, context, results, seed ) {
 				// Support: IE <=8
 				// Exclude object elements
 				} else if ( context.nodeName.toLowerCase() !== "object" ) {
-
 					// Capture the context ID, setting it first if necessary
 					if ( (nid = context.getAttribute( "id" )) ) {
 						nid = nid.replace( rcssescape, fcssescape );
@@ -465,15 +452,12 @@ function createButtonPseudo( type ) {
  * @param {Boolean} disabled true for :disabled; false for :enabled
  */
 function createDisabledPseudo( disabled ) {
-
 	// Known :disabled false positives: fieldset[disabled] > legend:nth-of-type(n+2) :can-disable
 	return function( elem ) {
-
 		// Only certain elements can match :enabled or :disabled
 		// https://html.spec.whatwg.org/multipage/scripting.html#selector-enabled
 		// https://html.spec.whatwg.org/multipage/scripting.html#selector-disabled
 		if ( "form" in elem ) {
-
 			// Check for inherited disabledness on relevant non-disabled elements:
 			// * listed form-associated elements in a disabled fieldset
 			//   https://html.spec.whatwg.org/multipage/forms.html#category-listed
@@ -482,7 +466,6 @@ function createDisabledPseudo( disabled ) {
 			//   https://html.spec.whatwg.org/multipage/forms.html#concept-option-disabled
 			// All such elements have a "form" property.
 			if ( elem.parentNode && elem.disabled === false ) {
-
 				// Option elements defer to a parent optgroup if present
 				if ( "label" in elem ) {
 					if ( "label" in elem.parentNode ) {
@@ -585,7 +568,6 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// Accessing iframe documents after unload throws "permission denied" errors (jQuery #13936)
 	if ( preferredDoc !== document &&
 		(subWindow = document.defaultView) && subWindow.top !== subWindow ) {
-
 		// Support: IE 11, Edge
 		if ( subWindow.addEventListener ) {
 			subWindow.addEventListener( "unload", unloadHandler, false );
@@ -660,7 +642,6 @@ setDocument = Sizzle.setDocument = function( node ) {
 					elem = context.getElementById( id );
 
 				if ( elem ) {
-
 					// Verify the id attribute
 					node = elem.getAttributeNode("id");
 					if ( node && node.value === id ) {
@@ -824,7 +805,6 @@ setDocument = Sizzle.setDocument = function( node ) {
 		docElem.mozMatchesSelector ||
 		docElem.oMatchesSelector ||
 		docElem.msMatchesSelector) )) ) {
-
 		assert(function( el ) {
 			// Check to see if it's possible to do matchesSelector
 			// on a disconnected node (IE 9)
@@ -874,7 +854,6 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// Document order sorting
 	sortOrder = hasCompare ?
 	function( a, b ) {
-
 		// Flag for duplicate removal
 		if ( a === b ) {
 			hasDuplicate = true;
@@ -897,7 +876,6 @@ setDocument = Sizzle.setDocument = function( node ) {
 		// Disconnected nodes
 		if ( compare & 1 ||
 			(!support.sortDetached && b.compareDocumentPosition( a ) === compare) ) {
-
 			// Choose the first element that is related to our preferred document
 			if ( a === document || a.ownerDocument === preferredDoc && contains(preferredDoc, a) ) {
 				return -1;
@@ -988,7 +966,6 @@ Sizzle.matchesSelector = function( elem, expr ) {
 		!compilerCache[ expr + " " ] &&
 		( !rbuggyMatches || !rbuggyMatches.test( expr ) ) &&
 		( !rbuggyQSA     || !rbuggyQSA.test( expr ) ) ) {
-
 		try {
 			var ret = matches.call( elem, expr );
 
@@ -1111,7 +1088,6 @@ getText = Sizzle.getText = function( elem ) {
 };
 
 Expr = Sizzle.selectors = {
-
 	// Can be adjusted by the user
 	cacheLength: 50,
 
@@ -1194,7 +1170,6 @@ Expr = Sizzle.selectors = {
 				(excess = tokenize( unquoted, true )) &&
 				// advance to the next closing parenthesis
 				(excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length) ) {
-
 				// excess is a negative index
 				match[0] = match[0].slice( 0, excess );
 				match[2] = unquoted.slice( 0, excess );
@@ -1206,7 +1181,6 @@ Expr = Sizzle.selectors = {
 	},
 
 	filter: {
-
 		"TAG": function( nodeNameSelector ) {
 			var nodeName = nodeNameSelector.replace( runescape, funescape ).toLowerCase();
 			return nodeNameSelector === "*" ?
@@ -1271,7 +1245,6 @@ Expr = Sizzle.selectors = {
 						diff = false;
 
 					if ( parent ) {
-
 						// :(first|last|only)-(child|of-type)
 						if ( simple ) {
 							while ( dir ) {
@@ -1280,7 +1253,6 @@ Expr = Sizzle.selectors = {
 									if ( ofType ?
 										node.nodeName.toLowerCase() === name :
 										node.nodeType === 1 ) {
-
 										return false;
 									}
 								}
@@ -1294,7 +1266,6 @@ Expr = Sizzle.selectors = {
 
 						// non-xml :nth-child(...) stores cache data on `parent`
 						if ( forward && useCache ) {
-
 							// Seek `elem` from a previously-cached index
 
 							// ...in a gzip-friendly way
@@ -1315,14 +1286,12 @@ Expr = Sizzle.selectors = {
 
 								// Fallback to seeking `elem` from the start
 								(diff = nodeIndex = 0) || start.pop()) ) {
-
 								// When found, cache indexes on `parent` and break
 								if ( node.nodeType === 1 && ++diff && node === elem ) {
 									uniqueCache[ type ] = [ dirruns, nodeIndex, diff ];
 									break;
 								}
 							}
-
 						} else {
 							// Use previously-cached element index if available
 							if ( useCache ) {
@@ -1346,12 +1315,10 @@ Expr = Sizzle.selectors = {
 								// Use the same loop as above to seek `elem` from the start
 								while ( (node = ++nodeIndex && node && node[ dir ] ||
 									(diff = nodeIndex = 0) || start.pop()) ) {
-
 									if ( ( ofType ?
 										node.nodeName.toLowerCase() === name :
 										node.nodeType === 1 ) &&
 										++diff ) {
-
 										// Cache the index of each encountered element
 										if ( useCache ) {
 											outerCache = node[ expando ] || (node[ expando ] = {});
@@ -1481,7 +1448,6 @@ Expr = Sizzle.selectors = {
 					if ( (elemLang = documentIsHTML ?
 						elem.lang :
 						elem.getAttribute("xml:lang") || elem.getAttribute("lang")) ) {
-
 						elemLang = elemLang.toLowerCase();
 						return elemLang === lang || elemLang.indexOf( lang + "-" ) === 0;
 					}
@@ -1643,7 +1609,6 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 	preFilters = Expr.preFilter;
 
 	while ( soFar ) {
-
 		// Comma and first run
 		if ( !matched || (match = rcomma.exec( soFar )) ) {
 			if ( match ) {
@@ -1751,7 +1716,6 @@ function addCombinator( matcher, combinator, base ) {
 							elem = elem[ dir ] || elem;
 						} else if ( (oldCache = uniqueCache[ key ]) &&
 							oldCache[ 0 ] === dirruns && oldCache[ 1 ] === doneName ) {
-
 							// Assign to newCache so results back-propagate to previous elements
 							return (newCache[ 2 ] = oldCache[ 2 ]);
 						} else {
@@ -1885,7 +1849,6 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 				while ( i-- ) {
 					if ( (elem = matcherOut[i]) &&
 						(temp = postFinder ? indexOf( seed, elem ) : preMap[i]) > -1 ) {
-
 						seed[temp] = !(results[temp] = elem);
 					}
 				}
@@ -2057,7 +2020,6 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				// Seedless set matches succeeding multiple successful matchers stipulate sorting
 				if ( outermost && !seed && setMatched.length > 0 &&
 					( matchedCount + setMatchers.length ) > 1 ) {
-
 					Sizzle.uniqueSort( results );
 				}
 			}
@@ -2125,12 +2087,10 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 	// Try to minimize operations if there is only one selector in the list and no seed
 	// (the latter of which guarantees us context)
 	if ( match.length === 1 ) {
-
 		// Reduce context if the leading compound selector is an ID
 		tokens = match[0] = match[0].slice( 0 );
 		if ( tokens.length > 2 && (token = tokens[0]).type === "ID" &&
 				context.nodeType === 9 && documentIsHTML && Expr.relative[ tokens[1].type ] ) {
-
 			context = ( Expr.find["ID"]( token.matches[0].replace(runescape, funescape), context ) || [] )[0];
 			if ( !context ) {
 				return results;
@@ -2158,7 +2118,6 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 					token.matches[0].replace( runescape, funescape ),
 					rsibling.test( tokens[0].type ) && testContext( context.parentNode ) || context
 				)) ) {
-
 					// If seed is empty or no tokens remain, we can return early
 					tokens.splice( i, 1 );
 					selector = seed.length && toSelector( tokens );
@@ -2268,5 +2227,4 @@ if ( typeof define === "function" && define.amd ) {
 	window.Sizzle = Sizzle;
 }
 // EXPOSE
-
 })( window );

@@ -49,10 +49,9 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 var _instance = 0;
 
-/** 
+/**
  * AutoFill provides Excel like auto-fill features for a DataTable
  *
  * @class AutoFill
@@ -101,7 +100,6 @@ var AutoFill = function( dt, opts )
 		enabled: false
 	};
 
-
 	/**
 	 * @namespace Common and useful DOM elements for the class instance
 	 */
@@ -134,12 +132,9 @@ var AutoFill = function( dt, opts )
 		offsetParent: null
 	};
 
-
 	/* Constructor logic */
 	this._constructor();
 };
-
-
 
 $.extend( AutoFill.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -149,7 +144,6 @@ $.extend( AutoFill.prototype, {
 	{
 		return this.s.enabled;
 	},
-
 
 	enable: function ( flag )
 	{
@@ -179,7 +173,6 @@ $.extend( AutoFill.prototype, {
 
 		return this;
 	},
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
@@ -216,7 +209,6 @@ $.extend( AutoFill.prototype, {
 			that._focusListenerRemove();
 		} );
 	},
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
@@ -265,7 +257,6 @@ $.extend( AutoFill.prototype, {
 			} )
 			.appendTo( this.dom.offsetParent );
 	},
-
 
 	/**
 	 * Determine can the fill type should be. This can be automatic, or ask the
@@ -331,7 +322,6 @@ $.extend( AutoFill.prototype, {
 		}
 	},
 
-
 	/**
 	 * Remove the AutoFill handle from the document
 	 *
@@ -342,7 +332,6 @@ $.extend( AutoFill.prototype, {
 		this.dom.attachedTo = null;
 		this.dom.handle.detach();
 	},
-
 
 	/**
 	 * Draw the selection outline by calculating the range between the start
@@ -419,7 +408,6 @@ $.extend( AutoFill.prototype, {
 		} );
 	},
 
-
 	/**
 	 * Use the Editor API to perform an update based on the new data for the
 	 * cells
@@ -492,7 +480,6 @@ $.extend( AutoFill.prototype, {
 			.submit();
 	},
 
-
 	/**
 	 * Emit an event on the DataTable for listeners
 	 *
@@ -506,7 +493,6 @@ $.extend( AutoFill.prototype, {
 			$(ctx.nTable).triggerHandler( name+'.dt', args );
 		} );
 	},
-
 
 	/**
 	 * Attach suitable listeners (based on the configuration) that will attach
@@ -562,7 +548,6 @@ $.extend( AutoFill.prototype, {
 		}
 	},
 
-
 	_focusListenerRemove: function ()
 	{
 		var dt = this.s.dt;
@@ -571,7 +556,6 @@ $.extend( AutoFill.prototype, {
 		$(dt.table().body()).off( this.s.namespace );
 		$(document.body).off( this.s.namespace );
 	},
-
 
 	/**
 	 * Get the position of a node, relative to another, including any scrolling
@@ -620,7 +604,6 @@ $.extend( AutoFill.prototype, {
 			left: left
 		};
 	},
-
 
 	/**
 	 * Start mouse drag - selects the start cell
@@ -672,7 +655,6 @@ $.extend( AutoFill.prototype, {
 		};
 	},
 
-
 	/**
 	 * Mouse drag - selects the end cell and update the selection display for
 	 * the end user
@@ -681,7 +663,7 @@ $.extend( AutoFill.prototype, {
 	 * @private
 	 */
 	_mousemove: function ( e )
-	{	
+	{
 		var that = this;
 		var dt = this.s.dt;
 		var name = e.target.nodeName.toLowerCase();
@@ -692,7 +674,6 @@ $.extend( AutoFill.prototype, {
 		this._drawSelection( e.target, e );
 		this._shiftScroll( e );
 	},
-
 
 	/**
 	 * End mouse drag - perform the update actions
@@ -738,7 +719,7 @@ $.extend( AutoFill.prototype, {
 				.on( 'submitComplete.kt preSubmitCancelled.kt', function () {
 					editor.off( '.kt');
 				} );
-			
+
 			editor.submit();
 
 			return;
@@ -777,17 +758,16 @@ $.extend( AutoFill.prototype, {
 		}
 
 		this._actionSelector( selected );
-		
+
 		// Stop shiftScroll
 		clearInterval( this.s.scrollInterval );
 		this.s.scrollInterval = null;
 	},
 
-
 	/**
 	 * Create an array with a range of numbers defined by the start and end
 	 * parameters passed in (inclusive!).
-	 * 
+	 *
 	 * @param  {integer} start Start
 	 * @param  {integer} end   End
 	 * @private
@@ -810,7 +790,6 @@ $.extend( AutoFill.prototype, {
 
 		return out;
 	},
-
 
 	/**
 	 * Move the window and DataTables scrolling during a drag to scroll new
@@ -918,7 +897,6 @@ $.extend( AutoFill.prototype, {
 		}
 	},
 
-
 	/**
 	 * Update the DataTable after the user has selected what they want to do
 	 *
@@ -968,7 +946,6 @@ $.extend( AutoFill.prototype, {
 		this._emitEvent( 'autoFill', [ dt, cells ] );
 	}
 } );
-
 
 /**
  * AutoFill actions. The options here determine how AutoFill will fill the data
@@ -1082,19 +1059,17 @@ AutoFill.actions = {
 	}
 };
 
-
 /**
  * AutoFill version
- * 
+ *
  * @static
  * @type      String
  */
 AutoFill.version = '2.3.1';
 
-
 /**
  * AutoFill defaults
- * 
+ *
  * @namespace
  */
 AutoFill.defaults = {
@@ -1123,17 +1098,15 @@ AutoFill.defaults = {
 	horizontal: true
 };
 
-
 /**
  * Classes used by AutoFill that are configurable
- * 
+ *
  * @namespace
  */
 AutoFill.classes = {
 	/** @type {String} Class used by the selection button */
 	btn: 'btn'
 };
-
 
 /*
  * API
@@ -1169,7 +1142,6 @@ Api.register( 'autoFill().disable()', function () {
 	} );
 } );
 
-
 // Attach a listener to the document which listens for DataTables initialisation
 // events so we can automatically initialise
 $(document).on( 'preInit.dt.autofill', function (e, settings, json) {
@@ -1189,11 +1161,9 @@ $(document).on( 'preInit.dt.autofill', function (e, settings, json) {
 	}
 } );
 
-
 // Alias for access
 DataTable.AutoFill = AutoFill;
 DataTable.AutoFill = AutoFill;
-
 
 return AutoFill;
 }));

@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -18,12 +17,10 @@
 			"./effect-scale"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.effects.effect.puff = function( o, done ) {
 	var elem = $( this ),
 		mode = $.effects.setMode( elem, o.mode || "hide" ),
@@ -56,5 +53,4 @@ return $.effects.effect.puff = function( o, done ) {
 
 	elem.effect( o );
 };
-
 }));

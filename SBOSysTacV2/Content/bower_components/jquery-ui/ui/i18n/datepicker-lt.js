@@ -2,16 +2,13 @@
 /* @author Arturas Paleicikas <arturas@avalon.lt> */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['lt'] = {
 	closeText: 'Uždaryti',
 	prevText: '&#x3C;Atgal',
@@ -33,5 +30,4 @@ datepicker.regional['lt'] = {
 datepicker.setDefaults(datepicker.regional['lt']);
 
 return datepicker.regional['lt'];
-
 }));

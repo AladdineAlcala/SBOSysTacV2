@@ -11,7 +11,7 @@
 // use. That means, you can include it in your product, or your web
 // site, or any other form where the code is actually being used. You
 // may not put the plain javascript up on your site for download or
-// include it in your javascript libraries for download. 
+// include it in your javascript libraries for download.
 // If you wish to share this code with others, please just point them
 // to the URL instead.
 // Please DO NOT link directly to my .js files from your site. Copy
@@ -23,20 +23,20 @@
 // Jul 23, 2007: Add capital Y and D for Year and Date formats
 // Dec 19, 2006: Replaced calls to getYear() with getFullYear()
 // Dec 19, 2006: Removed parseDate() function
-// Dec 19, 2006: Modified getDateFromFormat() to return Date or null. Also made 
-//               pass null to Date constructor for values it doesn't know. 
+// Dec 19, 2006: Modified getDateFromFormat() to return Date or null. Also made
+//               pass null to Date constructor for values it doesn't know.
 // Dec 18, 2006: Packaged for use in crystal reports viewer
 // May 17, 2003: Fixed bug in parseDate() for dates <1970
 // March 11, 2003: Added parseDate() function
 // March 11, 2003: Added "NNN" formatting option. Doesn't match up
-//                 perfectly with SimpleDateFormat formats, but 
+//                 perfectly with SimpleDateFormat formats, but
 //                 backwards-compatability was required.
 
 // ------------------------------------------------------------------
-// These functions use the same 'format' strings as the 
+// These functions use the same 'format' strings as the
 // java.text.SimpleDateFormat class, with minor exceptions.
 // The format string consists of the following abbreviations:
-// 
+//
 // Field        | Full Form          | Short Form
 // -------------+--------------------+-----------------------
 // Year         | yyyy (4 digits)    | yy (2 digits), y (2 or 4 digits)
@@ -178,7 +178,7 @@ bobj.external.date.formatDate = function(date,format) {
         }
     return result;
 }
-    
+
 // ------------------------------------------------------------------
 // Utility functions for parsing in getDateFromFormat()
 // ------------------------------------------------------------------
@@ -198,7 +198,7 @@ bobj.external.date._getInt = function(str,i,minlength,maxlength) {
         }
     return null;
 }
-    
+
 // ------------------------------------------------------------------
 // getDateFromFormat( date_string , format_string )
 //
@@ -222,7 +222,7 @@ bobj.external.date.getDateFromFormat = function(val,format) {
     var mm=null;
     var ss=null;
     var ampm="";
-    
+
     while (i_format < format.length) {
         // Get next token from format string
         c=format.charAt(i_format);
@@ -235,10 +235,10 @@ bobj.external.date.getDateFromFormat = function(val,format) {
             if (token=="yyyy" || token=="YYYY") { x=4;y=4; }
             if (token=="yy" || token=="YY")   { x=2;y=2; }
             if (token=="y" || token=="Y")    { x=2;y=4; }
-            year=bobj.external.date._getInt(val,i_val,x,y); 
+            year=bobj.external.date._getInt(val,i_val,x,y);
             if (year==null) { return null; }
             i_val += year.length;
-            if (year.length==2) { 
+            if (year.length==2) {
                 if (year > 70) { year=1900+(year-0); }
                 else { year=2000+(year-0); }
                 }
@@ -327,9 +327,8 @@ bobj.external.date.getDateFromFormat = function(val,format) {
         if (hh<12 && ampm=="PM") { hh=hh-0+12; }
         else if (hh>11 && ampm=="AM") { hh-=12; }
     }
-    
-    var newDate = new Date(year,month-1,date,hh,mm,ss);
-    newDate.setFullYear(year); 
-    return newDate; 
-}
 
+    var newDate = new Date(year,month-1,date,hh,mm,ss);
+    newDate.setFullYear(year);
+    return newDate;
+}

@@ -2,16 +2,13 @@
 /* Written by Harri Kilpiö (harrikilpio@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['fi'] = {
 	closeText: 'Sulje',
 	prevText: '&#xAB;Edellinen',
@@ -33,5 +30,4 @@ datepicker.regional['fi'] = {
 datepicker.setDefaults(datepicker.regional['fi']);
 
 return datepicker.regional['fi'];
-
 }));

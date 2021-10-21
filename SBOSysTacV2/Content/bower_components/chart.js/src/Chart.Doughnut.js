@@ -33,9 +33,7 @@
 
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-
 	};
-
 
 	Chart.Type.extend({
 		//Passing in a name registers this chart in the Chart namespace
@@ -45,7 +43,6 @@
 		//Initialize is fired when the chart is initialized - Data is passed in as a parameter
 		//Config is automatically merged by the core of Chart.js, and is available at this.options
 		initialize:  function(data){
-
 			//Declare segments as a static property to prevent inheriting across the Chart type prototype
 			this.segments = [];
 			this.outerRadius = (helpers.min([this.chart.width,this.chart.height]) -	this.options.segmentStrokeWidth/2)/2;
@@ -172,7 +169,6 @@
 					this.segments[index+1].startAngle = segment.endAngle;
 				}
 			},this);
-
 		}
 	});
 
@@ -180,5 +176,4 @@
 		name : "Pie",
 		defaults : helpers.merge(defaultConfig,{percentageInnerCutout : 0})
 	});
-
 }).call(this);

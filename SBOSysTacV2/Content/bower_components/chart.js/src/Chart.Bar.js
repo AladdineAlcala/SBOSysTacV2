@@ -5,7 +5,6 @@
 		Chart = root.Chart,
 		helpers = Chart.helpers;
 
-
 	var defaultConfig = {
 		//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
 		scaleBeginAtZero : true,
@@ -39,15 +38,12 @@
 
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-
 	};
-
 
 	Chart.Type.extend({
 		name: "Bar",
 		defaults : defaultConfig,
 		initialize:  function(data){
-
 			//Expose options as a scope variable here so we can access it in the ScaleClass
 			var options = this.options;
 
@@ -99,7 +95,6 @@
 
 			//Iterate through each of the datasets, and build this into a property of the chart
 			helpers.each(data.datasets,function(dataset,datasetIndex){
-
 				var datasetObject = {
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
@@ -121,7 +116,6 @@
 						highlightStroke : dataset.highlightStroke || dataset.strokeColor
 					}));
 				},this);
-
 			},this);
 
 			this.buildScale(data.labels);
@@ -293,10 +287,7 @@
 						}, easingDecimal).draw();
 					}
 				},this);
-
 			},this);
 		}
 	});
-
-
 }).call(this);

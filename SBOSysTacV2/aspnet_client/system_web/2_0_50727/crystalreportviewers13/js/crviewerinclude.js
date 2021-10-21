@@ -35,7 +35,7 @@ function crv_isCookieEnabled()
 {
     var TESTNAME = '__BOBJ_VIEWER_TEST_COOKIE_NAME';
     var TESTVALUE = '__BOBJ_VIEWER_TEST_COOKIE_VALUE';
-    
+
     crv_createCookie(TESTNAME, TESTVALUE);
     var cookieValue = crv_readCookie(TESTNAME);
     if (cookieValue == TESTVALUE)
@@ -43,14 +43,14 @@ function crv_isCookieEnabled()
         crv_eraseCookie(TESTNAME);
         return true;
     }
-    
+
     return false;
 }
 
 function crv_showDialog(showFunc, cookieName)
 {
     var cookieVal = crv_readCookie(cookieName);
-    if (cookieVal == "true" || !crv_isCookieEnabled()) 
+    if (cookieVal == "true" || !crv_isCookieEnabled())
     {
         showFunc();
     }
@@ -62,14 +62,14 @@ function getComposite(prefixArray, suffixStr, encodeF)
     if (!prefixArray) return "";
     suffixStr = suffixStr ? suffixStr : "";
     var composite="";
-    for (var i in prefixArray) 
+    for (var i in prefixArray)
     {
         var eltID = prefixArray[i] + suffixStr;
         var elt = document.getElementById(eltID);
-        if (elt) 
+        if (elt)
         {
             var value = elt.value;
-            if (value) 
+            if (value)
             {
                 if (composite != "")
                     composite += ";";
@@ -82,20 +82,20 @@ function getComposite(prefixArray, suffixStr, encodeF)
 
 function scrollToElement(id)
 {
-	var obj = document.getElementById(id); 
+	var obj = document.getElementById(id);
     if(obj != null)
-    { 
-		var offsetTop = obj.offsetTop; 
-		var offsetLeft = obj.offsetLeft; 
-		var myOffsetParent = obj.offsetParent; 
-	
-		while( myOffsetParent ) 
-		{ 
-			offsetTop += myOffsetParent.offsetTop; 
-			offsetLeft += myOffsetParent.offsetLeft; 
-			myOffsetParent = myOffsetParent.offsetParent; 
-		}  
-		
+    {
+		var offsetTop = obj.offsetTop;
+		var offsetLeft = obj.offsetLeft;
+		var myOffsetParent = obj.offsetParent;
+
+		while( myOffsetParent )
+		{
+			offsetTop += myOffsetParent.offsetTop;
+			offsetLeft += myOffsetParent.offsetLeft;
+			myOffsetParent = myOffsetParent.offsetParent;
+		}
+
 		window.scrollTo(offsetLeft, offsetTop);
 	}
 }

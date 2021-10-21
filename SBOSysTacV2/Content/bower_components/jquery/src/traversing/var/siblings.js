@@ -1,5 +1,4 @@
 define( function() {
-
 "use strict";
 
 return function( n, elem ) {
@@ -13,5 +12,4 @@ return function( n, elem ) {
 
 	return matched;
 };
-
 } );

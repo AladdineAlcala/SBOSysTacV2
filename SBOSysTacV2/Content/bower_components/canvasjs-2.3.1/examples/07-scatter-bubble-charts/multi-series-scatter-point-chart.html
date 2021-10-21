@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">	
-<script>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -18,7 +18,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	},
 	data: [{
 		type: "scatter",
-		toolTipContent: "<span style='color:#4F81BC '><b>{name}</b></span><br/><b> Load:</b> {x} TPS<br/><b> Response Time:</b></span> {y} ms",
+		toolTipContent: "<span style='color:#4F81BC '><b>{name}</b></span><br /><b> Load:</b> {x} TPS<br /><b> Response Time:</b></span> {y} ms",
 		name: "Server Pluto",
 		showInLegend: true,
 		dataPoints: [
@@ -41,8 +41,8 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	{
 		type: "scatter",
 		name: "Server Mars",
-		showInLegend: true, 
-		toolTipContent: "<span style='color:#C0504E '><b>{name}</b></span><br/><b> Load:</b> {x} TPS<br/><b> Response Time:</b></span> {y} ms",
+		showInLegend: true,
+		toolTipContent: "<span style='color:#C0504E '><b>{name}</b></span><br /><b> Load:</b> {x} TPS<br /><b> Response Time:</b></span> {y} ms",
 		dataPoints: [
 			{ x: 19, y: 200 },
 			{ x: 27, y: 300 },
@@ -64,10 +64,10 @@ var chart = new CanvasJS.Chart("chartContainer", {
 chart.render();
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

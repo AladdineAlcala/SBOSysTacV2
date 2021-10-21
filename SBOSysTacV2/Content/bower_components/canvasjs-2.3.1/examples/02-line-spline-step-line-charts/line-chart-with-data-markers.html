@@ -1,15 +1,15 @@
 <!DOCTYPE HTML>
 <html>
-<head>  
-<meta charset="UTF-8">
-<script>
+<head>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
 	theme: "light2", // "light1", "light2", "dark1", "dark2"
 	animationEnabled: true,
 	title:{
-		text: "Share Value - 2016"   
+		text: "Share Value - 2016"
 	},
 	axisX: {
 		interval: 1,
@@ -20,12 +20,12 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		title: "Price (in USD)",
 		valueFormatString: "$#0"
 	},
-	data: [{        
+	data: [{
 		type: "line",
 		markerSize: 12,
 		xValueFormatString: "MMM, YYYY",
 		yValueFormatString: "$###.#",
-		dataPoints: [        
+		dataPoints: [
 			{ x: new Date(2016, 00, 1), y: 61, indexLabel: "gain", markerType: "triangle",  markerColor: "#6B8E23" },
 			{ x: new Date(2016, 01, 1), y: 71, indexLabel: "gain", markerType: "triangle",  markerColor: "#6B8E23" },
 			{ x: new Date(2016, 02, 1) , y: 55, indexLabel: "loss", markerType: "cross", markerColor: "tomato" },
@@ -44,10 +44,10 @@ var chart = new CanvasJS.Chart("chartContainer", {
 chart.render();
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -18,12 +17,10 @@
 			"./widget"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.widget( "ui.tabs", {
 	version: "1.11.4",
 	delay: 300,
@@ -203,7 +200,6 @@ return $.widget( "ui.tabs", {
 
 		// Navigating with control/command key will prevent automatic activation
 		if ( !event.ctrlKey && !event.metaKey ) {
-
 			// Update aria-selected immediately so that AT think the tab is already selected.
 			// Otherwise AT may confuse the user by stating that they need to activate the tab,
 			// but the tab will already be activated by the time the announcement finishes.
@@ -882,5 +878,4 @@ return $.widget( "ui.tabs", {
 		return this.element.find( this._sanitizeSelector( "#" + id ) );
 	}
 });
-
 }));

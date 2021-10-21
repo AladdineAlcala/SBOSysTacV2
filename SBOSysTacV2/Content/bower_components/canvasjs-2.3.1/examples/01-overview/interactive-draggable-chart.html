@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function() {
 
-var chart = new CanvasJS.Chart("chartContainer", {       
+var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
 	title: {
 		text: "Try Dragging Any Column to Resize"
@@ -43,7 +43,7 @@ var changeCursor = false;
 var timerId = null;
 
 function getPosition(e) {
-	var parentOffset = $("#chartContainer > .canvasjs-chart-container").offset();          	
+	var parentOffset = $("#chartContainer > .canvasjs-chart-container").offset();
 	var relX = e.pageX - parentOffset.left;
 	var relY = e.pageY - parentOffset.top;
 	xValue = Math.round(chart.axisX[0].convertPixelToValue(relX));
@@ -53,14 +53,14 @@ function getPosition(e) {
 function searchDataPoint() {
 	var dps = chart.data[0].dataPoints;
 	for(var i = 0; i < dps.length; i++ ) {
-		if( (xValue >= dps[i].x - xSnapDistance && xValue <= dps[i].x + xSnapDistance) && (yValue >= dps[i].y - ySnapDistance && yValue <= dps[i].y + ySnapDistance) ) 
+		if( (xValue >= dps[i].x - xSnapDistance && xValue <= dps[i].x + xSnapDistance) && (yValue >= dps[i].y - ySnapDistance && yValue <= dps[i].y + ySnapDistance) )
 		{
 			if(mouseDown) {
 				selected = i;
 				break;
 			} else {
 				changeCursor = true;
-				break; 
+				break;
 			}
 		} else {
 			selected = null;
@@ -72,7 +72,7 @@ function searchDataPoint() {
 jQuery("#chartContainer > .canvasjs-chart-container").on({
 	mousedown: function(e) {
 		mouseDown = true;
-		getPosition(e);  
+		getPosition(e);
 		searchDataPoint();
 	},
 	mousemove: function(e) {
@@ -83,7 +83,7 @@ jQuery("#chartContainer > .canvasjs-chart-container").on({
 				if(selected != null) {
 					chart.data[0].dataPoints[selected].y = yValue;
 					chart.render();
-				}   
+				}
 			}, 0);
 		}
 		else {
@@ -105,11 +105,11 @@ jQuery("#chartContainer > .canvasjs-chart-container").on({
 });
 
 }
-</script>
+    </script>
 </head>
-<body>    
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>  
-<script src="../../canvasjs.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>  
+<body>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </body>
 </html>

@@ -1,143 +1,123 @@
 /* Copyright (c) Business Objects 2006. All rights reserved. */
 
-.stackedPanel
-{
+.stackedPanel {
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
     background-color: #F5F7F9;
 }
 
-.parameterPanelToolbar
-{
+.parameterPanelToolbar {
     margin: 0px;
     overflow: hidden;
 }
 
-.toolPanel
-{
-    position:relative; /* Needed for Webform design time */
+.toolPanel {
+    position: relative; /* Needed for Webform design time */
     background-color: #F5F7F9;
     border-right: 1px solid #96a8c3;
     border-bottom: 1px solid #96a8c3;
 }
 
-.toolPanel.leftBorder
-{
-    border-left: 1px solid #96a8c3;
-}
+    .toolPanel.leftBorder {
+        border-left: 1px solid #96a8c3;
+    }
 
-.leftPanel
-{
-    position : absolute;
+.leftPanel {
+    position: absolute;
     top: 0px;
     left: 0px;
 }
 
-.panelHeader 
-{
+.panelHeader {
     border-top: 1px solid #96a8c3;
     border-right: 1px solid #96a8c3;
-    background:transparent url('allInOneBG.gif') repeat-x 0px -126px; /* panelHeaderBG.gif */
-    position : absolute;
+    background: transparent url('allInOneBG.gif') repeat-x 0px -126px; /* panelHeaderBG.gif */
+    position: absolute;
     z-index: 1;
     overflow: hidden;
 }
 
-.panelHeaderTitle
-{
-    position : absolute;
-    bottom : 3px;
-    left : 10px;    
-    font-family : "Tahoma";
+.panelHeaderTitle {
+    position: absolute;
+    bottom: 3px;
+    left: 10px;
+    font-family: "Tahoma";
     font-weight: bold;
-    font-size : 8.5pt;
+    font-size: 8.5pt;
     white-space: nowrap;
-    color :#FFFFFF;
-    overflow : hidden;
+    color: #FFFFFF;
+    overflow: hidden;
 }
 
-.panelHeaderCloseButton 
-{
-    padding : 1px;
+.panelHeaderCloseButton {
+    padding: 1px;
 }
 
-.panelHeaderCloseButtonHighlighted
-{
-    border : 1px solid #F5F7F9;
+.panelHeaderCloseButtonHighlighted {
+    border: 1px solid #F5F7F9;
 }
 
-.panelHeaderButtonCtn
-{
-    position : absolute;
+.panelHeaderButtonCtn {
+    position: absolute;
     right: 4px;
     bottom: 1px;
 }
-    
-.panelNavigatorInnerBorder 
-{
+
+.panelNavigatorInnerBorder {
     border: 1px solid #f3f6f8;
 }
 
-.panelNavigator
-{
-    position : absolute;    
-    background-color : #e5eaf1;
+.panelNavigator {
+    position: absolute;
+    background-color: #e5eaf1;
     z-index: 5;
     border: 1px solid #96a8c3;
 }
 
-.panelNavigatorItemImage
-{
-    width : 22px;
-    height : 22px;
-    position : absolute;
-    top : 6px;
+.panelNavigatorItemImage {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    top: 6px;
     left: 6px;
 }
 
-.panelNavigatorItem 
-{
-    position:absolute;
+.panelNavigatorItem {
+    position: absolute;
     width: 35px;
-    left : 0px; 
-    top : 0px; /* Will be set by PanelNavigatorItem constructor */
-    height : 35px;
-    cursor : pointer;
+    left: 0px;
+    top: 0px; /* Will be set by PanelNavigatorItem constructor */
+    height: 35px;
+    cursor: pointer;
 }
 
+    .panelNavigatorItem.selected {
+        background: transparent url('allInOneBG.gif') repeat-x 0px -181px; /* panelNavigatorItemSelectedBG.gif */
+    }
 
-.panelNavigatorItem.selected
-{
-    background:transparent url('allInOneBG.gif') repeat-x 0px -181px; /* panelNavigatorItemSelectedBG.gif */
-}
+    .panelNavigatorItem.highlighted {
+        background: transparent url('allInOneBG.gif') repeat-x 0px -146px; /* panelNavigatorItemHL.gif */
+    }
 
-.panelNavigatorItem.highlighted
-{
-    background:transparent url('allInOneBG.gif') repeat-x 0px -146px; /* panelNavigatorItemHL.gif */
-}
+    .panelNavigatorItem.selected.highlighted {
+        background: transparent url('allInOneBG.gif') repeat-x 0px -146px; /* panelNavigatorItemHL.gif */
+    }
 
-.panelNavigatorItem.selected.highlighted
-{
-    background:transparent url('allInOneBG.gif') repeat-x 0px -146px; /* panelNavigatorItemHL.gif */
-}
-
-.parameterInfoRow
-{
-    color : #006699;
-    padding : 1px 2px;
+.parameterInfoRow {
+    color: #006699;
+    padding: 1px 2px;
     margin: 2px 10px;
     font-style: italic;
-    font-family : "arial" , "sans-serif";    
-    font-size : 12px;
+    font-family: "arial", "sans-serif";
+    font-size: 12px;
     display: none;
     white-space: nowrap;
     text-decoration: underline;
     cursor: pointer;
 }
 
-.paramPanelOverLay 
-{
+.paramPanelOverLay {
     width: 100%;
     height: 100%;
     background-color: black;
@@ -149,8 +129,7 @@
     opacity: 0.15; /* Safari and Mozilla */
 }
 
-.stackedTab
-{
+.stackedTab {
     overflow: hidden;
     margin: 5px 2px;
     background-color: #f7f7f7;
@@ -158,45 +137,37 @@
     border: 1px solid #94aac5;
 }
 
-.stackedTabTitle
-{
+.stackedTabTitle {
     height: 20px;
 }
 
-.stackedTabTitleDirty
-{
+.stackedTabTitleDirty {
     background-color: #D5ECFF;
     height: 20px;
 }
 
-.stackedTabContentCtn
-{
+.stackedTabContentCtn {
     float: left;
 }
 
-.arrow_button_default
-{
+.arrow_button_default {
 }
 
-.arrow_button_depressed 
-{
+.arrow_button_depressed {
     background-image: url('arrow_button_depressed.gif');
     background-repeat: no-repeat;
 }
 
-.arrow_button_hover 
-{
+.arrow_button_hover {
     background-image: url('arrow_button_hover.gif');
     background-repeat: no-repeat;
 }
 
-.stackedTabLabelHover
-{
+.stackedTabLabelHover {
     background-color: #8E8EAD;
 }
 
-.stackedTabText
-{
+.stackedTabText {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -210,8 +181,7 @@
     width: 100%;
 }
 
-.stackedTabIconCtn
-{
+.stackedTabIconCtn {
     position: absolute;
     top: 1px;
     height: 100%;
@@ -219,80 +189,69 @@
     z-index: 5;
 }
 
-.clearValueBtnCtn
-{
-    position : absolute;
-    right : 1px;    
-    top : 1px;
+.clearValueBtnCtn {
+    position: absolute;
+    right: 1px;
+    top: 1px;
 }
 
 .advButtonContainer {
     height: 16px;
-    position:absolute;
-    right:0px;
-    top : 0px;    
+    position: absolute;
+    right: 0px;
+    top: 0px;
 }
 
-.WarningPopup
-{
-    position : absolute;
+.WarningPopup {
+    position: absolute;
     border: 1px solid black;
-    width :300px;
-    font-family : "arial" , "sans-serif";    
-    font-size : 12px;
-    background-color : #ffffcc;
-    display : none;
+    width: 300px;
+    font-family: "arial", "sans-serif";
+    font-size: 12px;
+    background-color: #ffffcc;
+    display: none;
     z-index: 20;
 }
 
-.crvnoselect
-{
+.crvnoselect {
     -moz-user-select: none;
     -khtml-user-select: none;
     user-select: none;
 }
 
-.iactParamRow
-{
+.iactParamRow {
     position: relative;
     height: 18px;
     overflow: hidden;
     white-space: nowrap;
     margin: 2px 20px 2px 0px;
-    
 }
 
-.iactParamRow.editable.hasError
-{
-    border: 1px solid red;
-}
+    .iactParamRow.editable.hasError {
+        border: 1px solid red;
+    }
 
-.iactParamRow.editable
-{
-    border: 1px solid #94aac5;
-}
+    .iactParamRow.editable {
+        border: 1px solid #94aac5;
+    }
 
-.iactParamRowIE
-{
+.iactParamRowIE {
     height: 20px;
 }
 
-.iactParamValue
-{
-    padding-left:4px;
+.iactParamValue {
+    padding-left: 4px;
     height: 18px;
     overflow: hidden;
 }
 
-.iactParamValueAndButton
-{
+.iactParamValueAndButton {
     position: relative;
     overflow: hidden;
     height: 18px;
 }
 
-.iactTextField
-{
+.iactTextField {
     background-color: #f7f7f7;
     font-family: tahoma;
     font-size: 8pt;
@@ -300,31 +259,28 @@
     border: none;
     padding-left: 2px;
     padding-right: 2px;
-    position : relative;
-    padding-top : 0px;
-    top : 2px;
+    position: relative;
+    padding-top: 0px;
+    top: 2px;
 }
 
-.iactRangeFieldTable
-{
+.iactRangeFieldTable {
     height: 18px;
     padding-left: 2px;
     padding-right: 2px;
     padding-top: 1px;
-    white-space:nowrap;
-    overflow:hidden;
+    white-space: nowrap;
+    overflow: hidden;
     border-collapse: collapse;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 12px;
 }
 
-.iactTextComboTextField
-{
+.iactTextComboTextField {
     margin-right: 15px;
 }
 
-.iactTextComboArrow
-{
+.iactTextComboArrow {
     height: 16px;
     overflow: hidden;
     border-top: 1px solid #E1E1FC;
@@ -335,18 +291,16 @@
     top: 0px;
 }
 
-.iactValueIcon
-{
+.iactValueIcon {
     height: 18px;
     overflow: hidden;
 }
 
-.crvTooltip
-{
+.crvTooltip {
     position: absolute;
     z-index: 5000;
     padding: 2px 6px 2px 6px;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: #000000;
     background-color: #FFFFCC;
@@ -354,18 +308,16 @@
     -moz-border-radius: 5px;
 }
 
-.infozone
-{
+.infozone {
     background-color: white;
     color: #808080;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     border: 1px solid #808080;
     padding: 4px;
 }
 
-.waitdialogzone
-{
+.waitdialogzone {
     border-top: solid 1px #FFFFFF;
     border-left: solid 1px #FFFFFF;
     border-right: solid 1px #636384;
@@ -374,18 +326,16 @@
     margin: 5px;
 }
 
-.dialogTitleLevel2
-{
-    font-family : Tahoma, sans-serif;
+.dialogTitleLevel2 {
+    font-family: Tahoma, sans-serif;
     font-size: 8.5pt;
     font-weight: bold;
-    color : #4F5C72;    
-    display:inline;
-    white-space:nowrap;
+    color: #4F5C72;
+    display: inline;
+    white-space: nowrap;
 }
 
-.dialogTitleLevel2Underline
-{
+.dialogTitleLevel2Underline {
     border-bottom: 1px solid #4F5C72;
 }
 
@@ -393,14 +343,12 @@
 /* Toolbar */
 /*=========*/
 
-.crtoolbar
-{
-    background:transparent url('allInOneBG.gif') repeat-x 0px 0px; /* toolbar_background.gif */
+.crtoolbar {
+    background: transparent url('allInOneBG.gif') repeat-x 0px 0px; /* toolbar_background.gif */
 }
 
-img.toolbar_separator /* must be used on a IMG which is inside a DIV with 6px width */
-{
-    background:transparent url('allInOneBG.gif') no-repeat 0px -28px; /* toolbar_separator_icon.gif */
+img.toolbar_separator /* must be used on a IMG which is inside a DIV with 6px width */ {
+    background: transparent url('allInOneBG.gif') no-repeat 0px -28px; /* toolbar_separator_icon.gif */
     width: 2px;
     height: 26px;
     position: relative;
@@ -411,18 +359,15 @@ img.toolbar_separator /* must be used on a IMG which is inside a DIV with 6px wi
 /* Toolbar button's default, depressed and hover behaviours */
 /*==========================================================*/
 
-.toolbar_button_default
-{
+.toolbar_button_default {
 }
 
-.toolbar_button_depressed 
-{
+.toolbar_button_depressed {
     background-image: url('toolbar_button_depressed.gif');
     background-repeat: no-repeat;
 }
 
-.toolbar_button_hover 
-{
+.toolbar_button_hover {
     background-image: url('toolbar_button_hover.gif');
     background-repeat: no-repeat;
 }
@@ -431,18 +376,15 @@ img.toolbar_separator /* must be used on a IMG which is inside a DIV with 6px wi
 /* Toolbar menu arrow's default, depressed and hover behaviours */
 /*==============================================================*/
 
-.toolbar_menuarrow_default
-{
+.toolbar_menuarrow_default {
 }
 
-.toolbar_menuarrow_depressed 
-{
+.toolbar_menuarrow_depressed {
     background-image: url('toolbar_menuarrow_depressed.gif');
     background-repeat: no-repeat;
 }
 
-.toolbar_menuarrow_hover 
-{
+.toolbar_menuarrow_hover {
     background-image: url('toolbar_menuarrow_hover.gif');
     background-repeat: no-repeat;
 }
@@ -451,21 +393,18 @@ img.toolbar_separator /* must be used on a IMG which is inside a DIV with 6px wi
 /* Toolbar button group */
 /*======================*/
 
-.toolbar_buttongroup
-{
-    background:transparent url('allInOneBG.gif') repeat-x 0px -54px; /* toolbar_buttongroup_background.gif */
+.toolbar_buttongroup {
+    background: transparent url('allInOneBG.gif') repeat-x 0px -54px; /* toolbar_buttongroup_background.gif */
 }
 
-img.toolbar_buttongroup_left
-{
-    background:transparent url('allInOneBG.gif') no-repeat 0px -78px; /* toolbar_buttongroup_left.gif */
+img.toolbar_buttongroup_left {
+    background: transparent url('allInOneBG.gif') no-repeat 0px -78px; /* toolbar_buttongroup_left.gif */
     width: 2px;
     height: 24px;
 }
 
-img.toolbar_buttongroup_right
-{
-    background:transparent url('allInOneBG.gif') no-repeat 0px -102px; /* toolbar_buttongroup_right.gif */
+img.toolbar_buttongroup_right {
+    background: transparent url('allInOneBG.gif') no-repeat 0px -102px; /* toolbar_buttongroup_right.gif */
     width: 2px;
     height: 24px;
 }
@@ -474,8 +413,7 @@ img.toolbar_buttongroup_right
 /* Statusbar */
 /*===========*/
 
-.statusbar_breadcrumb
-{
+.statusbar_breadcrumb {
     width: 100%;
     height: 14px;
     overflow: hidden;
@@ -486,8 +424,7 @@ img.toolbar_buttongroup_right
 /* DesignTime CSS styles                                        */
 /*==============================================================*/
 
-.designTimeToolbarButton
-{
+.designTimeToolbarButton {
     overflow: hidden;
     float: left;
     width: 21px;
@@ -496,44 +433,38 @@ img.toolbar_buttongroup_right
     margin-left: 5px;
 }
 
-.designTimePanelNavigatorItem 
-{
-    width : 31px;
-    height : 33px;
-    cursor : pointer;
+.designTimePanelNavigatorItem {
+    width: 31px;
+    height: 33px;
+    cursor: pointer;
 }
 
-.designTimePanelNavigatorItem.selected
-{
-    background:transparent url('allInOneBG.gif') repeat-x 0px -181px;
-}
+    .designTimePanelNavigatorItem.selected {
+        background: transparent url('allInOneBG.gif') repeat-x 0px -181px;
+    }
 
-.designTimeToolbarItem
-{
+.designTimeToolbarItem {
     float: left;
 }
 
-.designTimeLeftPanel 
-{
-    height: 100%; 
-    float : left;
+.designTimeLeftPanel {
+    height: 100%;
+    float: left;
     vertical-align: top;
-    width: 100px; 
+    width: 100px;
 }
 
-.designTimePanelNavigator
-{  
+.designTimePanelNavigator {
     vertical-align: top;
-    background-color : #e5eaf1;
+    background-color: #e5eaf1;
     border: 1px solid #94abc5;
     float: left;
-    width : 33px;
+    width: 33px;
     height: 100%;
-    overflow:hidden;
+    overflow: hidden;
 }
 
-.designTimeStatusBar 
-{
+.designTimeStatusBar {
     height: 15px;
     overflow: hidden;
     clear: both;
@@ -543,37 +474,32 @@ img.toolbar_buttongroup_right
     position: relative;
 }
 
-.designTimeToolPanel
-{
-    height:100%;
-    position : relative;
+.designTimeToolPanel {
+    height: 100%;
+    position: relative;
     overflow: hidden;
-    float : right;
+    float: right;
     border-top: 1px solid #94abc5;
-    border-right : 1px solid #94abc5;
+    border-right: 1px solid #94abc5;
     border-bottom: 1px solid #94abc5;
     background-color: #F5F7F9;
 }
 
-.designTimeReportAlbum 
-{
-    height: 100%; 
-    float:right;
+.designTimeReportAlbum {
+    height: 100%;
+    float: right;
 }
-.clear 
-{ 
-    clear: both; 
+
+.clear {
+    clear: both;
     height: 1px;
     overflow: hidden;
 }
 
-DIV.hideFrame
-{
+DIV.hideFrame {
     background-color: transparent;
 }
 
-DIV.hideFrame .hideableFrame
-{
-    display: none;
-}
-
+    DIV.hideFrame .hideableFrame {
+        display: none;
+    }

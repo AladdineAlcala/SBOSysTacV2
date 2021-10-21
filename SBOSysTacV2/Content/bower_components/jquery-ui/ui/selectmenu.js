@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -20,12 +19,10 @@
 			"./menu"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.widget( "ui.selectmenu", {
 	version: "1.11.4",
 	defaultElement: "<select>",
@@ -109,7 +106,6 @@ return $.widget( "ui.selectmenu", {
 
 		this._on( this.button, this._buttonEvents );
 		this.button.one( "focusin", function() {
-
 			// Delay rendering the menu items until the button receives focus.
 			// The menu may have already been rendered via a programmatic open.
 			if ( !that.menuItems ) {
@@ -231,7 +227,6 @@ return $.widget( "ui.selectmenu", {
 		if ( !this.menuItems ) {
 			this._refreshMenu();
 		} else {
-
 			// Menu clears focus on close, reset focus to selected item
 			this.menu.find( ".ui-state-focus" ).removeClass( "ui-state-focus" );
 			this.menuInstance.focus( null, this._getSelectedItem() );
@@ -384,7 +379,6 @@ return $.widget( "ui.selectmenu", {
 	},
 
 	_buttonEvents: {
-
 		// Prevent text selection from being reset when interacting with the selectmenu (#10144)
 		mousedown: function() {
 			var selection;
@@ -611,5 +605,4 @@ return $.widget( "ui.selectmenu", {
 		this.label.attr( "for", this.ids.element );
 	}
 });
-
 }));

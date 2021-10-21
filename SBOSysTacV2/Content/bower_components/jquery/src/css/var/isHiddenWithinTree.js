@@ -14,7 +14,6 @@ define( [
 	// These differences improve the behavior of .toggle() et al. when applied to elements that are
 	// detached or contained within hidden ancestors (gh-2404, gh-2863).
 	return function( elem, el ) {
-
 		// isHiddenWithinTree might be called from jQuery#filter function;
 		// in that case, element will be second argument
 		elem = el || elem;

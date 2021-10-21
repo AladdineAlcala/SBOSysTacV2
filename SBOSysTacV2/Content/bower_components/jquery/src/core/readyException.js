@@ -1,7 +1,6 @@
 define( [
 	"../core"
 ], function( jQuery ) {
-
 "use strict";
 
 jQuery.readyException = function( error ) {
@@ -9,5 +8,4 @@ jQuery.readyException = function( error ) {
 		throw error;
 	} );
 };
-
 } );

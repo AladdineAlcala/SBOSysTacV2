@@ -4,7 +4,6 @@ define( [
 	"./support",
 	"../selector"
 ], function( jQuery, access, support ) {
-
 "use strict";
 
 var rfocusable = /^(?:input|select|textarea|button)$/i,
@@ -33,7 +32,6 @@ jQuery.extend( {
 		}
 
 		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
-
 			// Fix name and attach hooks
 			name = jQuery.propFix[ name ] || name;
 			hooks = jQuery.propHooks[ name ];
@@ -58,7 +56,6 @@ jQuery.extend( {
 	propHooks: {
 		tabIndex: {
 			get: function( elem ) {
-
 				// Support: IE <=9 - 11 only
 				// elem.tabIndex doesn't always return the
 				// correct value when it hasn't been explicitly set
@@ -100,7 +97,6 @@ jQuery.extend( {
 if ( !support.optSelected ) {
 	jQuery.propHooks.selected = {
 		get: function( elem ) {
-
 			/* eslint no-unused-expressions: "off" */
 
 			var parent = elem.parentNode;
@@ -110,7 +106,6 @@ if ( !support.optSelected ) {
 			return null;
 		},
 		set: function( elem ) {
-
 			/* eslint no-unused-expressions: "off" */
 
 			var parent = elem.parentNode;
@@ -139,5 +134,4 @@ jQuery.each( [
 ], function() {
 	jQuery.propFix[ this.toLowerCase() ] = this;
 } );
-
 } );

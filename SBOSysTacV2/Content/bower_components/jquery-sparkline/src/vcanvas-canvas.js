@@ -136,7 +136,6 @@
                 shapeseq.splice(first, 0, shapes[i].id);
                 this.shapes[shapes[i].id] = shapes[i];
             }
-
         },
 
         insertAfterShape: function (shapeid, shape) {
@@ -188,6 +187,4 @@
                 this.shapeseq = [];
             }
         }
-
     });
-

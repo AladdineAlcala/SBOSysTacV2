@@ -5,7 +5,6 @@ import { deprecateSimple } from '../utils/deprecate';
 import { hooks } from '../utils/hooks';
 import absRound from '../utils/abs-round';
 
-
 // TODO: remove 'name' arg after deprecation is removed
 function createAdder(direction, name) {
     return function (val, period) {
@@ -52,4 +51,3 @@ export function addSubtract (mom, duration, isAdding, updateOffset) {
 
 export var add      = createAdder(1, 'add');
 export var subtract = createAdder(-1, 'subtract');
-

@@ -50,7 +50,6 @@
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
 	};
 
-
 	Chart.Type.extend({
 		//Passing in a name registers this chart in the Chart namespace
 		name: "PolarArea",
@@ -187,7 +186,6 @@
 					yCenter: this.chart.height/2
 				}
 			);
-
 		},
 		update : function(){
 			this.calculateTotal(this.segments);
@@ -195,7 +193,7 @@
 			helpers.each(this.segments,function(segment){
 				segment.save();
 			});
-			
+
 			this.reflow();
 			this.render();
 		},
@@ -217,7 +215,6 @@
 					outerRadius : this.scale.calculateCenterOffset(segment.value)
 				});
 			}, this);
-
 		},
 		draw : function(ease){
 			var easingDecimal = ease || 1;
@@ -246,5 +243,4 @@
 			this.scale.draw();
 		}
 	});
-
 }).call(this);

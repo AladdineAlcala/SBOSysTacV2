@@ -2,16 +2,13 @@
 /* Written by DaeKwon Kang (ncrash.dk@gmail.com), Edited by Genie. */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['ko'] = {
 	closeText: '닫기',
 	prevText: '이전달',
@@ -33,5 +30,4 @@ datepicker.regional['ko'] = {
 datepicker.setDefaults(datepicker.regional['ko']);
 
 return datepicker.regional['ko'];
-
 }));

@@ -2,7 +2,7 @@
 ================================================================================
 ParameterInfoRow
 
-Internal class for use by ParameterUI. Draws a UI for a single info row. 
+Internal class for use by ParameterUI. Draws a UI for a single info row.
 This row is always displayed as last child of parameterUI
 ================================================================================
  */
@@ -26,12 +26,11 @@ bobj.crv.params.ParameterInfoRow.prototype = {
             append2(parent, this.getHTML());
             this.layer = getLayer(this.id);
         }
-        
+
         if(this.layer) {
             MochiKit.Signal.connect(this.layer, "onclick", this, '_onClick');
             MochiKit.Signal.connect(this.layer, "onkeydown", this, '_onKeyDown');
         }
-        
     },
 
     getHTML : function() {
@@ -73,12 +72,12 @@ bobj.crv.params.ParameterInfoRow.prototype = {
             parentNode.appendChild(this.layer);
         }
     },
-    
+
     _onClick : function (ev) {
         MochiKit.Signal.signal(this, "switch");
         ev.stop();
     },
-    
+
     _onKeyDown : function (ev) {
         if(ev && ev.key() && ev.key().code == 13) {
             MochiKit.Signal.signal(this, "switch");

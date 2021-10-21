@@ -10,21 +10,17 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
 			"./effect"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.effects.effect.size = function( o, done ) {
-
 	// Create element
 	var original, baseline, factor,
 		el = $( this ),
@@ -85,7 +81,6 @@ return $.effects.effect.size = function( o, done ) {
 
 	// Scale the css box
 	if ( scale === "box" || scale === "both" ) {
-
 		// Vertical props scaling
 		if ( factor.from.y !== factor.to.y ) {
 			props = props.concat( vProps );
@@ -103,7 +98,6 @@ return $.effects.effect.size = function( o, done ) {
 
 	// Scale the content
 	if ( scale === "content" || scale === "both" ) {
-
 		// Vertical props scaling
 		if ( factor.from.y !== factor.to.y ) {
 			props = props.concat( cProps ).concat( props2 );
@@ -129,7 +123,6 @@ return $.effects.effect.size = function( o, done ) {
 
 	// Animate
 	if ( scale === "content" || scale === "both" ) { // Scale the children
-
 		// Add margins/font-size
 		vProps = vProps.concat([ "marginTop", "marginBottom" ]).concat(cProps);
 		hProps = hProps.concat([ "marginLeft", "marginRight" ]);
@@ -175,7 +168,6 @@ return $.effects.effect.size = function( o, done ) {
 			// Animate children
 			child.css( child.from );
 			child.animate( child.to, o.duration, o.easing, function() {
-
 				// Restore children
 				if ( restore ) {
 					$.effects.restore( child, props2 );
@@ -198,7 +190,6 @@ return $.effects.effect.size = function( o, done ) {
 			}
 			$.effects.restore( el, props );
 			if ( !restore ) {
-
 				// we need to calculate our new positioning based on the scaling
 				if ( position === "static" ) {
 					el.css({
@@ -227,7 +218,5 @@ return $.effects.effect.size = function( o, done ) {
 			done();
 		}
 	});
-
 };
-
 }));

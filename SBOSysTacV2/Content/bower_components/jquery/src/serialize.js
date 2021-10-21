@@ -7,7 +7,6 @@ define( [
 	"./traversing", // filter
 	"./attributes/prop"
 ], function( jQuery, toType, rcheckableType, isFunction ) {
-
 "use strict";
 
 var
@@ -20,16 +19,12 @@ function buildParams( prefix, obj, traditional, add ) {
 	var name;
 
 	if ( Array.isArray( obj ) ) {
-
 		// Serialize array item.
 		jQuery.each( obj, function( i, v ) {
 			if ( traditional || rbracket.test( prefix ) ) {
-
 				// Treat each array item as a scalar.
 				add( prefix, v );
-
 			} else {
-
 				// Item is non-scalar (array or object), encode its numeric index.
 				buildParams(
 					prefix + "[" + ( typeof v === "object" && v != null ? i : "" ) + "]",
@@ -39,16 +34,12 @@ function buildParams( prefix, obj, traditional, add ) {
 				);
 			}
 		} );
-
 	} else if ( !traditional && toType( obj ) === "object" ) {
-
 		// Serialize object item.
 		for ( name in obj ) {
 			buildParams( prefix + "[" + name + "]", obj[ name ], traditional, add );
 		}
-
 	} else {
-
 		// Serialize scalar item.
 		add( prefix, obj );
 	}
@@ -60,7 +51,6 @@ jQuery.param = function( a, traditional ) {
 	var prefix,
 		s = [],
 		add = function( key, valueOrFunction ) {
-
 			// If value is a function, invoke it and use its return value
 			var value = isFunction( valueOrFunction ) ?
 				valueOrFunction() :
@@ -72,14 +62,11 @@ jQuery.param = function( a, traditional ) {
 
 	// If an array was passed in, assume that it is an array of form elements.
 	if ( Array.isArray( a ) || ( a.jquery && !jQuery.isPlainObject( a ) ) ) {
-
 		// Serialize the form elements
 		jQuery.each( a, function() {
 			add( this.name, this.value );
 		} );
-
 	} else {
-
 		// If traditional, encode the "old" way (the way 1.3.2 or older
 		// did it), otherwise encode params recursively.
 		for ( prefix in a ) {
@@ -97,7 +84,6 @@ jQuery.fn.extend( {
 	},
 	serializeArray: function() {
 		return this.map( function() {
-
 			// Can add propHook for "elements" to filter or add form elements
 			var elements = jQuery.prop( this, "elements" );
 			return elements ? jQuery.makeArray( elements ) : this;

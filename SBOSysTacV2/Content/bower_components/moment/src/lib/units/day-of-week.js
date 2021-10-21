@@ -321,7 +321,6 @@ export function weekdaysMinRegex (isStrict) {
     }
 }
 
-
 function computeWeekdaysParse () {
     function cmpLenRev(a, b) {
         return b.length - a.length;

@@ -771,4 +771,3 @@ MochiKit.DragAndDrop.__new__ = function () {
 MochiKit.DragAndDrop.__new__();
 
 MochiKit.Base._exportSymbols(this, MochiKit.DragAndDrop);
-

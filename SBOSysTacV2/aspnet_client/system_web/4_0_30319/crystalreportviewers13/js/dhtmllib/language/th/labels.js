@@ -7,12 +7,11 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
 File: labels.js
-
 
 =============================================================
 */
@@ -94,7 +93,7 @@ _closeDialog="ปิดหน้าต่าง"
 
 _lstMoveUpLab="เลื่อนขึ้น"
 _lstMoveDownLab="เลื่อนลง"
-_lstMoveLeftLab="เลื่อนไปทางซ้าย" 
+_lstMoveLeftLab="เลื่อนไปทางซ้าย"
 _lstMoveRightLab="เลื่อนไปทางขวา"
 _lstNewNodeLab="เพิ่มฟิลเตอร์ที่ซ้อนกัน"
 _lstAndLabel="และ"
@@ -142,7 +141,7 @@ _calendarSelectionLab="วันที่เลือก"
 
 _menuCheckLab="ที่ตรวจสอบ"
 _menuDisableLab="ที่ปิดใช้งาน"
-	
+
 _level="ระดับ"
 _closeTab="ปิดแท็บ"
 _of=" จาก "

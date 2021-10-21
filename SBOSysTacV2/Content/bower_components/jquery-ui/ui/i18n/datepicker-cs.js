@@ -2,16 +2,13 @@
 /* Written by Tomas Muller (tomas@tomas-muller.net). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['cs'] = {
 	closeText: 'Zavřít',
 	prevText: '&#x3C;Dříve',
@@ -33,5 +30,4 @@ datepicker.regional['cs'] = {
 datepicker.setDefaults(datepicker.regional['cs']);
 
 return datepicker.regional['cs'];
-
 }));

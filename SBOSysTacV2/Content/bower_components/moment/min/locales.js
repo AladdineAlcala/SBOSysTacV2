@@ -1999,7 +1999,6 @@
         weekdaysShort : weekdays,
         weekdaysMin : 'އާދި_ހޯމަ_އަން_ބުދަ_ބުރާ_ހުކު_ހޮނި'.split('_'),
         longDateFormat : {
-
             LT : 'HH:mm',
             LTS : 'HH:mm:ss',
             L : 'D/M/YYYY',
@@ -9885,5 +9884,4 @@
     moment.locale('en');
 
     return moment;
-
 })));

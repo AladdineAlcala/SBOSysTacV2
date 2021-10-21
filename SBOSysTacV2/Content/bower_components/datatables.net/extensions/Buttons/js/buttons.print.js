@@ -36,7 +36,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 var _link = document.createElement( 'a' );
 
 /**
@@ -77,7 +76,6 @@ var _relToAbs = function( href ) {
 
 	return _link.protocol+"//"+linkHost+_link.pathname+_link.search;
 };
-
 
 DataTable.ext.buttons.print = {
 	className: 'buttons-print',
@@ -193,7 +191,6 @@ DataTable.ext.buttons.print = {
 
 	customize: null
 };
-
 
 return DataTable.Buttons;
 }));

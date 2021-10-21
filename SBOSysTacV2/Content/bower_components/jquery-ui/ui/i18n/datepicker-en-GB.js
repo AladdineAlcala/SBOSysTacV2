@@ -2,16 +2,13 @@
 /* Written by Stuart. */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['en-GB'] = {
 	closeText: 'Done',
 	prevText: 'Prev',
@@ -33,5 +30,4 @@ datepicker.regional['en-GB'] = {
 datepicker.setDefaults(datepicker.regional['en-GB']);
 
 return datepicker.regional['en-GB'];
-
 }));

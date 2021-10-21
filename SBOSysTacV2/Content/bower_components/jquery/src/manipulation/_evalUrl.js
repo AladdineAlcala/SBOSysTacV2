@@ -1,7 +1,6 @@
 define( [
 	"../ajax"
 ], function( jQuery ) {
-
 "use strict";
 
 jQuery._evalUrl = function( url ) {
@@ -19,5 +18,4 @@ jQuery._evalUrl = function( url ) {
 };
 
 return jQuery._evalUrl;
-
 } );

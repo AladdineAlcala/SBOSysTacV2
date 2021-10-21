@@ -2,16 +2,13 @@
 /* Written by Jamil Najafov (necefov33@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['az'] = {
 	closeText: 'Bağla',
 	prevText: '&#x3C;Geri',
@@ -33,5 +30,4 @@ datepicker.regional['az'] = {
 datepicker.setDefaults(datepicker.regional['az']);
 
 return datepicker.regional['az'];
-
 }));

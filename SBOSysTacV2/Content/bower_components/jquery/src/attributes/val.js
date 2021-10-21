@@ -7,7 +7,6 @@ define( [
 
 	"../core/init"
 ], function( jQuery, stripAndCollapse, support, nodeName, isFunction ) {
-
 "use strict";
 
 var rreturn = /\r/g;
@@ -61,10 +60,8 @@ jQuery.fn.extend( {
 			// Treat null/undefined as ""; convert numbers to string
 			if ( val == null ) {
 				val = "";
-
 			} else if ( typeof val === "number" ) {
 				val += "";
-
 			} else if ( Array.isArray( val ) ) {
 				val = jQuery.map( val, function( value ) {
 					return value == null ? "" : value + "";
@@ -85,7 +82,6 @@ jQuery.extend( {
 	valHooks: {
 		option: {
 			get: function( elem ) {
-
 				var val = jQuery.find.attr( elem, "value" );
 				return val != null ?
 					val :
@@ -108,7 +104,6 @@ jQuery.extend( {
 
 				if ( index < 0 ) {
 					i = max;
-
 				} else {
 					i = one ? index : 0;
 				}
@@ -125,7 +120,6 @@ jQuery.extend( {
 							!option.disabled &&
 							( !option.parentNode.disabled ||
 								!nodeName( option.parentNode, "optgroup" ) ) ) {
-
 						// Get the specific value for the option
 						value = jQuery( option ).val();
 
@@ -187,5 +181,4 @@ jQuery.each( [ "radio", "checkbox" ], function() {
 		};
 	}
 } );
-
 } );

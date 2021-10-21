@@ -121,7 +121,6 @@
             this.xvalues = xvalues;
             this.yvalues = yvalues;
             this.yminmax = yminmax;
-
         },
 
         processRangeOptions: function () {
@@ -149,7 +148,6 @@
             if (options.get('chartRangeMaxX') !== undefined && (options.get('chartRangeClipX') || options.get('chartRangeMaxX') > this.maxx)) {
                 this.maxx = options.get('chartRangeMaxX');
             }
-
         },
 
         drawNormalRange: function (canvasLeft, canvasTop, canvasHeight, canvasWidth, rangey) {
@@ -219,7 +217,6 @@
                     canvasWidth -= Math.ceil(spotRadius);
                 }
             }
-
 
             canvasHeight--;
 
@@ -317,7 +314,6 @@
                             color).append();
                     }
                 }
-
             }
             if (spotRadius && options.get('spotColor') && yvalues[yvallast] !== null) {
                 target.drawCircle(canvasLeft + Math.round((xvalues[xvalues.length - 1] - this.minx) * (canvasWidth / rangex)),
@@ -347,4 +343,3 @@
             target.render();
         }
     });
-

@@ -38,27 +38,26 @@ bobj.crv.newToolPanel = function(kwArgs) {
         height: '100%',
         initialViewType: bobj.crv.ToolPanelType.None
     }, kwArgs);
-    
 
-    var o = newWidget(kwArgs.id); 
-    
+    var o = newWidget(kwArgs.id);
+
     // Update instance with constructor arguments
-    bobj.fillIn(o, kwArgs);   
-    
+    bobj.fillIn(o, kwArgs);
+
     o.widgetType = 'ToolPanel';
-    
+
     o._children = [];
     o._selectedChild = null;
-    o._groupTree = null;  
+    o._groupTree = null;
     o._paramPanel = null;
 
     // Update instance with member functions
     o.initOld = o.init;
     o.resizeOld = o.resize;
     MochiKit.Base.update(o, bobj.crv.ToolPanel);
-    
+
     o.needLeftBorder = false;
-    
+
     return o;
 };
 
@@ -66,12 +65,12 @@ bobj.crv.ToolPanel = {
     hasGroupTree : function() {
         return this._groupTree != null;
     },
-    
+
     /**
      * Adds a child widget as a view. If the child has an isSelected attribute
      * that evaluates as true, it will be the selected (active) view.
      *
-     * This function must be called before getHTML() is called. 
+     * This function must be called before getHTML() is called.
      *
      * @param widget [Widget]  Child view widget
      */
@@ -105,15 +104,15 @@ bobj.crv.ToolPanel = {
 
         this._children.push (widget);
     },
-    
+
     hasParameterPanel : function () {
         return this._paramPanel != null;
     },
-    
+
     getParameterPanel : function() {
         return this._paramPanel;
     },
-    
+
     /**
      * This method must be called after viewer has been initialized. Adds new child to toolpanel.
      */
@@ -128,7 +127,7 @@ bobj.crv.ToolPanel = {
         }, widget.getHTML ()));
         widget.init ();
     },
-    
+
     /*
      * The caller is responsible for calling doLayout after making a call to setView. calling doLayout is very expensive and want to avoid it if
      * possible.
@@ -137,7 +136,7 @@ bobj.crv.ToolPanel = {
         var prevSelectedChild = this._selectedChild;
         this.updateSelectedChild (panelType);
         var nextSelectedChild = this._selectedChild;
-        
+
         if(prevSelectedChild != nextSelectedChild) {
             if (prevSelectedChild) {
                 var container = bobj.getContainer (prevSelectedChild);
@@ -145,7 +144,7 @@ bobj.crv.ToolPanel = {
                     container.style.display = 'none';
                 }
             }
-            
+
             if(nextSelectedChild) {
                 var container = bobj.getContainer (nextSelectedChild);
                 if (container) {
@@ -154,7 +153,7 @@ bobj.crv.ToolPanel = {
             }
         }
     },
-    
+
     updateSelectedChild : function (panelType) {
         var Type = bobj.crv.ToolPanelType;
         switch(panelType) {
@@ -168,7 +167,7 @@ bobj.crv.ToolPanel = {
                 this._selectedChild = null;
         }
     },
-    
+
     getHTML : function() {
         var h = bobj.html;
 
@@ -189,7 +188,6 @@ bobj.crv.ToolPanel = {
         if (this.needLeftBorder)
             toolPanelClass += ' leftBorder';
 
-
         var layerAtt = {
             id : this.id,
             'class' : toolPanelClass,
@@ -207,7 +205,7 @@ bobj.crv.ToolPanel = {
 
         return html;
     },
-    
+
     init : function() {
         this.initOld ();
         if (this._groupTree)
@@ -216,7 +214,7 @@ bobj.crv.ToolPanel = {
         if (this._paramPanel)
             this._paramPanel.init ();
     },
-    
+
     update : function(update) {
         if (update && update.cons == "bobj.crv.newToolPanel") {
             for ( var childVar in update.children) {
@@ -250,23 +248,23 @@ bobj.crv.ToolPanel = {
             this.css.width = update.args.width;
         }
     },
-    
+
     getBestFitHeight : function () {
         var height = 0;
         if(this._selectedChild != null)
-            height = this._selectedChild.getBestFitHeight(); 
-        
+            height = this._selectedChild.getBestFitHeight();
+
         return height;
     },
-    
+
     hasPercentWidth : function () {
         return (this.width != null) && (this.width.length > 0) && (this.width.charAt(this.width.length - 1) == '%');
     },
-    
+
     getPercentWidth : function () {
         return parseInt(this.width) / 100;
     },
-            
+
     _doLayout : function() {
         var innerWidth = this.layer.clientWidth;
         var contentHeight = this.layer.clientHeight;
@@ -276,7 +274,7 @@ bobj.crv.ToolPanel = {
             this._selectedChild.resize (innerWidth, contentHeight);
         }
     },
-    
+
     resize : function(w, h) {
         bobj.setOuterSize (this.layer, w, h);
         this._doLayout ();
@@ -284,7 +282,7 @@ bobj.crv.ToolPanel = {
         var width = _ie && _isQuirksMode ? this.layer.offsetWidth : this.layer.clientWidth;
         var height = _ie && _isQuirksMode ? this.layer.offsetWidth : this.layer.clientWidth;
         MochiKit.Signal.signal (this, 'resizeToolPanel', width, height);
-        
+
         // do not have a percent width if we have resized the tool panel
         this.width = width;
     },

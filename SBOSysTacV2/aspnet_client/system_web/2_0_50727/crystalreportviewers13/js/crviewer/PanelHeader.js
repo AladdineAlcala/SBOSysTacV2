@@ -9,7 +9,7 @@ bobj.crv.PanelHeader = function() {
 
     this.normalCssClass = "panelHeaderCloseButton";
     this.highlightedCssClass = "panelHeaderCloseButtonHighlighted";
-    
+
     this._closeButton.setClasses (this.normalCssClass, this.normalCssClass, this.highlightedCssClass, this.highlightedCssClass);
     this._title = "";
 };
@@ -44,7 +44,7 @@ bobj.crv.PanelHeader.prototype = {
     },
 
     /**
-     * 
+     *
      * @return [DOM element] of title
      */
     _getTitleLayer : function() {
@@ -81,7 +81,7 @@ bobj.crv.PanelHeader.prototype = {
     resize : function(w, h) {
         if (this.layer)
             bobj.setOuterSize (this.layer, w, h);
-        
+
         var titleLayer = this._getTitleLayer ();
         if(titleLayer)
             bobj.setOuterSize (titleLayer, w - 30);

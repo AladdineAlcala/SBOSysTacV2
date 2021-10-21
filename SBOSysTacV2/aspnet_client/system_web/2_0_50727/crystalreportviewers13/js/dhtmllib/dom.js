@@ -102,7 +102,7 @@ function styleSheet()
 // ================================================================================
 
 function isLayerDisplayed(lyr)
-//check if the layer is displayed 
+//check if the layer is displayed
 //and check its parents
 //if one parent is not displayed return false
 {
@@ -117,8 +117,8 @@ function isLayerDisplayed(lyr)
 			if(par!=null)
 				return isLayerDisplayed(par)
 			else
-				return true	
-		}			
+				return true
+		}
 	}
 	else
 		return true;
@@ -130,7 +130,6 @@ function safeSetFocus(lyr)
 {
 if (lyr && lyr.focus && isLayerDisplayed(lyr))
 	lyr.focus()
-		
 }
 
 // ================================================================================
@@ -185,7 +184,6 @@ function new_Widget(prm)
     return newWidget(prm.id)
 }
 
-
 function getEvent(e,w)
 {
     if (_ie&&(e==null))
@@ -197,7 +195,7 @@ function getEvent(e,w)
 function Widget_param(paramsObj, paramName, paramDefaultValue)
 {
     var val = paramsObj ? paramsObj[paramName] : null;
-	
+
     return val == null ? paramDefaultValue : val;
 }
 
@@ -335,10 +333,9 @@ function Widget_isDisplayed()
 {
 	if(this.css.display == "none")
 		return false
-	else	
-		return true		
+	else
+		return true
 }
-
 
 // ================================================================================
 
@@ -467,10 +464,10 @@ function GrabberWidget_setButtonImage(isRollover,tooltip)
 {
 	// PRIVATE
 	var o=this
-	
+
 	o.getImgOffset(isRollover)
 	o.tooltipButton=tooltip
-	
+
 	if (o.layer)
 	{
 		if (o.buttonLyr==null)
@@ -488,7 +485,7 @@ function GrabberWidget_enableGrab(bEnable)
 {
 	var o=this
 	o.allowGrab=bEnable
-	
+
 	if (o.css)
 		o.css.cursor=o.allowGrab?(o.isHori?_resizeW:_resizeH):"default"
 }
@@ -505,7 +502,6 @@ function GrabberWidget_getHTML()
 
     return getBGIframe('grabIframe_'+o.id)+imgG+'<table cellpadding="0" cellspacing="0" border="0" '+moveableCb+' id="'+o.id+'" style="overflow:hidden;position:absolute;left:'+o.x+'px;top:'+o.y+'px;width:'+o.w+'px;height:'+o.h+'px;cursor:'+cr+'"><tr><td></td></tr></table>'
 }
-
 
 // ================================================================================
 
@@ -583,9 +579,9 @@ function GrabberWidget_down(e,index,lyr)
 	o.grabStartPosy=parseInt(lyr.style.top)
 	o.grabStartx=eventGetX(e)
 	o.grabStarty=eventGetY(e)
-	
+
 	var mod=o.mod,ifr=o.iframe,stl=o.layer.style,st=mod.style
-	
+
 	stl.backgroundImage='url(\''+_skin+'../resizepattern.gif\')'
 	o.prevZ=stl.zIndex
 	stl.zIndex=9999
@@ -598,7 +594,7 @@ function GrabberWidget_down(e,index,lyr)
 	var p=getPos(o.layer)
 	ifr.move(p.x,p.y)
 	ifr.resize(o.getWidth(),o.getHeight())
-	
+
 	if (!o.isFromButton)
 		o.showGrab()
 
@@ -629,10 +625,9 @@ function GrabberWidget_move(e)
 		if (!o.isFromButton)
 			o.showGrab()
 	}
-	
-	
+
 	if (!o.isFromButton)
-	{	
+	{
 		if (o.allowGrab)
 		{
 			var x=o.isHori?Math.max(0,o.grabStartPosx-o.grabStartx+eventGetX(e)):null
@@ -659,7 +654,7 @@ function GrabberWidget_move(e)
 				if (bCss.display!="none")
 					bCss.display="none"
 			}
-			
+
 			o.iframe.move(x,y)
 		}
 	}
@@ -683,7 +678,7 @@ function GrabberWidget_up(e)
 	st.display="none"
 	st.width='0px'
 	st.height='0px'
-	
+
 	if (o.buttonCB)
 		o.buttonLyr.style.display=""
 
@@ -754,7 +749,7 @@ function newButtonWidget(id,label,cb,width,hlp,tooltip,tabIndex,margin,url,w,h,d
 	}
 
 	o.getHTML=ButtonWidget_getHTML
-	o.setDisabled=ButtonWidget_setDisabled	
+	o.setDisabled=ButtonWidget_setDisabled
 	o.setText=ButtonWidget_setText
 	o.changeImg=ButtonWidget_changeImg
 	o.oldInit=o.init
@@ -762,9 +757,8 @@ function newButtonWidget(id,label,cb,width,hlp,tooltip,tabIndex,margin,url,w,h,d
 	o.isDisabled=ButtonWidget_isDisabled
 	o.setDefaultButton=ButtonWidget_setDefaultButton
 	o.executeCB=ButtonWidget_executeCB
-	o.setTooltip=ButtonWidget_setTooltip	
+	o.setTooltip=ButtonWidget_setTooltip
 	o.setDelayCallback=ButtonWidget_setDelayCallback
-	
 
 	o.instIndex=ButtonWidget_currInst
 	ButtonWidget_inst[ButtonWidget_currInst++]=o
@@ -782,10 +776,10 @@ function ButtonWidget_getHTML()
 	with (this)
 	{
 		var clk=_codeWinName+'.ButtonWidget_clickCB('+this.instIndex+');return false;"'
-		
+
 		var clcbs= 'onclick="'+clk+'" '
 		if (_ie)  clcbs+= 'ondblclick="'+clk+'" '
-		
+
 		//
 		var isDefaultSty=(this.isDefault && !this.isGray);
 
@@ -794,7 +788,7 @@ function ButtonWidget_getHTML()
 
 		var url1=_skin+"button.gif",addPar=' style="'+extraStyle+'cursor:'+_hand+';margin-left:'+margin+'px; margin-right:'+margin+'px; "'+clcbs+' ',tip=attr('title', tooltip),idText="theBttn"+id, idIcon="theBttnIcon"+id;
 		var bg=backImgOffset(url1,0,isDefaultSty?105:42);
-		
+
 		var lnkB='<a '+attr('id',idText)+' '+tip+' '+attr('tabindex',tabIndex)+' href="javascript:void(0)" class="wizbutton" role="button">'
 		var l=(label!=null)
 		var im=(this.url?('<td align="'+(l?(this.imgRight?'right':'left'):'center')+'" style="'+bg+'" width="'+(!l&&(width!=null)?width+6:w+6)+'">'+(l?'':lnkB)+simpleImgOffset(url,w,h,this.isGray?disDs:dx,this.isGray?disDy:dy,idIcon,null,(l?'':tooltip),'cursor:'+_hand)+(l?'':'</a>')+'</td>'):'')
@@ -810,7 +804,6 @@ function ButtonWidget_getHTML()
 }
 
 function ButtonWidget_setDelayCallback(value) {
-	
 	this.isDelayCallback = (value == true);
 }
 // ================================================================================
@@ -825,7 +818,7 @@ function ButtonWidget_setDisabled(d)
 	if (o.layer)
 	{
 		var newClassName=d?'wizbuttongray':'wizbutton'
-	
+
 		// Ensure the button state hasn't changed to avoid unnecessary processing
 		// The text className is a safe way to do the test
 		if (o.txt.className!=newClassName)
@@ -833,38 +826,37 @@ function ButtonWidget_setDisabled(d)
 			o.txt.className=newClassName
 			o.txt.style.cursor=newCur
 			o.css.cursor=newCur
-			
+
 			if(o.icn)
 			{
 				changeSimpleOffset(o.icn,o.isGray?o.disDx:o.dx,o.isGray?o.disDy:o.dy)
 				o.icn.style.cursor=newCur
 			}
-					
+
 			if(o.isDefault) //default button style
 			{
-				var isDefaultSty=!d,url=_skin+"button.gif";	
+				var isDefaultSty=!d,url=_skin+"button.gif";
 				changeSimpleOffset(o.leftImg,0,isDefaultSty?63:0,url);
 				changeOffset(o.centerImg,0,isDefaultSty?105:42,url);
 				changeSimpleOffset(o.rightImg,0,isDefaultSty?84:21,url);
 			}
-		}		
+		}
 	}
 }
-
 
 // ================================================================================
 function ButtonWidget_setDefaultButton()
 {
 	var o=this;
-	
+
 	if (o.layer)
 	{
-		var isDefaultSty = !o.isGray,url=_skin+"button.gif";		
+		var isDefaultSty = !o.isGray,url=_skin+"button.gif";
 		changeSimpleOffset(o.leftImg,0,isDefaultSty?63:0,url);
 		changeOffset(o.centerImg,0,isDefaultSty?105:42,url);
-		changeSimpleOffset(o.rightImg,0,isDefaultSty?84:21,url);		
-	}	
-	o.isDefault=true;	
+		changeSimpleOffset(o.rightImg,0,isDefaultSty?84:21,url);
+	}
+	o.isDefault=true;
 }
 // ================================================================================
 
@@ -892,8 +884,8 @@ function ButtonWidget_setTooltip(tooltip)
 	o.layer.title=tooltip
 	if (o.txt)
 		o.txt.title=tooltip
-	if (o.icn)	
-		o.icn.title=tooltip	
+	if (o.icn)
+		o.icn.title=tooltip
 }
 
 // ================================================================================
@@ -906,17 +898,17 @@ function ButtonWidget_init()
 	o.oldInit()
 	o.txt=getLayer('theBttn'+this.id)
 	o.icn=getLayer('theBttnIcon'+this.id)
-	
+
 	o.leftImg=getLayer('theBttnLeftImg'+this.id)
 	o.centerImg=getLayer('theBttnCenterImg'+this.id)
 	o.rightImg=getLayer('theBttnRightImg'+this.id)
-	
+
 	// reset if already initialized
 	var newClassName=o.isGray?'wizbuttongray':'wizbutton'
 	if (o.txt.className!=newClassName)
 	{
 		o.setDisabled(o.isGray)
-	}	
+	}
 }
 
 // ================================================================================
@@ -929,7 +921,7 @@ function ButtonWidget_changeImg(dx,dy,disDx,disDy,url,tooltip)
 	if (disDx!=null) o.disDx=disDx
 	if (disDy!=null) o.disDy=disDy
 	if (tooltip!=null) o.tooltip=tooltip
-	
+
 	if (o.icn)
 		changeSimpleOffset(o.icn,o.isGray?o.disDx:o.dx,o.isGray?o.disDy:o.dy, o.url, o.tooltip)
 }
@@ -946,7 +938,6 @@ function ButtonWidget_clickCB(index)
 		else
 			ButtonWidget_delayClickCB(index);
 	}
-		
 }
 
 // ================================================================================
@@ -963,7 +954,7 @@ function ButtonWidget_delayClickCB(index)
 			btn.cb()
 		else
 			eval(btn.cb)
-	}*/	
+	}*/
 }
 // ================================================================================
 
@@ -987,7 +978,7 @@ function ButtonWidget_keydownCB(e,index)
 	var btn=ButtonWidget_inst[index]
 	if(k == 13 && btn.cb )//enter
 	{
-		eventCancelBubble(e);	
+		eventCancelBubble(e);
 	}
 	return true;
 }
@@ -1030,22 +1021,21 @@ function ScrolledZoneWidget_beginHTML()
 {
 	var w=this.w,h=this.h;
 	var ofs=_moz?2*(this.borderW+this.padding):0
-	
+
 	if (typeof(w)=="number")
 	{
 		if (_moz)
 			w=Math.max(0,w-ofs)
 		w=""+w+"px"
 	}
-	
+
 	if (typeof(h)=="number")
 	{
 		if (_moz)
 			h=Math.max(0,h-ofs)
 		h=""+h+"px"
 	}
-	
-	
+
 	return '<div tabindex=-1 align="left" class="' + this.bgClass + '" id="'+this.id+'" style="border-width:'+this.borderW+'px;padding:'+this.padding+'px;'+sty("width",w)+sty("height",h)+'overflow:auto">'
 }
 
@@ -1166,18 +1156,18 @@ function TooltipWidget_show(show,str,url,w,h,dx,dy,isHTML, e)
 		if (url)
 			//s='<span style="margin-right:2px;width:'+w+'px;height:'+h+'px;overflow:hidden">'+img(url,null,null,'top','style="position:relative;top:-'+dy+'px;left:-'+dx+'px"')+'</span>'
 			s=simpleImgOffset(url,w,h,dx,dy,null,null,null,"margin-right:4px;margin-left:0px;",'top')
-			
+
 		//o.resize(0,0)
 
 		o.css.width=''
 		o.css.height=''
-		
+
 		o.setHTML('<table border="0" cellspacing="0" cellpadding="0"><tr valign="middle">'+(s?'<td align="center">'+s+'</td>':'')+'<td class="dragTxt"><nobr>'+(isHTML?str:convStr(str))+'</nobr></td></tr></table>')
 		o.setPos(null,e)
-		
+
 		if (o.getWidth()>o.maxw)
 			o.resize(o.maxw)
-			
+
 		o.oldShow(show)
 		o.iframe.setDisplay(true)
 	}
@@ -1199,7 +1189,7 @@ function TooltipWidget_show(show,str,url,w,h,dx,dy,isHTML, e)
 function TooltipWidget_hide()
 {
 	var o=this
-	
+
 	o.show(false)
 }
 
@@ -1207,7 +1197,7 @@ function TooltipWidget_hide()
 
 function TooltipWidget_setPos(shift,e)
 // Return [void]
-{	
+{
 	var o=this
 	if (o.layer==null)
 		return
@@ -1222,7 +1212,7 @@ function TooltipWidget_setPos(shift,e)
 	y+=_tooltipDy
 
 	o.move(x+27,y+10);
-	
+
 	o.iframe.move(x+27,y+10);
 	o.iframe.resize(o.getWidth(),o.getHeight())
 
@@ -1245,7 +1235,6 @@ function TooltipWidget_setPos(shift,e)
 		}
 	}
 }
-
 
 // ================================================================================
 
@@ -1368,19 +1357,19 @@ function ComboWidget_add(s,val,sel,id,grayed)
 		opt.innerText=s;
 	else
 		opt.innerHTML=convStr(s);
-		
+
 	// Set other attributes
 	opt.value=val;
 	if(id!=null)
 		opt.id=id;
 	if (sel)
 		opt.selected=true;
-	
-	if (grayed) 
+
+	if (grayed)
 	{
 		opt.style.color='gray'
 	}
-	
+
 	return opt;
 }
 
@@ -1499,9 +1488,9 @@ function ComboWidget_keyDownCB(e,l)
 		eventCancelBubble(e);
 	}
 	else if(k==13 && o.keyUpCB) //Enter can be attached to an action in listwidget
-	{				
-		eventCancelBubble(e);		
-	}	
+	{
+		eventCancelBubble(e);
+	}
 }
 // ================================================================================
 
@@ -1604,11 +1593,11 @@ function ComboWidget_getValue(i)
 {
 	var o=this,e=o.layer,opts=e.options,len=opts.length
 	if(i==null || i<0 || i>len)  return null;
-	
+
 	var ret=new Object;
 	ret.index=i;
 	ret.value=e.options[i].value;
-	return ret				
+	return ret
 }
 
 // ================================================================================
@@ -1618,7 +1607,7 @@ function ComboWidget_isGrayed(i)
 	var o=this,e=o.layer,opts=e.options,len=opts.length
 	if(i==null || i<0 || i>len)  return false;
 
-	return (e.options[i].style.color=="gray")			
+	return (e.options[i].style.color=="gray")
 }
 
 // ================================================================================
@@ -1635,7 +1624,7 @@ function newListWidget(id,changeCB,multi,width,lines,tooltip,dblClickCB,keyUpCB,
 {
 	var o=newComboWidget(id,changeCB,true,width,tooltip)
 	o.clickCB=clickCB
-	o.dblClickCB=dblClickCB	
+	o.dblClickCB=dblClickCB
 	o.keyUpCB=keyUpCB
 	o.size=lines
 	o.multi=multi
@@ -1685,16 +1674,16 @@ function ListWidget_getMultiSelection()
 }
 
 function ListWidget_change(multi,lines)
-{	
+{
 	var o=this
 	if(multi!=null)
-	{	
+	{
 		o.multi=multi
 		o.layer.multiple=multi
-	}	
+	}
 	if(lines!=null)
 	{
-		o.size=lines	
+		o.size=lines
 		o.layer.size=lines
 	}
 }
@@ -1717,7 +1706,7 @@ function newInfoWidget(id,title,boldTitle,text,height)
 	o.height=(height!=null)?height:55
 
 	o.getHTML=InfoWidget_getHTML
-	o.setText=InfoWidget_setText	
+	o.setText=InfoWidget_setText
 	o.setTitle=InfoWidget_setTitle
 	o.setTitleBold=InfoWidget_setTitleBold
 	o.oldResize=o.resize
@@ -1752,7 +1741,7 @@ function InfoWidget_setTitle(text)
 	var o=this
 	text=text?text:""
 	o.title=text
-	
+
 	if (o.layer)
 	{
 		var l=o.titleLayer
@@ -1769,7 +1758,7 @@ function InfoWidget_setTitleBold(text)
 	var o=this
 	text=text?text:""
 	o.boldTitle=text
-	
+
 	if (o.layer)
 	{
 		var l=o.titleLayerBold
@@ -1787,7 +1776,7 @@ function InfoWidget_getHTML()
 	return '<div class="dialogzone" align="left" style="overflow:hidden;'+sty("width",o.width)+sty("height",""+o.height+"px")+'" id="'+o.id+'">'+
 		'<nobr>'+img(_skin+'../help.gif',16,16,'top',null,_helpLab)+
 		'<span class="dialogzone" style="padding-left:5px" id="infotitle_'+o.id+'">'+convStr(o.title)+'</span><span style="padding-left:5px" class="dialogzonebold" id="infotitlebold_'+o.id+'">'+convStr(o.boldTitle)+'</span></nobr>'+
-		'<br>'+getSpace(1,2)+		
+		'<br>'+getSpace(1,2)+
 		'<div class="infozone" align="left" id="infozone_'+o.id+'" style="height:'+(o.height-18-(_moz?10:0))+'px;overflow'+(_ie?'-y':'')+':auto">'+convStr(o.text,false,true)+'</div>'+
 	'</div>'
 }
@@ -1812,7 +1801,6 @@ function InfoWidget_resize(w,h)
 		}
 	}
 }
-
 
 // ================================================================================
 // ================================================================================
@@ -1877,7 +1865,7 @@ function CheckWidget_setText(s)
 {
 	var o=this
 	o.text=s
-	
+
 	if (o.layer)
 	{
 		if (o.labelLyr==null)
@@ -1957,7 +1945,6 @@ function RadioWidget_uncheckOthers()
 /*
 function newIconNoTextCheckWidget(id,changeCB,imgUrl,imgW,imgH,tooltip)
 {
-
 	var o=newWidget(id)
 	o.changeCB=changeCB
 	o.idCheckbox='check_'+id
@@ -2013,7 +2000,7 @@ function newIconNoTextRadioWidget(id,group,changeCB,imgUrl,imgW,imgH,tooltip)
 	if (_RadioWidget_groups[group]==null)
 		_RadioWidget_groups[group]=new Array
 	o.groupInstance=_RadioWidget_groups[group]
-	var g=o.groupInstance	
+	var g=o.groupInstance
 	o.groupIdx=g.length
 	g[g.length]=o
 	o.uncheckOthers=RadioWidget_uncheckOthers
@@ -2069,7 +2056,7 @@ function TextFieldWidget_setDisabled(d)
 {
 	var o=this
 	o.disabled=d
-	
+
 	if (o.layer)
 		o.layer.disabled=d
 }
@@ -2079,20 +2066,19 @@ function TextFieldWidget_setDisabled(d)
 function TextFieldWidget_init()
 {
 	var o=this
-	o.wInit()	
+	o.wInit()
 	o.layer.value=""+ (o.oldValue != "")?o.oldValue : "";
-	
-	if(o.helpTxt && !o.oldValue)	
-		o.setHelpTxt(o.helpTxt);	
+
+	if(o.helpTxt && !o.oldValue)
+		o.setHelpTxt(o.helpTxt);
 }
 
 // ================================================================================
 
 function TextFieldWidget_getHTML()
 {
-	var o=this	
+	var o=this
 	return '<input'+(o.disabled?' disabled':'')+' oncontextmenu="event.cancelBubble=true;return true" style="'+sty("width",this.width)+(_moz?'margin-top:1px;margin-bottom:1px;padding-left:5px;padding-right:2px;':'')+(_isQuirksMode? 'height:20px;' : 'height:16px;') + 'margin-left:'+(this.noMargin?0:10)+'px" onfocus="'+_codeWinName+'.TextFieldWidget_focus(this)" onblur="'+_codeWinName+'.TextFieldWidget_blur(this)" onchange="'+_codeWinName+'.TextFieldWidget_changeCB(event,this)" onkeydown=" return '+_codeWinName+'.TextFieldWidget_keyDownCB(event,this);" onkeyup=" return '+_codeWinName+'.TextFieldWidget_keyUpCB(event,this);" onkeypress=" return '+_codeWinName+'.TextFieldWidget_keyPressCB(event,this);" type="text" '+attr('maxLength',this.maxChar)+' ondragstart="event.cancelBubble=true;return true" onselectstart="event.cancelBubble=true;return true" class="textinputs" id="'+this.id+'" name="'+this.id+'"'+attr('title',this.tooltip)+' value="">'
-		
 }
 
 // ================================================================================
@@ -2100,13 +2086,13 @@ function TextFieldWidget_getHTML()
 function TextFieldWidget_getValue()
 {
 	var o=this
-	if (o.isHelpTxt) { 
+	if (o.isHelpTxt) {
 		return ''
 	}
 	else
 	{
 		return o.layer ? o.layer.value : o.oldValue
-	}	
+	}
 }
 
 // ================================================================================
@@ -2115,11 +2101,11 @@ function TextFieldWidget_setValue(s)
 {
 	var o=this
 	if (o.layer) {
-		o.eraseHelpTxt()		
+		o.eraseHelpTxt()
 		o.layer.value=''+s
 	} else {
 		o.oldValue=s
-	}	
+	}
 }
 
 // ================================================================================
@@ -2174,12 +2160,12 @@ function TextFieldWidget_keyUpCB(e,l)
 
 			o.enterCB(e)
 		}
-				
+
 		return false
 	}
 	else if(o.keyUpCB)
 	{
-		o.keyUpCB(e)	
+		o.keyUpCB(e)
 	}
 	o.enterKeyPressed = false;
 	return true
@@ -2201,7 +2187,7 @@ function TextFieldWidget_keyDownCB(e,l)
 	{
 		eventCancelBubble(e);
 	}
-	return true;	
+	return true;
 }
 
 // ================================================================================
@@ -2212,7 +2198,7 @@ function TextFieldWidget_eraseHelpTxt()
 	var o=this
 	if (o.isHelpTxt) o.layer.value= ""
 	o.isHelpTxt = false
-	o.layer.style.color="black"	
+	o.layer.style.color="black"
 }
 
 // ================================================================================
@@ -2267,12 +2253,12 @@ function TextFieldWidget_select()
 function TextFieldWidget_setHelpTxt(h)
 {
 	var o=this
-	o.helpTxt=h		
-	if (o.layer && (o.layer.value == "")) 
+	o.helpTxt=h
+	if (o.layer && (o.layer.value == ""))
 	{
 		o.isHelpTxt=true
 		o.layer.value=h
-		o.layer.style.color="#808080"		
+		o.layer.style.color="#808080"
 	}
 }
 
@@ -2329,12 +2315,12 @@ function IntFieldWidget_setValue(s)
 		o.oldValue = ''
 		return
 	}
-	
+
 	var n=parseInt(s)
 	value = ''
 	if (!isNaN(n) && (n >= o.min) && (n <= o.max) && ((o.customCheckCB==null) || o.customCheckCB(n))) {
 		 value = n
-		 o.oldValue = value			
+		 o.oldValue = value
 	} else {
 		if (o.oldValue)
 			value = o.oldValue
@@ -2394,13 +2380,13 @@ function FloatFieldWidget_setValue(s)
 	value = ''
 	if (!isNaN(n) && (n >= o.min) && (n <= o.max) && ((o.customCheckCB==null) || o.customCheckCB(n))) {
 		value = '' + o.toPrecision(n)
-		o.oldValue = value		
+		o.oldValue = value
 	} else {
 		if (o.oldValue)
 			value = o.oldValue
 	}
 	if (l)
-		l.value = value	
+		l.value = value
 }
 
 // ================================================================================
@@ -2449,11 +2435,11 @@ function FloatFieldWidget_setSeparator(s)
 
 function newTextAreaWidget(id,rows,cols,tooltip,changeCB,enterCB,cancelCB)
 {
-	var o=newWidget(id)	
+	var o=newWidget(id)
 	o.rows=rows
 	o.cols=cols
 	o.allowCR=true
-	o.tooltip=tooltip	
+	o.tooltip=tooltip
 	o.changeCB=changeCB
 	o.enterCB=enterCB
 	o.cancelCB=cancelCB
@@ -2464,8 +2450,7 @@ function newTextAreaWidget(id,rows,cols,tooltip,changeCB,enterCB,cancelCB)
 	o.wInit=o.init
 	o.init=TextAreaWidget_init
 	o.oldValue=""
-	
-	
+
 	if ((o.rows!=null)&&!_ie&&!_saf)
 		o.rows--
 
@@ -2485,7 +2470,7 @@ function TextAreaWidget_init()
 
 function TextAreaWidget_getHTML()
 {
-	return '<textarea oncontextmenu="event.cancelBubble=true;return true" id="'+this.id+'" '+attr('title',this.tooltip)+ 'rows="'+this.rows+'" cols="'+this.cols+'" class="textinputs" value="" onkeydown="return '+_codeWinName+'.TextAreaWidget_keyDownCB(event,this)" ondragstart="event.cancelBubble=true;return true" onselectstart="event.cancelBubble=true;return true" ></textarea>'	
+	return '<textarea oncontextmenu="event.cancelBubble=true;return true" id="'+this.id+'" '+attr('title',this.tooltip)+ 'rows="'+this.rows+'" cols="'+this.cols+'" class="textinputs" value="" onkeydown="return '+_codeWinName+'.TextAreaWidget_keyDownCB(event,this)" ondragstart="event.cancelBubble=true;return true" onselectstart="event.cancelBubble=true;return true" ></textarea>'
 }
 
 // ================================================================================
@@ -2510,7 +2495,7 @@ function TextAreaWidget_setValue(s)
 function TextAreaWidget_resize(lines,cols)
 {
 	var o=this
-	
+
 	if(lines && lines >0) o.layer.rows=lines
 	if(cols && cols>0) o.layer.cols=cols
 }
@@ -2522,7 +2507,7 @@ function TextAreaWidget_keyDownCB(e,l)
 	var key = eventGetKey(e),o=getWidget(l)
 
 	if (key==13)//enter
-	{		
+	{
 		if (o.enterCB)
 		{
 			eventCancelBubble(e)
@@ -2539,9 +2524,9 @@ function TextAreaWidget_keyDownCB(e,l)
 	}
 	else if(key==27)//escape
 	{
-		if(o.cancelCB) 
+		if(o.cancelCB)
 			return o.cancelCB(e)
-		else 
+		else
 			return true;
 	}
 	else if(key == 8)// back space
@@ -2549,10 +2534,10 @@ function TextAreaWidget_keyDownCB(e,l)
 			eventCancelBubble(e);
 			//change in textarea
 			setTimeout("TextAreaWidget_delayedChangeCB("+key+","+o.widx+")",1)
-			
+
 			return true;
 	}
-	else 
+	else
 	{
 		//setTimeout to be sure that the key is writen in the textarea
 		//we do not use the keyup event because of rapid keyboard pression
@@ -2614,10 +2599,9 @@ function FrameZoneWidget_resize(w,h)
 function FrameZoneWidget_beginHTML()
 {
     var o=this
-    
+
     return '<table width="100%" style="'+sty("width",o.w)+sty("height",o.h)+'" id="'+o.id+'" cellspacing="0" cellpadding="4" border="0"><tbody>'+
         '<tr><td valign="top" class="dlgFrame" id="frame_cont_'+o.id+'" style="padding:5px">'
-        
 }
 
 // ================================================================================
@@ -2700,7 +2684,6 @@ function BOColor_getStyleColor()
 	return "rgb(" + o.r + "," + o.g + "," + o.b + ")"
 }
 
-
 // ================================================================================
 // ================================================================================
 //
@@ -2710,7 +2693,6 @@ function BOColor_getStyleColor()
 //
 // ================================================================================
 // ================================================================================
-
 
 function newDragDropData(widget,dragStartCB,dragCB,dragEndCB,acceptDropCB,leaveDropCB,dropCB)
 // void    dragStartCB  (source,layer)
@@ -2929,7 +2911,7 @@ function arrayRemove(obj,fieldName,idx)
 //		{
 //			if (array[i][subfield] == v) return i;
 //		}
-//		else 
+//		else
 //			if(array[i]==v) return i;
 //	}
 //
@@ -2962,7 +2944,7 @@ function getFrame(name,par)
 						return w
 		} catch (exc) {
 			// keep on
-		}	
+		}
 	}
 
 	return null
@@ -2972,19 +2954,19 @@ function getFrame(name,par)
 
 //function frameNav(name,url,fillHistory,par,noRefreshDrillBar)
 //// par [window optional]
-//{	
+//{
 //	var fr=null
 //	if (noRefreshDrillBar & name=="Report")
-//	{		
-//		var topfs=getTopFrameset();				
+//	{
+//		var topfs=getTopFrameset();
 //		fr=topfs.getReportFrame()
 //	} else {
 //		fr=getFrame(name,par)
-//	}		
+//	}
 //
-//	if (fr) {				
+//	if (fr) {
 //		var l=fr.location
-//		
+//
 //		if (fillHistory)
 //			l.href=url
 //		else
@@ -2993,14 +2975,13 @@ function getFrame(name,par)
 //		var lay = document.getElementById(name)
 //		if (lay)
 //			lay.src=url;
-//	}			
+//	}
 //}
 
 // ================================================================================
 /*
 function genericIframeNav(url,fillHistory)
-{	
-				
+{
 	var l = getDynamicBGIFrameLayer()
 
 	if (fillHistory)
@@ -3008,7 +2989,7 @@ function genericIframeNav(url,fillHistory)
 		l.href=url
 	} else {
 		l.replace(url)
-	} 
+	}
 }
 */
 // ================================================================================
@@ -3097,11 +3078,11 @@ function addDblClickCB(l,cb)
 // l [layer] the layer
 // cb [Function] the double click function handler
 {
-	if (l.addEventListener && !_saf) {// ADAPT00521043 for Safari : Bug 7790: ondblclick doesn't fire when attached with addEventListener	  
-	  l.addEventListener("dblclick",cb,false)	  
+	if (l.addEventListener && !_saf) {// ADAPT00521043 for Safari : Bug 7790: ondblclick doesn't fire when attached with addEventListener
+	  l.addEventListener("dblclick",cb,false)
 	} else {
 	  l.ondblclick=cb
-	} 
+	}
 }
 
 // ================================================================================
@@ -3154,12 +3135,12 @@ function simpleImgOffset(url,w,h,dx,dy,id,att,alt,st,align)
 // alt    [String optional] image tooltip
 // st     [String optional] optional style attributes
 // align [String optional] optional style attributes
-{	
+{
 	if (_ie)
 	{
 		if (dx==null) dx=0
 		if (dy==null) dy=0
-		return '<div '+(att?att:'')+' '+attr("id",id)+' style="position:relative;padding:0px;width:'+w+'px;height:'+h+'px;overflow:hidden;'+(st?st:'')+'">'+img(url,null,null,(align?align:'top'),'style="margin:0px;position:relative;top:'+(-dy)+'px;left:'+(-dx)+'px" tabIndex="-1"',alt)+'</div>'		
+		return '<div '+(att?att:'')+' '+attr("id",id)+' style="position:relative;padding:0px;width:'+w+'px;height:'+h+'px;overflow:hidden;'+(st?st:'')+'">'+img(url,null,null,(align?align:'top'),'style="margin:0px;position:relative;top:'+(-dy)+'px;left:'+(-dx)+'px" tabIndex="-1"',alt)+'</div>'
 	}
 	else
 		return imgOffset(url,w,h,dx,dy,id,att,alt,st,align)
@@ -3181,11 +3162,11 @@ function changeSimpleOffset(lyr,dx,dy,url,alt)
 
 		if ((url!=null)&&(url!=lyr.src))
 			lyr.src=url
-		if (dx!=null)	
+		if (dx!=null)
 			st.left=""+(-dx)+"px"
-		if (dy!=null)	
+		if (dy!=null)
 			st.top=""+(-dy)+"px"
-		if (alt!=null)	
+		if (alt!=null)
 		{
 			lyr.title=alt
 			lyr.alt = alt;
@@ -3231,7 +3212,7 @@ function changeOffset(lyr,dx,dy,url,alt)
 //function includeScript(url)
 //// Include a script
 //{
-//	document.write('<scr'+'ipt language="javascript" charset="UTF-8" src="'+url+'"><\/scr'+'ipt>')	
+//	document.write('<scr'+'ipt language="javascript" charset="UTF-8" src="'+url+'"><\/scr'+'ipt>')
 //}
 
 // ================================================================================
@@ -3265,7 +3246,7 @@ function getLayer(id)
    if(typeof id == 'object')
         doc = _curDoc.getElementById(id.id);
    else
-        doc = _curDoc.getElementById(id);	
+        doc = _curDoc.getElementById(id);
    return doc;
 }
 
@@ -3275,7 +3256,7 @@ function setLayerTransp(lyr,percent)
 // lyr [Object] : the layer
 // percent [number] : the opacity 0 .. 100
 {
-	if (_ie)	
+	if (_ie)
 		lyr.style.filter=(percent==null) ? "" :  "progid:DXImageTransform.Microsoft.Alpha( style=0,opacity="+percent+")"
 	else
 		lyr.style.MozOpacity=(percent==null) ? 1 : percent/100
@@ -3301,7 +3282,7 @@ function getPos2(el,relTo) {
     var relTo = relTo?relTo:null
     var posX = 0;
     var posY = 0;
-    
+
     while(el.parentNode || el.offsetParent) {
         if(el.offsetParent) {
             posX +=el.offsetLeft;
@@ -3317,13 +3298,13 @@ function getPos2(el,relTo) {
                     posY += el.style.top;
                 }
             }
-            el = el.parentNode;   
+            el = el.parentNode;
         }
         else {
             break;
         }
     }
-    
+
     if(relTo) {
         relToCord = getPos2(relTo);
         posX -= relToCord.x;
@@ -3360,14 +3341,12 @@ function getPosScrolled(el,relTo)
 			}
 		}
 	}
-	
+
 	lx+=getScrollX()
 	ly+=getScrollY()
 
 	return {x:lx,y:ly}
 }
-
-
 
 // ================================================================================
 
@@ -3397,10 +3376,9 @@ function getWidgetFromID(id)
 		return null
 
 	var l=getLayer(id)
-	
+
 	return getWidget(l)
 }
-
 
 // ================================================================================
 
@@ -3468,8 +3446,7 @@ function documentWidth(win)
 // Gets the document(page) width
 // return [int]
 {
-    
-    var win=win?win:_curWin;  
+    var win=win?win:_curWin;
     var width = Math.max(document.body.clientWidth,document.documentElement.clientWidth);
     width = Math.max(width,document.body.scrollWidth);
 	return width;
@@ -3481,8 +3458,7 @@ function documentHeight(win)
 // Gets the document(page) height
 // return [int]
 {
-    
-    var win=win?win:_curWin;  
+    var win=win?win:_curWin;
     var height = Math.max(document.body.clientHeight,document.documentElement.clientHeight);
     height = Math.max(height,document.body.scrollHeight);
 	return height;
@@ -3495,10 +3471,10 @@ function winWidth(win)
 // return [int]
 {
     var width;
-    var win=win?win:_curWin;  
-    if(_ie) 
+    var win=win?win:_curWin;
+    if(_ie)
     {
-        if(_isQuirksMode) 
+        if(_isQuirksMode)
         {
             width = win.document.body.clientWidth;
         }
@@ -3520,11 +3496,11 @@ function winHeight(win)
 // Gets the window height
 // return [int]
 {
-    var win=win?win:_curWin;  
+    var win=win?win:_curWin;
     var height;
-    if(_ie) 
+    if(_ie)
     {
-        if(_isQuirksMode) 
+        if(_isQuirksMode)
         {
             height = document.body.clientHeight;
         }
@@ -3546,18 +3522,17 @@ function getScrollX(win)
 // Return [int] the scrolling horizontal value in pixels
 {
     var scrollLeft = 0;
-    var win=win?win:_curWin;  
-     
+    var win=win?win:_curWin;
+
     if(typeof(win.scrollX ) == 'number') {
         scrollLeft = win.scrollX;
     }
     else {
         scrollLeft = Math.max(win.document.body.scrollLeft,win.document.documentElement.scrollLeft);
     }
-    
+
     return scrollLeft;
 }
-
 
 // ================================================================================
 
@@ -3566,8 +3541,8 @@ function getScrollY(win)
 // returns an int
 {
     var scrollTop = 0;
-    var win=win?win:_curWin;  
-     
+    var win=win?win:_curWin;
+
     if(typeof(win.scrollY ) == 'number') {
         scrollTop = window.scrollY;
     }
@@ -3584,14 +3559,14 @@ function winScrollTo(x, y, win)
 // Scroll to the x, y position in pixels
 // takes 2 int
 {
-	win=win?win:_curWin	
+	win=win?win:_curWin
 	win.scrollTo(x,y)
 	/*/if (_ie) {
 		win.document.body.scrollLeft = x
 		win.document.body.scrollTop = y
 	} else {
 		win.scrollTo(x,y)
-	}*/	
+	}*/
 }
 
 // ================================================================================
@@ -3629,10 +3604,10 @@ function xpos(o,e,doc,zoom)
 {
 	if ((zoom==null)||(!_ie))
 		zoom=1;
-		
+
 	return ((e.clientX/zoom)-getPos(o).x)+getScrollX();
 }
-		
+
 // ================================================================================
 
 function ypos(o,e,doc,zoom)
@@ -3648,9 +3623,9 @@ function absxpos(e,zoom)
 {
 	if ((zoom==null)||(!_ie)) {
 		return e.clientX
-	} else {	
+	} else {
 		return e.clientX/zoom
-	}	
+	}
 }
 
 // ================================================================================
@@ -3659,9 +3634,9 @@ function absypos(e,zoom)
 {
 	if ((zoom==null)||(!_ie)) {
 		return e.clientY
-	} else {	
+	} else {
 		return e.clientY/zoom
-	}	
+	}
 }
 
 // ================================================================================
@@ -3670,7 +3645,6 @@ function eventCancelBubble(e,win)
 // Cancels event bubbling
 // e [event]
 {
-    
 	win=win?win:_curWin
 	var ev =_ie? win.event : e;
 	if(ev) {
@@ -3733,15 +3707,15 @@ function canScanFrames(w)
 {
 	//_excludeFromFrameScan variable is set by a frame that does not want to
 	// be scaned, when the frame is used to download document for instance.
-	
+
 	var ex=true,d=null
-	
+
 	if (_moz)
 	{
 		_oldErrHandler=window.onerror
 		window.onerror=localErrHandler
 	}
-	
+
 	try
 	{
 		d=w.document
@@ -3752,7 +3726,6 @@ function canScanFrames(w)
 	catch(expt)
 	{
 	}
-
 
 	if (_moz)
 		window.onerror=_oldErrHandler
@@ -3771,7 +3744,7 @@ function canScanFrames(w)
 //
 //		//_excludeFromFrameScan variable is set by a frame that does not want to
 //		// be scaned, when the frame is used to download document for instance.
-//		
+//
 //		if (canScanFrames(win))
 //		{
 //			if (level==null)
@@ -3810,7 +3783,7 @@ function canScanFrames(w)
 //
 //		//_excludeFromFrameScan variable is set by a frame that does not want to
 //		// be scaned, when the frame is used to download document for instance.
-//		
+//
 //		if (canScanFrames(win))
 //		{
 //			var b=win.document.body,arr=b?b.getElementsByTagName("SELECT"):null,len=arr?arr.length:0
@@ -3852,27 +3825,26 @@ function getBGIframe(id)
 	return '<iframe id="'+id+'" name="'+id+'" style="display:none;left:0px;position:absolute;top:0px" src="' + _skin + '../../empty.html' + '" frameBorder="0" scrolling="no"></iframe>'
 }
 
-
 function getDynamicBGIFrameLayer()
-{	
+{
 	var recycle=false
-	if (_curWin.BGIFramePool) 
+	if (_curWin.BGIFramePool)
 	{
 		BGIFrames = _curWin.BGIFramePool.split(",")
 		BGIFCount = BGIFrames.length
 		for (var id = 0; id < BGIFCount; id++) {
-			if (BGIFrames[id] != "1") {				
+			if (BGIFrames[id] != "1") {
 				recycle=true
 				break
 			}
 		}
 	} else {
 		id = 0
-		BGIFrames = new Array	
+		BGIFrames = new Array
 	}
 	BGIFrames[id] = "1"
 	_curWin.BGIFramePool = BGIFrames.join(",")
-	if (!recycle) {				
+	if (!recycle) {
 		targetApp(getBGIframe("BGIFramePool_" + id))
 	}
 	return getLayer("BGIFramePool_" + id)
@@ -3882,7 +3854,7 @@ function holdBGIFrame(layerId) {
 	var l = getLayer(layerId)
 	if (l) {
 		l.style.display=""
-	}	
+	}
 	id = parseInt(layerId.split('_')[1])
 	BGIFrames = _curWin.BGIFramePool.split(",")
 	BGIFrames[id]=1
@@ -3893,7 +3865,7 @@ function releaseBGIFrame(layerId) {
 	var l = getLayer(layerId)
 	if (l) {
 		l.style.display="none"
-	}	
+	}
 	id = parseInt(layerId.split('_')[1])
 	BGIFrames = _curWin.BGIFramePool.split(",")
 	BGIFrames[id]=0
@@ -3909,7 +3881,6 @@ function append(e,s,c)
 // s [String] the HTML
 // c curDoc
 {
-		
 	if (_ie)
 		e.insertAdjacentHTML("BeforeEnd",s)
 	else
@@ -3931,7 +3902,6 @@ function append2(e,s,c)
 // s [String] the HTML
 // c curDoc
 {
-		
 	if (_ie)
 		e.insertAdjacentHTML("afterBegin",s)
 	else
@@ -4126,7 +4096,7 @@ function preloadImg(url)
 
 //remove space caracters around a string
 //function remSpaceAround(s)
-//{	
+//{
 //	var len = s.length;
 //	if(len<=0) return "";
 //	var start=0,end=len
@@ -4134,7 +4104,7 @@ function preloadImg(url)
 //	while (c==' ' && start<len)
 //	{
 //		start++
-//		c=s.substr(start,1);		
+//		c=s.substr(start,1);
 //	}
 //	if(start<len)
 //	{
@@ -4142,12 +4112,12 @@ function preloadImg(url)
 //		while (c==' ')
 //		{
 //			end--
-//			c=s.substr(end-1,1);		
+//			c=s.substr(end-1,1);
 //		}
 //	}
 //	var sub = s.substring(start,end);
 ////	alert(sub.length +"-"+sub)
-//	return sub	
+//	return sub
 //}
 // ================================================================================
 
@@ -4177,7 +4147,6 @@ function preloadImg(url)
 //	if (hori) s+='</nobr>'
 //	return s
 //}
-
 
 // ================================================================================
 // ================================================================================
@@ -4291,13 +4260,13 @@ function requestQueryString(win, par){
 					tpfs._dontCloseDoc=true
 					tpfs.document.location.replace(tpfs._root+"html/badparamserror.html");
 				} else {
-					tpfs=getTopFrameset(window.opener)					
+					tpfs=getTopFrameset(window.opener)
 					if (tpfs != null)
 					{
 						document.location.replace(tpfs._skin+"../../../html/badparamserror.html");
 					}
-				}	
-			}	
+				}
+			}
 		}
 	}
 }
@@ -4361,26 +4330,26 @@ function isTextInput(ev) {
 	        isText=true;
 	    if((source.tagName=="INPUT") && ((source.type.toLowerCase()=="text") || (source.type.toLowerCase()=="password")))
 	        isText=true;
-	
+
 	    return isText;
 }
 
 function isTextArea(ev) {
-	    var source = _ie?ev.srcElement:ev.target;	
+	    var source = _ie?ev.srcElement:ev.target;
 	    if(source.tagName=="TEXTAREA")
 	        return true;
-	    else 
+	    else
 	        return false;
 }
 
-// function shrink text, used for tooltip, because a too long tooltip flickers ADAPT00465457 
+// function shrink text, used for tooltip, because a too long tooltip flickers ADAPT00465457
 // max n chars ?
 //function shrinkTooltip(t,n)
-//{ 
+//{
 //	var n = n?n:360
 //	return (t.length < n)? t : (t.substring(0,n) + "...")
 //}
-//	
+//
 
 // ================================================================================
 // ================================================================================
@@ -4391,7 +4360,7 @@ function isTextArea(ev) {
 // ================================================================================
 
 //function setDateValue(strDateValue, strInputFormat)
-//{	
+//{
 //	var strRet = ",,";
 //	var strYear = "";
 //	var strMonth = "";
@@ -4399,10 +4368,10 @@ function isTextArea(ev) {
 //	//Get separator
 //	var length = strInputFormat.length;
 //	var sep = "";
-//	for (var i=0; i<length; i++) 
+//	for (var i=0; i<length; i++)
 //	{
 //		var c = strInputFormat.charAt(i);
-//		switch(c) 
+//		switch(c)
 //		{
 //			case "/":
 //			case "-":
@@ -4412,35 +4381,35 @@ function isTextArea(ev) {
 //		}
 //		if (sep != "") break;
 //	}
-//	if (sep != "") 
+//	if (sep != "")
 //	{
 //		var arrInputFormat = strInputFormat.split(sep);
 //		var arrDateValue = strDateValue.split(sep);
 //
-//		for (var i=0; i<arrDateValue.length; i++) 
+//		for (var i=0; i<arrDateValue.length; i++)
 //		{
-//			if (arrInputFormat[i] != null && typeof(arrInputFormat[i]) != "undefined") 
+//			if (arrInputFormat[i] != null && typeof(arrInputFormat[i]) != "undefined")
 //			{
 //				//Year
-//				if (arrInputFormat[i].indexOf('y')>=0) 
+//				if (arrInputFormat[i].indexOf('y')>=0)
 //				{
 //					var iPosA = arrInputFormat[i].indexOf('y');
 //					var iPosB = arrInputFormat[i].lastIndexOf('y');
-//					if (iPosB>=0) 
+//					if (iPosB>=0)
 //					{
 //						strYear = arrInputFormat[i].substring(iPosA, iPosB + 1);
 //						if (strYear.length >= arrDateValue[i].length) strYear = arrDateValue[i];
-//						else 
+//						else
 //						{
 //							iPosB = iPosA;
-//							for (var j=iPosA; j<arrDateValue[i].length; j++) 
+//							for (var j=iPosA; j<arrDateValue[i].length; j++)
 //							{
 //								var c = arrDateValue[i].charAt(j);
 //								if (c < '0' || c > '9') break;
 //								else iPosB = j + 1;
 //							}
 //							strYear = arrDateValue[i].substring(iPosA, iPosB);
-//							if (strYear.length <= 2) 
+//							if (strYear.length <= 2)
 //							{
 //								var iYear = parseInt(strYear);
 //								if (iYear>=70) iYear += 1900;
@@ -4449,24 +4418,24 @@ function isTextArea(ev) {
 //							}
 //						}
 //					}
-//					else 
+//					else
 //					{
 //						return strRet;
 //					}
 //				}
 //				//Month
-//				else if (arrInputFormat[i].indexOf('M')>=0) 
+//				else if (arrInputFormat[i].indexOf('M')>=0)
 //				{
 //					var iPosA = arrInputFormat[i].indexOf('M');
 //					var iPosB = arrInputFormat[i].lastIndexOf('M');
-//					if (iPosB>=0) 
+//					if (iPosB>=0)
 //					{
 //						strMonth = arrInputFormat[i].substring(iPosA, iPosB + 1);
 //						if (strMonth.length >= arrDateValue[i].length) strMonth = arrDateValue[i];
-//						else 
+//						else
 //						{
 //							iPosB = iPosA;
-//							for (var j=iPosA; j<arrDateValue[i].length; j++) 
+//							for (var j=iPosA; j<arrDateValue[i].length; j++)
 //							{
 //								var c = arrDateValue[i].charAt(j);
 //								if (c < '0' || c > '9') break;
@@ -4475,23 +4444,23 @@ function isTextArea(ev) {
 //							strMonth = arrDateValue[i].substring(iPosA, iPosB);
 //						}
 //					}
-//					else 
+//					else
 //					{
 //						return strRet;
 //					}
 //				}
 //				//Day
-//				else if (arrInputFormat[i].indexOf('d')>=0) 
+//				else if (arrInputFormat[i].indexOf('d')>=0)
 //				{
 //					var iPosA = arrInputFormat[i].indexOf('d');
 //					var iPosB = arrInputFormat[i].lastIndexOf('d');
-//					if (iPosB>=0) 
+//					if (iPosB>=0)
 //					{
 //						strDay = arrInputFormat[i].substring(iPosA, iPosB + 1);
 //						if (strDay.length >= arrDateValue[i].length) strDay = arrDateValue[i];
 //						else {
 //							iPosB = iPosA;
-//							for (var j=iPosA; j<arrDateValue[i].length; j++) 
+//							for (var j=iPosA; j<arrDateValue[i].length; j++)
 //							{
 //								var c = arrDateValue[i].charAt(j);
 //								if (c < '0' || c > '9') break;
@@ -4500,7 +4469,7 @@ function isTextArea(ev) {
 //							strDay = arrDateValue[i].substring(iPosA, iPosB);
 //						}
 //					}
-//					else 
+//					else
 //					{
 //						return strRet;
 //					}
@@ -4508,11 +4477,11 @@ function isTextArea(ev) {
 //			}
 //		}
 //
-//		if (strMonth != "" && strDay != "" && strYear != "" && !(isNaN(strMonth) || isNaN(strDay) || isNaN(strYear))) 
+//		if (strMonth != "" && strDay != "" && strYear != "" && !(isNaN(strMonth) || isNaN(strDay) || isNaN(strYear)))
 //		{
 //			//Set Date
 //			strRet = strMonth + ',' + strDay + ',' + strYear;
-//		}		
+//		}
 //	}
 //	return strRet;
 //}
@@ -4527,7 +4496,7 @@ function LZ(x) {
 //
 //function formatDate(date,format)
 //{
-//	var format=format+"";	
+//	var format=format+"";
 //    var result="";
 //    var i_format=0;
 //    var c="";
@@ -4574,7 +4543,7 @@ function LZ(x) {
 //    value["s"]=s;
 //    value["ss"]=LZ(s);
 //    while (i_format < format.length) {
-//        c=format.charAt(i_format); 
+//        c=format.charAt(i_format);
 //        token="";
 //        while ((format.charAt(i_format)==c) && (i_format < format.length)) {
 //            token += format.charAt(i_format++);
@@ -4597,19 +4566,19 @@ function LZ(x) {
 //function newSearchWidget(id,w,searchCB,helpText)
 //{
 //	var o=newWidget(id)
-//									
-//	o.bMatchCase			= false;	
-//	
+//
+//	o.bMatchCase			= false;
+//
 //	o.searchField			= newTextFieldWidget(id+"_searchVal",null,50,SearchWidget_keyUpCB,SearchWidget_searchCB,true,_lovSearchFieldLab,w?(w-40):null);
 //	o.searchField.par		= o;
 //	o.searchField.setHelpTxt(helpText?helpText:_lovSearchFieldLab);
-//	
+//
 //	o.searchIcn				= newIconMenuWidget(id+"_searchIcn",_skin+'../lov.gif',SearchWidget_searchCB,null,_lovSearchLab,16,16,0,0,0,0)
 //	o.searchIcn.par			= o
 //	o.searchMenu			= o.searchIcn.getMenu()
 //	o.normal				= o.searchMenu.addCheck(id+"normal",_lovNormalLab,SearchWidget_normalClickCB)
 //	o.matchCase				= o.searchMenu.addCheck(id+"matchCase",_lovMatchCase,SearchWidget_matchCaseClickCB)
-//		
+//
 //	o.oldInit				= o.init
 //	o.searchCB				= searchCB
 //	o.init					= SearchWidget_init
@@ -4619,8 +4588,8 @@ function LZ(x) {
 //	o.updateMatchCase		= SearchWidget_updateMatchCase
 //	o.getSearchValue		= SearchWidget_getSearchValue;
 //	o.setSearchValue		= SearchWidget_setSearchValue;
-//	o.resize				= SearchWidget_resize;		
-//	
+//	o.resize				= SearchWidget_resize;
+//
 //	return o;
 //}
 //
@@ -4632,27 +4601,27 @@ function LZ(x) {
 //				'<td>' + o.searchField.getHTML() + '</td>' +
 //				'<td>' + o.searchIcn.getHTML() + '</td>' +
 //			'</tr>' +
-//		'</tbody></table>';	
-//		
+//		'</tbody></table>';
+//
 //	return s
 //}
 //
 //function SearchWidget_resize(w,h)
 //{
 //	var o = this
-//	
-//	o.searchField.resize(w-40,h);	
+//
+//	o.searchField.resize(w-40,h);
 //}
 //
 //function SearchWidget_init()
 //{
 //	var o=this
-//	
+//
 //	o.oldInit();
-//	o.searchField.init()	
+//	o.searchField.init()
 //	o.searchIcn.init()
 //	o.searchIcn.setDisabled((o.searchField.getValue()==''))	// Disabled if no value set on loading widget
-//	o.updateMatchCase(o.bMatchCase)			
+//	o.updateMatchCase(o.bMatchCase)
 //}
 //
 //// function isCaseSensitive
@@ -4670,7 +4639,7 @@ function LZ(x) {
 //// b	[boolean]	used as is
 //{
 //	var o=this
-//	
+//
 //	if(o.bMatchCase!=b)
 //	{
 //		o.updateMatchCase(b);
@@ -4681,47 +4650,47 @@ function LZ(x) {
 //function SearchWidget_updateMatchCase(b)
 //{
 //	var o=this
-//	
+//
 //	o.normal.check(!b)
 //	o.matchCase.check(b)
-//	
+//
 //	if (b)
 //		o.searchIcn.icon.changeImg(55,0)	// match case icon
 //	else
-//		o.searchIcn.icon.changeImg(0,0)		// normal icon			
+//		o.searchIcn.icon.changeImg(0,0)		// normal icon
 //}
 //
 //function SearchWidget_normalClickCB()
 //{
 //	var o=this.par.parIcon.par
-//		
-//	if(o.bMatchCase) 
-//		o.bMatchCase=false;	
-//	
-//	o.updateMatchCase(o.bMatchCase);		
+//
+//	if(o.bMatchCase)
+//		o.bMatchCase=false;
+//
+//	o.updateMatchCase(o.bMatchCase);
 //}
 //
 //function SearchWidget_matchCaseClickCB()
 //{
 //	var o=this.par.parIcon.par
-//		
-//	if(!o.bMatchCase) 
-//		o.bMatchCase=true;	
-//	
-//	o.updateMatchCase(o.bMatchCase);	
+//
+//	if(!o.bMatchCase)
+//		o.bMatchCase=true;
+//
+//	o.updateMatchCase(o.bMatchCase);
 //}
 //
 //function SearchWidget_keyUpCB()
 //{
 //	var p=this.par
-//		
+//
 //	p.searchIcn.setDisabled((this.getValue()==''))
 //}
 //
 //function SearchWidget_searchCB()
 //{
 //	var p=this.par;
-//	
+//
 //	if (p.searchCB != null)
 //		p.searchCB();
 //}
@@ -4776,7 +4745,7 @@ function newToggleButtonWidget(id,label,cb,width,hlp,tooltip,tabIndex,margin,url
 	o.checked=false
 	o.executeCB=ToggleButtonWidget_executeCB
 	o.check=ToggleButtonWidget_check
-	o.isChecked=ToggleButtonWidget_isChecked	
+	o.isChecked=ToggleButtonWidget_isChecked
 	o.init=ButtonWidget_init
 
 	return o
@@ -4788,9 +4757,9 @@ function ToggleButtonWidget_executeCB()
 // PRIVATE internal click event handler
 {
 	var o=this
-		
+
 	o.check(!o.checked) // toggle
-	
+
 	if (o.cb)
 	{
 		if (typeof o.cb!="string")
@@ -4805,19 +4774,19 @@ function ToggleButtonWidget_check(checked)
 // check : [boolean] specified if the check icon must be checked or not
 {
 	var o=this
-	
+
 	if (o.checked != checked)
 	{
 		o.checked=checked
 
 		if (o.checked)
-		{			
-			changeSimpleOffset(o.icn,o.togX,o.togY,o.url)			
-		} else {	
-			changeSimpleOffset(o.icn,o.dx,o.dy,o.url);			
+		{
+			changeSimpleOffset(o.icn,o.togX,o.togY,o.url)
+		} else {
+			changeSimpleOffset(o.icn,o.dx,o.dy,o.url);
 		}
-	}	
-	
+	}
+
 	if (o.checked&&o.beforeClickCB)
 	{
 		if (o.layer)

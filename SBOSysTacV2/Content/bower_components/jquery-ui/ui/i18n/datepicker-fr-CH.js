@@ -2,16 +2,13 @@
 /* Written Martin Voelkle (martin.voelkle@e-tc.ch). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['fr-CH'] = {
 	closeText: 'Fermer',
 	prevText: '&#x3C;Préc',
@@ -33,5 +30,4 @@ datepicker.regional['fr-CH'] = {
 datepicker.setDefaults(datepicker.regional['fr-CH']);
 
 return datepicker.regional['fr-CH'];
-
 }));

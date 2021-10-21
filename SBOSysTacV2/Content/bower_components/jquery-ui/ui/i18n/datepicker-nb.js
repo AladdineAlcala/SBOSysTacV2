@@ -2,16 +2,13 @@
 /* Written by Bjørn Johansen (post@bjornjohansen.no). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['nb'] = {
 	closeText: 'Lukk',
 	prevText: '&#xAB;Forrige',
@@ -32,5 +29,4 @@ datepicker.regional['nb'] = {
 datepicker.setDefaults(datepicker.regional['nb']);
 
 return datepicker.regional['nb'];
-
 }));

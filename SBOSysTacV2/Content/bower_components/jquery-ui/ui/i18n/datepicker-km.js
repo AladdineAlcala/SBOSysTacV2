@@ -2,16 +2,13 @@
 /* Written by Chandara Om (chandara.teacher@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['km'] = {
 	closeText: 'ធ្វើ​រួច',
 	prevText: 'មុន',
@@ -33,5 +30,4 @@ datepicker.regional['km'] = {
 datepicker.setDefaults(datepicker.regional['km']);
 
 return datepicker.regional['km'];
-
 }));

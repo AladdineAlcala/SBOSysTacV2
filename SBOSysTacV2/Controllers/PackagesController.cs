@@ -561,14 +561,10 @@ namespace SBOSysTacV2.Controllers
                         
                        
                 }
-                //else
-                //{
-                //    packages = areaPackage.GetAreasByPackages().OrderBy(x => x.packageId).ToList();
-
-
-                //}
+                
 
             }
+
             else
             {
                 packages = areaPackage.GetPackageByType()

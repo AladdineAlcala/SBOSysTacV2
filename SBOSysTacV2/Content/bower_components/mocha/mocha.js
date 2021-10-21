@@ -1,5 +1,4 @@
 ;(function(){
-
 // CommonJS require()
 
 function require(p){
@@ -46,14 +45,11 @@ require.relative = function (parent) {
     };
   };
 
-
 require.register("browser/debug.js", function(module, exports, require){
-
 module.exports = function(type){
   return function(){
   }
 };
-
 }); // module: browser/debug.js
 
 require.register("browser/diff.js", function(module, exports, require){
@@ -411,11 +407,9 @@ var JsDiff = (function() {
 if (typeof module !== 'undefined') {
     module.exports = JsDiff;
 }
-
 }); // module: browser/diff.js
 
 require.register("browser/events.js", function(module, exports, require){
-
 /**
  * Module exports.
  */
@@ -596,11 +590,9 @@ EventEmitter.prototype.emit = function (name) {
 }); // module: browser/events.js
 
 require.register("browser/fs.js", function(module, exports, require){
-
 }); // module: browser/fs.js
 
 require.register("browser/path.js", function(module, exports, require){
-
 }); // module: browser/path.js
 
 require.register("browser/progress.js", function(module, exports, require){
@@ -700,28 +692,28 @@ Progress.prototype.draw = function(ctx){
       , y = half
       , rad = half - 1
       , fontSize = this._fontSize;
-  
+
     ctx.font = fontSize + 'px ' + this._font;
-  
+
     var angle = Math.PI * 2 * (percent / 100);
     ctx.clearRect(0, 0, size, size);
-  
+
     // outer circle
     ctx.strokeStyle = '#9f9f9f';
     ctx.beginPath();
     ctx.arc(x, y, rad, 0, angle, false);
     ctx.stroke();
-  
+
     // inner circle
     ctx.strokeStyle = '#eee';
     ctx.beginPath();
     ctx.arc(x, y, rad - 1, 0, angle, true);
     ctx.stroke();
-  
+
     // text
     var text = this._text || (percent | 0) + '%'
       , w = ctx.measureText(text).width;
-  
+
     ctx.fillText(
         text
       , x - w / 2 + 1
@@ -729,11 +721,9 @@ Progress.prototype.draw = function(ctx){
   } catch (ex) {} //don't fail if we can't render progress
   return this;
 };
-
 }); // module: browser/progress.js
 
 require.register("browser/tty.js", function(module, exports, require){
-
 exports.isatty = function(){
   return true;
 };
@@ -746,11 +736,9 @@ exports.getWindowSize = function(){
     return [640, 480];
   }
 };
-
 }); // module: browser/tty.js
 
 require.register("context.js", function(module, exports, require){
-
 /**
  * Expose `Context`.
  */
@@ -819,11 +807,9 @@ Context.prototype.inspect = function(){
     return val;
   }, 2);
 };
-
 }); // module: context.js
 
 require.register("hook.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -858,7 +844,6 @@ F.prototype = Runnable.prototype;
 Hook.prototype = new F;
 Hook.prototype.constructor = Hook;
 
-
 /**
  * Get or set the test `err`.
  *
@@ -876,11 +861,9 @@ Hook.prototype.error = function(err){
 
   this._error = err;
 };
-
 }); // module: hook.js
 
 require.register("interfaces/bdd.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -910,7 +893,6 @@ module.exports = function(suite){
   var suites = [suite];
 
   suite.on('pre-require', function(context, file, mocha){
-
     /**
      * Execute before running tests.
      */
@@ -1017,11 +999,9 @@ module.exports = function(suite){
     };
   });
 };
-
 }); // module: interfaces/bdd.js
 
 require.register("interfaces/exports.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -1081,20 +1061,16 @@ module.exports = function(suite){
     }
   }
 };
-
 }); // module: interfaces/exports.js
 
 require.register("interfaces/index.js", function(module, exports, require){
-
 exports.bdd = require('./bdd');
 exports.tdd = require('./tdd');
 exports.qunit = require('./qunit');
 exports.exports = require('./exports');
-
 }); // module: interfaces/index.js
 
 require.register("interfaces/qunit.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -1132,7 +1108,6 @@ module.exports = function(suite){
   var suites = [suite];
 
   suite.on('pre-require', function(context, file, mocha){
-
     /**
      * Execute before running tests.
      */
@@ -1216,11 +1191,9 @@ module.exports = function(suite){
     };
   });
 };
-
 }); // module: interfaces/qunit.js
 
 require.register("interfaces/tdd.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -1258,7 +1231,6 @@ module.exports = function(suite){
   var suites = [suite];
 
   suite.on('pre-require', function(context, file, mocha){
-
     /**
      * Execute before each test case.
      */
@@ -1358,7 +1330,6 @@ module.exports = function(suite){
     };
   });
 };
-
 }); // module: interfaces/tdd.js
 
 require.register("mocha.js", function(module, exports, require){
@@ -1731,7 +1702,6 @@ Mocha.prototype.run = function(fn){
   exports.reporters.Base.inlineDiffs = options.useInlineDiffs;
   return runner.run(fn);
 };
-
 }); // module: mocha.js
 
 require.register("ms.js", function(module, exports, require){
@@ -1844,11 +1814,9 @@ function plural(ms, n, name) {
   if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
-
 }); // module: ms.js
 
 require.register("reporters/base.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -2180,7 +2148,6 @@ function pad(str, len) {
   return Array(len - str.length + 1).join(' ') + str;
 }
 
-
 /**
  * Returns an inline diff between 2 strings with coloured ANSI output
  *
@@ -2354,12 +2321,9 @@ function sameType(a, b) {
   b = Object.prototype.toString.call(b);
   return a == b;
 }
-
-
 }); // module: reporters/base.js
 
 require.register("reporters/doc.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -2415,11 +2379,9 @@ function Doc(runner) {
     console.log('%s  <dd><pre><code>%s</code></pre></dd>', indent(), code);
   });
 }
-
 }); // module: reporters/doc.js
 
 require.register("reporters/dot.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -2484,11 +2446,9 @@ function F(){};
 F.prototype = Base.prototype;
 Dot.prototype = new F;
 Dot.prototype.constructor = Dot;
-
 }); // module: reporters/dot.js
 
 require.register("reporters/html-cov.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -2542,7 +2502,6 @@ function coverageClass(n) {
 }); // module: reporters/html-cov.js
 
 require.register("reporters/html.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -2816,11 +2775,9 @@ function on(el, event, fn) {
     el.attachEvent('on' + event, fn);
   }
 }
-
 }); // module: reporters/html.js
 
 require.register("reporters/index.js", function(module, exports, require){
-
 exports.Base = require('./base');
 exports.Dot = require('./dot');
 exports.Doc = require('./doc');
@@ -2838,11 +2795,9 @@ exports.Landing = require('./landing');
 exports.JSONCov = require('./json-cov');
 exports.HTMLCov = require('./html-cov');
 exports.JSONStream = require('./json-stream');
-
 }); // module: reporters/index.js
 
 require.register("reporters/json-cov.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -2995,11 +2950,9 @@ function clean(test) {
     , duration: test.duration
   }
 }
-
 }); // module: reporters/json-cov.js
 
 require.register("reporters/json-stream.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -3063,7 +3016,6 @@ function clean(test) {
 }); // module: reporters/json-stream.js
 
 require.register("reporters/json.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -3136,7 +3088,6 @@ function clean(test) {
 }); // module: reporters/json.js
 
 require.register("reporters/landing.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -3236,11 +3187,9 @@ function F(){};
 F.prototype = Base.prototype;
 Landing.prototype = new F;
 Landing.prototype.constructor = Landing;
-
 }); // module: reporters/landing.js
 
 require.register("reporters/list.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -3307,8 +3256,6 @@ function F(){};
 F.prototype = Base.prototype;
 List.prototype = new F;
 List.prototype.constructor = List;
-
-
 }); // module: reporters/list.js
 
 require.register("reporters/markdown.js", function(module, exports, require){
@@ -3406,7 +3353,6 @@ function Markdown(runner) {
 }); // module: reporters/markdown.js
 
 require.register("reporters/min.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -3447,8 +3393,6 @@ function F(){};
 F.prototype = Base.prototype;
 Min.prototype = new F;
 Min.prototype.constructor = Min;
-
-
 }); // module: reporters/min.js
 
 require.register("reporters/nyan.js", function(module, exports, require){
@@ -3715,12 +3659,9 @@ function F(){};
 F.prototype = Base.prototype;
 NyanCat.prototype = new F;
 NyanCat.prototype.constructor = NyanCat;
-
-
 }); // module: reporters/nyan.js
 
 require.register("reporters/progress.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -3809,12 +3750,9 @@ function F(){};
 F.prototype = Base.prototype;
 Progress.prototype = new F;
 Progress.prototype.constructor = Progress;
-
-
 }); // module: reporters/progress.js
 
 require.register("reporters/spec.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -3900,12 +3838,9 @@ function F(){};
 F.prototype = Base.prototype;
 Spec.prototype = new F;
 Spec.prototype.constructor = Spec;
-
-
 }); // module: reporters/spec.js
 
 require.register("reporters/tap.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -3978,11 +3913,9 @@ function TAP(runner) {
 function title(test) {
   return test.fullTitle().replace(/#/g, '');
 }
-
 }); // module: reporters/tap.js
 
 require.register("reporters/xunit.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -4057,7 +3990,6 @@ F.prototype = Base.prototype;
 XUnit.prototype = new F;
 XUnit.prototype.constructor = XUnit;
 
-
 /**
  * Output tag for the given `test.`
  */
@@ -4105,11 +4037,9 @@ function tag(name, attrs, close, content) {
 function cdata(str) {
   return '<![CDATA[' + escape(str) + ']]>';
 }
-
 }); // module: reporters/xunit.js
 
 require.register("runnable.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -4166,7 +4096,6 @@ function F(){};
 F.prototype = EventEmitter.prototype;
 Runnable.prototype = new F;
 Runnable.prototype.constructor = Runnable;
-
 
 /**
  * Set & get timeout `ms`.
@@ -4340,7 +4269,6 @@ Runnable.prototype.run = function(fn){
     fn(err);
   }
 };
-
 }); // module: runnable.js
 
 require.register("runner.js", function(module, exports, require){
@@ -4424,7 +4352,6 @@ function F(){};
 F.prototype = EventEmitter.prototype;
 Runner.prototype = new F;
 Runner.prototype.constructor = Runner;
-
 
 /**
  * Run tests with full titles matching `re`. Updates runner.total
@@ -4741,7 +4668,6 @@ Runner.prototype.runTests = function(suite, fn){
     , tests = suite.tests.slice()
     , test;
 
-
   function hookErr(err, errSuite, after) {
     // before/after Each hook for errSuite failed:
     var orig = self.suite;
@@ -4795,7 +4721,6 @@ Runner.prototype.runTests = function(suite, fn){
     // execute test and hook(s)
     self.emit('test', self.test = test);
     self.hookDown('beforeEach', function(err, errSuite){
-
       if (err) return hookErr(err, errSuite, false);
 
       self.currentRunnable = self.test;
@@ -4995,7 +4920,6 @@ function filterLeaks(ok, globals) {
  function extraGlobals() {
   if (typeof(process) === 'object' &&
       typeof(process.version) === 'string') {
-
     var nodeVersion = process.version.split('.').reduce(function(a, v) {
       return a << 8 | v;
     });
@@ -5009,11 +4933,9 @@ function filterLeaks(ok, globals) {
 
   return [];
  }
-
 }); // module: runner.js
 
 require.register("suite.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -5085,7 +5007,6 @@ function F(){};
 F.prototype = EventEmitter.prototype;
 Suite.prototype = new F;
 Suite.prototype.constructor = Suite;
-
 
 /**
  * Return a clone of this `Suite`.
@@ -5313,11 +5234,9 @@ Suite.prototype.eachTest = function(fn){
   });
   return this;
 };
-
 }); // module: suite.js
 
 require.register("test.js", function(module, exports, require){
-
 /**
  * Module dependencies.
  */
@@ -5352,8 +5271,6 @@ function F(){};
 F.prototype = Runnable.prototype;
 Test.prototype = new F;
 Test.prototype.constructor = Test;
-
-
 }); // module: test.js
 
 require.register("utils.js", function(module, exports, require){
@@ -5656,7 +5573,6 @@ exports.highlightTags = function(name) {
     code[i].innerHTML = highlight(code[i].innerHTML);
   }
 };
-
 }); // module: utils.js
 // The global object is "self" in Web Workers.
 global = (function() { return this; })();

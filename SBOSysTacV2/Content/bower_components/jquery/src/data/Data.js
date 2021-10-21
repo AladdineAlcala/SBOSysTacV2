@@ -4,7 +4,6 @@ define( [
 	"../var/rnothtmlwhite",
 	"./var/acceptData"
 ], function( jQuery, camelCase, rnothtmlwhite, acceptData ) {
-
 "use strict";
 
 function Data() {
@@ -14,9 +13,7 @@ function Data() {
 Data.uid = 1;
 
 Data.prototype = {
-
 	cache: function( owner ) {
-
 		// Check if the owner object already has a cache
 		var value = owner[ this.expando ];
 
@@ -28,7 +25,6 @@ Data.prototype = {
 			// but we should not, see #8335.
 			// Always return an empty object.
 			if ( acceptData( owner ) ) {
-
 				// If it is a node unlikely to be stringify-ed or looped over
 				// use plain assignment
 				if ( owner.nodeType ) {
@@ -59,7 +55,6 @@ Data.prototype = {
 
 		// Handle: [ owner, { properties } ] args
 		} else {
-
 			// Copy the properties one-by-one to the cache object
 			for ( prop in data ) {
 				cache[ camelCase( prop ) ] = data[ prop ];
@@ -75,7 +70,6 @@ Data.prototype = {
 			owner[ this.expando ] && owner[ this.expando ][ camelCase( key ) ];
 	},
 	access: function( owner, key, value ) {
-
 		// In cases where either:
 		//
 		//   1. No key was specified
@@ -89,7 +83,6 @@ Data.prototype = {
 		//
 		if ( key === undefined ||
 				( ( key && typeof key === "string" ) && value === undefined ) ) {
-
 			return this.get( owner, key );
 		}
 
@@ -114,10 +107,8 @@ Data.prototype = {
 		}
 
 		if ( key !== undefined ) {
-
 			// Support array or space separated string of keys
 			if ( Array.isArray( key ) ) {
-
 				// If key is an array of keys...
 				// We always set camelCase keys, so remove that.
 				key = key.map( camelCase );
@@ -140,7 +131,6 @@ Data.prototype = {
 
 		// Remove the expando if there's no more data
 		if ( key === undefined || jQuery.isEmptyObject( cache ) ) {
-
 			// Support: Chrome <=35 - 45
 			// Webkit & Blink performance suffers when deleting properties
 			// from DOM nodes, so set to undefined instead

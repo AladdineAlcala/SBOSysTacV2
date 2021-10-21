@@ -6,7 +6,7 @@ function writeError(header, message)
           '<tr><td class="crExceptionHeader">' + header + '</td></tr>' +
           '<tr><td>' +
             '<table width="100%" border=0 cellpadding=5 cellspacing=0>' +
-              '<tr><td class="crExceptionElement">' + 
+              '<tr><td class="crExceptionElement">' +
                 '<table border=0 cellpadding=5 cellspacing=0>' +
                   '<tr><td><span class="crExceptionText">' + message + '</span></td></tr>' +
                 '</table>' +
@@ -16,27 +16,27 @@ function writeError(header, message)
         '</table>\n' );
 }
 
-function loadResources(locale) 
+function loadResources(locale)
 {
     var lang = locale.split('-');
     var locales = [];
-    
+
     locales.push('en');
-    
+
     if(lang.length >= 1) {
         locales.push(lang[0]);
     }
-    
+
     if(lang.length >= 2) {
         locales.push(lang[0] + '_' + lang[1]);
     }
-    
+
     for(var i =0 ; i < locales.length; i++) {
         _loadStrings(locales[i]);
     }
 }
 
-function _loadStrings(locale) 
+function _loadStrings(locale)
 {
     document.write('<script language="javascript" src="js/strings_' + locale + '.js"></script>');
 }

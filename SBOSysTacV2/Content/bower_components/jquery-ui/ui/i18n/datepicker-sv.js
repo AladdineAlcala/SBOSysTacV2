@@ -2,16 +2,13 @@
 /* Written by Anders Ekdahl ( anders@nomadiz.se). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['sv'] = {
 	closeText: 'Stäng',
 	prevText: '&#xAB;Förra',
@@ -33,5 +30,4 @@ datepicker.regional['sv'] = {
 datepicker.setDefaults(datepicker.regional['sv']);
 
 return datepicker.regional['sv'];
-
 }));

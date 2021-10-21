@@ -140,12 +140,11 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
 File: labels.js
-
 
 =============================================================
 */
@@ -227,7 +226,7 @@ _closeDialog="Pencereyi Kapat"
 
 _lstMoveUpLab="Yukarı Taşı"
 _lstMoveDownLab="Aşağı Taşı"
-_lstMoveLeftLab="Sola Taşı" 
+_lstMoveLeftLab="Sola Taşı"
 _lstMoveRightLab="Sağa Taşı"
 _lstNewNodeLab="İç İçe Geçmiş Filtre Ekle"
 _lstAndLabel="AND"
@@ -275,7 +274,7 @@ _calendarSelectionLab="Seçili gün"
 
 _menuCheckLab="Denetlendi"
 _menuDisableLab="Devre dışı"
-	
+
 _level="Düzey"
 _closeTab="Sekmeyi Kapat"
 _of=" / "

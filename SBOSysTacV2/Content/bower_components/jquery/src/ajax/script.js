@@ -3,7 +3,6 @@ define( [
 	"../var/document",
 	"../ajax"
 ], function( jQuery, document ) {
-
 "use strict";
 
 // Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
@@ -42,7 +41,6 @@ jQuery.ajaxPrefilter( "script", function( s ) {
 
 // Bind script tag hack transport
 jQuery.ajaxTransport( "script", function( s ) {
-
 	// This transport only deals with cross domain requests
 	if ( s.crossDomain ) {
 		var script, callback;
@@ -73,5 +71,4 @@ jQuery.ajaxTransport( "script", function( s ) {
 		};
 	}
 } );
-
 } );

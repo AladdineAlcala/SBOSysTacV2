@@ -3,7 +3,6 @@ define( [
 	"../queue",
 	"../effects" // Delay is optional because of this dependency
 ], function( jQuery ) {
-
 "use strict";
 
 // Based off of the plugin by Clint Helfers, with permission.

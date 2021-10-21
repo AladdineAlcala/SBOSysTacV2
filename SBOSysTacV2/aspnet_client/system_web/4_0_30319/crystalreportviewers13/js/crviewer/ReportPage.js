@@ -13,7 +13,7 @@
  * @param kwArgs.leftMargin   [Int] Left margin of report page in pixels
  * @param kwArgs.extraCssFileUrl   [String] The path of an extra CSS file used in report page
  */
- 
+
 bobj.crv.newReportPage = function(kwArgs) {
     kwArgs = MochiKit.Base.update({
         id: bobj.uniqueId(),
@@ -23,18 +23,18 @@ bobj.crv.newReportPage = function(kwArgs) {
         extraCssFileUrl: "",
         documentView: bobj.crv.ReportPage.DocumentView.PRINT_LAYOUT
     }, kwArgs);
-    
-    var o = newWidget(kwArgs.id);    
+
+    var o = newWidget(kwArgs.id);
     o.widgetType = 'ReportPage';
-    
+
     // Update instance with constructor arguments
     bobj.fillIn(o, kwArgs);
-    
+
     // Update instance with member functions
     o.initOld = o.init;
     o.resizeOld = o.resize;
     MochiKit.Base.update(o, bobj.crv.ReportPage);
-    
+
     return o;
 };
 
@@ -43,42 +43,41 @@ bobj.crv.ReportPage = {
         WEB_LAYOUT : 'weblayout',
         PRINT_LAYOUT : 'printlayout'
     },
-       
+
     /**
      * Disposes report page by removing its layer and stylesheet from DOM
      */
     dispose : function() {
         MochiKit.DOM.removeElement (this.layer);
     },
-    
+
     /**
      * DO NOT REMOVE. USED BY WEB ELEMENTS
      */
     displayScrollBars : function (isDisplay) {
         this.layer.style.overflow = isDisplay ? "auto" : "hidden";
     },
-    
+
     /**
      * DO NOT REMOVE. USED BY WEB ELEMENTS
      */
     isDisplayScrollBars : function () {
         this.layer.style.overflow == "auto";
     },
-    
-    
+
     update : function(update) {
         if (update && update.cons == "bobj.crv.newReportPage") {
             this.updateSize ( {
                 width : update.args.width,
                 height : update.args.height
             });
-            
+
             this.layer.scrollLeft = 0;
             this.layer.scrollTop = 0;
             this.updateHTML (update.args.content, false);
         }
     },
-    
+
     scrollToHighlighted : function (scrollWindow) {
         if(this._iframe) {
             var iframeDoc = _ie ? this._iframe.contentWindow.document  : this._iframe.contentDocument;
@@ -96,27 +95,27 @@ bobj.crv.ReportPage = {
             }
         }
     },
-        
+
     updateHTML : function(content, useAnimation) {
         if (content) {
             if(!this._iframe) {
-                this._iframe = MochiKit.DOM.createDOM('IFRAME', {id : this.id + '_iframe', width : '100%', height : '100%', frameBorder : '0',  margin : '0'})   
+                this._iframe = MochiKit.DOM.createDOM('IFRAME', {id : this.id + '_iframe', width : '100%', height : '100%', frameBorder : '0',  margin : '0'})
                 this._pageNode.appendChild(this._iframe);
             }
-            
+
             if(useAnimation)
                 this._iframe.style.display = "none";
-            
+
             var iframeDoc = _ie ? this._iframe.contentWindow.document  : this._iframe.contentDocument;
             iframeDoc.open();
             iframeDoc.write(this.getIFrameHTML (content));
             iframeDoc.close();
-            
+
             if(useAnimation)
                 bobj.displayElementWithAnimation(this._iframe);
         }
     },
-    
+
     getIFrameHTML : function (content) {
         var extraCssFileLink = "";
         if (this.extraCssFileUrl != "") {
@@ -134,14 +133,13 @@ bobj.crv.ReportPage = {
             "</body>\r\n" +
         "</html>";
     },
-    
+
     /*
      * Updates size of report page based on update object
      * @param update [{width,height,marginLeft,marginRight,marginTop}] dimension and margins
      * of report p
      */
     updateSize : function(sizeObject) {
-        
         if (sizeObject) {
             this.width = (sizeObject.width != undefined) ? sizeObject.width : this.width;
             this.height = (sizeObject.height != undefined) ? sizeObject.height : this.height;
@@ -158,7 +156,7 @@ bobj.crv.ReportPage = {
             this._shadowNode.style.height = (isBBM ? this.height + 2: this.height) + 'px';
         }
     },
-    
+
     getHTML : function() {
         var h = bobj.html;
         var isBBM = bobj.isBorderBoxModel ();
@@ -181,7 +179,7 @@ bobj.crv.ReportPage = {
             overflow : 'hidden',
             'text-align' : 'left'
         };
-        
+
         var shadowStyle = {
             position : 'absolute',
             'z-index' : 0,
@@ -191,8 +189,7 @@ bobj.crv.ReportPage = {
             top : '0px',
             left : '0px'
         };
-        
-        
+
         var shadowHTML = '';
         if (this.documentView.toLowerCase () == bobj.crv.ReportPage.DocumentView.PRINT_LAYOUT) {
             layerStyle['background-color'] = '#8E8E8E';
@@ -226,16 +223,16 @@ bobj.crv.ReportPage = {
 
         return html;
     },
-    
+
     init : function() {
         this._pageNode = getLayer (this.id + '_page');
         this._shadowNode = getLayer (this.id + '_shadow');
 
         this.initOld ();
-        
+
         this.updateHTML (this.content, true);
     },
-    
+
     updateShadowLocation : function () {
         var updateFunc = function () {
             if(this._shadowNode && this._pageNode) {
@@ -243,13 +240,13 @@ bobj.crv.ReportPage = {
                 var pageNodPos = {x : this._pageNode.offsetLeft, y : this._pageNode.offsetTop};
                 this._shadowNode.style.display = "block";
                 this._shadowNode.style.top = pageNodPos.y + (bobj.isBorderBoxModel() ? 4 : 6) + "px";
-                this._shadowNode.style.left = pageNodPos.x +  (bobj.isBorderBoxModel()  ? 4 : 6) + "px";            
+                this._shadowNode.style.left = pageNodPos.x +  (bobj.isBorderBoxModel()  ? 4 : 6) + "px";
             }
         }
-        
+
         setTimeout(bobj.bindFunctionToObject(updateFunc,this), 0); // Must be executed after viewer has finished doLayout
     },
-    
+
     /**
      * Resizes the outer dimensions of the widget.
      */
@@ -257,22 +254,22 @@ bobj.crv.ReportPage = {
         bobj.setOuterSize(this.layer, w, h);
         if(_moz)
             this.css.clip = bobj.getRect(0,w,h,0);
-        
+
         this.updateShadowLocation ();
     },
-    
+
     /**
-     * @return Returns an object with width and height properties such that there 
-     * would be no scroll bars around the page if they were applied to the widget. 
+     * @return Returns an object with width and height properties such that there
+     * would be no scroll bars around the page if they were applied to the widget.
      */
     getBestFitSize : function() {
         var page = this._pageNode;
         return {
-            width: page.offsetWidth + 30, 
-            height: page.offsetHeight + 30 
+            width: page.offsetWidth + 30,
+            height: page.offsetHeight + 30
         };
     },
-    
+
     hideFrame : function() {
         this.css.borderStyle = 'none';
         this._pageNode.style.border = '';

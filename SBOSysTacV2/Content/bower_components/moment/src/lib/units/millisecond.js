@@ -37,7 +37,6 @@ addFormatToken(0, ['SSSSSSSSS', 9], 0, function () {
     return this.millisecond() * 1000000;
 });
 
-
 // ALIASES
 
 addUnitAlias('millisecond', 'ms');

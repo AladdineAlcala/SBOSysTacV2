@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -18,12 +17,10 @@
 			"./widget"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 var lastActive,
 	baseClasses = "ui-button ui-widget ui-state-default ui-corner-all",
 	typeClasses = "ui-button-icons-only ui-button-icon-only ui-button-text-icons ui-button-text-icon-primary ui-button-text-icon-secondary ui-button-text-only",
@@ -407,5 +404,4 @@ $.widget( "ui.buttonset", {
 });
 
 return $.ui.button;
-
 }));

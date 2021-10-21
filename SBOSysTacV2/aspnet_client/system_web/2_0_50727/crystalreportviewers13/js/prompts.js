@@ -123,7 +123,6 @@ function addPromptRangeValue ( inForm, type , paramName )
 	promptEntry = new Option(display,value,false,false);
 	theList = inForm[paramName + "ListBox"];
 	theList.options[theList.length] = promptEntry;
-
 }
 
 ////////////////////////////////////
@@ -209,7 +208,7 @@ function setPromptSingleValue (inform, type, paramName)
 function setPromptRangeValue (inform, type, paramName)
 {
     hiddenField = inform[promptPrefix + paramName];
-    
+
     if ( inform[paramName + "NULL"] != null && inform[paramName + "NULL"].checked )
     {
         value = "_crNULL_"; //NULL is a literal for, uhmm.. a NULL
@@ -270,14 +269,14 @@ function setPromptMultipleValue (inform, type, paramName)
 {
     hiddenField = inform[promptPrefix + paramName];
     values = inform[paramName + "ListBox"].options;
-    
+
     if ( inform[paramName + "NULL"] != null && inform[paramName + "NULL"].checked )
     {
         value = "_crNULL_"; //NULL is a literal for, uhmm.. a NULL
         hiddenField.value = value;
         return true;
     }
-    
+
     if ( values.length == 0 )
     {
         value = "_crEMPTY_";     //if value is empty, set to empty string
@@ -342,17 +341,16 @@ function checkSingleValue ( value, type )
 }
 
 function checkValue(evt) {
-  
-  if (navigator.appName == "Netscape") 
+  if (navigator.appName == "Netscape")
   {
-	if (evt.which == 13 && (evt.target.type == "text" || evt.target.type == "password")) 
+	if (evt.which == 13 && (evt.target.type == "text" || evt.target.type == "password"))
 	{
 		checkSetAndSubmitValues ();
 	}
-  } 
-  else 
+  }
+  else
   {
-	if (window.event.keyCode == 13 && (window.event.srcElement.type == "text" || window.event.srcElement.type == "password")) 
+	if (window.event.keyCode == 13 && (window.event.srcElement.type == "text" || window.event.srcElement.type == "password"))
 	{
 		checkSetAndSubmitValues ();
 	}

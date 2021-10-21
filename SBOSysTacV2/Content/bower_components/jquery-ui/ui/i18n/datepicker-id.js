@@ -2,16 +2,13 @@
 /* Written by Deden Fathurahman (dedenf@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['id'] = {
 	closeText: 'Tutup',
 	prevText: '&#x3C;mundur',
@@ -33,5 +30,4 @@ datepicker.regional['id'] = {
 datepicker.setDefaults(datepicker.regional['id']);
 
 return datepicker.regional['id'];
-
 }));

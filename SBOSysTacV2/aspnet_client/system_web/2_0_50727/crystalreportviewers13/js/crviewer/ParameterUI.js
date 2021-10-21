@@ -1,4 +1,3 @@
-
 /* Copyright (c) Business Objects 2006. All rights reserved. */
 
 /*
@@ -30,17 +29,17 @@ bobj.crv.params.newParameterUI = function(kwArgs) {
         maxNumValuesDisplayed : 7,
         canOpenAdvDialog : false
     }, kwArgs);
-    
+
     var o = newWidget(kwArgs.id);
-    
+
     // Update instance with constructor arguments
     bobj.fillIn(o, kwArgs);
-    
+
     o.displayAllValues = false;
-    
+
     // Update instance with member functions
     MochiKit.Base.update(o, bobj.crv.params.ParameterUI);
-    
+
     o._createMenu();
     o._rows = [];
     o._infoRow = new bobj.crv.params.ParameterInfoRow(o.id);
@@ -48,7 +47,7 @@ bobj.crv.params.newParameterUI = function(kwArgs) {
 };
 
 bobj.crv.params.ParameterUI = {
-    /** 
+    /**
      *  Creates single menubar for all parameter value rows of current param UI
      */
     _createMenu : function() {
@@ -71,13 +70,13 @@ bobj.crv.params.ParameterUI = {
             this._defaultValuesMenu = null;
         }
     },
-    
+
     setFocusOnRow : function(rowIndex) {
         var row = this._rows[rowIndex];
         if (row)
             row.focus ();
     },
-    
+
     /*
      * Disables tabbing if dis is true
      */
@@ -85,10 +84,10 @@ bobj.crv.params.ParameterUI = {
         for(var i = 0, len = this._rows.length; i < len; i++) {
             this._rows[i].setTabDisabled(dis);
         }
-        
+
         this._infoRow.setTabDisabled(dis);
     },
-    
+
     init : function() {
         Widget_init.call (this);
 
@@ -96,11 +95,11 @@ bobj.crv.params.ParameterUI = {
         for ( var i = 0, len = rows.length; i < len; ++i) {
             rows[i].init ();
         }
-        
+
         MochiKit.Signal.connect(this._infoRow, "switch", this, '_onSwitchDisplayAllValues');
         this.refreshUI ();
     },
-    
+
     /**
      * Processes actions triggered by clicks on "x more values" or "collapse" button displayed in inforow
      */
@@ -108,14 +107,14 @@ bobj.crv.params.ParameterUI = {
         this.displayAllValues = !this.displayAllValues;
         var TIME_INTERVAL = 10; /* 10 msec or 100 actions per second */
         var timerIndex = 0;
-        
+
         if(this.displayAllValues) {
             if (this.values.length > this._rows.length) {
                 for(var i = this._rows.length, l = this.values.length; i < l; i++) {
                     var addRow = function(paramUI, value) {
                         return function() { return paramUI._addRow(value); };
                     };
-                    
+
                     timerIndex++;
                     setTimeout(addRow(this, this.values[i]), TIME_INTERVAL * timerIndex);
                 }
@@ -127,20 +126,20 @@ bobj.crv.params.ParameterUI = {
                     var deleteRow = function(paramUI, rowIndex) {
                         return function() { return paramUI.deleteValue(rowIndex); };
                     };
-                    
+
                     timerIndex++;
                     setTimeout(deleteRow(this, i), TIME_INTERVAL * timerIndex);
                 }
             }
         }
-        
+
         var signalResize =  function(paramUI) {
             return function() {MochiKit.Signal.signal(paramUI, 'ParameterUIResized'); };
         };
-        
+
         setTimeout(signalResize(this), TIME_INTERVAL * timerIndex);
     },
-    
+
     getHTML : function() {
         var rowsHtml = '';
 
@@ -161,7 +160,7 @@ bobj.crv.params.ParameterUI = {
             }
         }, rowsHtml);
     },
-    
+
     _getNewValueRowArgs : function(value) {
         return {
             value : value,
@@ -178,28 +177,28 @@ bobj.crv.params.ParameterUI = {
             canOpenAdvDialog : this.canOpenAdvDialog
         };
     },
-    
+
     _getNewValueRowConstructor : function() {
         return bobj.crv.params.newParameterValueRow;
     },
-    
+
     _getRow : function(value) {
         var row = this._getNewValueRowConstructor()(this._getNewValueRowArgs(value));
         var bind = MochiKit.Base.bind;
-        
-        row.changeCB = bind(this._onChangeValue, this, row); 
+
+        row.changeCB = bind(this._onChangeValue, this, row);
         row.enterCB = bind(this._onEnterValue, this, row);
-        
+
         return row;
     },
-    
+
     _addRow : function(value) {
         var row = this._getRow (value);
         this._rows.push (row);
         append (this.layer, row.getHTML ());
 
         row.init ();
-        
+
         this.refreshUI ();
         return row;
     },
@@ -232,30 +231,29 @@ bobj.crv.params.ParameterUI = {
         return this._rows.length;
     },
 
-
     refreshUI : function() {
         if (this.allowRange)
             this.alignRangeRows ();
-        
+
         var displayInfoRow = false;
         var infoRowText = "";
 
         if (this.values.length > this.maxNumValuesDisplayed) {
             displayInfoRow = true;
-            
-            if(this.displayAllValues) 
+
+            if(this.displayAllValues)
                 infoRowText = L_bobj_crv_Collapse;
             else {
                 var hiddenValuesCount = this.values.length - this.maxNumValuesDisplayed;
-                infoRowText = (hiddenValuesCount == 1) ? L_bobj_crv_ParamsMoreValue : L_bobj_crv_ParamsMoreValues;               
+                infoRowText = (hiddenValuesCount == 1) ? L_bobj_crv_ParamsMoreValue : L_bobj_crv_ParamsMoreValues;
                 infoRowText = infoRowText.replace ("%1", hiddenValuesCount);
             }
-        } 
+        }
 
         this._infoRow.setText (infoRowText);
         this._infoRow.setVisible (displayInfoRow);
     },
-    
+
     getValueAt : function(index) {
         var row = this._rows[index];
         if (row) {
@@ -263,7 +261,7 @@ bobj.crv.params.ParameterUI = {
         }
         return null;
     },
-    
+
     getValues : function() {
         var values = [];
         for ( var i = 0, len = this._rows.length; i < len; ++i) {
@@ -271,7 +269,7 @@ bobj.crv.params.ParameterUI = {
         }
         return values;
     },
-    
+
     setValueAt : function(index, value) {
         var row = this._rows[index];
         if (row) {
@@ -280,7 +278,7 @@ bobj.crv.params.ParameterUI = {
 
         this.refreshUI ();
     },
-    
+
     resetValues : function(values) {
         if (!values) {
             return;
@@ -306,14 +304,13 @@ bobj.crv.params.ParameterUI = {
         else if (valuesLen > rowsLen) {
             for ( var i = rowsLen; i < valuesLen && (this.displayAllValues || i < this.maxNumValuesDisplayed); ++i) {
                 var row = this._addRow (values[i]);
-
             }
         }
-        
+
         MochiKit.Signal.signal(this, 'ParameterUIResized');
         this.refreshUI ();
     },
-    
+
     alignRangeRows : function() {
         if (!this.allowRange)
             return;
@@ -331,9 +328,9 @@ bobj.crv.params.ParameterUI = {
             rangeField.setLowerBoundValueWidth (lowerBoundWidth);
         }
     },
-    
+
     setValues : function(values) {
-        if (!values) 
+        if (!values)
             return;
 
         this.values = values;
@@ -358,13 +355,13 @@ bobj.crv.params.ParameterUI = {
         MochiKit.Signal.signal(this, 'ParameterUIResized');
         this.refreshUI ();
     },
-    
+
     setCleanValue : function(index, value) {
         var row = this._rows[index];
         if (row)
             row.setCleanValue (value);
     },
-    
+
     deleteValue : function(index) {
         if (index >= 0 && index < this._rows.length) {
             var row = this._rows[index];
@@ -377,22 +374,22 @@ bobj.crv.params.ParameterUI = {
 
         this.refreshUI ();
     },
-    
+
     setWarning : function(index, warning) {
         var row = this._rows[index];
         if (row) {
             row.setWarning (warning);
         }
     },
-    
+
     getWarning : function(index) {
         var row = this._rows[index];
-        if (row) 
+        if (row)
             return row.getWarning ();
-        
+
         return null;
     },
-    
+
     resize : function(w) {
         if (w !== null) {
             this.width = w;

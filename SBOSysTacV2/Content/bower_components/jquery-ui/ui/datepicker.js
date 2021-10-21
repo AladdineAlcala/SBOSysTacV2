@@ -10,19 +10,16 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
 			"./core"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 $.extend($.ui, { datepicker: { version: "1.11.4" } });
 
 var datepicker_instActive;
@@ -1807,7 +1804,6 @@ $.extend(Datepicker.prototype, {
 	/* Generate the month and year header. */
 	_generateMonthYearHeader: function(inst, drawMonth, drawYear, minDate, maxDate,
 			secondary, monthNames, monthNamesShort) {
-
 		var inMinYear, inMaxYear, month, years, thisYear, determineYear, year, endYear,
 			changeMonth = this._get(inst, "changeMonth"),
 			changeYear = this._get(inst, "changeYear"),
@@ -2040,7 +2036,6 @@ function datepicker_extendRemove(target, props) {
 					Object - settings for attaching new datepicker functionality
    @return  jQuery object */
 $.fn.datepicker = function(options){
-
 	/* Verify an empty collection wasn't passed - Fixes #6976 */
 	if ( !this.length ) {
 		return this;
@@ -2080,5 +2075,4 @@ $.datepicker.uuid = new Date().getTime();
 $.datepicker.version = "1.11.4";
 
 return $.datepicker;
-
 }));

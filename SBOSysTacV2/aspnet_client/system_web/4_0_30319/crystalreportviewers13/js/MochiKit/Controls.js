@@ -276,7 +276,6 @@ MochiKit.Base.update(Ajax.Request.prototype, {
 
             var body = this.options.postBody ? this.options.postBody : parameters;
             this.transport.send(this.options.method == 'post' ? body : null);
-
         } catch (e) {
             this.dispatchException(e);
         }
@@ -894,7 +893,6 @@ MochiKit.Base.update(Autocompleter.Local.prototype, {
 
                 for (var i = 0; i < instance.options.array.length &&
                     ret.length < instance.options.choices ; i++) {
-
                     var elem = instance.options.array[i];
                     var foundPos = instance.options.ignoreCase ?
                         elem.toLowerCase().indexOf(entry.toLowerCase()) :
@@ -918,7 +916,6 @@ MochiKit.Base.update(Autocompleter.Local.prototype, {
                         foundPos = instance.options.ignoreCase ?
                             elem.toLowerCase().indexOf(entry.toLowerCase(), foundPos + 1) :
                             elem.indexOf(entry, foundPos + 1);
-
                     }
                 }
                 if (partial.length) {
@@ -1281,4 +1278,3 @@ Ajax.InPlaceEditor.prototype = {
         }
     }
 };
-

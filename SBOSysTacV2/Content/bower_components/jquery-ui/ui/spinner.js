@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -19,12 +18,10 @@
 			"./button"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 function spinner_modifier( fn ) {
 	return function() {
 		var previous = this.element.val();
@@ -510,5 +507,4 @@ return $.widget( "ui.spinner", {
 		return this.uiSpinner;
 	}
 });
-
 }));

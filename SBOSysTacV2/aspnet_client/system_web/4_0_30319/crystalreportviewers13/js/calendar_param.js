@@ -11,7 +11,6 @@
 // Moved resource strings to top of file for translation
 // Added A.whatever:visited styles so that followed links appear as if they weren't followed
 
-
 // BEGIN USER-EDITABLE SECTION -----------------------------------------------------
 
 // CALENDAR COLORS
@@ -58,7 +57,6 @@ buildCalParts();
 
 // SET THE INITIAL VALUE OF THE GLOBAL DATE FIELD
 function setDateField(formName, dateField, hiddenField) {
-
     // ASSIGN THE INCOMING FIELD OBJECT TO A GLOBAL VARIABLE
     thisform = document.forms[formName];
     calDateField = thisform[dateField];
@@ -75,15 +73,12 @@ function setDateField(formName, dateField, hiddenField) {
     calDocBottom = buildBottomCalFrame();
 }
 
-
 // SET THE INITIAL CALENDAR DATE TO TODAY OR TO THE EXISTING VALUE IN dateField
 function setInitialDate() {
-
     calDate = ParseDate(inDate, DateTimeFormat);
-    
+
     // IF THE INCOMING DATE IS INVALID, USE THE CURRENT DATE
     if (isNaN(calDate)) {
-
         // ADD CUSTOM DATE PARSING HERE
         // IF IT FAILS, SIMPLY CREATE A NEW DATE OBJECT WHICH DEFAULTS TO THE CURRENT DATE
         calDate = new Date();
@@ -100,7 +95,6 @@ function setInitialDate() {
 
 // CREATE THE TOP CALENDAR FRAME
 function buildTopCalFrame() {
-
     // CREATE THE TOP FRAME OF THE CALENDAR
     var calDoc =
         "<HTML>" +
@@ -148,7 +142,6 @@ function buildBottomCalFrame() {
     month   = calDate.getMonth();
     year    = calDate.getFullYear();
 
-
     // GET GLOBALLY-TRACKED DAY VALUE (PREVENTS JAVASCRIPT DATE ANOMALIES)
     day     = calDay;
 
@@ -174,7 +167,6 @@ function buildBottomCalFrame() {
 
     // MAKE BEGINNING NON-DATE CELLS BLANK
     for (i = 0; i < startingPos; i++) {
-
         calDoc += blankCell;
 	columnCount++;
     }
@@ -185,7 +177,6 @@ function buildBottomCalFrame() {
 
     // DATE CELLS CONTAIN A NUMBER
     for (i = startingPos; i < days; i++) {
-
 	var paddingChar = "&nbsp;";
 
         // ADJUST SPACING SO THAT ALL LINKS HAVE RELATIVELY EQUAL WIDTHS
@@ -222,7 +213,6 @@ function buildBottomCalFrame() {
 
     // MAKE REMAINING NON-DATE CELLS BLANK
     for (i=days; i<42; i++)  {
-
         calDoc += blankCell;
 	columnCount++;
 
@@ -242,7 +232,6 @@ function buildBottomCalFrame() {
     return calDoc;
 }
 
-
 // WRITE THE MONTHLY CALENDAR TO THE BOTTOM CALENDAR FRAME
 function writeCalendar() {
 	// CREATE THE NEW CALENDAR FOR THE SELECTED MONTH & YEAR
@@ -260,7 +249,6 @@ function writeCalendar() {
 
 // SET THE CALENDAR TO TODAY'S DATE AND DISPLAY THE NEW CALENDAR
 function setToday() {
-
     // SET GLOBAL DATE TO TODAY'S DATE
     calDate = new Date();
 
@@ -281,10 +269,8 @@ function setToday() {
     writeCalendar();
 }
 
-
 // SET THE GLOBAL DATE TO THE NEWLY ENTERED YEAR AND REDRAW THE CALENDAR
 function setYear() {
-
     // GET THE NEW YEAR VALUE
     var year  = top.newWin.frames['topCalFrame'].document.calControl.year.value;
 
@@ -301,10 +287,8 @@ function setYear() {
     }
 }
 
-
 // SET THE GLOBAL DATE TO THE SELECTED MONTH AND REDRAW THE CALENDAR
 function setCurrentMonth() {
-
     // GET THE NEWLY SELECTED MONTH AND CHANGE THE CALENDAR ACCORDINGLY
     var month = top.newWin.frames['topCalFrame'].document.calControl.month.selectedIndex;
 
@@ -312,10 +296,8 @@ function setCurrentMonth() {
     writeCalendar();
 }
 
-
 // SET THE GLOBAL DATE TO THE PREVIOUS YEAR AND REDRAW THE CALENDAR
 function setPreviousYear() {
-
     var year  = top.newWin.frames['topCalFrame'].document.calControl.year.value;
 
     if (isFourDigitYear(year) && year > 1000) {
@@ -326,10 +308,8 @@ function setPreviousYear() {
     }
 }
 
-
 // SET THE GLOBAL DATE TO THE PREVIOUS MONTH AND REDRAW THE CALENDAR
 function setPreviousMonth() {
-
     var year  = top.newWin.frames['topCalFrame'].document.calControl.year.value;
     if (isFourDigitYear(year)) {
         var month = top.newWin.frames['topCalFrame'].document.calControl.month.selectedIndex;
@@ -352,10 +332,8 @@ function setPreviousMonth() {
     }
 }
 
-
 // SET THE GLOBAL DATE TO THE NEXT MONTH AND REDRAW THE CALENDAR
 function setNextMonth() {
-
     var year = top.newWin.frames['topCalFrame'].document.calControl.year.value;
 
     if (isFourDigitYear(year)) {
@@ -377,7 +355,6 @@ function setNextMonth() {
     }
 }
 
-
 // SET THE GLOBAL DATE TO THE NEXT YEAR AND REDRAW THE CALENDAR
 function setNextYear() {
     var year  = top.newWin.frames['topCalFrame'].document.calControl.year.value;
@@ -389,10 +366,8 @@ function setNextYear() {
     }
 }
 
-
 // GET NUMBER OF DAYS IN MONTH
 function getDaysInMonth()  {
-
     var days;
     var month = calDate.getMonth()+1;
     var year  = calDate.getFullYear();
@@ -419,10 +394,8 @@ function getDaysInMonth()  {
     return (days);
 }
 
-
 // CHECK TO SEE IF YEAR IS A LEAP YEAR
 function isLeapYear (Year) {
-
     if (((Year % 4)==0) && ((Year % 100)!=0) || ((Year % 400)==0)) {
         return (true);
     }
@@ -431,10 +404,8 @@ function isLeapYear (Year) {
     }
 }
 
-
 // ENSURE THAT THE YEAR IS FOUR DIGITS IN LENGTH
 function isFourDigitYear(year) {
-
     if (year == null || year.match(/^[0-9]{4}$/) == null){
         top.newWin.frames['topCalFrame'].document.calControl.year.value = calDate.getFullYear();
         top.newWin.frames['topCalFrame'].document.calControl.year.select();
@@ -445,13 +416,10 @@ function isFourDigitYear(year) {
     }
 }
 
-
 // BUILD THE MONTH SELECT LIST
 function getMonthSelect() {
-
     monthArray = new Array(L_January, L_February, L_March, L_April, L_May, L_June,
                            L_July, L_August, L_September, L_October, L_November, L_December);
-
 
     // DETERMINE MONTH TO SET AS DEFAULT
     var activeMonth = calDate.getMonth();
@@ -461,7 +429,6 @@ function getMonthSelect() {
 
     // LOOP THROUGH MONTH ARRAY
     for (i in monthArray) {
-
         // SHOW THE CORRECT MONTH IN THE SELECT LIST
         if (i == activeMonth) {
             monthSelect += "<OPTION SELECTED>" + monthArray[i] + "\n";
@@ -476,19 +443,15 @@ function getMonthSelect() {
     return monthSelect;
 }
 
-
 // SET DAYS OF THE WEEK DEPENDING ON LANGUAGE
 function createWeekdayList() {
-
  weekdayArray = new Array(L_Su,L_Mo,L_Tu,L_We,L_Th,L_Fr,L_Sa);
-
 
     // START HTML TO HOLD WEEKDAY NAMES IN TABLE FORMAT
     var weekdays = "<TR BGCOLOR='" + headingCellColor + "'>";
 
     // LOOP THROUGH WEEKDAY ARRAY
     for (i in weekdayArray) {
-
         weekdays += "<TD class='heading' align=center>" + weekdayArray[i] + "</TD>";
     }
     weekdays += "</TR>";
@@ -497,10 +460,8 @@ function createWeekdayList() {
     return weekdays;
 }
 
-
 // PRE-BUILD PORTIONS OF THE CALENDAR (FOR PERFORMANCE REASONS)
 function buildCalParts() {
-
     // GENERATE WEEKDAY HEADERS FOR THE CALENDAR
     weekdays = createWeekdayList();
 
@@ -545,7 +506,6 @@ function buildCalParts() {
             weekdays +
             "<TR>";
 
-
     // BUILD THE BOTTOM PORTION OF THE CALENDAR PAGE
     calendarEnd = "";
 
@@ -572,7 +532,6 @@ function buildCalParts() {
             "</HTML>";
 }
 
-
 // REPLACE ALL INSTANCES OF find WITH replace
 // inString: the string you want to convert
 // find:     the value to search for
@@ -583,7 +542,6 @@ function buildCalParts() {
 //           result: "To ski or not to ski"
 //
 function jsReplace(inString, find, replace) {
-
     var outString = "";
 
     if (!inString) {
@@ -603,20 +561,16 @@ function jsReplace(inString, find, replace) {
     }
 }
 
-
 // JAVASCRIPT FUNCTION -- DOES NOTHING (USED FOR THE HREF IN THE CALENDAR CALL)
 function doNothing() {
 }
 
-
 // ENSURE THAT VALUE IS TWO DIGITS IN LENGTH
 function makeTwoDigit(inValue) {
-
     var numVal = parseInt(inValue, 10);
 
     // VALUE IS LESS THAN TWO DIGITS IN LENGTH
     if (numVal < 10) {
-
         // ADD A LEADING ZERO TO THE VALUE AND RETURN IT
         return("0" + numVal);
     }
@@ -624,7 +578,6 @@ function makeTwoDigit(inValue) {
         return numVal;
     }
 }
-
 
 // SET FIELD VALUE TO THE DATE SELECTED AND CLOSE THE CALENDAR WINDOW
 function returnDate(inDay)
@@ -636,7 +589,7 @@ function returnDate(inDay)
     var day           = calDate.getDate();
     var month         = calDate.getMonth()+1;
     var year          = calDate.getFullYear();
-    
+
     // SET THE VALUE OF THE FIELD THAT WAS PASSED TO THE CALENDAR
     var dt = new Date(year, month - 1, day, 0, 0, 0);
     if (this.formatJsDate)
@@ -693,12 +646,12 @@ function ParseDatePrompt(inDate)
 function ParseDate(inDate, bDateTimeFormat)
 {
     var result;
-    
+
     if (bDateTimeFormat == true) {
         result = ParseDateTimePrompt(inDate);
     } else {
         result = ParseDatePrompt(inDate);
     }
-    
+
     return result;
 }

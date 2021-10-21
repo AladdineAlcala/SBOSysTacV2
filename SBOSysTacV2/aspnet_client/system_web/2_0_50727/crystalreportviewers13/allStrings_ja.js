@@ -140,12 +140,11 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
 File: labels.js
-
 
 =============================================================
 */
@@ -227,7 +226,7 @@ _closeDialog="ウィンドウを閉じる"
 
 _lstMoveUpLab="上へ移動"
 _lstMoveDownLab="下へ移動"
-_lstMoveLeftLab="左へ移動" 
+_lstMoveLeftLab="左へ移動"
 _lstMoveRightLab="右へ移動"
 _lstNewNodeLab="ネストされたフィルタを追加"
 _lstAndLabel="AND"
@@ -275,7 +274,7 @@ _calendarSelectionLab="選択された日"
 
 _menuCheckLab="チェック済み"
 _menuDisableLab="無効"
-	
+
 _level="レベル"
 _closeTab="タブを閉じる"
 _of=" of "

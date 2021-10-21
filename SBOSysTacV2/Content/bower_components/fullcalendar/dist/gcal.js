@@ -79,17 +79,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ })
 /************************************************************************/
 /******/ ({
-
 /***/ 1:
 /***/ (function(module, exports) {
-
 module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ }),
 
 /***/ 2:
 /***/ (function(module, exports) {
-
 /*
 derived from:
 https://github.com/Microsoft/tslib/blob/v1.6.0/tslib.js
@@ -107,24 +104,20 @@ exports.__extends = function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 
-
 /***/ }),
 
 /***/ 266:
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var exportHooks = __webpack_require__(1);
 var GcalEventSource_1 = __webpack_require__(267);
 exportHooks.EventSourceParser.registerClass(GcalEventSource_1.default);
 exportHooks.GcalEventSource = GcalEventSource_1.default;
 
-
 /***/ }),
 
 /***/ 267:
 /***/ (function(module, exports, __webpack_require__) {
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var $ = __webpack_require__(3);
@@ -310,12 +303,10 @@ function injectQsComponent(url, component) {
     });
 }
 
-
 /***/ }),
 
 /***/ 3:
 /***/ (function(module, exports) {
-
 module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
 
 /***/ })

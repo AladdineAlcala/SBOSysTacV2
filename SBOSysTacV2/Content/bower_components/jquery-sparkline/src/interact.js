@@ -134,7 +134,6 @@
         }
     });
 
-
     Tooltip = createClass({
         sizeStyle: 'position: static !important;' +
             'display: block !important;' +
@@ -210,7 +209,6 @@
                 }
                 x = this.mousex - this.offsetLeft;
                 y = this.mousey - this.offsetTop;
-
             } else {
                 this.mousex = x = x - this.offsetLeft;
                 this.mousey = y = y - this.offsetTop;
@@ -244,4 +242,3 @@
             $(window).unbind('resize.jqs scroll.jqs');
         }
     });
-

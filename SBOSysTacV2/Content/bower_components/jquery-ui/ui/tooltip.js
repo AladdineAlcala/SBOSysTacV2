@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -19,12 +18,10 @@
 			"./position"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.widget( "ui.tooltip", {
 	version: "1.11.4",
 	options: {
@@ -209,11 +206,9 @@ return $.widget( "ui.tooltip", {
 		}
 
 		content = contentOption.call( target[0], function( response ) {
-
 			// IE may instantly serve a cached response for ajax requests
 			// delay this call to _open so the other call to _open runs first
 			that._delay(function() {
-
 				// Ignore async response if tooltip was closed already
 				if ( !target.data( "ui-tooltip-open" ) ) {
 					return;
@@ -356,7 +351,6 @@ return $.widget( "ui.tooltip", {
 
 		// The tooltip may already be closed
 		if ( !tooltipData ) {
-
 			// We set ui-tooltip-open immediately upon open (in open()), but only set the
 			// additional data once there's actually content to show (in _open()). So even if the
 			// tooltip doesn't have full data, we always remove ui-tooltip-open in case we're in
@@ -469,5 +463,4 @@ return $.widget( "ui.tooltip", {
 		this.liveRegion.remove();
 	}
 });
-
 }));

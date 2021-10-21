@@ -5,7 +5,7 @@
  */
 
 /**
- * GroupTree constructor. 
+ * GroupTree constructor.
  *
  * @param kwArgs.id       [String]  DOM node id
  * @param kwArgs.icns     [String]  URL to magnifying glass icon
@@ -49,7 +49,7 @@ bobj.crv.newGroupTree = function(kwArgs) {
     o.initOld = o.init;
 
     UPDATE (o, bobj.crv.GroupTree);
-   
+
     return o;
 };
 
@@ -62,7 +62,7 @@ bobj.crv.GroupTree = {
         while (this._curSigs.length > 0) {
             bobj.crv.SignalDisposer.dispose (this._curSigs.pop ());
         }
-         
+
         /* disposes all the children*/
         while (this._children.length > 0) {
             var child = this._children.pop ();
@@ -76,14 +76,14 @@ bobj.crv.GroupTree = {
         this.sub = [];
         bobj.removeAllChildElements(this.treeLyr);
     },
-    
+
     getModalChildren : function () {
         return this._modalChildren;
     },
-    
+
     /**
      * Adds a child widget as a group tree node.
-     * 
+     *
      * @param widget
      *            [Widget] Child tree node widget
      */
@@ -102,17 +102,17 @@ bobj.crv.GroupTree = {
         this._curSigs.push (connect (widget, 'grpDrilldown', Base.partial (Signal.signal, this, 'grpDrilldown')));
         this._curSigs.push (connect (widget, 'grpNodeRetrieveChildren', Base.partial (Signal.signal, this, 'grpNodeRetrieveChildren')));
     },
-    
+
     /**
      * Since GroupTree nodes are delay loaded, we would have to store the timeout ids to cancel them in case user drill down to another views
      */
     delayedBatchAdd : function(children) {
         if (!children || children.length == 0)
             return;
-        
+
         this._modalChildren = children;
         var childrenHTML = "";
-        
+
         var numChildrenToRender = children.length > 100 ? 100 : children.length;
         if(numChildrenToRender > 0) {
             for(var i = 0 ; i < numChildrenToRender ; i++) {
@@ -122,51 +122,51 @@ bobj.crv.GroupTree = {
                     childrenHTML += child.getHTML(0);
             }
         }
-        
+
         if(this.initialized()) {
             this.appendChildrenHTML (childrenHTML);
             this.initChildren ();
         }
     },
-    
+
     appendChildrenHTML : function (childrenHTML) {
         append (this.treeLyr, childrenHTML);
     },
-    
+
     init : function() {
         this.initOld ();
         bobj.setVisualStyle (this.layer, this.visualStyle);
         this.css.verticalAlign = "top";
 
         this.initChildren ();
-        
+
         this._groupTreeListener = new bobj.crv.GroupTreeListener(this);
     },
-    
+
     update : function(update) {
         if (update.cons == "bobj.crv.newGroupTree") {
             var args = update.args;
             var path = args.lastExpandedPath;
             /* if path specified, then update specific path, otherwise recreate grouptree */
             // if user has expands a node after session timeout -> the whole gt must be rerendered
-            if (path.length > 0 && this._children.length > 0) { 
+            if (path.length > 0 && this._children.length > 0) {
                 this.updateNode (path, update);
             } else {
                 this.refreshChildNodes (update)
             }
         }
     },
-        
+
     delayedAddChild : function(widget) {
         this.addChild (widget);
         append (this.treeLyr, widget.getHTML (this.initialIndent));
     },
-    
+
     initChildren : function () {
         while(this._lastNodeIdInitialized < this._children.length - 1)
             this.initNextChild ();
     },
-    
+
     initNextChild : function () {
         var nextNode = null;
         var nextNodeId = -1;
@@ -179,17 +179,17 @@ bobj.crv.GroupTree = {
             nextNode = this._lastNodeInitialized.nextSibling;
             while(!(nextNode.id && nextNode.id.indexOf("TWe_") > -1))
                 nextNode = nextNode.nextSibling;
-            
+
             nextNodeId = this._lastNodeIdInitialized + 1;
         }
-        
+
         if(nextNodeId < this._children.length && nextNode != null) {
             this._children[nextNodeId].init(nextNode);
             this._lastNodeInitialized = nextNode;
-            this._lastNodeIdInitialized = nextNodeId; 
+            this._lastNodeIdInitialized = nextNodeId;
         }
     },
-    
+
     getBestFitHeight : function () {
         return bobj.getHiddenElementDimensions (this.layer).h;
         /**
@@ -206,13 +206,13 @@ bobj.crv.GroupTree = {
         this.delayedBatchAdd (update.children);
         MochiKit.Signal.signal(this, "refreshed");
     },
-   
+
     /**
      * @param path
      *            path to the node that should be updated eg) 0-1-2
      * @param newTree
      *            the new tree sent in update
-     * 
+     *
      * Updates children of node specified by path
      */
     updateNode : function(path, newTree) {
@@ -244,7 +244,7 @@ bobj.crv.GroupTree = {
             }
         }
     },
-    
+
     getChildrenCount : function () {
         return this.sub.length;
     },
@@ -255,14 +255,14 @@ bobj.crv.GroupTree = {
     _collapse : function(expandPath) {
         MochiKit.Signal.signal (this, 'grpNodeCollapse', expandPath);
     },
-    
+
     /**
      * Private. Callback function when a (complete) group tree node is expanded.
      */
     _expand : function(expandPath) {
         MochiKit.Signal.signal (this, 'grpNodeExpand', expandPath);
     },
-    
+
     resize : function(width, height) {
         bobj.setOuterSize (this.layer, width, height);
         MochiKit.Signal.signal(this, "resized");

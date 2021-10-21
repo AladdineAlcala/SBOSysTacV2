@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -19,12 +18,10 @@
 			"./widget"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.widget("ui.selectable", $.ui.mouse, {
 	version: "1.11.4",
 	options: {
@@ -155,11 +152,9 @@ return $.widget("ui.selectable", $.ui.mouse, {
 				return false;
 			}
 		});
-
 	},
 
 	_mouseDrag: function(event) {
-
 		this.dragged = true;
 
 		if (this.options.disabled) {
@@ -281,7 +276,5 @@ return $.widget("ui.selectable", $.ui.mouse, {
 
 		return false;
 	}
-
 });
-
 }));

@@ -41,7 +41,6 @@ test('DATA-API: data-provide="datepicker" on component', function(){
     ok(comp.data('datepicker'), 'append component initialized by "click" event on add-on');
     comp.remove();
 
-
     html = '<div class="input-prepend date" data-provide="datepicker">'+
                 '<span class="add-on"><i class="icon-th"></i></span><input>'+
             '</div>';

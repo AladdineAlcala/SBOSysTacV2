@@ -8,7 +8,7 @@ bobj.crv.newReportAlbum = function(kwArgs) {
     var UPDATE = mb.update;
     var BIND = mb.bind;
     var ALBUM = bobj.crv.ReportAlbum;
-    
+
     kwArgs = UPDATE({
         id: bobj.uniqueId(),
         initTabIdx: 0, // Index of tab to select when initializing
@@ -16,31 +16,30 @@ bobj.crv.newReportAlbum = function(kwArgs) {
         height: 500,
         displayDrilldownTab : true
     }, kwArgs);
-    
-    
+
     // Override TabbedZone's TabBarWidget
     var tabbar = newNaviBarWidget(bobj.uniqueId(), _HorizTabTopWithClose, null, null, kwArgs.width, null, null, null, false, true, false);
     var o = newTabbedZone(kwArgs.id, tabbar, kwArgs.width, kwArgs.height);
-    
+
     tabbar.cb = BIND(ALBUM._onSelectTab, o);
     tabbar.closeTab = BIND(ALBUM._removeView, o, true);
-    bobj.fillIn(o, kwArgs);  
+    bobj.fillIn(o, kwArgs);
     o.widgetType = 'ReportAlbum';
     o._views = [];
     o._hideFrame = false;
-    
-    // Attach member functions 
+
+    // Attach member functions
     o.selectOld = o.select;
     UPDATE(o, ALBUM);
-    
-    return o;    
+
+    return o;
 };
 
 bobj.crv.ReportAlbum = {
     getTabBarHeight : function() {
         return this.tabs.getHeight ();
     },
-    
+
     init : function() {
         /*
          * This is not nice... Copied super class' init code here so that select will be called only once.
@@ -56,7 +55,6 @@ bobj.crv.ReportAlbum = {
                  adding bobj.crv.getInitHtml to their HTML)
                  it is report album's responsibility to initialize its children */
                 views[i].init ();
-
             }
 
             if (this.initTabIdx < 0 || this.initTabIdx >= views.length) {
@@ -66,10 +64,10 @@ bobj.crv.ReportAlbum = {
             this.select (this.initTabIdx);
         }
     },
-    
+
     showDrilldownTab  : function (isDisplay) {
         this.displayDrilldownTab = isDisplay;
-        try 
+        try
         {
             /* IE supports table-row since IE8. */
             var displayStyle;
@@ -81,11 +79,11 @@ bobj.crv.ReportAlbum = {
         }
         catch(e){}
     },
-    
+
     isDisplayDrilldownTab : function () {
         return this.displayDrilldownTab;
     },
-    
+
     setHideFrame : function(hide) {
         this._hideFrame = hide;
         var selectedView = this.getSelectedView ();
@@ -126,7 +124,7 @@ bobj.crv.ReportAlbum = {
         this.initTabIdx = update.args.initTabIdx;
         this.select (this.initTabIdx);
     },
-    
+
     /**
      * @return index of the tab specified by viewstateid
      */
@@ -138,7 +136,7 @@ bobj.crv.ReportAlbum = {
 
         return -1;
     },
-    
+
     /**
      * Adds view to its list of views. Since this method can be called after initialization time, its HTML
      * is first added to report album, and then widget is intialized.
@@ -150,14 +148,14 @@ bobj.crv.ReportAlbum = {
         append (getLayer (this.id + "_container"), tabHTML);
         view.init ();
     },
-    
+
     addChild : function(view) {
         if (view) {
             this._views.push (view);
             this.add (view.label, view.tooltip);
         }
     },
-    
+
     getHTML : function() {
         var html = this.beginHTML ();
         var children = this._views;
@@ -168,7 +166,6 @@ bobj.crv.ReportAlbum = {
         html += this.endHTML ();
         return html;
     },
-    
 
     /**
      * @param index,
@@ -188,7 +185,7 @@ bobj.crv.ReportAlbum = {
 
         return html;
     },
-    
+
     /**
      * Resize the outer dimensions of the ReportAlbum. The standard resize method, inherited from TabbedZoneWidget, resizes the container. We
      * can't override it without breaking things.
@@ -196,7 +193,7 @@ bobj.crv.ReportAlbum = {
     resizeOuter : function(w, h) {
         var tabHeight = 33;
         var frameWidth = 10;
-        
+
         if(bobj.isNumber (h)) {
             if(this.displayDrilldownTab)
                 h -= tabHeight;
@@ -204,12 +201,11 @@ bobj.crv.ReportAlbum = {
         }
 
         if(bobj.isNumber (w)) {
-            if(!this._hideFrame) 
+            if(!this._hideFrame)
                 w -= frameWidth;
-            
+
             w = Math.max(w, 0);
         }
-        
 
         this.resize (w, h);
         this.tabs.resize (w);
@@ -219,9 +215,7 @@ bobj.crv.ReportAlbum = {
             selectedView.resize (); /* Notify ReportView of resize */
         }
     },
-    
-    
-    
+
     /**
      * @return Returns a suggested size for the widget as an object with width and height integer properties that specify the dimensions in
      *         pixels.
@@ -241,7 +235,7 @@ bobj.crv.ReportAlbum = {
             height : h
         };
     },
-    
+
     /**
      * Overrides parent. Opens a tab with a positioned div. The positioning prevents
      * the ReportView from disappearing in IE.
@@ -257,14 +251,13 @@ bobj.crv.ReportAlbum = {
             }
         });
     },
-    
+
     /**
      * @return Returns the select ReportView or null if no view is selected
      */
     getSelectedView : function() {
         return this._views[this.oldIndex];
     },
-    
 
     /**
      * Overrides parent. Selects a report view to display.
@@ -275,7 +268,6 @@ bobj.crv.ReportAlbum = {
         var partial = MochiKit.Base.partial;
 
         if (index >= 0 && index < this._views.length && index != this.oldIndex) {
-
             /* Disposes currently selected view */
             var selectedView = this.getSelectedView ();
             if (selectedView) {
@@ -294,10 +286,10 @@ bobj.crv.ReportAlbum = {
             MochiKit.Signal.signal (this, "viewChanged");
         }
     },
-    
+
     /**
      * Removes view specified by index from view list
-     * 
+     *
      * @param autoSelectNext
      *            [boolean] indicates whether another view should be auto selected after view specified by index is removed
      * @param index
@@ -308,13 +300,13 @@ bobj.crv.ReportAlbum = {
         var removedTab = this.tabs.items[index];
 
         autoSelectNext = (removedTab != null && removedTab.isSelected && autoSelectNext);
-        
+
         if (removedView) {
             removedView.dispose ();
             bobj.deleteWidget (removedView);
             MochiKit.Signal.signal (this, 'removeView', removedView);
         }
-  
+
         if (removedTab.isSelected) {
             /* oldIndex (index of currently selected view) needs to be reset so when
              response for the next selected view arrives
@@ -326,10 +318,9 @@ bobj.crv.ReportAlbum = {
         this.tabs.remove (index, autoSelectNext);
         bobj.deleteWidget (removedTab);
     },
-    
+
     _onSelectTab : function(index) {
         if(index != this.oldIndex)
             MochiKit.Signal.signal (this, 'selectView', this._views[index]);
     }
 };
-

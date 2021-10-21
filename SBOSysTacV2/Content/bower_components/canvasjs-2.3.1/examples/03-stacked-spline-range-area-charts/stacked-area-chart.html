@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
-<head>  
-<meta charset="UTF-8">
-<script>
+<head>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -20,7 +20,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	toolTip: {
 		shared: true
 	},
-	data: [{        
+	data: [{
 		type: "stackedArea",
 		showInLegend: true,
 		toolTipContent: "<span style='color:#4F81BC'><strong>{name}: </strong></span> {y}",
@@ -39,8 +39,8 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		{ x: 11, y: 105000 }
 		]
 	},
-	{        
-		type: "stackedArea",  
+	{
+		type: "stackedArea",
 		name: "Android",
 		toolTipContent: "<span style='color:#C0504E'><strong>{name}: </strong></span> {y}<br><b>Total:<b> #total",
 		showInLegend: true,
@@ -52,17 +52,17 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		{ x: 8,y: 21000 },
 		{ x: 9, y: 31000 },
 		{ x: 10, y: 46000 },
-		{ x: 11, y: 61000 }   
+		{ x: 11, y: 61000 }
 		]
 	}]
 });
 chart.render();
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

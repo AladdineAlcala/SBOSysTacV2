@@ -7,7 +7,6 @@
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
 
-
     var pt = moment.defineLocale('pt', {
         months : 'janeiro_fevereiro_março_abril_maio_junho_julho_agosto_setembro_outubro_novembro_dezembro'.split('_'),
         monthsShort : 'jan_fev_mar_abr_mai_jun_jul_ago_set_out_nov_dez'.split('_'),
@@ -60,5 +59,4 @@
     });
 
     return pt;
-
 })));

@@ -2,16 +2,13 @@
 /* Written by Levon Zakaryan (levon.zakaryan@gmail.com)*/
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['hy'] = {
 	closeText: 'Փակել',
 	prevText: '&#x3C;Նախ.',
@@ -33,5 +30,4 @@ datepicker.regional['hy'] = {
 datepicker.setDefaults(datepicker.regional['hy']);
 
 return datepicker.regional['hy'];
-
 }));

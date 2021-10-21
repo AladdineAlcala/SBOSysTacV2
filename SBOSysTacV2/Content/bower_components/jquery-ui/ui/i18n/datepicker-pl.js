@@ -2,16 +2,13 @@
 /* Written by Jacek Wysocki (jacek.wysocki@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['pl'] = {
 	closeText: 'Zamknij',
 	prevText: '&#x3C;Poprzedni',
@@ -33,5 +30,4 @@ datepicker.regional['pl'] = {
 datepicker.setDefaults(datepicker.regional['pl']);
 
 return datepicker.regional['pl'];
-
 }));

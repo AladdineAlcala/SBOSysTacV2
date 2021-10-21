@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">
-<script>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function() {
 
 var dataPoints = [];
@@ -37,7 +37,7 @@ function addData(data) {
 		xValue++;
 		yValue = parseInt(data[0][1]);
 	}
-	
+
 	newDataCount = 1;
 	chart.render();
 	setTimeout(updateData, 500);
@@ -48,11 +48,11 @@ function updateData() {
 }
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

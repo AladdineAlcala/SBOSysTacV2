@@ -6,7 +6,6 @@ define( [
 	"../data/var/dataPriv",
 	"../core/init"
 ], function( jQuery, stripAndCollapse, isFunction, rnothtmlwhite, dataPriv ) {
-
 "use strict";
 
 function getClass( elem ) {
@@ -87,7 +86,6 @@ jQuery.fn.extend( {
 				if ( cur ) {
 					j = 0;
 					while ( ( clazz = classes[ j++ ] ) ) {
-
 						// Remove *all* instances
 						while ( cur.indexOf( " " + clazz + " " ) > -1 ) {
 							cur = cur.replace( " " + clazz + " ", " " );
@@ -127,14 +125,12 @@ jQuery.fn.extend( {
 			var className, i, self, classNames;
 
 			if ( isValidValue ) {
-
 				// Toggle individual class names
 				i = 0;
 				self = jQuery( this );
 				classNames = classesToArray( value );
 
 				while ( ( className = classNames[ i++ ] ) ) {
-
 					// Check each className given, space separated list
 					if ( self.hasClass( className ) ) {
 						self.removeClass( className );
@@ -147,7 +143,6 @@ jQuery.fn.extend( {
 			} else if ( value === undefined || type === "boolean" ) {
 				className = getClass( this );
 				if ( className ) {
-
 					// Store className if set
 					dataPriv.set( this, "__className__", className );
 				}
@@ -182,5 +177,4 @@ jQuery.fn.extend( {
 		return false;
 	}
 } );
-
 } );

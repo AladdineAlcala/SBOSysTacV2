@@ -35,7 +35,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 var _display = DataTable.Responsive.display;
 var _original = _display.modal;
 var _modal = $(
@@ -71,7 +70,6 @@ _display.modal = function ( options ) {
 		}
 	};
 };
-
 
 return DataTable.Responsive;
 }));

@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -23,12 +22,10 @@
 			"./resizable"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.widget( "ui.dialog", {
 	version: "1.11.4",
 	options: {
@@ -196,7 +193,6 @@ return $.widget( "ui.dialog", {
 		this._untrackInstance();
 
 		if ( !this.opener.filter( ":focusable" ).focus().length ) {
-
 			// support: IE9
 			// IE9 throws an "Unspecified error" accessing document.activeElement from an <iframe>
 			try {
@@ -205,7 +201,6 @@ return $.widget( "ui.dialog", {
 				// Support: IE9, IE10
 				// If the <body> is blurred, IE will switch windows, see #4520
 				if ( activeElement && activeElement.nodeName.toLowerCase() !== "body" ) {
-
 					// Hiding a focused element doesn't trigger blur in WebKit
 					// so in case we have nothing to focus on, explicitly blur the active element
 					// https://bugs.webkit.org/show_bug.cgi?id=47182
@@ -823,7 +818,6 @@ return $.widget( "ui.dialog", {
 		});
 
 		if ( !this.document.data( "ui-dialog-overlays" ) ) {
-
 			// Prevent use of anchors and inputs
 			// Using _on() for an event handler shared across many instances is
 			// safe because the dialogs stack and must be closed in reverse order
@@ -872,5 +866,4 @@ return $.widget( "ui.dialog", {
 		}
 	}
 });
-
 }));

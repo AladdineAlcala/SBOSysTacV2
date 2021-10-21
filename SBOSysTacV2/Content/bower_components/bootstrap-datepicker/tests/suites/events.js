@@ -477,7 +477,6 @@ test('Changing view mode triggers changeViewMode', function () {
   this.picker.find('.datepicker-decades .datepicker-switch').click();
   equal(triggered, 4);
   equal(viewMode, 4);
-
 });
 
 test('Clicking inside content of date with custom beforeShowDay content works', function(){

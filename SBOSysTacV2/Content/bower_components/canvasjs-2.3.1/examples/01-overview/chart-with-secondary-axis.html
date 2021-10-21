@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -13,7 +13,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	},
 	subtitles: [{
 		text: "Click Legend to Hide or Unhide Data Series"
-	}], 
+	}],
 	axisX: {
 		title: "States"
 	},
@@ -41,7 +41,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	data: [{
 		type: "column",
 		name: "Oil Filter",
-		showInLegend: true,      
+		showInLegend: true,
 		yValueFormatString: "#,##0.# Units",
 		dataPoints: [
 			{ label: "New Jersey",  y: 19034.5 },
@@ -78,10 +78,10 @@ function toggleDataSeries(e) {
 }
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

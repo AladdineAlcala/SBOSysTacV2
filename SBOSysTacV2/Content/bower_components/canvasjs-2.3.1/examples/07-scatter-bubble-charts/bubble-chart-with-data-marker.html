@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">  
-<script type="text/javascript">
+    <meta charset="UTF-8">
+    <script type="text/javascript">
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -23,10 +23,10 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		valueFormatString:"#,##0 km,.",
 		interval: 50000
 	},
-	data: [{        
+	data: [{
 		type: "bubble",
 		markerType: "triangle",
-		toolTipContent: "<b>{label}</b><br/><b>Land Area:</b> {x}mn sq. km <br/><b>Rail Road:</b> {y} km<br/> <b>Population:</b>{z}mn",
+		toolTipContent: "<b>{label}</b><br /><b>Land Area:</b> {x}mn sq. km <br /><b>Rail Road:</b> {y} km<br /> <b>Population:</b>{z}mn",
 		dataPoints: [
 			{ x: 9.14, y: 228513, z:309.34, label:"US" },
 			{ x: 16.37, y: 85292, z:141.92, label:"Russia" },
@@ -50,10 +50,10 @@ var chart = new CanvasJS.Chart("chartContainer", {
 chart.render();
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

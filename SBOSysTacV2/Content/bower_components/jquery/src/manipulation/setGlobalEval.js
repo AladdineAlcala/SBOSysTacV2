@@ -1,7 +1,6 @@
 define( [
 	"../data/var/dataPriv"
 ], function( dataPriv ) {
-
 "use strict";
 
 // Mark scripts as having already been evaluated

@@ -231,7 +231,7 @@ function promptengine_addRangeValue (
 {
     var lowerBoundPickList = form[promptID + "SelectLowerRangeValue"];
     var upperBoundPickList = form[promptID + "SelectUpperRangeValue"];
-    
+
     lowerBound = form[promptID + "LowerBound"];
     upperBound = form[promptID + "UpperBound"];
     //handle select box, not text box case
@@ -246,7 +246,7 @@ function promptengine_addRangeValue (
     lowerUnBounded = form[promptID + "NoLBoundCheck"].checked;
     upperUnBounded = form[promptID + "NoUBoundCheck"].checked;
     lvalue = uvalue = "";
-    
+
     if ( ! lowerUnBounded )
     {
         if ( ! promptengine_checkRangeBoundValue ( lowerBound.value, type ) ) {
@@ -265,10 +265,10 @@ function promptengine_addRangeValue (
         }
         uvalue = upperBound.value;
     }
-    
+
     var ldisplay = "";
     var udisplay = "";
-    
+
     var found = false;
     if (lowerBoundPickList != null && lvalue != null && lvalue.length > 0)
     {
@@ -286,7 +286,7 @@ function promptengine_addRangeValue (
     }
     if (!found)
         ldisplay = (lowerBound.text && !lowerUnBounded) ? lowerBound.text : lvalue;
-        
+
     found = false;
     if (upperBoundPickList != null && uvalue != null && uvalue.length > 0)
     {
@@ -326,7 +326,7 @@ function promptengine_addRangeValue (
 
     promptEntry = new Option(display,value,false,false);
     theList = form[promptID + "ListBox"];
-    
+
     // search the list/select box for the new option, if the returned index is -1, i.e., no such option, add it
     // otherwise, highlight that option
     var idx = promptengine_findOptionInList(theList, value);
@@ -334,24 +334,24 @@ function promptengine_addRangeValue (
         theList.selectedIndex = idx;
     else
         theList.options[theList.length] = promptEntry;
-	
+
     return true;
 }
 
 ////////////////////////////////////
 // search the given select object for the given option value, and returns its index.
 function promptengine_findOptionInList(selectObj, optionValue)
-{	
+{
     if (selectObj == null || optionValue == null || optionValue == "")
         return -1;
-	
+
     for (var i = 0; i < selectObj.options.length; i++)
     {
         if (selectObj.options[i].value == optionValue)
             return i;
     }
 
-    return -1;	
+    return -1;
 }
 
 ////////////////////////////////////
@@ -411,7 +411,7 @@ function promptengine_onSetNullCheckClicked(
         if (form[promptID + "DiscreteValue"] != null)
             form[promptID + "DiscreteValue"].disabled = false;
         if (form[promptID + "SelectValue"] != null)
-            form[promptID + "SelectValue"].disabled = false;            
+            form[promptID + "SelectValue"].disabled = false;
     }
 }
 
@@ -503,7 +503,7 @@ function promptengine_removeValue(
         promptengine_deselectAllItems(lbox);
         lbox.options[lastSelected - 1].selected = true;
     }
-    
+
     return changed;
 }
 
@@ -760,10 +760,10 @@ function promptengine_checkValue (
 {
     if (value == null)
         return false;
-        
+
     if (value == "_crNULL_")
         return true;
-        
+
     if ( type == 'n' && ! regNumber.test ( value ) )
     {
         if (value.length > 0)
@@ -835,8 +835,8 @@ function promptengine_checkRangeBoundValue (
         alert ( (typeof L_Empty) != 'undefined'? L_Empty : L_NoValue );
         return false;
     }
-        
-    return promptengine_checkValue(value, type);    
+
+    return promptengine_checkValue(value, type);
 }
 
 function promptengine_isSubmitEvent(evt)
@@ -1037,19 +1037,19 @@ function promptengine_showHidePromptByKey(fieldSetId, imgId, currentImgPath, cha
 {
     var correctKey = false;
     var fieldSet = document.getElementById(fieldSetId);
-    
+
     if (fieldSet == null)
         return;
 
     if (isNetscape)
     {
-        if ( (evt.which == LEFT_ARROW_KEY && fieldSet.style.display == "") || 
+        if ( (evt.which == LEFT_ARROW_KEY && fieldSet.style.display == "") ||
             (evt.which == RIGHT_ARROW_KEY && fieldSet.style.display == "none") )
                 correctKey = true;
     }
     else
     {
-        if ( (window.event.keyCode == LEFT_ARROW_KEY && fieldSet.style.display == "") || 
+        if ( (window.event.keyCode == LEFT_ARROW_KEY && fieldSet.style.display == "") ||
             (window.event.keyCode == RIGHT_ARROW_KEY && fieldSet.style.display == "none") )
                 correctKey = true;
     }
@@ -1060,13 +1060,13 @@ function promptengine_showHidePromptByKey(fieldSetId, imgId, currentImgPath, cha
 
 function promptengine_showHidePrompt(fieldSetId, imgId, currentImgPath, changeImgPath, evt)
 {
-    var imgElem;    
+    var imgElem;
     imgElem = document.getElementById(imgId);
 
     if (imgElem!= null && fieldSetId != null)
     {
         if (!imgElem.origImage)
-            imgElem.origImage = imgElem.src;    
+            imgElem.origImage = imgElem.src;
 
         var fieldSet = document.getElementById(fieldSetId);
         if (fieldSet != null)
@@ -1092,18 +1092,18 @@ function promptengine_showHidePrompt(fieldSetId, imgId, currentImgPath, changeIm
 
 function promptengine_scrollTo(elt)
 {
-	if (!elt) return; 
-	
-	var offsetTop = elt.offsetTop; 
+	if (!elt) return;
+
+	var offsetTop = elt.offsetTop;
 	if (!offsetTop) return;
-	
-	var myOffsetParent = elt.offsetParent; 
-	while( myOffsetParent ) 	
-	{ 
-		offsetTop += myOffsetParent.offsetTop; 
-		myOffsetParent = myOffsetParent.offsetParent; 
-	}  
-	
+
+	var myOffsetParent = elt.offsetParent;
+	while( myOffsetParent )
+	{
+		offsetTop += myOffsetParent.offsetTop;
+		myOffsetParent = myOffsetParent.offsetParent;
+	}
+
 	window.scrollTo(0, offsetTop);
 }
 

@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    <meta charset="utf-8">
-    <title>Eve Use Case</title>
-    <script src="eve.js"></script>
-    <script>
-        var log = function (text) {
+<meta charset="utf-8">
+<title>Eve Use Case</title>
+<script src="eve.js"></script>
+<script>var log = function (text) {
             log.log = log.log || [];
             log.log.push(text);
         };
         window.onload = function () {
             document.getElementById("res").innerHTML = log.log.join("<br>");
-        };
-    </script>
-    <script>
-        var f1, f2, f3, f4;
+        };</script>
+<script>var f1, f2, f3, f4;
 
         // setting up listeners
         eve.on("hit", f1 = function () {
@@ -31,7 +28,7 @@
         eve.once("hit", function () {
             log("   You scoundrel!");
         })(-1);
-        
+
         // fire events
         log("In your face!");
         eve("hit/face");
@@ -60,7 +57,6 @@
         // I’m hit!
         log("Take that!");
         eve("hit.chest.leg");
-        // I’m hit!
-    </script>
-    <pre id="res"></pre>
+        // I’m hit!</script>
+<pre id="res"></pre>
 </html>

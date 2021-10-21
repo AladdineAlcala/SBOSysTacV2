@@ -20,7 +20,6 @@ dom.js dialog.js palette.js must be included before
 =============================================================
 */
 
-
 // ================================================================================
 // ================================================================================
 //
@@ -49,20 +48,20 @@ function newWaitDialogBoxWidget(id,w,h,title,bShowCancel,cancelCB,bShowLabel,tex
 	// Min values for width and height of this dialog box
 	var minW=250
 	var minH=150
-	if (w<minW) 
+	if (w<minW)
 		w=minW
-	if (h<minH) 
+	if (h<minH)
 		h=minH
-		
-    // Justin: I've added the close button to the top right corner (last param=false) so that the user can hide 
-    // the progress dialog.  The cancel button option of the waitdialog adds a full button to the dialog 
+
+    // Justin: I've added the close button to the top right corner (last param=false) so that the user can hide
+    // the progress dialog.  The cancel button option of the waitdialog adds a full button to the dialog
     // and gives the user the expectation that the request has been cancelled vs. just hiding this dialog.
 	var o=newDialogBoxWidget(id,title,w,null,null,WaitDialogBoxWidget_cancelCB, noCloseButton,true)
-	
+
 	// Properties
-	o.pad=5	
+	o.pad=5
 	o.frZone=newFrameZoneWidget(id+"_frZone",null,null)
-	o.showLabel=(bShowLabel!=null)?bShowLabel:false	
+	o.showLabel=(bShowLabel!=null)?bShowLabel:false
 	o.showCancel=(bShowCancel!=null)?bShowCancel:false
 	o.label=newWidget(id+"_label")
 	o.label.text=text
@@ -76,15 +75,15 @@ function newWaitDialogBoxWidget(id,w,h,title,bShowCancel,cancelCB,bShowLabel,tex
 		o.cancelButton.init=function(){};
 		o.cancelButton.setDisplay=function(x) {};
 		o.cancelButton.setDisabled=function(x) {};
-		o.cancelButton.getHTML=function(){ return '' };		
+		o.cancelButton.getHTML=function(){ return '' };
 	}
 	o.cancelCB=cancelCB
-	
+
 	// Methods
 	o.oldDialogBoxInit=o.init
 	o.init=WaitDialogBoxWidget_init
 	o.getHTML=WaitDialogBoxWidget_getHTML
-	o.setShowCancel=WaitDialogBoxWidget_setShowCancel	
+	o.setShowCancel=WaitDialogBoxWidget_setShowCancel
 	o.setShowLabel=WaitDialogBoxWidget_setShowLabel
 
 	return o
@@ -103,7 +102,7 @@ function WaitDialogBoxWidget_init()
 
 	o.label.init()
 	o.label.setDisplay(o.showLabel)
-	
+
 	o.cancelButton.init()
 	o.cancelButton.setDisplay(o.showCancel)
 }
@@ -174,7 +173,7 @@ function WaitDialogBoxWidget_setShowCancel(show,cancelCB)
 
 	o.showCancel=show
 	o.cancelButton.setDisabled(false)
-	o.cancelButton.setDisplay(show)	
+	o.cancelButton.setDisplay(show)
 	o.cancelCB=cancelCB
 }
 
@@ -201,7 +200,7 @@ function WaitDialogBoxWidget_cancelCB()
 	var o=this
 	if (o.cancelCB != null)
 	{
-		o.cancelCB()		
+		o.cancelCB()
 		o.cancelButton.setDisabled(true);
 	}
 }
@@ -214,7 +213,7 @@ function CancelButton_cancelCB()
 	var o=this
 	if (o.par.cancelCB != null)
 	{
-		o.par.cancelCB()		
+		o.par.cancelCB()
 		o.par.cancelButton.setDisabled(true);
 	}
 }

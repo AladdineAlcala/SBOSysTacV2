@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">	
-<script>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
@@ -24,7 +24,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	},
 	data: [{
 		type: "bubble",
-		toolTipContent: "<b>{name}</b><br/>Employment: {x}% <br/> Agri-Land: {y}mn sq. km<br/> Population: {z}mn",
+		toolTipContent: "<b>{name}</b><br />Employment: {x}% <br /> Agri-Land: {y}mn sq. km<br /> Population: {z}mn",
 		dataPoints: [
 			{ x: 39.6, y: 5.225, z:1347, name:"China" },
 			{ x: 3.3, y: 4.17, z:21.49, name:"Australia" },
@@ -51,10 +51,10 @@ var chart = new CanvasJS.Chart("chartContainer", {
 chart.render();
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

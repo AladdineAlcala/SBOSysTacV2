@@ -2,16 +2,13 @@
 /* Written by Mohd Nawawi Mohamad Jamili (nawawi@ronggeng.net). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['ms'] = {
 	closeText: 'Tutup',
 	prevText: '&#x3C;Sebelum',
@@ -33,5 +30,4 @@ datepicker.regional['ms'] = {
 datepicker.setDefaults(datepicker.regional['ms']);
 
 return datepicker.regional['ms'];
-
 }));

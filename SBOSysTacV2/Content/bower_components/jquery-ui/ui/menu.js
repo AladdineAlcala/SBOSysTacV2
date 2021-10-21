@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -19,12 +18,10 @@
 			"./position"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 return $.widget( "ui.menu", {
 	version: "1.11.4",
 	defaultElement: "<ul>",
@@ -88,7 +85,6 @@ return $.widget( "ui.menu", {
 					if ( target.has( ".ui-menu" ).length ) {
 						this.expand( event );
 					} else if ( !this.element.is( ":focus" ) && $( this.document[ 0 ].activeElement ).closest( ".ui-menu" ).length ) {
-
 						// Redirect focus to the menu
 						this.element.trigger( "focus", [ true ] );
 
@@ -498,7 +494,6 @@ return $.widget( "ui.menu", {
 	},
 
 	_isDivider: function( item ) {
-
 		// Match hyphen, em dash, en dash
 		return !/[^\-\u2014\u2013\s]/.test( item.text() );
 	},
@@ -642,5 +637,4 @@ return $.widget( "ui.menu", {
 			});
 	}
 });
-
 }));

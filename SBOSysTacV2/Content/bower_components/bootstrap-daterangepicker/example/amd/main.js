@@ -8,7 +8,6 @@ requirejs.config({
 
 requirejs(['jquery', 'moment', 'daterangepicker'] , function ($, moment) {
 $(document).ready(function() {
-
   $('#config-text').keyup(function() {
     eval($(this).val());
   });
@@ -134,8 +133,6 @@ $(document).ready(function() {
     $('#config-text').val("$('#demo').daterangepicker(" + JSON.stringify(options, null, '    ') + ", function(start, end, label) {\n  console.log(\"New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')\");\n});");
 
     $('#config-demo').daterangepicker(options, function(start, end, label) { console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')'); });
-
   }
-
 });
 });

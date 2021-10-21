@@ -17,11 +17,11 @@ Calendar Widget
 */
 
 /**
- * Get a shared calendar instance 
+ * Get a shared calendar instance
  */
 bobj.crv.Calendar.getInstance = function() {
     if (!bobj.crv.Calendar.__instance) {
-        bobj.crv.Calendar.__instance = bobj.crv.newCalendar();    
+        bobj.crv.Calendar.__instance = bobj.crv.newCalendar();
     }
     return bobj.crv.Calendar.__instance;
 };
@@ -29,7 +29,7 @@ bobj.crv.Calendar.getInstance = function() {
 bobj.crv.Calendar.Signals = {
     OK_CLICK: 'okClick',
     CANCEL_CLICK: 'cancelClick',
-    ON_HIDE: 'onHide' 
+    ON_HIDE: 'onHide'
 };
 
 bobj.crv.newCalendar = function(kwArgs) {
@@ -38,29 +38,29 @@ bobj.crv.newCalendar = function(kwArgs) {
         id: bobj.uniqueId() + "_calendar",
         showTime: false,
         date: new Date(),
-        // List of formats to match in order of preference. Once a format is 
+        // List of formats to match in order of preference. Once a format is
         // matched, the time field will be displayed in that format.
-        timeFormats: ["HH:mm:ss", "H:mm:ss", "H:m:s", "HH:mm", "H:mm", "H:m", 
-            "h:mm:ss a", "h:m:s a", "h:mm:ssa", "h:m:sa", "h:mm a", "h:m a", 
+        timeFormats: ["HH:mm:ss", "H:mm:ss", "H:m:s", "HH:mm", "H:mm", "H:m",
+            "h:mm:ss a", "h:m:s a", "h:mm:ssa", "h:m:sa", "h:mm a", "h:m a",
             "h:mma", "h:ma"]
     }, kwArgs);
-    
+
     var o = newMenuWidget( );
-        
+
     o.widgetType = 'Calendar';
-    
+
     // Update instance with constructor arguments
     bobj.fillIn(o, kwArgs);
-    
+
     // Update instance with member functions
     o._menuJustInTimeInit = o.justInTimeInit;
     UPDATE(o, bobj.crv.Calendar);
-    
+
     o._curTimeFormat = o.timeFormats[0];
     o._cells = [];
     o._firstDay = 0;
     o._numDays = 0;
-    
+
     return o;
 };
 
@@ -70,9 +70,9 @@ bobj.crv.Calendar._createHeaderButtons = function() {
     var dx = 46;
     var dyUp = 0;
     var dyDown = 12;
-    
+
     var bind = MochiKit.Base.bind;
-    
+
     this._prevMonthBtn = newIconWidget(this.id+"_pm",_skin+'../lov.gif',bind(this._onPrevMonthClick, this),"",_calendarPrevMonthLab,w,h,dx,dyDown);
     this._prevYearBtn = newIconWidget(this.id+"_py",_skin+'../lov.gif',bind(this._onPrevYearClick, this),"",_calendarPrevYearLab,w,h,dx,dyDown);
     this._nextMonthBtn = newIconWidget(this.id+"_nm",_skin+'../lov.gif',bind(this._onNextMonthClick, this),"",_calendarNextMonthLab,w,h,dx,dyUp);
@@ -81,7 +81,7 @@ bobj.crv.Calendar._createHeaderButtons = function() {
 
 bobj.crv.Calendar._createTimeTextField = function() {
     var bind = MochiKit.Base.bind;
-    
+
     this._timeField = newTextFieldWidget(
         this.id + '_time',
         bind(this._onTimeChange, this),  //changeCB
@@ -92,7 +92,7 @@ bobj.crv.Calendar._createTimeTextField = function() {
         null,  //tooltip
         null,  //width
         null,  //focusCB
-        null); //blurCB    
+        null); //blurCB
 };
 
 bobj.crv.Calendar._createOKCancelButtons = function() {
@@ -107,7 +107,7 @@ bobj.crv.Calendar._createOKCancelButtons = function() {
  */
 bobj.crv.Calendar.justInTimeInit = function() {
     this._menuJustInTimeInit();
-    
+
     this._prevMonthBtn.init();
     this._prevYearBtn.init();
     this._nextMonthBtn.init();
@@ -115,23 +115,23 @@ bobj.crv.Calendar.justInTimeInit = function() {
 
     this._okBtn.init();
     this._cancelBtn.init();
-    
+
     this._timeField.init();
     this._timeField.layer.style.width = '100%';
     this._timeField.setValue(bobj.external.date.formatDate(this.date, this._curTimeFormat));
-    
+
     this._timeRow = getLayer(this.id + '_timeRow');
     this._timeSep = getLayer(this.id + '_timeSep');
-    
+
     this._month = getLayer(this.id + "_month");
     this._year = getLayer(this.id + "_year");
-    
+
     var numCells = 6 * 7; // six rows in the calendar with 7 days each
     for (var i = 0; i < numCells; i++) {
         this._cells[i] = getLayer(this.id + '_c' + i);
     }
-    
-    this._update(); 
+
+    this._update();
 };
 
 /**
@@ -147,7 +147,7 @@ bobj.crv.Calendar.getHTML = function() {
     var DIV = h.DIV;
     var SPAN = h.SPAN;
     var A = h.A;
-    
+
     this._createHeaderButtons();
     this._createTimeTextField();
     this._createOKCancelButtons();
@@ -156,13 +156,13 @@ bobj.crv.Calendar.getHTML = function() {
     var onmousedown = "eventCancelBubble(event)";
     var onmouseup = "eventCancelBubble(event)";
     var onkeypress = "eventCancelBubble(event)";
-    
+
     var dayHeaderAtt = {'class':"calendarTextPart"};
-   
+
     var html = TABLE({dir: 'ltr', id: this.id, border:"0", cellpadding:"0", cellspacing:"0",
         onkeydown: onkeydown, onmousedown: onmousedown, onmouseup: onmouseup, onkeypress: onkeypress,
         'class':"menuFrame", style:{cursor:"default", visibility:"hidden",'z-index': 10000}},
-        TBODY(null, 
+        TBODY(null,
             TR(null, TD(null, this._getMonthYearHTML())),
             TR(null, TD({align:"center"},
                 TABLE({border:"0", cellspacing:"0", cellpadding:"0", style:{margin:"2px", 'margin-top': "6px"}},
@@ -180,14 +180,14 @@ bobj.crv.Calendar.getHTML = function() {
                     TR({id:this.id + '_timeRow', style:{display:this.showTime ? '' : 'none'}},
                         TD({colspan:"7", style:{'padding-top':"3px", 'padding-bottom':"3px", 'padding-right':"10px", 'padding-left':"10px"}},
                             this._timeField.getHTML())),
-                    TR({id:this.id + '_timeSep',style:{display:this.showTime ? '' : 'none'}}, 
-                        TD({colspan:"7", style:{padding:"2px"}}, this._getSeparatorHTML())),  
+                    TR({id:this.id + '_timeSep',style:{display:this.showTime ? '' : 'none'}},
+                        TD({colspan:"7", style:{padding:"2px"}}, this._getSeparatorHTML())),
                     TR(null, TD({colspan:"7", align:"right", style:{'padding-bottom':"3px", 'padding-top':"3px"}},
-                        TABLE(null, TBODY(null, TR(null, 
+                        TABLE(null, TBODY(null, TR(null,
                             TD(null, this._okBtn.getHTML()),
                             TD(null, this._cancelBtn.getHTML())))))))))));
-                            
-    return this._getLinkHTML('startLink_' + this.id) + html + this._getLinkHTML('endLink_' + this.id);                         
+
+    return this._getLinkHTML('startLink_' + this.id) + html + this._getLinkHTML('endLink_' + this.id);
 };
 
 bobj.crv.Calendar._getMonthYearHTML = function() {
@@ -198,7 +198,7 @@ bobj.crv.Calendar._getMonthYearHTML = function() {
     var TD = h.TD;
     var DIV = h.DIV;
     var SPAN = h.SPAN;
-    
+
     return TABLE({'class':"dialogzone", width:"100%", cellpadding:"0", cellspacing:"0"},
         TBODY(null,
             TR(null,
@@ -219,23 +219,23 @@ bobj.crv.Calendar._getSeparatorHTML = function() {
     var TBODY = h.TBODY;
     var TR = h.TR;
     var TD = h.TD;
-    
-    return TABLE({width:"100%", 
-                  height:"3", 
-                  cellpadding:"0", 
-                  cellspacing:"0", 
-                  border:"0", 
+
+    return TABLE({width:"100%",
+                  height:"3",
+                  cellpadding:"0",
+                  cellspacing:"0",
+                  border:"0",
                   style:backImgOffset(_skin+"menus.gif",0,80)},
         TBODY(null, TR(null, TD())));
 };
 
 bobj.crv.Calendar._getLinkHTML = function(id) {
     return bobj.html.A({
-        id: id, 
-        href: "javascript:void(0)", 
-        onfocus: "MenuWidget_keepFocus('"+this.id+"')", 
+        id: id,
+        href: "javascript:void(0)",
+        onfocus: "MenuWidget_keepFocus('"+this.id+"')",
         style:{
-            visibility:"hidden", 
+            visibility:"hidden",
             position:"absolute"
     }});
 };
@@ -244,16 +244,16 @@ bobj.crv.Calendar._getDaysHTML = function() {
     var TD = bobj.html.TD;
     var DIV = bobj.html.DIV;
     var html = '';
-    
+
     for (i = 0; i < 6; ++i) {
         html += '<tr align="right">';
-        
+
         for (j = 0; j < 7; ++j) {
             var cellNum = j + (i * 7);
             var eventArgs =  "(this," + cellNum + "," + "event);";
-            
-            html += TD({id: this.id + '_c' + (i * 7 + j), 
-                        'class':"calendarTextPart", 
+
+            html += TD({id: this.id + '_c' + (i * 7 + j),
+                        'class':"calendarTextPart",
                         onmousedown: "bobj.crv.Calendar._onDayMouseDown" + eventArgs,
                         onmouseover: "bobj.crv.Calendar._onDayMouseOver" + eventArgs,
                         onmouseout:  "bobj.crv.Calendar._onDayMouseOut"  + eventArgs,
@@ -264,7 +264,7 @@ bobj.crv.Calendar._getDaysHTML = function() {
 
         html += '</tr>';
     }
-    
+
     return html;
 };
 
@@ -274,30 +274,30 @@ bobj.crv.Calendar._getDaysHTML = function() {
 bobj.crv.Calendar._update = function() {
     var numCells = 6 * 7; // six rows in the calendar with 7 days each
     var curDate = this.date.getDate();
-    
+
     var info = this._getMonthInfo(this.date.getMonth(), this.date.getFullYear());
-    
+
     var firstCellInMonth = info.firstDay;
     this._firstDay = info.firstDay;
     this._numDays = info.numDays;
-    
+
     var year = "" + this.date.getFullYear();
     while (year.length < 4) {
-        year = "0" + year;    
+        year = "0" + year;
     }
     this._year.innerHTML = year;
     this._month.innerHTML = _month[this.date.getMonth()];
-    
+
     this._selectedDate = null;
-    
+
     for (var cellNum = 0; cellNum < numCells; cellNum++) {
         var cell = this._cells[cellNum].firstChild;
         var cssClass = "menuCalendar";
         var cellDate = this._getDateFromCellNum(cellNum);
-        
+
         if (cellDate < 1 || cellDate > info.numDays) {
             cell.innerHTML = "";
-            cell.tabIndex = "-1"; 
+            cell.tabIndex = "-1";
         }
         else {
             cell.innerHTML = "" + cellDate;
@@ -307,7 +307,7 @@ bobj.crv.Calendar._update = function() {
                 this._selectedDay = cell;
             }
         }
-        
+
         cell.className = cssClass;
     }
 };
@@ -317,12 +317,12 @@ bobj.crv.Calendar._getMonthInfo = function(month, year) {
     date.setDate(1);
     date.setFullYear(year);
     date.setMonth(month);
-    
+
     var firstDay = date.getDay(); // First day of the week in this month
-    
+
     date.setDate(28);
     var lastDate = 28; // Last date in this month
-    
+
     for (var i = 29; i < 32; i++) {
         date.setDate(i);
         if (date.getMonth() != month) {
@@ -330,21 +330,21 @@ bobj.crv.Calendar._getMonthInfo = function(month, year) {
         }
         lastDate = i;
     }
-    
+
     return {firstDay: firstDay, numDays: lastDate};
 };
 
 bobj.crv.Calendar._setDayOfMonth = function(date) {
     if (date > 0 && date <= this._numDays) {
-        var prevDate = this.date.getDate(); 
-        
+        var prevDate = this.date.getDate();
+
         if (date != prevDate) {
-            var prevCell = this._getCellFromDate(prevDate); 
-        
+            var prevCell = this._getCellFromDate(prevDate);
+
             if (prevCell) {
-                prevCell.firstChild.className = "menuCalendar";    
+                prevCell.firstChild.className = "menuCalendar";
             }
-            
+
             this._getCellFromDate(date).firstChild.className = "menuCalendarSel";
             this.date.setDate(date);
         }
@@ -363,24 +363,24 @@ bobj.crv.Calendar._getDateFromCellNum = function(cellNum) {
 bobj.crv.Calendar._onDayMouseOver = function(node, cellNum, event) {
     var o = getWidget(node);
     var div = node.firstChild;
-    
+
     var date = cellNum - o._firstDay + 1;
     if (date < 1 || date > o._numDays) {
-        div.className = "menuCalendar";    
+        div.className = "menuCalendar";
     }
     else {
-        div.className = "menuCalendarSel";    
+        div.className = "menuCalendarSel";
     }
 };
 
 bobj.crv.Calendar._onDayMouseOut = function(node, cellNum, event) {
     var o = getWidget(node);
     var div = node.firstChild;
-    
-    var date = cellNum - o._firstDay + 1; 
-    
+
+    var date = cellNum - o._firstDay + 1;
+
     if (date != o.date.getDate()) {
-        div.className = "menuCalendar";  
+        div.className = "menuCalendar";
     }
 };
 
@@ -397,7 +397,7 @@ bobj.crv.Calendar._onDayDoubleClick = function(node, cellNum, event) {
 
 bobj.crv.Calendar._onDayKeyDown = function(node, cellNum, event) {
     event = new MochiKit.Signal.Event(node, event);
-    var key = event.key().string; 
+    var key = event.key().string;
     if (key === "KEY_ENTER") {
         var o = getWidget(node);
         var date = cellNum - o._firstDay + 1;
@@ -446,8 +446,8 @@ bobj.crv.Calendar._onNextYearClick = function() {
 
 bobj.crv.Calendar._onOKClick = function() {
     this.restoreFocus();
-    MochiKit.Signal.signal(this, this.Signals.OK_CLICK, this._copyDate(this.date));  
-    this.show(false);  
+    MochiKit.Signal.signal(this, this.Signals.OK_CLICK, this._copyDate(this.date));
+    this.show(false);
 };
 
 bobj.crv.Calendar._copyDate = function(date) {
@@ -473,13 +473,13 @@ bobj.crv.Calendar._onTimeChange = function() {
     var text = this._timeField.getValue();
     var date = null;
     var format = null;
-    
+
     for (var i = 0; i < this.timeFormats.length && date === null; ++i) {
         format = this.timeFormats[i];
         date = bobj.external.date.getDateFromFormat(text, format);
     }
-    
-    if (date) { 
+
+    if (date) {
         this._curTimeFormat = format;
         this.date.setHours(date.getHours());
         this.date.setMinutes(date.getMinutes());
@@ -514,9 +514,9 @@ bobj.crv.Calendar.setDate = function(date) {
  * @param isShow [bool] Show calendar if true. Hide it if false.
  * @param x [int] x coordinate for left of calendar
  * @param y [int] y coordinate for top of calendar
- * @param isAlignRight [bool, optional] When true, the x coordinate applies to 
+ * @param isAlignRight [bool, optional] When true, the x coordinate applies to
  *                                      the right edge of the calendar
- * @param isAlignBottom [bool, optional] When true, the y coordinate applies to 
+ * @param isAlignBottom [bool, optional] When true, the y coordinate applies to
  *                                      the bottom edge of the calendar
  */
 bobj.crv.Calendar.show = function(isShow, x, y, isAlignRight, isAlignBottom) {

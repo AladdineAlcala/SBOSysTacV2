@@ -2,16 +2,13 @@
 /* Writers: (joan.leon@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['ca'] = {
 	closeText: 'Tanca',
 	prevText: 'Anterior',
@@ -33,5 +30,4 @@ datepicker.regional['ca'] = {
 datepicker.setDefaults(datepicker.regional['ca']);
 
 return datepicker.regional['ca'];
-
 }));

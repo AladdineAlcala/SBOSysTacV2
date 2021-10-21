@@ -3,7 +3,7 @@
  */
 bobj.crv.setAllClasses = function (widget, prefix)
 {
-    if (widget && widget.setClasses) 
+    if (widget && widget.setClasses)
     {
         if (prefix)
             widget.setClasses(prefix + '_default', prefix + '_depressed', prefix + '_hover', prefix + '_depressed');
@@ -34,37 +34,35 @@ bobj.crv.newToolbar = function(kwArgs) {
             fontStyle       : null,
             fontSize        : null
        }
-        
    }, kwArgs);
-   
+
     var o = newPaletteContainerWidget(kwArgs.id);
 
     o.margin = 0;
-    bobj.fillIn(o, kwArgs);  
+    bobj.fillIn(o, kwArgs);
     o._rightZoneWgts = [];
     o.widgetType = 'Toolbar';
-    
+
     // Attach member functions (since we can't use prototypes)
     o.initOld = o.init;
     UPDATE(o, bobj.crv.Toolbar);
-    
+
     o.palette = newPaletteWidget(o.id + "_palette");
     o.add(o.palette);
-    return o;    
+    return o;
 };
 
 bobj.crv.Toolbar = {
-        
     /**
      * Adds a widget to the toolbar and attaches callbacks to known types.
-     * 
+     *
      * @param widget
      *            [Widget] The control to be displayed in the toolbar.
      */
     addChild : function(widget) {
         if(!widget)
             return;
-        
+
         var SIGNAL = MochiKit.Signal.signal;
         var PARTIAL = MochiKit.Base.partial;
         var BIND = MochiKit.Base.bind;
@@ -124,56 +122,56 @@ bobj.crv.Toolbar = {
             this.palette.add (widget);
         }
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getSearchTextControl : function () {
         return this.searchTextControl;
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getZoomControl : function () {
         return this.zoomControl;
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getSelectPageControl : function () {
         return this.selectPageControl;
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getButtonGroup : function () {
         return this.group;
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getNextPageButton : function () {
         return this.nextPageButton;
     },
-        
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getPrevPageButton : function () {
         return this.prevPageButton;
     },
-    
+
     init : function() {
         this.initOld ();
         bobj.setVisualStyle (this.layer, this.visualStyle);
         this.palette.init ();
         this._updateNavButtons ();
     },
-    
+
     write : function() {
         this._addRightZone ();
         this.begin ();
@@ -181,7 +179,7 @@ bobj.crv.Toolbar = {
         this.end ();
         document.write (bobj.crv.getInitHTML (this.widx));
     },
-    
+
     /**
      * Overrides parent. Opens the toolbar's tags.
      */
@@ -196,12 +194,12 @@ bobj.crv.Toolbar = {
             }
         });
     },
-    
+
     getHTML : function() {
         this._addRightZone ();
         return (this.beginHTML () + this.palette.getHTML () + this.endHTML ());
     },
-    
+
     getWidth : function() {
         var itemLayer;
         var width = 0;
@@ -217,9 +215,9 @@ bobj.crv.Toolbar = {
         }
         return width;
     },
-    
+
     /**
-     * Private. Adds right-aligned widgets to the right zone of the palette 
+     * Private. Adds right-aligned widgets to the right zone of the palette
      */
     _addRightZone : function() {
         this.palette.beginRightZone ();
@@ -231,7 +229,7 @@ bobj.crv.Toolbar = {
 
         delete this._rightZoneWgts;
     },
-    
+
     /**
      * Private. Updates the enabled state of navigation buttons based on the current page number and the number of pages.
      */
@@ -258,7 +256,7 @@ bobj.crv.Toolbar = {
             }
         }
     },
-    
+
     setPageNumber : function(curPage, numPages) {
         if (this.selectPageControl) {
             if (curPage)
@@ -270,7 +268,7 @@ bobj.crv.Toolbar = {
             this._updateNavButtons ();
         }
     },
-    
+
     update : function(update) {
         if (update) {
             for ( var childNum in update.children) {
@@ -316,19 +314,19 @@ bobj.crv.newToolbarMenu = function(kwArgs) {
         text: L_bobj_crv_File,
         tooltip: L_bobj_crv_FileMenu
     }, kwArgs);
-    
+
     var o = newSingleIconMenuWidget(kwArgs.id, kwArgs.icon, null, kwArgs.text, kwArgs.tooltip);
     o.widgetType = 'ToolbarMenu';
-    
+
     o._tbBtnOldInit = o.init;
-    
+
     bobj.crv.setAllClasses(o.icon, null);
     bobj.crv.setAllClasses(o.arrow, null);
     bobj.crv.setAllClasses(o, 'filemenu');
     o.arrow.resize(13, (_ie?20:18));
-    
+
     MochiKit.Base.update(o, bobj.crv.ToolbarMenu);
-    return o;    
+    return o;
 };
 
 bobj.crv.ToolbarMenu = {
@@ -343,7 +341,7 @@ bobj.crv.ToolbarMenu = {
             this.icon.clickCB = null;
         }
     },
-    
+
     /**
      * Add toolbar menu items to toolbar
      */
@@ -369,7 +367,7 @@ bobj.crv.ToolbarMenu = {
                 break;
         }
     },
-    
+
     commonAddChild : function(menu, widget) {
         switch (widget.widgetType) {
             case 'Separator':
@@ -391,7 +389,6 @@ bobj.crv.ToolbarMenu = {
     }
 };
 
-
 /**
  * ToolbarSubMenu Constructor
  */
@@ -407,12 +404,12 @@ bobj.crv.newToolbarSubMenu = function(kwArgs) {
         disDy: 0,
         alt : null
     }, kwArgs);
-    
+
     o.submenu = newMenuWidget(o.id);
     o.widgetType = 'ToolbarSubMenu';
 
     MochiKit.Base.update(o, bobj.crv.ToolbarSubMenu);
-    return o;    
+    return o;
 };
 
 bobj.crv.ToolbarSubMenu = {
@@ -424,13 +421,12 @@ bobj.crv.ToolbarSubMenu = {
     }
 };
 
- 
 /**
  * ToolbarMenuItem constructor
  */
 bobj.crv.newToolbarMenuItem = function(kwArgs) {
     var o = MochiKit.Base.update({
-        id: bobj.uniqueId(), 
+        id: bobj.uniqueId(),
         widgetType:null,
         text: null,
         icon: null,
@@ -440,8 +436,8 @@ bobj.crv.newToolbarMenuItem = function(kwArgs) {
         disDx: 0,
         disDy: 0,
         alt : null
-    }, kwArgs); 
-    
+    }, kwArgs);
+
     MochiKit.Base.update(o, bobj.crv.ToolbarMenuItem);
     return o;
 };
@@ -461,11 +457,11 @@ bobj.crv.ToolbarMenuItem = {
 };
 
 /**
- * Constructor. Base class for toolbar buttons. 
+ * Constructor. Base class for toolbar buttons.
  */
 bobj.crv.newToolbarButton = function(kwArgs) {
     kwArgs = MochiKit.Base.update({
-        id: bobj.uniqueId(), 
+        id: bobj.uniqueId(),
         icon: null,
         tooltip: null,
         text: null,
@@ -479,32 +475,32 @@ bobj.crv.newToolbarButton = function(kwArgs) {
         disDx: 25,
         disDy: 3,
         isTabEnabled: true
-    }, kwArgs);    
-    
-    var o = newIconWidget( 
-        kwArgs.id,        
-        kwArgs.icon,      
-        kwArgs.clickCB,   
-        kwArgs.text,      
+    }, kwArgs);
+
+    var o = newIconWidget(
+        kwArgs.id,
+        kwArgs.icon,
+        kwArgs.clickCB,
+        kwArgs.text,
         kwArgs.tooltip,
-        kwArgs.width,     
-        kwArgs.height,    
-        kwArgs.dx,        
-        kwArgs.dy,        
-        kwArgs.disDx,      
+        kwArgs.width,
+        kwArgs.height,
+        kwArgs.dx,
+        kwArgs.dy,
+        kwArgs.disDx,
         kwArgs.disDy,
-        kwArgs.isTabEnabled);    
-        
+        kwArgs.isTabEnabled);
+
     if (kwArgs.text)
         bobj.crv.setAllClasses(o, null);
     else
         bobj.crv.setAllClasses(o, 'toolbar_button');
-    
+
     o._tbBtnOldInit = o.init;
     o._tbBtnKwArgs = kwArgs;
     MochiKit.Base.update(o, bobj.crv.ToolbarButton);
-    
-    return o;    
+
+    return o;
 };
 
 bobj.crv.ToolbarButton = {
@@ -521,7 +517,6 @@ bobj.crv.ToolbarButton = {
         }
     }
 };
-
 
 /**
  * PrevPageButton constructor
@@ -546,7 +541,7 @@ bobj.crv.newNextPageButton = function(kwArgs) {
         tooltip: L_bobj_crv_NextPage,
         dx:3, dy:bobj.crv.allInOne.toolbarNextPageDy + 3, disDx:25, disDy:bobj.crv.allInOne.toolbarNextPageDy + 3, width:16, height:16
     }, kwArgs));
-    
+
     o.widgetType = 'NextPageButton';
     return o;
 };
@@ -560,7 +555,7 @@ bobj.crv.newDrillUpButton = function(kwArgs) {
         tooltip: L_bobj_crv_DrillUp,
         dx:0, dy:bobj.crv.allInOne.toolbarUpDy, disDx:22, disDy:bobj.crv.allInOne.toolbarUpDy
     }, kwArgs));
-    
+
     o.widgetType = 'DrillUpButton';
     return o;
 };
@@ -575,7 +570,7 @@ bobj.crv.newRefreshButton = function(kwArgs) {
         dy: bobj.crv.allInOne.toolbarRefreshDy,
         disDy:  bobj.crv.allInOne.toolbarRefreshDy
     }, kwArgs));
-    
+
     o.widgetType = 'RefreshButton';
     return o;
 };
@@ -590,7 +585,7 @@ bobj.crv.newExportButton = function(kwArgs) {
         dy: bobj.crv.allInOne.toolbarExportDy,
         disDy:  bobj.crv.allInOne.toolbarExportDy
     }, kwArgs));
-    
+
     o.widgetType = 'ExportButton';
     o.closeCB = MochiKit.Base.bind(function() { if (this.focus) this.focus(); }, o);
     return o;
@@ -606,7 +601,7 @@ bobj.crv.newPrintButton = function(kwArgs) {
         dy: bobj.crv.allInOne.toolbarPrintDy,
         disDy:  bobj.crv.allInOne.toolbarPrintDy
     }, kwArgs));
-    
+
     o.widgetType = 'PrintButton';
     o.closeCB = MochiKit.Base.bind(function() { if (this.focus) this.focus(); }, o);
     return o;
@@ -636,7 +631,7 @@ bobj.crv.newLogoIcon = function(kwArgs) {
     );
 
     bobj.crv.setAllClasses(o, null);
-    
+
     o.layoutAlign = 'right';
     o.widgetType = 'LogoIcon';
     return o;
@@ -662,7 +657,7 @@ bobj.crv.newCatalystIcon = function(kwArgs) {
     );
 
     bobj.crv.setAllClasses(o, null);
-    
+
     o.layoutAlign = 'right';
     o.widgetType = 'CatalystIcon';
     return o;
@@ -674,7 +669,7 @@ bobj.crv.newCatalystIcon = function(kwArgs) {
 bobj.crv.newToolbarSeparator = function() {
     var o = newPaletteVerticalSepWidget(bobj.uniqueId());
     o.getHTML = function() {
-        return bobj.html.DIV({id: this.id, style: {width: '6px'}}, 
+        return bobj.html.DIV({id: this.id, style: {width: '6px'}},
                 bobj.html.IMG({src: _skin+'../transp.gif', 'class':'toolbar_separator'}));
     };
     return o;
@@ -690,14 +685,14 @@ bobj.crv.newZoomControl = function(kwArgs) {
         id: bobj.uniqueId()
     }, kwArgs);
     if (bobj.isNumber(kwArgs.initialZoom)) {
-        kwArgs.initialZoom = kwArgs.initialZoom + '%';    
+        kwArgs.initialZoom = kwArgs.initialZoom + '%';
     }
-    
+
     var o = newTextComboWidget(
         kwArgs.id,
         5,               // max chars
         L_bobj_crv_Zoom, // tooltip
-        60,              // width 
+        60,              // width
         bobj.crv.ZoomControl._zoomChangeCB, // change CB
         null,            // check CB
         null,            // beforeShow CB
@@ -708,23 +703,23 @@ bobj.crv.newZoomControl = function(kwArgs) {
     bobj.crv.setAllClasses(o.arrow, 'toolbar_menuarrow');
 
     o.menu.setAccelEnabled(false);
-        
+
     var zoomList = ['400%','300%','200%','150%','125%','100%','75%','50%','25%'];
-    
+
     for (var i = 0, len = zoomList.length; i < len; ++i) {
         var zoomLevel = zoomList[i];
         o.add(zoomLevel, zoomLevel, (zoomLevel == kwArgs.initialZoom));
     }
     o.text.setValue(kwArgs.initialZoom);
-    
+
     o.zoomCB = null;
     o.widgetType = 'ZoomControl';
-    
+
     o.initOld = o.init;
     o._initZoom = kwArgs.initialZoom;
-    
-    UPDATE(o, bobj.crv.ZoomControl); 
-    
+
+    UPDATE(o, bobj.crv.ZoomControl);
+
     return o;
 };
 
@@ -733,13 +728,13 @@ bobj.crv.ZoomControl = {
         this.initOld ();
         this.setZoom (this._initZoom);
     },
-    
+
     update : function(update) {
         if(update.cons == "bobj.crv.newZoomControl") {
             this.setZoom(update.args.initialZoom);
         }
     },
-    
+
     setZoom : function(lvl) {
         var zoomVal = parseInt (lvl, 10);
         if (bobj.isNumber (zoomVal)) {
@@ -758,7 +753,7 @@ bobj.crv.ZoomControl = {
         }
         return false;
     },
-    
+
     _zoomChangeCB : function() {
         var zoomLvl = parseInt (this.text.getValue (), 10);
 
@@ -790,32 +785,32 @@ bobj.crv.newSelectPageControl = function(kwArgs) {
         id: bobj.uniqueId(),
         showMenu: true
         }, kwArgs);
-    
+
     // calculate the text input width on construction time to eliminate resize visual while loading
     var textNWidth = bobj.crv.SelectPageControl.getTextAndWidth(kwArgs.curPage, kwArgs.numPages);
-    
+
     var o = newTextComboWidget(
             kwArgs.id,
             75,              // max chars
             L_bobj_crv_PageNav,   	// tooltip
-            textNWidth.width + 13,  // calculated width of the input field + what is getting substracted from it this constructor 
+            textNWidth.width + 13,  // calculated width of the input field + what is getting substracted from it this constructor
             null,            // change CB
             null,            // check CB
             null,            // beforeShow CB
             null             // form name
             );
-    
+
     // Constructor args
     o.curPage = kwArgs.curPage;
     o.numPages = kwArgs.numPages;
-    
+
     if (kwArgs.showMenu) {
         o.addMenuItem(bobj.uniqueId(),L_bobj_crv_FirstPage,null,null,0,0,false,0,0);
         o.addMenuItem(bobj.uniqueId(),L_bobj_crv_LastPage,null,null,0,0,false,0,0);
-        
+
         o.firstPage = o.menu.items[0];
         o.lastPage = o.menu.items[1];
-        
+
         o.arrow.resize(13, (_ie?20:18));
         bobj.crv.setAllClasses(o.arrow, 'toolbar_menuarrow');
         o.menu.setAccelEnabled(false);
@@ -823,14 +818,14 @@ bobj.crv.newSelectPageControl = function(kwArgs) {
     else {
         o.arrow.setDisplay(false);
     }
-    
+
     o.text.oldSetValue = o.text.setValue;
     o.text.setValue = function(newText, newWidth) {
         o.text.oldSetValue(newText);
-        if (newWidth && o.text.layer) {            
+        if (newWidth && o.text.layer) {
             o.text.resize(newWidth, null);
         }
-    };    
+    };
     o.text.focusCB = function() {
         o.text.setValue(o.curPage);
         var l = o.text.layer;
@@ -839,25 +834,25 @@ bobj.crv.newSelectPageControl = function(kwArgs) {
     o.text.blurCB = function() {
         var textNWidth = o.getTextAndWidth(o.curPage, o.numPages);
         o.text.setValue(textNWidth.text);
-    };    
+    };
     o.text.enterCB = function() {
         if (o.selectPageCB){
             var value = o.text.getValue();
             o.selectPageCB(value);
         }
     };
-    
+
     // Constants
     o.margin = 1;
     o.space = 0;
     o.fieldWidth = 30;
     o.labelWidth = 13 + o.space;
-       
+
     /* Attach member functions */
     o.selectPageCB = null;
     UPDATE(o, bobj.crv.SelectPageControl);
-    
-    o.updateTextValue();    
+
+    o.updateTextValue();
     o.widgetType = 'SelectPageControl';
     return o;
 };
@@ -871,7 +866,7 @@ bobj.crv.SelectPageControl = {
             'width' : width
         };
     },
-    
+
     update : function(update) {
         if (update && update.cons == "bobj.crv.newSelectPageControl") {
             /* Don't call setCurrentPage and setNumPages as each of them calls updateTextValue - we'll end in updating twice!*/
@@ -880,7 +875,7 @@ bobj.crv.SelectPageControl = {
             this.updateTextValue ();
         }
     },
-    
+
     updateTextValue : function() {
         var textNWidth = this.getTextAndWidth(this.curPage, this.numPages);
         this.text.setValue(textNWidth.text, textNWidth.width);
@@ -895,31 +890,31 @@ bobj.crv.SelectPageControl = {
     getCurrentPage : function() {
         return this.curPage;
     },
-    
+
     setCurrentPage : function(val) {
         this.curPage = val;
         this.updateTextValue();
     },
-    
+
     /**
      * @return [String] Returns the number of pages label
      */
     getNumPages : function() {
         return this.numPages;
     },
-    
+
     setNumPages : function(val) {
         this.numPages = val;
         this.updateTextValue();
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getFirstPageButton : function () {
         return this.firstPage;
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
@@ -944,23 +939,23 @@ bobj.crv.newSearchTextControl = function(kwArgs) {
     bobj.fillIn(o, kwArgs);
     /* Construct the input box */
     o.textField = newTextFieldWidget(
-        o.id + "_textField", 
+        o.id + "_textField",
         null,
         null,
         null,
         MochiKit.Base.bind(bobj.crv.SearchTextControl._searchTextCB, o),
         true,
-        L_bobj_crv_SearchText, 
+        L_bobj_crv_SearchText,
         100);
-    
+
     o.empty = (o.searchText == '');
     o.textField.focusCB = function() {
-        if (o.empty) { 
+        if (o.empty) {
             o.textField.setValue('');
         }
     };
     o.textField.blurCB = function() {
-        if (o.textField.getValue() == '') {            
+        if (o.textField.getValue() == '') {
             o.textField.setValue(L_bobj_crv_Find);
             o.empty = true;
         }
@@ -968,22 +963,22 @@ bobj.crv.newSearchTextControl = function(kwArgs) {
             o.empty = false;
         }
     };
-    
+
     o.searchButton = newIconWidget(
-        o.id + "_button", 
-        kwArgs.icon, 
-        MochiKit.Base.bind(bobj.crv.SearchTextControl._searchTextCB, o), 
+        o.id + "_button",
+        kwArgs.icon,
+        MochiKit.Base.bind(bobj.crv.SearchTextControl._searchTextCB, o),
         null,
-        L_bobj_crv_SearchText, 
+        L_bobj_crv_SearchText,
         16,16,3,kwArgs.dy, kwArgs.disDy,3,true);
-    
+
     bobj.crv.setAllClasses(o.searchButton, 'toolbar_button');
-    
+
     /* Attach member functions */
     o.initOld = o.init;
     o.searchTextCB = null;
     UPDATE(o, bobj.crv.SearchTextControl);
-    
+
     o.widgetType = 'SearchTextControl';
     return o;
 };
@@ -1032,7 +1027,6 @@ bobj.crv.SearchTextControl = {
     }
 };
 
-
 bobj.crv.newToolbarButtonGroup = function(kwArgs) {
     var UPDATE = MochiKit.Base.update;
     kwArgs = UPDATE({
@@ -1052,19 +1046,18 @@ bobj.crv.newToolbarButtonGroup = function(kwArgs) {
             fontStyle       : null,
             fontSize        : null
        }
-        
    }, kwArgs);
-   
+
     var o = newPaletteContainerWidget(kwArgs.id);
 
     o.margin = 2;
-    bobj.fillIn(o, kwArgs);  
+    bobj.fillIn(o, kwArgs);
     o.widgetType = 'ToolbarButtonGroup';
-    
+
     // Attach member functions (since we can't use prototypes)
     o.initOld = o.init;
     UPDATE(o, bobj.crv.ToolbarButtonGroup);
-    
+
     o.palette = newPaletteWidget(o.id + "_palette");
     o.add(o.palette);
     return o;
@@ -1087,7 +1080,7 @@ bobj.crv.ToolbarButtonGroup = {
         }
         this.palette.add (widget);
     },
-    
+
     update : function (update) {
         if(update != null && update.cons == "bobj.crv.newToolbarButtonGroup") {
             for (var childNum in update.children) {
@@ -1119,42 +1112,42 @@ bobj.crv.ToolbarButtonGroup = {
             }
         }
     },
-    
+
     isAnyButtonDisplayed : function () {
         return (this.printButton != null && this.printButton.isDisplayed()) ||
                     (this.exportButton != null && this.exportButton.isDisplayed()) ||
                         (this.refreshButton != null && this.refreshButton.isDisplayed()) ||
                             (this.drillUpButton != null && this.drillUpButton.isDisplayed());
     },
-    
+
     autoDisplay : function () {
-        if(this.isAnyButtonDisplayed()) 
+        if(this.isAnyButtonDisplayed())
             this.setDisplay (true);
         else
             this.setDisplay(false);
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getExportButton : function () {
         return this.exportButton;
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getRefreshButton : function () {
         return this.refreshButton;
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
     getDrillUpButton : function () {
         return this.drillUpButton;
     },
-    
+
     /**
      * Do not Remove, Used by WebElements Public API
      */
@@ -1184,9 +1177,9 @@ bobj.crv.ToolbarButtonGroup = {
                 margin: this.margin + 'px'
                 }
 	        })
-	        + h.openTag ('tr', null) 
+	        + h.openTag ('tr', null)
 	        + h.TD ({ style: { width: '2px' }
-	        	}, h.IMG({src: _skin+'../transp.gif', 'class': 'toolbar_buttongroup_left'})) 
+	        	}, h.IMG({src: _skin+'../transp.gif', 'class': 'toolbar_buttongroup_left'}))
 	        + h.openTag ('td', {'class': 'toolbar_buttongroup'});
     },
 
@@ -1195,11 +1188,11 @@ bobj.crv.ToolbarButtonGroup = {
      */
     endHTML : function() {
         var h = bobj.html;
-        return h.closeTag ('td', null) 
-        	+ h.TD ( 
+        return h.closeTag ('td', null)
+        	+ h.TD (
         		{ style: { width: '2px' }
-        		}, h.IMG({src: _skin+'../transp.gif', 'class' : 'toolbar_buttongroup_right'})) 
-        	+ h.closeTag ('tr', null) 
+        		}, h.IMG({src: _skin+'../transp.gif', 'class' : 'toolbar_buttongroup_right'}))
+        	+ h.closeTag ('tr', null)
         	+ h.closeTag ('table');
     },
 

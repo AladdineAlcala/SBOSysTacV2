@@ -131,7 +131,6 @@ export function defineLocale (name, config) {
         // created, so we won't end up with the child locale set.
         getSetGlobalLocale(name);
 
-
         return locales[name];
     } else {
         // useful for testing

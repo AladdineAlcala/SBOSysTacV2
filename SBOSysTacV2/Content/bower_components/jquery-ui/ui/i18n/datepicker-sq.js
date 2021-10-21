@@ -2,16 +2,13 @@
 /* Written by Flakron Bytyqi (flakron@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['sq'] = {
 	closeText: 'mbylle',
 	prevText: '&#x3C;mbrapa',
@@ -33,5 +30,4 @@ datepicker.regional['sq'] = {
 datepicker.setDefaults(datepicker.regional['sq']);
 
 return datepicker.regional['sq'];
-
 }));

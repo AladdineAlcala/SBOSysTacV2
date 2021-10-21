@@ -140,12 +140,11 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
 File: labels.js
-
 
 =============================================================
 */
@@ -227,7 +226,7 @@ _closeDialog="Закрыть окно"
 
 _lstMoveUpLab="Переместить вверх"
 _lstMoveDownLab="Переместить вниз"
-_lstMoveLeftLab="Переместить влево" 
+_lstMoveLeftLab="Переместить влево"
 _lstMoveRightLab="Переместить вправо"
 _lstNewNodeLab="Добавить вложенный фильтр"
 _lstAndLabel="и"
@@ -275,7 +274,7 @@ _calendarSelectionLab="Выбранный день"
 
 _menuCheckLab="Отмечен"
 _menuDisableLab="Отключен"
-	
+
 _level="Уровень"
 _closeTab="Закрыть вкладку"
 _of="из"

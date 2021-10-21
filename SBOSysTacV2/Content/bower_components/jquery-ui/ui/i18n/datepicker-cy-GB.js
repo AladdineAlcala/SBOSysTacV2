@@ -2,16 +2,13 @@
 /* Written by William Griffiths. */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['cy-GB'] = {
 	closeText: 'Done',
 	prevText: 'Prev',
@@ -33,5 +30,4 @@ datepicker.regional['cy-GB'] = {
 datepicker.setDefaults(datepicker.regional['cy-GB']);
 
 return datepicker.regional['cy-GB'];
-
 }));

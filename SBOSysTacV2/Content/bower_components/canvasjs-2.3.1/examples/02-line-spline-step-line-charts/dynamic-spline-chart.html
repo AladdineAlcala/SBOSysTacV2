@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">
-<script>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var dps = [];
@@ -17,7 +17,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	data: [{
 		type: "spline",
 		markerSize: 0,
-		dataPoints: dps 
+		dataPoints: dps
 	}]
 });
 
@@ -29,7 +29,7 @@ var dataLength = 50; // number of dataPoints visible at any point
 var updateChart = function (count) {
 	count = count || 1;
 	// count is number of times loop runs to generate random dataPoints.
-	for (var j = 0; j < count; j++) {	
+	for (var j = 0; j < count; j++) {
 		yVal = yVal + Math.round(5 + Math.random() *(-5-5));
 		dps.push({
 			x: xVal,
@@ -43,14 +43,14 @@ var updateChart = function (count) {
 	chart.render();
 };
 
-updateChart(dataLength); 
-setInterval(function(){ updateChart() }, updateInterval); 
+updateChart(dataLength);
+setInterval(function(){ updateChart() }, updateInterval);
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

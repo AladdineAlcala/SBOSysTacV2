@@ -1,4 +1,3 @@
-
 //////////////////////////////
 // FOR DEBUGGING ONLY
 var debug = false;
@@ -102,7 +101,6 @@ function clickSetNullCheckBox(inForm, paramName, suffix)
         if (minuteCtrl != null) minuteCtrl.disabled = false;
         if (secondCtrl != null) secondCtrl.disabled = false;
         if (ampmCtrl != null) ampmCtrl.disabled = false;
-        
     }
 }
 
@@ -171,7 +169,7 @@ function DateTimePromptValueHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secon
         {
 	    hour = hourCtrl.selectedIndex;
         }
-            
+
         promptValue += hour;
         promptValue += ",";
         promptValue += minuteCtrl.selectedIndex;
@@ -189,11 +187,10 @@ function DateTimePromptValueHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secon
         promptValue += ",";
         promptValue += day;
         promptValue += ")";
-        
     }
     else if (type == "t")
     {
-        promptValue = "Time(" 
+        promptValue = "Time("
 
 	var hour = 0;
 	if (ampmCtrl != undefined)
@@ -209,8 +206,7 @@ function DateTimePromptValueHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secon
         {
 	    hour = hourCtrl.selectedIndex;
         }
-       
-            
+
         promptValue += hour;
         promptValue += ",";
         promptValue += minuteCtrl.selectedIndex;
@@ -221,7 +217,6 @@ function DateTimePromptValueHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secon
 
     return promptValue;
 }
-
 
 function DateTimeDisplayStringHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl)
 {
@@ -235,7 +230,6 @@ function DateTimeDisplayStringHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, sec
     else
       return NeutralDT2D(neutralstring);
 }
-
 
 function addPromptDiscreteValueHelper(inForm, type, paramName, suffix)
 {
@@ -272,7 +266,7 @@ function addPromptDiscreteValueHelper(inForm, type, paramName, suffix)
             return;
         }
     }
-    
+
     var textCtrl = inForm[paramName + suffix];
     var hiddenCtrl = inForm[paramName + suffix + "Hidden"];
     var hourCtrl = inForm[paramName + suffix + "Hour"];
@@ -299,14 +293,14 @@ function addPromptDiscreteValueHelper(inForm, type, paramName, suffix)
     }
 
     if (type == "dt" || type == "d" || type == "t")
-    {   
+    {
         promptValue = DateTimePromptValueHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl);
         if (promptValue.length == 0) return false;
-        
+
         if (editables)
-            displayString = DateTimeDisplayStringHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl);   
+            displayString = DateTimeDisplayStringHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl);
         else
-            displayString = DateTimeDisplayStringHelper(type, obj.text, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl); 
+            displayString = DateTimeDisplayStringHelper(type, obj.text, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl);
     }
     else
     {
@@ -358,7 +352,7 @@ function addPromptDiscreteValueHelperWithChecking(inForm, type, paramName, suffi
             return;
         }
     }
-    
+
     var textCtrl = inForm[paramName + suffix];
     var hiddenCtrl = inForm[paramName + suffix + "Hidden"];
     var hourCtrl = inForm[paramName + suffix + "Hour"];
@@ -385,14 +379,14 @@ function addPromptDiscreteValueHelperWithChecking(inForm, type, paramName, suffi
     }
 
     if (type == "dt" || type == "d" || type == "t")
-    {   
+    {
         promptValue = DateTimePromptValueHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl);
         if (promptValue.length == 0) return false;
-        
+
         if (editables)
-            displayString = DateTimeDisplayStringHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl);   
+            displayString = DateTimeDisplayStringHelper(type, hiddenCtrl, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl);
         else
-            displayString = DateTimeDisplayStringHelper(type, obj.text, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl); 
+            displayString = DateTimeDisplayStringHelper(type, obj.text, hourCtrl, minuteCtrl, secondCtrl, ampmCtrl);
     }
     else
     {
@@ -460,7 +454,6 @@ function addPromptDiscreteRangeValueWithChecking ( inForm, type , paramName, min
 // adds Range prompt to listbox where multiple values are supported
 function addPromptRangeValue ( inForm, type , paramName )
 {
-
     theList = inForm[paramName + "ListBox"];
 
     // if there is a NULL checkbox and it is set
@@ -526,7 +519,7 @@ function addPromptRangeValue ( inForm, type , paramName )
     if ( lowerBound == undefined && lhourCtrl == undefined)//either upper or lower, doesn't matter
     {
         editable = false;
-        
+
         lowerBound = inForm[paramName + "SelectLowerBound"];
         upperBound = inForm[paramName + "SelectUpperBound"];
         lowerBound = lowerBound.options[lowerBound.selectedIndex];
@@ -536,13 +529,12 @@ function addPromptRangeValue ( inForm, type , paramName )
     lowerUnBounded = (inForm[paramName+"SelectLowerOptions"].selectedIndex == (inForm[paramName + "SelectLowerOptions"].options.length - 1));
     upperUnBounded = (inForm[paramName+"SelectUpperOptions"].selectedIndex == (inForm[paramName + "SelectUpperOptions"].options.length - 1));
 
-
     lvalue = uvalue = "";
 
     if ( ! lowerUnBounded )
     {
         if ((type == "dt" || type == "d" || type == "t") && (editable))
-        {   
+        {
             lvalue = DateTimePromptValueHelper(type, lowerBoundHidden, lhourCtrl, lminuteCtrl, lsecondCtrl, lampmCtrl);
             if (lvalue.length == 0) return false;
         }
@@ -558,7 +550,7 @@ function addPromptRangeValue ( inForm, type , paramName )
     if ( ! upperUnBounded )
     {
         if ((type == "dt" || type == "d" || type == "t") && (editable))
-        {   
+        {
             uvalue = DateTimePromptValueHelper(type, upperBoundHidden, uhourCtrl, uminuteCtrl, usecondCtrl, uampmCtrl);
             if (uvalue.length == 0) return false;
         }
@@ -589,7 +581,7 @@ function addPromptRangeValue ( inForm, type , paramName )
 
     lowerChecked = (inForm[paramName+"SelectLowerOptions"].selectedIndex == 0);
     upperChecked = (inForm[paramName+"SelectUpperOptions"].selectedIndex == 0);
-   
+
     value = lowerUnBounded ? "{" : lowerChecked ? "[" : "(";
     if ( ! lowerUnBounded ) //unbounded is empty string not quoted empty string (e.g not "_crEMPTY_")
         value += encodePrompt(lvalue);
@@ -637,7 +629,7 @@ function addPromptRangeValue ( inForm, type , paramName )
     {
 		display = ConstructRangeDisplayString(L_AFTER_BEFORE, ldisplay, udisplay);
     }
-   
+
     if ((!lowerUnBounded) || (!upperUnBounded))
     {
         promptEntry = new Option(display,value,false,false);
@@ -647,14 +639,12 @@ function addPromptRangeValue ( inForm, type , paramName )
     {
         alert(L_BadBound);
     }
-
 }
 
 ////////////////////////////////////
 // adds Range prompt with Checking to listbox where multiple values are supported
 function addPromptRangeValueWithChecking ( inForm, type , paramName, minValue, maxValue, errorMessage )
 {
-
     theList = inForm[paramName + "ListBox"];
 
     // if there is a NULL checkbox and it is set
@@ -720,7 +710,7 @@ function addPromptRangeValueWithChecking ( inForm, type , paramName, minValue, m
     if ( lowerBound == undefined && lhourCtrl == undefined)//either upper or lower, doesn't matter
     {
         editable = false;
-        
+
         lowerBound = inForm[paramName + "SelectLowerBound"];
         upperBound = inForm[paramName + "SelectUpperBound"];
         lowerBound = lowerBound.options[lowerBound.selectedIndex];
@@ -730,13 +720,12 @@ function addPromptRangeValueWithChecking ( inForm, type , paramName, minValue, m
     lowerUnBounded = (inForm[paramName+"SelectLowerOptions"].selectedIndex == (inForm[paramName + "SelectLowerOptions"].options.length - 1));
     upperUnBounded = (inForm[paramName+"SelectUpperOptions"].selectedIndex == (inForm[paramName + "SelectUpperOptions"].options.length - 1));
 
-
     lvalue = uvalue = "";
 
     if ( ! lowerUnBounded )
     {
         if ((type == "dt" || type == "d" || type == "t") && (editable))
-        {   
+        {
             lvalue = DateTimePromptValueHelper(type, lowerBoundHidden, lhourCtrl, lminuteCtrl, lsecondCtrl, lampmCtrl);
             if (lvalue.length == 0) return false;
         }
@@ -752,7 +741,7 @@ function addPromptRangeValueWithChecking ( inForm, type , paramName, minValue, m
     if ( ! upperUnBounded )
     {
         if ((type == "dt" || type == "d" || type == "t") && (editable))
-        {   
+        {
             uvalue = DateTimePromptValueHelper(type, upperBoundHidden, uhourCtrl, uminuteCtrl, usecondCtrl, uampmCtrl);
             if (uvalue.length == 0) return false;
         }
@@ -783,7 +772,7 @@ function addPromptRangeValueWithChecking ( inForm, type , paramName, minValue, m
 
     lowerChecked = (inForm[paramName+"SelectLowerOptions"].selectedIndex == 0);
     upperChecked = (inForm[paramName+"SelectUpperOptions"].selectedIndex == 0);
-   
+
     value = lowerUnBounded ? "{" : lowerChecked ? "[" : "(";
     if ( ! lowerUnBounded ) //unbounded is empty string not quoted empty string (e.g not "_crEMPTY_")
         value += encodePrompt(lvalue);
@@ -831,7 +820,7 @@ function addPromptRangeValueWithChecking ( inForm, type , paramName, minValue, m
     {
 		display = ConstructRangeDisplayString(L_AFTER_BEFORE, ldisplay, udisplay);
     }
-   
+
     if ((!lowerUnBounded) || (!upperUnBounded))
     {
         promptEntry = new Option(display,value,false,false);
@@ -841,7 +830,6 @@ function addPromptRangeValueWithChecking ( inForm, type , paramName, minValue, m
     {
         alert(L_BadBound);
     }
-
 }
 
 ////////////////////////////////////
@@ -942,7 +930,7 @@ function setSelectedValue (inForm, selectCtrlName, textCtrlName, type, namePlusF
             day = a[2];
         }
         else if (type == "t")
-        {   
+        {
             hour = parseInt(a[0]);
             minute = parseInt(a[1]);
             second = parseInt(a[2]);
@@ -979,7 +967,7 @@ function setSelectedValue (inForm, selectCtrlName, textCtrlName, type, namePlusF
         minuteCtrl.selectedIndex = minute;
         secondCtrl.selectedIndex = second;
         if (ampmCtrl != null)
-        { 
+        {
             if ( hour >= 12)
                 ampmCtrl.selectedIndex = 1;
             else
@@ -1017,7 +1005,7 @@ function setSelectedValue (inForm, selectCtrlName, textCtrlName, type, namePlusF
         minuteCtrl.selectedIndex = minute;
         secondCtrl.selectedIndex = second;
         if (ampmCtrl != null)
-        { 
+        {
             if ( hour >= 12)
                 ampmCtrl.selectedIndex = 1;
             else
@@ -1085,11 +1073,9 @@ function setPromptSingleValue (inform, type, paramName)
         }
     }
 
-        
     discreteVal = inform[paramName + "DiscreteValue"];
     if (discreteVal != undefined || inform[paramName + "DiscreteValueHour"] != undefined)
     { // editable
-          
         if ( type == "dt" || type == "d" || type == "t")
         {
            var hiddenCtrl = inform[paramName+"DiscreteValueHidden"];
@@ -1131,7 +1117,6 @@ function setPromptSingleValue (inform, type, paramName)
 // sets prompt value for a range into the hidden form field in proper format so that it can be submitted
 function setPromptRangeValue (inform, type, paramName)
 {
-
     hiddenField = inform[promptPrefix + paramName];
     var hiddenMinValue = "";
     var hiddenMaxValue = "";
@@ -1244,7 +1229,7 @@ function setPromptRangeValue (inform, type, paramName)
             return false;
         }
     }
-    
+
     value = lowerUnBounded ? "{" : lowerChecked ? "[" : "(";
     if ( ! lowerUnBounded )
         value += encodePrompt(lvalue);
@@ -1296,10 +1281,10 @@ function setPromptMultipleValue (inform, type, paramName)
             value += values[idx].value;
         }
     }
-    
+
     if ( debug )
         alert (value);
-    
+
     hiddenField.value = value;
     //NOTE: we'll always return true as the validation is done before values are added to select box
     return true;
@@ -1360,13 +1345,13 @@ function checkSingleValueWithMinMax ( value, type, minValue, maxValue, errorMess
 		    {
 		    	alert (errorMessage);
 		    	return false;
-		    }   
-	    }     
+		    }
+	    }
     }
     else if ( type == 'c' )
     {
     	if (! regCurrency.test ( value ) || isNaN(DelocalizeNum (value)) || isNaN(DelocalizeNum (minValue)) || isNaN(DelocalizeNum (maxValue)))
-    	{ 
+    	{
 	        alert ( L_BadCurrency );
 	        return false;
         }
@@ -1376,8 +1361,8 @@ function checkSingleValueWithMinMax ( value, type, minValue, maxValue, errorMess
 		    {
 		    	alert (errorMessage);
 		    	return false;
-		    } 
-	    }       
+		    }
+	    }
     }
     else if ( type == 'd' )
     {
@@ -1395,7 +1380,7 @@ function checkSingleValueWithMinMax ( value, type, minValue, maxValue, errorMess
 		    {
 		    	alert (errorMessage);
 		    	return false;
-		    }   
+		    }
 	    }
     }
     else if ( type == "dt" )
@@ -1414,7 +1399,7 @@ function checkSingleValueWithMinMax ( value, type, minValue, maxValue, errorMess
 		    {
 		    	alert (errorMessage);
 		    	return false;
-		    }   
+		    }
 	    }
     }
     else if ( type == 't' )
@@ -1447,8 +1432,8 @@ function checkSingleValueWithMinMax ( value, type, minValue, maxValue, errorMess
 		    {
 		    	alert (errorMessage);
 		    	return false;
-		    } 
-	    }       
+		    }
+	    }
     }
 	else if (type == "text" || type == 's')
     {
@@ -1458,12 +1443,12 @@ function checkSingleValueWithMinMax ( value, type, minValue, maxValue, errorMess
 	    {
 	    	alert (errorMessage);
 	    	return false;
-	    }        
+	    }
     }
     //by default let it go...
     return true;
 }
- 
+
 function checkRangeValue (fvalue, tvalue, type)
 {
     // determine if the start is smaller than the end
@@ -1481,7 +1466,7 @@ function checkRangeValue (fvalue, tvalue, type)
         if (eval("new " + fvalue) > eval("new " + tvalue)){
             alert(L_RangeError);
             return false;
-        }         
+        }
     }else if (type == "t"){
         //Is a Time
         var comp1 = eval("new Date(0,0,0," + fvalue.substring(fvalue.indexOf('(') + 1, fvalue.indexOf(')') + 1));
@@ -1489,7 +1474,7 @@ function checkRangeValue (fvalue, tvalue, type)
         if (comp1 > comp2){
             alert(L_RangeError);
             return false;
-        }         
+        }
     }else if (type == "dt"){
         //Is a DateTime
         var comp1 = eval("new Date" + fvalue.substring(8, fvalue.length));
@@ -1497,7 +1482,7 @@ function checkRangeValue (fvalue, tvalue, type)
         if (comp1 > comp2){
             alert(L_RangeError);
             return false;
-        }         
+        }
     }
     else if (type == "text")
     {
@@ -1536,8 +1521,8 @@ function checkRangeValueWithMinMax (fvalue, tvalue, type, minValue, maxValue, er
 		    {
 		    	alert (errorMessage);
 		    	return false;
-		    }     
-	    }   
+		    }
+	    }
     }
     else if (type == "d"){
         //Is a Date
@@ -1546,7 +1531,7 @@ function checkRangeValueWithMinMax (fvalue, tvalue, type, minValue, maxValue, er
         if (comp1 > comp2){
             alert(L_RangeError);
             return false;
-        } 
+        }
 		//check min and max
 		if (minValue.length>0 && maxValue.length>0){
 			var dMin = Date.parse(minValue);
@@ -1562,8 +1547,8 @@ function checkRangeValueWithMinMax (fvalue, tvalue, type, minValue, maxValue, er
 		    {
 		    	alert (errorMessage);
 		    	return false;
-		    } 
-	    }            
+		    }
+	    }
     }else if (type == "t"){
         //Is a Time
         var comp1 = eval("new Date(0,0,0," + fvalue.substring(fvalue.indexOf('(') + 1, fvalue.indexOf(')') + 1));
@@ -1573,7 +1558,7 @@ function checkRangeValueWithMinMax (fvalue, tvalue, type, minValue, maxValue, er
         if (comp1 > comp2){
             alert(L_RangeError);
             return false;
-        }   
+        }
 		//check min and max
 		if (minValue.length>0 && maxValue.length>0){
 			//getTimeFromIETFFormat to remove the difference of the year, month and day components
@@ -1601,8 +1586,8 @@ function checkRangeValueWithMinMax (fvalue, tvalue, type, minValue, maxValue, er
 		    {
 		    	alert (errorMessage);
 		    	return false;
-		    }  
-	    }      
+		    }
+	    }
     }else if (type == "dt"){
         //Is a DateTime
         var comp1 = NeutralDT2Date(fvalue);
@@ -1610,7 +1595,7 @@ function checkRangeValueWithMinMax (fvalue, tvalue, type, minValue, maxValue, er
         if (comp1 > comp2){
             alert(L_RangeError);
             return false;
-        }         
+        }
 		//check min and max
 		if (minValue.length>0 && maxValue.length>0){
 			var dtMin = Date.parse(minValue);
@@ -1626,7 +1611,7 @@ function checkRangeValueWithMinMax (fvalue, tvalue, type, minValue, maxValue, er
 		    {
 		    	alert (errorMessage);
 		    	return false;
-		    }   
+		    }
 	    }
     }
     else if (type == "text" || type == 's')
@@ -1643,8 +1628,8 @@ function checkRangeValueWithMinMax (fvalue, tvalue, type, minValue, maxValue, er
 		    {
 		    	alert (errorMessage);
 		    	return false;
-		    }  
-	    }      
+		    }
+	    }
     }
     // otherwise, let it go
 
@@ -1655,24 +1640,24 @@ function DelocalizeNum(value)
 {
 	// trim spaces first
 	var numStr = value.replace(/\s/g, "");
-		
-	// get rid of grouping first	
+
+	// get rid of grouping first
 	var tempStr = "";
 	var index = numStr.indexOf(groupSep);
-	
+
 	while (index != -1)
 	{
 		tempStr += numStr.substr(0, index);
 		numStr = numStr.substr(index + groupSep.length, numStr.length - index - groupSep.length);
 		index = numStr.indexOf(groupSep);
 	}
-	
+
 	tempStr += numStr;
 
 	index = tempStr.indexOf(decimalSep);
 	var neutralStr = "";
 	if (index != -1)
-	{	
+	{
 		neutralStr += tempStr.substr(0, index);
 		neutralStr += ".";
 		neutralStr += tempStr.substr(index + decimalSep.length, tempStr.length - index - decimalSep.length);
@@ -1715,8 +1700,7 @@ function checkValue(evt) {
 }
 
 // To retrieve Time components of IETF format
-function getTimeFromIETFFormat (strIETF) {	
-
+function getTimeFromIETFFormat (strIETF) {
 	var components = strIETF.split(" ");
 	for (var i=0; i<components.length; i++) {
 		var y = components[i].split(":");

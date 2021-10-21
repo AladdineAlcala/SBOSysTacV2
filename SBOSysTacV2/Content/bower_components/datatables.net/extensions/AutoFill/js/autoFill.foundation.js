@@ -35,9 +35,7 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 DataTable.AutoFill.classes.btn = 'button tiny';
-
 
 return DataTable;
 }));

@@ -7,7 +7,6 @@ define( [
 	// This is the only module that needs core/support
 	"./support"
 ], function( jQuery, document, rsingleTag, buildFragment, support ) {
-
 "use strict";
 
 // Argument "data" should be string of html
@@ -26,7 +25,6 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 	var base, parsed, scripts;
 
 	if ( !context ) {
-
 		// Stop scripts or inline event handlers from being executed immediately
 		// by using document.implementation
 		if ( support.createHTMLDocument ) {
@@ -61,5 +59,4 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 };
 
 return jQuery.parseHTML;
-
 } );

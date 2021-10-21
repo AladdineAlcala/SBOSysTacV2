@@ -1,24 +1,19 @@
-
-A
-{
+A {
     color: #0000e0;
 }
 
-.smallTxt
-{
+.smallTxt {
     font-size: 3px;
     text-decoration: none;
 }
 
-.dragTxt
-{
-    font-family: "arial" , "sans-serif";
+.dragTxt {
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: black;
 }
 
-.insetBorder
-{
+.insetBorder {
     background-color: white;
     border-bottom: 2px solid #F0F0F0;
     border-right: 2px solid #F0F0F0;
@@ -26,27 +21,24 @@ A
     border-left: 2px solid #808080;
 }
 
-.dialogzonebold
-{
+.dialogzonebold {
     background-color: #E5EAF3;
     color: #2D62B0;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     font-weight: bold;
 }
 
-.listinputs
-{
-    font-family: "arial" , "sans-serif";
+.listinputs {
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     margin: 0px;
     background-color: white;
     font-weight: normal;
 }
 
-.textinputs
-{
-    font-family: "arial" , "sans-serif";
+.textinputs {
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     background-color: white;
     border: 1px solid #96A8C3;
@@ -56,37 +48,32 @@ A
     padding-right: 2px;
 }
 
-
 /*=========*/
 /* Buttons */
 /*=========*/
 
-.wizbutton
-{
+.wizbutton {
     color: black;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     font-weight: normal;
     text-decoration: none;
 }
 
-.wizbuttongray
-{
+.wizbuttongray {
     color: #909090;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     font-weight: normal;
     text-decoration: none;
 }
 
-a.wizbutton:hover
-{
+a.wizbutton:hover {
     color: black;
     text-decoration: underline;
 }
 
-a.wizbuttongray:hover
-{
+a.wizbuttongray:hover {
     color: #909090;
 }
 
@@ -94,16 +81,14 @@ a.wizbuttongray:hover
 /* Tree view */
 /*===========*/
 
-.trElt
-{
+.trElt {
     white-space: nowrap;
     padding: 0px;
     margin: 0px;
     width: 1px;
 }
 
-.trPlus
-{
+.trPlus {
     width: 13px;
     height: 12px;
     padding: 0px;
@@ -112,8 +97,7 @@ a.wizbuttongray:hover
     border-width: 0px;
 }
 
-.trIcn
-{
+.trIcn {
     width: 16px;
     height: 16px;
     padding: 0px;
@@ -123,8 +107,7 @@ a.wizbuttongray:hover
     margin-left: 15px;
 }
 
-.trIcnPlus
-{
+.trIcnPlus {
     width: 16px;
     height: 16px;
     padding: 0px;
@@ -133,8 +116,7 @@ a.wizbuttongray:hover
     margin-right: 2px;
 }
 
-.trSep
-{
+.trSep {
     width: 15px;
     height: 12px;
     padding: 0px;
@@ -143,24 +125,21 @@ a.wizbuttongray:hover
     margin-right: 2px;
 }
 
-.treeBody
-{
+.treeBody {
     background-color: white;
 }
 
-.treeContainer
-{
+.treeContainer {
     background-color: white;
     color: black;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
 }
 
-.treeNormal
-{
+.treeNormal {
     text-decoration: none;
     color: black;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     font-style: normal;
     padding: 1px;
@@ -168,11 +147,10 @@ a.wizbuttongray:hover
     height: 16px;
 }
 
-.treeGray
-{
+.treeGray {
     text-decoration: none;
     color: #909090;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     font-style: italic;
     padding: 1px;
@@ -180,13 +158,12 @@ a.wizbuttongray:hover
     height: 16px;
 }
 
-.treeSelected
-{
+.treeSelected {
     text-decoration: none;
     color: white;
     background-color: #195FA0;
     color: white;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     font-style: normal;
     padding: 1px;
@@ -194,12 +171,11 @@ a.wizbuttongray:hover
     height: 16px;
 }
 
-.treeHL
-{
+.treeHL {
     text-decoration: none;
     color: black;
     background-color: #D5E7FF;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     font-style: normal;
     padding: 1px;
@@ -207,23 +183,19 @@ a.wizbuttongray:hover
     height: 16px;
 }
 
-a.treeHL:hover
-{
+a.treeHL:hover {
     color: black;
 }
 
-a.treeNormal:hover
-{
+a.treeNormal:hover {
     color: black;
 }
 
-a.treeGray:hover
-{
+a.treeGray:hover {
     color: #909090;
 }
 
-a.treeSelected:hover
-{
+a.treeSelected:hover {
     color: white;
 }
 
@@ -231,32 +203,28 @@ a.treeSelected:hover
 /* Prompt Tree view */
 /*==================*/
 
-.promptNormal
-{
+.promptNormal {
     text-decoration: none;
     color: #2961B5;
     background-color: white;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
 }
 
-.promptSelected
-{
+.promptSelected {
     text-decoration: none;
     color: #2961B5;
     background-color: #EAE8E7;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
 }
 
-a.promptNormal:hover
-{
+a.promptNormal:hover {
     color: #2961B5;
     text-decoration: underline;
 }
 
-a.promptSelected:hover
-{
+a.promptSelected:hover {
     color: #2961B5;
     text-decoration: underline;
 }
@@ -265,73 +233,62 @@ a.promptSelected:hover
 /* Palette icons */
 /*===============*/
 
-.palette
-{
+.palette {
     background-color: #E5EAF3;
     border: 1px solid #BEBED1;
 }
 
-.combonocheck
-{
+.combonocheck {
     background-color: white;
     border: 1px solid #C6D7EF;
 }
 
-.combohover
-{
+.combohover {
     background-color: white;
     border: 1px solid #6392D6;
 }
 
-.combocheck
-{
+.combocheck {
     background-color: #B8C5D1;
     border: 1px solid #6392D6;
 }
 
-.combobtnhover
-{
+.combobtnhover {
     background-color: #6392D6;
     border: 1px solid #6392D6;
 }
 
-.iconnochecknobg
-{
+.iconnochecknobg {
     border: 1px solid #E5EAF3;
 }
 
-.iconchecknobg
-{
+.iconchecknobg {
     border-top: 1px solid #6A85AE;
     border-left: 1px solid #6A85AE;
     border-bottom: 1px solid white;
     border-right: 1px solid white;
 }
 
-.iconhovernobg
-{
+.iconhovernobg {
     border-top: 1px solid white;
     border-left: 1px solid white;
     border-bottom: 1px solid #6A85AE;
     border-right: 1px solid #6A85AE;
 }
 
-.iconcheckhovernobg
-{
+.iconcheckhovernobg {
     border-top: 1px solid #6A85AE;
     border-left: 1px solid #6A85AE;
     border-bottom: 1px solid white;
     border-right: 1px solid white;
 }
 
-.iconnocheck
-{
+.iconnocheck {
     background-color: #E5EAF3;
     border: 1px solid #E5EAF3;
 }
 
-.iconcheck
-{
+.iconcheck {
     background-color: #B8C5D1;
     border-top: 1px solid #6A85AE;
     border-left: 1px solid #6A85AE;
@@ -339,8 +296,7 @@ a.promptSelected:hover
     border-right: 1px solid white;
 }
 
-.iconhover
-{
+.iconhover {
     background-color: #E5EAF3;
     border-top: 1px solid white;
     border-left: 1px solid white;
@@ -348,8 +304,7 @@ a.promptSelected:hover
     border-right: 1px solid #6A85AE;
 }
 
-.iconcheckhover
-{
+.iconcheckhover {
     background-color: #B8C5D1;
     border-top: 1px solid #6A85AE;
     border-left: 1px solid #6A85AE;
@@ -357,65 +312,57 @@ a.promptSelected:hover
     border-right: 1px solid white;
 }
 
-.iconText
-{
-    font-family: "arial" , "sans-serif";
+.iconText {
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: black;
 }
 
-.iconTextDis
-{
-    font-family: "arial" , "sans-serif";
+.iconTextDis {
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: #7B8694;
 }
 
-.iconcheckwhite
-{
+.iconcheckwhite {
     background-color: #FFFFFF;
     border: 1px solid #788591;
 }
 
-.iconcheckhoverwhite
-{
+.iconcheckhoverwhite {
     background-color: #FFFFFF;
     border: 1px solid #788591;
 }
 
-.combo
-{
+.combo {
     background-color: white;
     border: 1px solid #96A8C3;
     background-image: url('background_field.gif');
     background-repeat: repeat-x;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     padding-left: 5px;
-    padding-right: 2px;    
+    padding-right: 2px;
 }
 
-.comboDisabled
-{
+.comboDisabled {
     background-color: #DDDDDD;
     border: 1px solid #999999;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
 }
 
-.textDisabled
-{
+.textDisabled {
     background-color: #DDDDDD;
     border: 1px solid #999999;
 }
 
-.comboEditable
-{
+.comboEditable {
     background-color: white;
     border: 1px solid #96A8C3;
     background-image: url('background_field.gif');
     background-repeat: repeat-x;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     padding-left: 5px;
     padding-right: 2px;
@@ -425,46 +372,40 @@ a.promptSelected:hover
 /* menus */
 /*=======*/
 
-.menuShadow
-{
+.menuShadow {
     position: absolute;
     background-color: #a0a0a0;
 }
 
-.menuFrame
-{
+.menuFrame {
     position: absolute;
     background-color: #FFFFFF;
     border: 1px solid #96A8C3;
     padding: 1px;
 }
 
-.menuLeftPart
-{
+.menuLeftPart {
     border: 1px solid #E5EAF3;
     border-right: 0px;
     background-color: #E5EAF3;
 }
 
-.menuLeftPartColor
-{
+.menuLeftPartColor {
     border: 1px solid #F6F6FB;
     border-right: 0px;
     background-color: #F6F6FB;
 }
 
-.menuLeftPartSel
-{
+.menuLeftPartSel {
     border: 1px solid #8CC6DC;
     border-right: 0px;
     background-image: url('background_menusel.gif');
     background-repeat: repeat-x;
 }
 
-.menuTextPart
-{
+.menuTextPart {
     white-space: nowrap;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: black;
     padding-left: 5px;
@@ -475,10 +416,9 @@ a.promptSelected:hover
     background-color: #F5F7F9;
 }
 
-.menuTextPartSel
-{
+.menuTextPartSel {
     white-space: nowrap;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: black;
     padding-left: 5px;
@@ -490,10 +430,9 @@ a.promptSelected:hover
     background-repeat: repeat-x;
 }
 
-.menuTextPartDisabled
-{
+.menuTextPartDisabled {
     white-space: nowrap;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: #7B8694;
     padding-left: 5px;
@@ -504,35 +443,29 @@ a.promptSelected:hover
     background-color: #F5F7F9;
 }
 
-
-.menuRightPart
-{
+.menuRightPart {
     border: 1px solid #F5F7F9;
     border-left: 0px;
     background-color: #F5F7F9;
 }
 
-.menuRightPartSel
-{
+.menuRightPartSel {
     border: 1px solid #8CC6DC;
     border-left: 0px;
     background-image: url('background_menusel.gif');
     background-repeat: repeat-x;
 }
 
-.menuIcon
-{
+.menuIcon {
     padding: 1px;
 }
 
-.menuIconCheck
-{
+.menuIconCheck {
     background-image: url('menuitem_check.gif');
     background-repeat: no-repeat;
 }
 
-.menuCalendar
-{
+.menuCalendar {
     height: 15px;
     padding: 2px;
     margin-left: 2px;
@@ -540,8 +473,7 @@ a.promptSelected:hover
     border: 1px solid #F5F7F9;
 }
 
-.menuCalendarSel
-{
+.menuCalendarSel {
     height: 15px;
     padding: 2px;
     margin-left: 2px;
@@ -550,86 +482,74 @@ a.promptSelected:hover
     background-color: #FEE09F;
 }
 
-.menuiconborders
-{
+.menuiconborders {
     padding: 2px;
     white-space: nowrap;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: black;
     background-color: #F5F7F9;
     border: 1px solid #F5F7F9;
 }
 
-.menuiconbordersSel
-{
+.menuiconbordersSel {
     padding: 2px;
     white-space: nowrap;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: black;
     background-color: #FEE09F;
     border: 1px solid #636384;
 }
 
-.calendarTextPart
-{
-    font-family: "arial" , "sans-serif";
+.calendarTextPart {
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: black;
     padding: 0px;
 }
 
-td.singleIconMenuL
-{
+td.singleIconMenuL {
     height: 22px;
     width: 3px;
 }
 
-td.singleIconMenuM
-{
+td.singleIconMenuM {
     height: 22px;
 }
 
-td.singleIconMenuR
-{
+td.singleIconMenuR {
     height: 22px;
     width: 3px;
 }
 
-.filemenu_hover td.singleIconMenuL
-{
-    background-image:url("toolbar_elements.png");
+.filemenu_hover td.singleIconMenuL {
+    background-image: url("toolbar_elements.png");
     background-position: 0 0;
 }
 
-.filemenu_hover td.singleIconMenuM
-{
-	background-image:url("toolbar_elements.png");
+.filemenu_hover td.singleIconMenuM {
+    background-image: url("toolbar_elements.png");
     background-position: 0 -22px;
 }
 
-.filemenu_hover td.singleIconMenuR
-{
-    background-image:url("toolbar_elements.png");
+.filemenu_hover td.singleIconMenuR {
+    background-image: url("toolbar_elements.png");
     background-position: 0 -44px;
 }
 
-.filemenu_depressed td.singleIconMenuL
-{
-    background-image:url("toolbar_elements.png");
+.filemenu_depressed td.singleIconMenuL {
+    background-image: url("toolbar_elements.png");
     background-position: 0 -66;
 }
 
-.filemenu_depressed td.singleIconMenuM
-{
-    background-image:url("toolbar_elements.png");
+.filemenu_depressed td.singleIconMenuM {
+    background-image: url("toolbar_elements.png");
     background-position: 0 -88px;
 }
 
-.filemenu_depressed td.singleIconMenuR
-{
-    background-image:url("toolbar_elements.png");
+.filemenu_depressed td.singleIconMenuR {
+    background-image: url("toolbar_elements.png");
     background-position: 0 -110px;
 }
 
@@ -637,12 +557,10 @@ td.singleIconMenuR
 /* Filter */
 /*=======*/
 
-
-.treeFeedbackDD
-{
+.treeFeedbackDD {
     text-decoration: none;
     color: black;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     font-style: normal;
     padding: 0px;
@@ -651,23 +569,20 @@ td.singleIconMenuR
     border: 1px solid #CC0000;
 }
 
-.filterOp
-{
+.filterOp {
     font-size: 12px;
 }
 
-.filterText
-{
-    font-family: "arial" , "sans-serif";
+.filterText {
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: black;
     text-decoration: none;
     margin: 1px;
 }
 
-.filterTextSelected
-{
-    font-family: "arial" , "sans-serif";
+.filterTextSelected {
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: black;
     text-decoration: none;
@@ -675,9 +590,8 @@ td.singleIconMenuR
     margin: 1px;
 }
 
-.filterTextFeedbackDD
-{
-    font-family: "arial" , "sans-serif";
+.filterTextFeedbackDD {
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     color: black;
     text-decoration: none;
@@ -685,11 +599,10 @@ td.singleIconMenuR
     margin: 0px;
 }
 
-.LOVZone
-{
+.LOVZone {
     background-color: #93B4E1;
     color: #FFFFFF;
-    font-family: "arial" , "sans-serif";
+    font-family: "arial", "sans-serif";
     font-size: 11px;
     font-weight: bold;
 }
@@ -698,393 +611,344 @@ td.singleIconMenuR
 /* Chart Appearance */
 /*==================*/
 
-
 /* horizontal navigation bar at top */
-.naviHTabText
-{
-	white-space:nowrap;
-	font-family:Tahoma,sans-serif;	
-	font-size:11px;
-	color:black;
-	text-align:left;
+.naviHTabText {
+    white-space: nowrap;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+    color: black;
+    text-align: left;
 }
 
-.naviHTabLSelected
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px 0px;
-	width:4px;
-	height:24px;
+.naviHTabLSelected {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px 0px;
+    width: 4px;
+    height: 24px;
 }
 
-.naviHTabMSelected
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -24px;
-	height:24px;
+.naviHTabMSelected {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -24px;
+    height: 24px;
 }
 
-.naviHTabRSelected
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -48px;
-	width:23px;
-	height:24px;
+.naviHTabRSelected {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -48px;
+    width: 23px;
+    height: 24px;
 }
 
-.naviHTabLNormal
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -72px;
-	width:4px;
-	height:23px;
+.naviHTabLNormal {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -72px;
+    width: 4px;
+    height: 23px;
 }
 
-.naviHTabMNormal
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -72px;
-	height:23px;
-	position:relative;
+.naviHTabMNormal {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -72px;
+    height: 23px;
+    position: relative;
 }
 
-.naviHTabRNormal
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -72px;
-	width:23px;
-	height:24px;
+.naviHTabRNormal {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -72px;
+    width: 23px;
+    height: 24px;
 }
 
-.naviHTabTextSel
-{
-	white-space:nowrap;
-	font-family:Tahoma,sans-serif;	
-	font-size:11px;
-	color:black;
-	text-align:left;
-	font-weight:bold;
+.naviHTabTextSel {
+    white-space: nowrap;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+    color: black;
+    text-align: left;
+    font-weight: bold;
 }
 
-.naviHTabTextHover
-{
-	white-space:nowrap;
-	font-family:Tahoma,sans-serif;	
-	font-size:11px;
-	color:black;
-	text-align:left;
-	text-decoration:underline;
+.naviHTabTextHover {
+    white-space: nowrap;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+    color: black;
+    text-align: left;
+    text-decoration: underline;
 }
 
-.naviHTabSeparator
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -96px;
-	width:1px;
-	height:11px;
-	overflow:hidden;
-	position: absolute;
-	bottom:3px;
+.naviHTabSeparator {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -96px;
+    width: 1px;
+    height: 11px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 3px;
 }
-	
+
 /* hover on horizontal selected tab at the top */
-.naviHTabLSelHover
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -203px;
-	width:4px;
-	height:24px;
+.naviHTabLSelHover {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -203px;
+    width: 4px;
+    height: 24px;
 }
 
-.naviHTabMSelHover
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -227px;
-	height:24px;
+.naviHTabMSelHover {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -227px;
+    height: 24px;
 }
 
-.naviHTabRSelHover
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -251px;
-	width:23px;
-	height:24px;
+.naviHTabRSelHover {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -251px;
+    width: 23px;
+    height: 24px;
 }
-	
+
 /* hover on horizontal NON-selected tab at the top */
-.naviHTabLHover
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -275px;
-	width:4px;
-	height:24px;
+.naviHTabLHover {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -275px;
+    width: 4px;
+    height: 24px;
 }
 
-.naviHTabMHover
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -299px;
-	height:24px;
+.naviHTabMHover {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -299px;
+    height: 24px;
 }
 
-.naviHTabRHover
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -323px;
-	width:23px;
-	height:24px;
+.naviHTabRHover {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -323px;
+    width: 23px;
+    height: 24px;
 }
-
 
 /* horizontal bar at top with close icon */
-.naviHTabRWithCloseNormal
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -72px;
-	width:4px;
-	height:24px;
+.naviHTabRWithCloseNormal {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -72px;
+    width: 4px;
+    height: 24px;
 }
 
-.naviHTabWithCloseRSel
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -491px;
-	width:4px;
-	height:24px;
+.naviHTabWithCloseRSel {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -491px;
+    width: 4px;
+    height: 24px;
 }
 
-.naviHTabWithCloseRSelHover
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -515px;
-	width:4px;
-	height:24px;
+.naviHTabWithCloseRSelHover {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -515px;
+    width: 4px;
+    height: 24px;
 }
 
-.naviHTabWithCloseRHover
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -563px;
-	width:4px;
-	height:24px;
+.naviHTabWithCloseRHover {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -563px;
+    width: 4px;
+    height: 24px;
 }
 
 /* close icon on selected tab */
-.naviHTabCloseSel
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -539px;
-	width:8px;
-	height:8px;
-	overflow: hidden;
-	margin-top:7px;
-}
-.naviHTabCloseHover
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -547px;
-	overflow: hidden;
-	width:8px;
-	height:8px;
-	margin-top:7px;
-}
-.naviHTabClosePressed
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -555px;
-	overflow: hidden;
-	width:8px;
-	height:8px;
-	margin-top:7px;
+.naviHTabCloseSel {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -539px;
+    width: 8px;
+    height: 8px;
+    overflow: hidden;
+    margin-top: 7px;
 }
 
-.naviHTabTextSelHover
-{
-	white-space:nowrap;
-	font-family:Tahoma,sans-serif;	
-	font-size:11px;
-	color:black;
-	text-align:left;
-	text-decoration:underline;
-	font-weight:bold;
+.naviHTabCloseHover {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -547px;
+    overflow: hidden;
+    width: 8px;
+    height: 8px;
+    margin-top: 7px;
+}
+
+.naviHTabClosePressed {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -555px;
+    overflow: hidden;
+    width: 8px;
+    height: 8px;
+    margin-top: 7px;
+}
+
+.naviHTabTextSelHover {
+    white-space: nowrap;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+    color: black;
+    text-align: left;
+    text-decoration: underline;
+    font-weight: bold;
 }
 
 /* icon for tab list/scroll menu */
-.tabListTop
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -587px;
-	width:19px;
-	height:23px;
-	cursor : poitner;
-
+.tabListTop {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -587px;
+    width: 19px;
+    height: 23px;
+    cursor: poitner;
 }
 
-.tabListTopHover
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -611px;
-	width:19px;
-	height:23px;
-	cursor : poitner;
-
+.tabListTopHover {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -611px;
+    width: 19px;
+    height: 23px;
+    cursor: poitner;
 }
 
-.tabListTopPressed
-{
-	background-image:url(horiz_tabs.gif);
-	background-position:0px -635px;
-	width:19px;
-	height:23px;
-	cursor : poitner;
+.tabListTopPressed {
+    background-image: url(horiz_tabs.gif);
+    background-position: 0px -635px;
+    width: 19px;
+    height: 23px;
+    cursor: poitner;
 }
 
-.tabListIcon
-{
-	width:19px;
-	height:23px;
-	overflow:hidden;
+.tabListIcon {
+    width: 19px;
+    height: 23px;
+    overflow: hidden;
 }
 
-.tabListMenuItem
-{
-	font-weight:bold;
+.tabListMenuItem {
+    font-weight: bold;
 }
 
-.dialogbox
-{
-	border:1px solid #96A8C3;
-	background-color:#E5EAF3;
+.dialogbox {
+    border: 1px solid #96A8C3;
+    background-color: #E5EAF3;
 }
 
-.dlgBox2
-{
-	border-top:1px solid #E5EAF3;
-	border-bottom:1px solid white;
-	border-left:1px solid white;
-	border-right:1px solid white;
+.dlgBox2 {
+    border-top: 1px solid #E5EAF3;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
 }
 
-.dlgBody
-{
-	background-color:#E5EAF3;
-	color:black;
-	font-family:Tahoma,sans-serif;
-	font-size:11px;
-	padding-left:6px;
-	padding-right:6px;
-	padding-top:4px;
+.dlgBody {
+    background-color: #E5EAF3;
+    color: black;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 4px;
 }
 
-.infoArea
-{
-	color:black;
-	font-family:Tahoma,sans-serif;
-	font-size:11px;
-	padding-top:10px;
-	padding-bottom:10px;
-	
+.infoArea {
+    color: black;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
-.dlgContent
-{
-	color:black;
-	font-family:Tahoma,sans-serif;
-	font-size:11px;	
+.dlgContent {
+    color: black;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
 }
 
-.dlgHelpText
-{
-	color : #7B8694;
-	font-family : Tahoma,sans-serif;
-	font-size: 7.5pt;
+.dlgHelpText {
+    color: #7B8694;
+    font-family: Tahoma,sans-serif;
+    font-size: 7.5pt;
 }
 
-.dlgContentbold
-{
-	color:#4F5C72;
-	font-family:Tahoma,sans-serif;
-	font-size:11px;	
-	font-weight:bold;
+.dlgContentbold {
+    color: #4F5C72;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+    font-weight: bold;
 }
 
-.dlgFrame
-{
-	background-color:white;
-	border:1px solid #96A8C3;
+.dlgFrame {
+    background-color: white;
+    border: 1px solid #96A8C3;
 }
 
-.dlgTitle
-{
-	border:none;
-	background-image:url(dialogtitle.gif);
-	background-position:0px 0px;
+.dlgTitle {
+    border: none;
+    background-image: url(dialogtitle.gif);
+    background-position: 0px 0px;
 }
 
-.dlgCloseArea
-{
-	cursor:pointer;
+.dlgCloseArea {
+    cursor: pointer;
 }
 
-.dlgCloseBtn
-{
-	background-image:url(dialogtitle.gif);
-	background-position:0px -26px;
-	width:11px;
-	height:10px;
+.dlgCloseBtn {
+    background-image: url(dialogtitle.gif);
+    background-position: 0px -26px;
+    width: 11px;
+    height: 10px;
 }
 
-.dlgCloseBtnHover
-{
-	background-image:url(dialogtitle.gif);
-	background-position:0px -37px;
-	width:11px;
-	height:10px;
+.dlgCloseBtnHover {
+    background-image: url(dialogtitle.gif);
+    background-position: 0px -37px;
+    width: 11px;
+    height: 10px;
 }
 
-.titlezone
-{
-	color:#4F5C72;
-	font-family:Tahoma,sans-serif;
-	font-size:11px;
-	font-weight:bold;
+.titlezone {
+    color: #4F5C72;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+    font-weight: bold;
 }
 
-.titlepane
-{
-	color:black;
-	font-family:Tahoma,sans-serif;
-	font-size:11px;
-	font-weight:normal;
-	padding-left:6px;
-	padding-right:2px;
-	padding-top:1px;
-	padding-bottom:0px;
-	text-overflow:ellipsis;
-	white-space:nowrap;
-	overflow:hidden;
+.titlepane {
+    color: black;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    padding-left: 6px;
+    padding-right: 2px;
+    padding-top: 1px;
+    padding-bottom: 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-.dialogzone
-{
-	background-color:#bcc8da ;
-	color:black;
-	font-family:Tahoma,sans-serif;
-	font-size:11px;
+.dialogzone {
+    background-color: #bcc8da;
+    color: black;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
 }
 
-.naviBarFrame
-{
-	background-color:white;
-	color:black;
-	font-family:Tahoma,sans-serif;
-	font-size:11px;
+.naviBarFrame {
+    background-color: white;
+    color: black;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
 }
 
-.naviFrame
-{
-	padding-left:20px;
-	padding-right:15px;
-	padding-top:20px;
-	padding-bottom:25px;
+.naviFrame {
+    padding-left: 20px;
+    padding-right: 15px;
+    padding-top: 20px;
+    padding-bottom: 25px;
 }

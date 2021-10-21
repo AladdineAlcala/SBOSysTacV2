@@ -10,7 +10,6 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([
 			"jquery",
@@ -20,12 +19,10 @@
 			"./menu"
 		], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 $.widget( "ui.autocomplete", {
 	version: "1.11.4",
 	defaultElement: "<input>",
@@ -396,7 +393,6 @@ $.widget( "ui.autocomplete", {
 	_searchTimeout: function( event ) {
 		clearTimeout( this.searching );
 		this.searching = this._delay(function() {
-
 			// Search if the value has changed, or if the user retypes the same value (see #7434)
 			var equalValues = this.term === this._value(),
 				menuVisible = this.menu.element.is( ":visible" ),
@@ -552,7 +548,6 @@ $.widget( "ui.autocomplete", {
 		}
 		if ( this.menu.isFirstItem() && /^previous/.test( direction ) ||
 				this.menu.isLastItem() && /^next/.test( direction ) ) {
-
 			if ( !this.isMultiLine ) {
 				this._value( this.term );
 			}
@@ -624,5 +619,4 @@ $.widget( "ui.autocomplete", $.ui.autocomplete, {
 });
 
 return $.ui.autocomplete;
-
 }));

@@ -13,26 +13,26 @@ bobj.crv.params.newParameterPanel = function(kwArgs) {
     kwArgs = MochiKit.Base.update({
         id: bobj.uniqueId() + '_IPPanel'
     }, kwArgs);
-    
+
     var o = newWidget(kwArgs.id);
     o.widgetType = 'ParameterPanel';
-    
+
     // Update instance with constructor arguments
     bobj.fillIn(o, kwArgs);
-    
+
     // Update instance with member functions
     MochiKit.Base.update(o, bobj.crv.params.ParameterPanel);
-    
+
     o._tabPanel = bobj.crv.newStackedPanel({
         id: o.id + '_ParamtersStack'
     });
 
     //Layer that appears on top of panel when it is disabled; necessary for preventing user to select parameters/widgets
-    o._overlayLayer = new bobj.crv.params.ParameterPanel.OverlayLayer(o.id); 
+    o._overlayLayer = new bobj.crv.params.ParameterPanel.OverlayLayer(o.id);
     o._toolbar = bobj.crv.params.newParameterPanelToolbar({
         id: o.id + '_IPToolbar'
     });
-    
+
     return o;
 };
 
@@ -43,7 +43,7 @@ bobj.crv.params.ParameterPanel = {
             this._toolbar.resetClickCB = resetClickCB;
         }
     },
-    
+
     /**
      * Disables panel by showing modal layer on top of panel, reducing opacity of panel, and disabling tabbing between widgets
      */
@@ -51,7 +51,7 @@ bobj.crv.params.ParameterPanel = {
         this._overlayLayer.setVisible (dis);
         this.setTabDisabled (dis);
     },
-    
+
     /**
      * Disables tabbing for toolbar and all parameters within panel
      */
@@ -59,24 +59,24 @@ bobj.crv.params.ParameterPanel = {
         this._toolbar.setTabDisabled (dis);
         this._tabPanel.setTabDisabled (dis);
     },
-    
+
     init : function() {
         Widget_init.call (this);
         this._toolbar.init ();
         if (this._tabPanel) {
             this._tabPanel.init ();
         }
-        
+
         MochiKit.Signal.signal (this, "resetParamPanel");
     },
-    
+
     update : function (update) {
         if (update && update.cons == "bobj.crv.params.newParameterPanel") {
-            if(update.args && update.args.isResetParamPanel) 
+            if(update.args && update.args.isResetParamPanel)
                 MochiKit.Signal.signal (this, "resetParamPanel");
         }
     },
-    
+
     getHTML : function() {
         var DIV = bobj.html.DIV;
         var layerStyle = {
@@ -95,7 +95,7 @@ bobj.crv.params.ParameterPanel = {
             style : layerStyle
         }, innerHTML);
     },
-    
+
     getBestFitHeight : function () {
         var height = 0;
         if(this._tabPanel) {
@@ -105,16 +105,16 @@ bobj.crv.params.ParameterPanel = {
              */
             height += bobj.getHiddenElementDimensions(this._tabPanel.layer).h;
         }
-        
+
         if(this._toolbar)
             height += this._toolbar.getHeight ();
-        
+
         return height;
     },
-    
+
     /**
      * Resize the panel
-     * 
+     *
      * @param w [int - optional] Width in pixels
      * @param h [int - optional] Height in pixels
      */
@@ -130,12 +130,12 @@ bobj.crv.params.ParameterPanel = {
             }
         }
     },
-    
+
     /**
      * Add a ParameterUI instance to the panel
      *
-     * @param paramUI [ParameterUI] 
-     * @param label [String]  Parameter title 
+     * @param paramUI [ParameterUI]
+     * @param label [String]  Parameter title
      * @param isDataFetching [bool]  Shows the data fetching icon when true
      */
     addParameter : function(kwArgs) {
@@ -154,7 +154,6 @@ bobj.crv.params.ParameterPanel = {
             this._tabPanel.addTab (paramTab);
         }
     },
-    
 
     /**
      * Remove a ParameterUI instance from the panel
@@ -164,30 +163,30 @@ bobj.crv.params.ParameterPanel = {
     removeParameter : function(index) {
         this._tabPanel.removeTab(index);
     },
-    
+
     getWidth : function() {
         if (this.layer) {
             return this.layer.offsetWidth;
         }
         return this.width;
     },
-    
+
     setResetButtonEnabled : function(isEnabled) {
         this._toolbar.resetButton.setDisabled (!isEnabled);
         var tooltip = isEnabled ? L_bobj_crv_ResetTip : L_bobj_crv_ResetDisabledTip;
         this._toolbar.resetButton.changeTooltip (tooltip, true);
     },
-    
+
     setApplyButtonEnabled : function(isEnabled) {
         this._toolbar.applyButton.setDisabled (!isEnabled);
         var tooltip = isEnabled ? L_bobj_crv_ParamsApplyTip : L_bobj_crv_ParamsApplyDisabledTip;
         this._toolbar.applyButton.changeTooltip (tooltip, true);
     },
-    
+
     isApplyButtonEnabled : function () {
         return this._toolbar != null && this._toolbar.applyButton != null && !this._toolbar.applyButton.isDisabled();
     },
-    
+
     getIndex : function(paramUI) {
         var numTabs = this._tabPanel.getNumTabs ();
         for ( var idx = 0; idx < numTabs; ++idx) {
@@ -198,7 +197,7 @@ bobj.crv.params.ParameterPanel = {
         }
         return -1;
     },
-    
+
     getParameterTabByWidget : function(paramUI) {
         var index = this.getIndex (paramUI);
         if (index >= 0)
@@ -206,7 +205,7 @@ bobj.crv.params.ParameterPanel = {
 
         return null;
     },
-    
+
     getParameter : function(index) {
         var tab = this._tabPanel.getTab (index);
         if (tab) {
@@ -214,14 +213,14 @@ bobj.crv.params.ParameterPanel = {
         }
         return null;
     },
-    
+
     /**
      * @return ParameterTab, tab specified by index
      */
     getParameterTab : function(index) {
         return this._tabPanel.getTab (index);
     },
-    
+
     /**
      * return Number of tabs/parameters in panel
      */
@@ -253,25 +252,25 @@ bobj.crv.params.ParameterPanel.OverlayLayer.prototype = {
             this.css.visibility = visible ? "visible" : "hidden";
         }
     },
-    
+
     isVisible: function() {
         if(!this.layer) {
             this.init();
         }
     	return this.css.visibility == "visible";
     },
-    
+
     getHTML: function() {
         return '<div id = ' + this.id + ' onselectstart="return false" ondragstart="return false" onmousedown="'+_codeWinName+'.eventCancelBubble(event)" border="0" hspace="0" vspace="0" src="'+_skin+'../transp.gif" class="paramPanelOverLay">'+(_ie?img(_skin+'../transp.gif','100%','100%',null,'ISMAP'):'')+'</div>'
     },
-    
+
     init: function() {
         var paramPanelLayer = getLayer(this.paramPanelId);
 
         if(paramPanelLayer) {
             append2(paramPanelLayer, this.getHTML()); //adds overlay layer to parameter panel layer
         }
-        
+
         Widget_init.call(this);
     }
 }

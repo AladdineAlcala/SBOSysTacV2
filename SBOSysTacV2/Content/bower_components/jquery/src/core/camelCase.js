@@ -1,5 +1,4 @@
 define( [], function() {
-
 "use strict";
 
 // Matches dashed string for camelizing
@@ -19,5 +18,4 @@ function camelCase( string ) {
 }
 
 return camelCase;
-
 } );

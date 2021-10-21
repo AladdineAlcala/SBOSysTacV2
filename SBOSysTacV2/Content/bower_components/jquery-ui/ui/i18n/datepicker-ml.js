@@ -2,16 +2,13 @@
 /* Written by Saji Nediyanchath (saji89@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['ml'] = {
 	closeText: 'ശരി',
 	prevText: 'മുന്നത്തെ',
@@ -33,5 +30,4 @@ datepicker.regional['ml'] = {
 datepicker.setDefaults(datepicker.regional['ml']);
 
 return datepicker.regional['ml'];
-
 }));

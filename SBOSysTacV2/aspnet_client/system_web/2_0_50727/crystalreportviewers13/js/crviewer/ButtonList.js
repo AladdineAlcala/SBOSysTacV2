@@ -1,4 +1,3 @@
-
 //** ButtonList Widget *************************************************************
 
 /**
@@ -15,41 +14,41 @@ bobj.crv.newButtonList = function(kwArgs) {
         tabIndex: 0,
         multiSelect: false,
         menuWidth: null,
-        menuTooltip: null 
+        menuTooltip: null
     }, kwArgs);
-    
+
     var o = newButtonWidget(
         kwArgs.id,
         kwArgs.label,
-        bobj.crv.ButtonList._onClick, 
+        bobj.crv.ButtonList._onClick,
         kwArgs.buttonWidth,
         null,
         kwArgs.buttonTooltip,
         kwArgs.tabIndex,
         0, _skin+"menus.gif", 7, 16, 0, 81, true, 0, 97);
-    
+
     o._menu = newListWidget(
         kwArgs.id + "_menu",
         MochiKit.Base.bind(bobj.crv.ButtonList._onChange, o),
         kwArgs.multiSelect,
         kwArgs.menuWidth,
-        kwArgs.numLines || 2, 
+        kwArgs.numLines || 2,
         kwArgs.menuTooltip,
         null,  //dblClickCB
         null); //keyUpCB
-        
+
     o._listItems = [];
     o._blOldInit = o.init;
     o._blOldGetHTML = o.getHTML;
     o._menuDiv = null;
-    
+
     o._captureClicks = MenuWidget_captureClicks;
     o._releaseClicks = MenuWidget_releaseClicks;
-    
-    bobj.fillIn(o, kwArgs);  
+
+    bobj.fillIn(o, kwArgs);
     o.widgetType = 'ButtonList';
     MochiKit.Base.update(o, bobj.crv.ButtonList);
-    
+
     return o;
 };
 
@@ -60,14 +59,14 @@ bobj.crv.ButtonList = {
     getMenu : function() {
         return this._menu;
     },
-    
+
     /**
      * Add an item to the menu
      *
      * @param label [String]           The text to display in the menu
      * @param value [any - opt.]       The value associated with the new menu item
      * @param isSelected [bool - opt.] True if item should be selected after being added
-     * @param id    [String - opt.]    DHTML id associated with menu item;  
+     * @param id    [String - opt.]    DHTML id associated with menu item;
      */
     add : function(label, value, isSelected, id) {
         if (this._menu && this._menu.layer)
@@ -81,7 +80,7 @@ bobj.crv.ButtonList = {
                 id : id
             });
     },
-    
+
     init : function() {
         var menu = this._menu;
         this._blOldInit ();
@@ -96,7 +95,7 @@ bobj.crv.ButtonList = {
         }
         this._listItems = [];
     },
-    
+
     getHTML : function() {
         var h = bobj.html;
 
@@ -112,7 +111,7 @@ bobj.crv.ButtonList = {
         };
         return this._blOldGetHTML () + h.DIV (menuDivAtts, this._menu.getHTML ());
     },
-    
+
     /**
      * @return [bool] True if and only if the menu is visible
      */
@@ -128,7 +127,7 @@ bobj.crv.ButtonList = {
             this._menuDiv.style.visibility = 'hidden';
         }
     },
-    
+
     /**
      * Position and show the menu
      */
@@ -183,7 +182,7 @@ bobj.crv.ButtonList = {
             divStyle.top = y + 'px';
         }
     },
-    
+
     /**
      * Private. Capture clicks in the current document so that the menu can be hidden automatically.
      */
@@ -199,7 +198,7 @@ bobj.crv.ButtonList = {
             }
         }
     },
-    
+
     /**
      * Private. Stop capturing clicks.
      */
@@ -209,18 +208,17 @@ bobj.crv.ButtonList = {
             document.onmousedown = this._oldMousedown;
         }
     },
-    
 
     /**
      * Private. Button click callback.
      */
     _onClick : function() {
-        if (!this._cancelNextClick) 
+        if (!this._cancelNextClick)
             this.showMenu ();
-        
+
         this._cancelNextClick = false;
     },
-    
+
     /**
      * Private. Menu change callback.
      */
@@ -228,10 +226,10 @@ bobj.crv.ButtonList = {
         this._releaseClicks ();
         this.hideMenu ();
 
-        if (this.changeCB) 
+        if (this.changeCB)
             this.changeCB ();
     },
-    
+
     /**
      * Private. Called when a click is captured (after _captureClicks has been called)
      */

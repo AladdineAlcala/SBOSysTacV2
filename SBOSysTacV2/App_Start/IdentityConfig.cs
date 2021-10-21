@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using SBOSysTacV2.Models;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace SBOSysTacV2
 {
@@ -105,6 +102,7 @@ namespace SBOSysTacV2
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
     }
+
     public class ApplicationRoleManager : RoleManager<IdentityRole>
     {
         public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)

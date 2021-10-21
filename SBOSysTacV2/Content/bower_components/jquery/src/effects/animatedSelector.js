@@ -3,7 +3,6 @@ define( [
 	"../selector",
 	"../effects"
 ], function( jQuery ) {
-
 "use strict";
 
 jQuery.expr.pseudos.animated = function( elem ) {
@@ -11,5 +10,4 @@ jQuery.expr.pseudos.animated = function( elem ) {
 		return elem === fn.elem;
 	} ).length;
 };
-
 } );

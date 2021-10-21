@@ -24,46 +24,46 @@ bobj.crv.newPromptPage = function(kwArgs) {
         top: 0,
         left: 0
     }, kwArgs);
-    
-    var o = newWidget(kwArgs.id);    
+
+    var o = newWidget(kwArgs.id);
     o.widgetType = 'PromptPage';
     o._reportProcessing = null;
-    
+
     // Update instance with constructor arguments
     bobj.fillIn(o, kwArgs);
-    
+
     // Update instance with member functions
     o.initOld = o.init;
     MochiKit.Base.update(o, bobj.crv.PromptPage);
-    
+
     window[o.id] = o;
-    
+
     return o;
 };
 
 bobj.crv.PromptPage = {
     /**
      * Overrides parent. Sets the content of the report page.
-     * 
+     *
      * @param content
      *            [String|DOM Node] Html or Node to use as report page content
-     */   
+     */
     setHTML : function(content) {
         var pageNode = this._pageNode;
         if (bobj.isString (content)) {
             var ext = bobj.html.extractHtml(content);
             pageNode.innerHTML = ext.html;
-            
+
             var links = ext.links;
             for(var iLinks = 0, linksLen = links.length; iLinks < linksLen; ++iLinks) {
                 bobj.includeLink(links[iLinks]);
             }
-                    
+
             var scripts = ext.scripts;
             for (var iScripts = 0, scriptsLen = scripts.length; iScripts < scriptsLen; ++iScripts) {
                 var script = scripts[iScripts];
                 if (!script) {continue;}
-                
+
                 if (script.text) {
                     bobj.evalInWindow(script.text);
                 }
@@ -76,7 +76,7 @@ bobj.crv.PromptPage = {
             contentStyle.visibility = 'visible';
         }
     },
-    
+
     getHTML : function() {
         var h = bobj.html;
         var isBorderBoxModel = bobj.isBorderBoxModel ();
@@ -117,7 +117,7 @@ bobj.crv.PromptPage = {
 
         return html;
     },
-    
+
     init : function() {
         this._pageNode = document.getElementById (this.id + '_page');
 
@@ -142,7 +142,7 @@ bobj.crv.PromptPage = {
 
         this._doLayout ();
     },
-    
+
     /* TODO: fix the layout (fitreport) to behave like XIR2 */
     _doLayout : function() {
         var layout = this.layoutType.toLowerCase ();
@@ -173,14 +173,13 @@ bobj.crv.PromptPage = {
             rptProcessing.center ();
         }
     },
-    
+
     addChild : function(widget) {
         if (widget.widgetType == 'ReportProcessingUI') {
             this._reportProcessing = widget;
         }
     }
 };
-
 
 /**
  * FlexPromptPage constructor
@@ -205,19 +204,19 @@ bobj.crv.newFlexPromptPage = function(kwArgs) {
         top: 0,
         left: 0
     }, kwArgs);
-    
-    var o = newWidget(kwArgs.id);    
+
+    var o = newWidget(kwArgs.id);
     o.widgetType = 'FlexPromptPage';
     o._reportProcessing = null;
-    
+
     // Update instance with constructor arguments
     bobj.fillIn(o, kwArgs);
-    
+
     // Update instance with member functions
     o.initOld = o.init;
     MochiKit.Base.update(o, bobj.crv.FlexPromptPage);
     window[o.id] = o;
-    
+
     return o;
 };
 
@@ -225,10 +224,10 @@ bobj.crv.FlexPromptPage = {
     /**
      * Overrides parent. Does nothing because the swf content will replace the DIV later
      *
-     * @param content [String|DOM Node]  Html or Node to use as report page content 
+     * @param content [String|DOM Node]  Html or Node to use as report page content
      */
     setHTML : MochiKit.Base.noop,
-    
+
     getHTML : function() {
         var isBorderBoxModel = bobj.isBorderBoxModel ();
 
@@ -269,7 +268,7 @@ bobj.crv.FlexPromptPage = {
             id : this.contentId
         })));
     },
-    
+
     init : function() {
         var connect = MochiKit.Signal.connect;
         if (this.layoutType.toLowerCase () == 'client') {
@@ -278,18 +277,17 @@ bobj.crv.FlexPromptPage = {
 
         this._doLayout ();
     },
-    
+
     _doLayout : function() {
         var rptProcessing = this._reportProcessing;
         if (rptProcessing && rptProcessing.layer) {
             rptProcessing.center ();
         }
     },
-    
+
     addChild : function(widget) {
         if (widget.widgetType == 'ReportProcessingUI') {
             this._reportProcessing = widget;
         }
     }
-        
 };

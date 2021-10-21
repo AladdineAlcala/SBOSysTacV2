@@ -1031,7 +1031,8 @@ $(document).on('change', '#' +
 
         debugger;
 
-        var selId = $(this).attr('id');
+    var selId = "";
+        selId = $(this).attr('id');
 
         if ($(this).val() === "regular") {
 
@@ -1070,7 +1071,9 @@ $(document).on('change', '#' +
         e.preventDefault();
         e.stopPropagation();
 
-        var selId = $(this).attr('id');
+        var selId = "";
+        selId = $(this).attr('id');
+
         //alert(selId);
         LoadDataTableSearch($(this).val(), selId);
 

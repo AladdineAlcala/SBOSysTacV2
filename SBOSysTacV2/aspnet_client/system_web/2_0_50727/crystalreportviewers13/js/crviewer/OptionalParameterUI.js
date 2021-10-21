@@ -12,7 +12,7 @@ bobj.crv.params.newOptionalParameterUI = function(kwArgs) {
     var o = bobj.crv.params.newParameterUI(kwArgs);
 
     /*
-     * The reason I'm using bobj.extendClass is that it would populate all functions defined in ParameterUI 
+     * The reason I'm using bobj.extendClass is that it would populate all functions defined in ParameterUI
      * in this.superClass  so I can call any function on parent class
      */
     bobj.extendClass(o, bobj.crv.params.OptionalParameterUI, bobj.crv.params.ParameterUI);

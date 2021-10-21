@@ -6,7 +6,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-
 +function ($) {
   'use strict';
 
@@ -215,7 +214,6 @@
           .one('bsTransitionEnd', callback)
           .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
         callback()
-
     } else if (!this.isShown && this.$backdrop) {
       this.$backdrop.removeClass('in')
 
@@ -228,7 +226,6 @@
           .one('bsTransitionEnd', callbackRemove)
           .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
         callbackRemove()
-
     } else if (callback) {
       callback()
     }
@@ -285,7 +282,6 @@
     return scrollbarWidth
   }
 
-
   // MODAL PLUGIN DEFINITION
   // =======================
 
@@ -306,7 +302,6 @@
   $.fn.modal             = Plugin
   $.fn.modal.Constructor = Modal
 
-
   // MODAL NO CONFLICT
   // =================
 
@@ -314,7 +309,6 @@
     $.fn.modal = old
     return this
   }
-
 
   // MODAL DATA-API
   // ==============
@@ -335,5 +329,4 @@
     })
     Plugin.call($target, option, this)
   })
-
 }(jQuery);

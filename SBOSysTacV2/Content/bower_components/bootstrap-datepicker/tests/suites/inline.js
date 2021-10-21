@@ -11,12 +11,10 @@ module('Inline', {
     }
 });
 
-
 test('Picker gets date/viewDate from data-date attr', function(){
     datesEqual(this.dp.dates[0], UTCDate(2012, 1, 12));
     datesEqual(this.dp.viewDate, UTCDate(2012, 1, 12));
 });
-
 
 test('Visible after init', function(){
     ok(this.picker.is(':visible'));

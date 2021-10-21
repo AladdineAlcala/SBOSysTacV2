@@ -12,7 +12,6 @@ define( [
 	"./selector"
 ], function( jQuery, document, documentElement, isFunction, rnothtmlwhite,
 	slice, dataPriv, nodeName ) {
-
 "use strict";
 
 var
@@ -41,10 +40,8 @@ function on( elem, types, selector, data, fn, one ) {
 
 	// Types can be a map of types/handlers
 	if ( typeof types === "object" ) {
-
 		// ( types-Object, selector, data )
 		if ( typeof selector !== "string" ) {
-
 			// ( types-Object, data )
 			data = data || selector;
 			selector = undefined;
@@ -56,18 +53,15 @@ function on( elem, types, selector, data, fn, one ) {
 	}
 
 	if ( data == null && fn == null ) {
-
 		// ( types, fn )
 		fn = selector;
 		data = selector = undefined;
 	} else if ( fn == null ) {
 		if ( typeof selector === "string" ) {
-
 			// ( types, selector, fn )
 			fn = data;
 			data = undefined;
 		} else {
-
 			// ( types, data, fn )
 			fn = data;
 			data = selector;
@@ -83,7 +77,6 @@ function on( elem, types, selector, data, fn, one ) {
 	if ( one === 1 ) {
 		origFn = fn;
 		fn = function( event ) {
-
 			// Can use an empty set, since event contains the info
 			jQuery().off( event );
 			return origFn.apply( this, arguments );
@@ -102,11 +95,9 @@ function on( elem, types, selector, data, fn, one ) {
  * Props to Dean Edwards' addEvent library for many of the ideas.
  */
 jQuery.event = {
-
 	global: {},
 
 	add: function( elem, types, handler, data, selector ) {
-
 		var handleObjIn, eventHandle, tmp,
 			events, t, handleObj,
 			special, handlers, type, namespaces, origType,
@@ -141,7 +132,6 @@ jQuery.event = {
 		}
 		if ( !( eventHandle = elemData.handle ) ) {
 			eventHandle = elemData.handle = function( e ) {
-
 				// Discard the second event of a jQuery.event.trigger() and
 				// when an event is called after a page has unloaded
 				return typeof jQuery !== "undefined" && jQuery.event.triggered !== e.type ?
@@ -191,7 +181,6 @@ jQuery.event = {
 				// Only use addEventListener if the special events handler returns false
 				if ( !special.setup ||
 					special.setup.call( elem, data, namespaces, eventHandle ) === false ) {
-
 					if ( elem.addEventListener ) {
 						elem.addEventListener( type, eventHandle );
 					}
@@ -216,12 +205,10 @@ jQuery.event = {
 			// Keep track of which events have ever been used, for event optimization
 			jQuery.event.global[ type ] = true;
 		}
-
 	},
 
 	// Detach an event or set of events from an element
 	remove: function( elem, types, handler, selector, mappedTypes ) {
-
 		var j, origCount, tmp,
 			events, t, handleObj,
 			special, handlers, type, namespaces, origType,
@@ -279,7 +266,6 @@ jQuery.event = {
 			if ( origCount && !handlers.length ) {
 				if ( !special.teardown ||
 					special.teardown.call( elem, namespaces, elemData.handle ) === false ) {
-
 					jQuery.removeEvent( elem, type, elemData.handle );
 				}
 
@@ -294,7 +280,6 @@ jQuery.event = {
 	},
 
 	dispatch: function( nativeEvent ) {
-
 		// Make a writable jQuery.Event from the native event object
 		var event = jQuery.event.fix( nativeEvent );
 
@@ -328,11 +313,9 @@ jQuery.event = {
 			j = 0;
 			while ( ( handleObj = matched.handlers[ j++ ] ) &&
 				!event.isImmediatePropagationStopped() ) {
-
 				// Triggered event must either 1) have no namespace, or 2) have namespace(s)
 				// a subset or equal to those in the bound event (both can have no namespace).
 				if ( !event.rnamespace || event.rnamespace.test( handleObj.namespace ) ) {
-
 					event.handleObj = handleObj;
 					event.data = handleObj.data;
 
@@ -376,9 +359,7 @@ jQuery.event = {
 			// Support: IE 11 only
 			// ...but not arrow key "clicks" of radio inputs, which can have `button` -1 (gh-2343)
 			!( event.type === "click" && event.button >= 1 ) ) {
-
 			for ( ; cur !== this; cur = cur.parentNode || this ) {
-
 				// Don't check non-elements (#13208)
 				// Don't process clicks on disabled elements (#6911, #8165, #11382, #11764)
 				if ( cur.nodeType === 1 && !( event.type === "click" && cur.disabled === true ) ) {
@@ -451,12 +432,10 @@ jQuery.event = {
 
 	special: {
 		load: {
-
 			// Prevent triggered image.load events from bubbling to window.load
 			noBubble: true
 		},
 		focus: {
-
 			// Fire native event if possible so blur/focus sequence is correct
 			trigger: function() {
 				if ( this !== safeActiveElement() && this.focus ) {
@@ -476,7 +455,6 @@ jQuery.event = {
 			delegateType: "focusout"
 		},
 		click: {
-
 			// For checkbox, fire native event so checked state will be right
 			trigger: function() {
 				if ( this.type === "checkbox" && this.click && nodeName( this, "input" ) ) {
@@ -493,7 +471,6 @@ jQuery.event = {
 
 		beforeunload: {
 			postDispatch: function( event ) {
-
 				// Support: Firefox 20+
 				// Firefox doesn't alert if the returnValue field is not set.
 				if ( event.result !== undefined && event.originalEvent ) {
@@ -505,7 +482,6 @@ jQuery.event = {
 };
 
 jQuery.removeEvent = function( elem, type, handle ) {
-
 	// This "if" is needed for plain objects
 	if ( elem.removeEventListener ) {
 		elem.removeEventListener( type, handle );
@@ -513,7 +489,6 @@ jQuery.removeEvent = function( elem, type, handle ) {
 };
 
 jQuery.Event = function( src, props ) {
-
 	// Allow instantiation without the 'new' keyword
 	if ( !( this instanceof jQuery.Event ) ) {
 		return new jQuery.Event( src, props );
@@ -699,7 +674,6 @@ jQuery.each( {
 } );
 
 jQuery.fn.extend( {
-
 	on: function( types, selector, data, fn ) {
 		return on( this, types, selector, data, fn );
 	},
@@ -709,7 +683,6 @@ jQuery.fn.extend( {
 	off: function( types, selector, fn ) {
 		var handleObj, type;
 		if ( types && types.preventDefault && types.handleObj ) {
-
 			// ( event )  dispatched jQuery.Event
 			handleObj = types.handleObj;
 			jQuery( types.delegateTarget ).off(
@@ -722,7 +695,6 @@ jQuery.fn.extend( {
 			return this;
 		}
 		if ( typeof types === "object" ) {
-
 			// ( types-object [, selector] )
 			for ( type in types ) {
 				this.off( type, selector, types[ type ] );
@@ -730,7 +702,6 @@ jQuery.fn.extend( {
 			return this;
 		}
 		if ( selector === false || typeof selector === "function" ) {
-
 			// ( types [, fn] )
 			fn = selector;
 			selector = undefined;

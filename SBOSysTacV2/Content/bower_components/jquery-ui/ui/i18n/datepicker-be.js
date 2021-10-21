@@ -2,16 +2,13 @@
 /* Written by Pavel Selitskas <p.selitskas@gmail.com> */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['be'] = {
 	closeText: 'Зачыніць',
 	prevText: '&larr;Папяр.',
@@ -33,5 +30,4 @@ datepicker.regional['be'] = {
 datepicker.setDefaults(datepicker.regional['be']);
 
 return datepicker.regional['be'];
-
 }));

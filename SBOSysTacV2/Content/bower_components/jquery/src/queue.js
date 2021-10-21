@@ -4,7 +4,6 @@ define( [
 	"./deferred",
 	"./callbacks"
 ], function( jQuery, dataPriv ) {
-
 "use strict";
 
 jQuery.extend( {
@@ -45,7 +44,6 @@ jQuery.extend( {
 		}
 
 		if ( fn ) {
-
 			// Add a progress sentinel to prevent the fx queue from being
 			// automatically dequeued
 			if ( type === "fx" ) {

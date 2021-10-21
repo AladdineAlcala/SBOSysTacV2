@@ -2,16 +2,13 @@
 /* Written by Kentaro SATO (kentaro@ranvis.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['ja'] = {
 	closeText: '閉じる',
 	prevText: '&#x3C;前',
@@ -33,5 +30,4 @@ datepicker.regional['ja'] = {
 datepicker.setDefaults(datepicker.regional['ja']);
 
 return datepicker.regional['ja'];
-
 }));

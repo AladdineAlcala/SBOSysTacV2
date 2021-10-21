@@ -1,4 +1,3 @@
-
 /*
 ================================================================================
 TextCombo
@@ -24,33 +23,33 @@ bobj.crv.params.newTextCombo = function(kwArgs) {
         enterCB: null,
         keyUpCB: null,
         isTextItalic: false
-    }, kwArgs); 
+    }, kwArgs);
 
     var o = newTextComboWidget(
         kwArgs.id,
         kwArgs.maxChar,
         kwArgs.tooltip,
         null, // width
-        kwArgs.changeCB,  
+        kwArgs.changeCB,
         null, // check CB
         null, // beforeShowCB
-        null);// formName 
-        
+        null);// formName
+
     o.widgetType = 'TextCombo';
-    
+
     // Update instance with constructor arguments
-    bobj.fillIn(o, kwArgs); 
+    bobj.fillIn(o, kwArgs);
     o.width = kwArgs.width;
-    
+
     // Update instance with member functions
     o.init_TextCombo = o.init;
     UPDATE(o, PARAMS.TextCombo);
-    
-    o._createTextField(); // Override parent's text property    
-    o._createArrow(); 
+
+    o._createTextField(); // Override parent's text property
+    o._createArrow();
     o.arrow.dy += 2; // Center the arrow
     o.arrow.disDy += 2;
-    
+
     return o;
 };
 
@@ -60,18 +59,18 @@ bobj.crv.params.TextCombo = {
             this.text.setTextItalic (isTextItalic);
         }
     },
-    
+
     setForeColor : function(color) {
         if (this.text)
             this.text.setForeColor (color);
     },
-    
+
     setTooltip : function(tooltip) {
         if (this.text) {
             this.text.setTooltip (tooltip);
         }
     },
-    
+
     setTabDisabled : function(dis) {
         if (this.text)
             this.text.setTabDisabled (dis);
@@ -79,11 +78,11 @@ bobj.crv.params.TextCombo = {
         if (this.arrow)
             bobj.disableTabbingKey (this.arrow.layer, dis);
     },
-    
+
     setMenu : function(menu) {
         this.menu = menu;
     },
-    
+
     init : function() {
         this.init_TextCombo ();
         this.arrowContainer = getLayer (this.id + '_arrowCtn');
@@ -95,7 +94,7 @@ bobj.crv.params.TextCombo = {
 
         this.text.setValue (this.cleanValue);
     },
-    
+
     toggleMenu : function() {
         var menu = this.menu;
         menu.parIcon = this;
@@ -104,7 +103,7 @@ bobj.crv.params.TextCombo = {
         if (toShow)
         	menu.valueSelect (this.text.getValue () + '');
     },
-    
+
     _createArrow : function() {
         var tooltip = _openMenu.replace("{0}", this.tooltip? this.tooltip: '');
         this.arrow = newIconWidget(this.id + "arrow_",
@@ -120,9 +119,9 @@ bobj.crv.params.TextCombo = {
                                     99);  /* disDy */
 
         this.arrow.setClasses("iconnocheck", "combobtnhover", "combobtnhover", "combobtnhover");
-        this.arrow.par = this;                           
+        this.arrow.par = this;
     },
-    
+
     _createTextField : function() {
         this.text = bobj.crv.params.newTextField ( {
             id : this.id + '_text',
@@ -141,7 +140,7 @@ bobj.crv.params.TextCombo = {
             isTextItalic : this.isTextItalic
         });
     },
-    
+
     getHTML : function() {
         var h = bobj.html;
 
@@ -151,7 +150,6 @@ bobj.crv.params.TextCombo = {
 
         if (MochiKit.Base.isIE ()) {
             arrowStyle.height = "18px";
-
         } else {
             arrowStyle.height = "16px";
         }
@@ -175,14 +173,14 @@ bobj.crv.params.TextCombo = {
 
         return html;
     },
-    
+
     /**
      * Resets TextCombo. sets original value and hides arrow icon
      */
     reset : function(value) {
         this.text.reset (value);
     },
-    
+
     /**
      * Set the content of the text box and update the menu selection
      *
@@ -191,11 +189,11 @@ bobj.crv.params.TextCombo = {
     setValue : function(text) {
         this.text.setValue(text);
     },
-    
+
     setCleanValue : function(text) {
         this.text.setCleanValue (text);
     },
-    
+
     /**
      * Private. Overrides parent.
      */
@@ -206,7 +204,7 @@ bobj.crv.params.TextCombo = {
             this.menu.select (item.index);
         }
     },
-    
+
     /**
      * Get the content on the text box
      *
@@ -215,7 +213,7 @@ bobj.crv.params.TextCombo = {
     getValue : function() {
         return this.text.getValue ();
     },
-    
+
     _onKeyUp : function(e) {
         var text = this.text.getValue ();
 
@@ -223,7 +221,6 @@ bobj.crv.params.TextCombo = {
             this.keyUpCB (e);
     }
 };
-
 
 /**
  * ScrollMenuWidget
@@ -239,7 +236,7 @@ bobj.crv.params.newScrollMenuWidget = function(kwArgs) {
         openAdvDialogCB: null,
         maxNumParameterDefaultValues: null
     },kwArgs);
-    
+
     var visibleLines = (kwArgs.originalValues.length >= kwArgs.maxVisibleItems) ? kwArgs.maxVisibleItems : kwArgs.originalValues.length;
     if (visibleLines === 1) {
         visibleLines++;
@@ -249,19 +246,19 @@ bobj.crv.params.newScrollMenuWidget = function(kwArgs) {
         "menu_"+ kwArgs.id, //id
         bobj.crv.params.ScrollMenuWidget.onChange, //changeCB
         false, //multi
-        null, 
-        visibleLines, //lines 
-        null, //tooltip 
-        null,//dblClickCB 
+        null,
+        visibleLines, //lines
+        null, //tooltip
+        null,//dblClickCB
         null, //keyUpCB
         false, //showLabel
-        '', //label 
-        '',//convBlanks 
+        '', //label
+        '',//convBlanks
         null, //beforeShowCB
         null); //menuClickCB
-      
+
     o.oldShow = o.show;
-    MochiKit.Base.update(o,kwArgs, bobj.crv.params.ScrollMenuWidget);                      
+    MochiKit.Base.update(o,kwArgs, bobj.crv.params.ScrollMenuWidget);
 
     return o;
 };
@@ -290,7 +287,7 @@ bobj.crv.params.ScrollMenuWidget = {
             o.changeCB ();
         }
     },
-    
+
     getPosition : function() {
         if (this.parIcon === null) {
             return;
@@ -312,9 +309,8 @@ bobj.crv.params.ScrollMenuWidget = {
             x : xPos,
             y : yPos
         };
-
     },
-    
+
     setProperWidth : function() {
         if (this.hasProperWidth === false) {
             this.css.display = "block";
@@ -323,7 +319,7 @@ bobj.crv.params.ScrollMenuWidget = {
             this.hasProperWidth = true;
         }
     },
-    
+
     setValueList : function() {
         if (this.hasValueList === false) {
             this.hasValueList = true;
@@ -333,7 +329,7 @@ bobj.crv.params.ScrollMenuWidget = {
             }
         }
     },
-    
+
     setFocus : function(focus) {
         if (focus) {
             var focusCB = bobj.bindFunctionToObject (this.list.focus, this.list);
@@ -344,7 +340,7 @@ bobj.crv.params.ScrollMenuWidget = {
             }
         }
     },
-    
+
     show : function(show) {
         if (this.layer === null)
             this.justInTimeInit ();

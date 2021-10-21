@@ -14,7 +14,7 @@ if (typeof(dojo) != 'undefined') {
 
 if (typeof(JSAN) != 'undefined') {
     JSAN.use("MochiKit.Base", []);
-}   
+}
 
 try {
     if (typeof(MochiKit.Base) == 'undefined') {
@@ -22,12 +22,12 @@ try {
     }
 } catch (e) {
     throw "MochiKit.Iter depends on MochiKit.Base!";
-}  
-            
+}
+
 if (typeof(MochiKit.Iter) == 'undefined') {
     MochiKit.Iter = {};
-}           
-        
+}
+
 MochiKit.Iter.NAME = "MochiKit.Iter";
 MochiKit.Iter.VERSION = "1.4";
 MochiKit.Base.update(MochiKit.Iter, {
@@ -148,7 +148,7 @@ MochiKit.Base.update(MochiKit.Iter, {
             }
         };
     },
-            
+
     next: function (iterator) {
         return iterator.next();
     },
@@ -208,7 +208,7 @@ MochiKit.Base.update(MochiKit.Iter, {
             }
         };
     },
-     
+
 //    islice: function (seq/*, [start,] stop[, step] */) {
 //        var self = MochiKit.Iter;
 //        var m = MochiKit.Base;
@@ -261,7 +261,7 @@ MochiKit.Base.update(MochiKit.Iter, {
             }
         };
     },
-        
+
 //    applymap: function (fun, seq, self) {
 //        seq = MochiKit.Iter.iter(seq);
 //        var m = MochiKit.Base;
@@ -421,7 +421,6 @@ MochiKit.Base.update(MochiKit.Iter, {
         return undefined;
     },
 
-        
 //    reduce: function (fn, iterable, /* optional */initial) {
 //        var i = 0;
 //        var x = initial;
@@ -484,7 +483,7 @@ MochiKit.Base.update(MochiKit.Iter, {
 //            toString: MochiKit.Base.forwardCall("repr")
 //        };
 //    },
-//            
+//
 //    sum: function (iterable, start/* = 0 */) {
 //        if (typeof(start) == "undefined" || start === null) {
 //            start = 0;
@@ -503,7 +502,7 @@ MochiKit.Base.update(MochiKit.Iter, {
 //        }
 //        return x;
 //    },
-            
+
 //    exhaust: function (iterable) {
 //        var self = MochiKit.Iter;
 //        iterable = self.iter(iterable);
@@ -723,7 +722,6 @@ MochiKit.Base.update(MochiKit.Iter, {
     }
 });
 
-
 MochiKit.Iter.EXPORT_OK = [
     "iteratorRegistry",
     "arrayLikeIter",
@@ -792,7 +790,6 @@ MochiKit.Iter.__new__ = function () {
     };
 
     m.nameFunctions(this);
-        
 };
 
 MochiKit.Iter.__new__();

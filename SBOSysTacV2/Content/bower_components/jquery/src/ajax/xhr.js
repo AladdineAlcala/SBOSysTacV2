@@ -3,7 +3,6 @@ define( [
 	"../var/support",
 	"../ajax"
 ], function( jQuery, support ) {
-
 "use strict";
 
 jQuery.ajaxSettings.xhr = function() {
@@ -13,7 +12,6 @@ jQuery.ajaxSettings.xhr = function() {
 };
 
 var xhrSuccessStatus = {
-
 		// File protocol always yields status code 0, assume 200
 		0: 200,
 
@@ -81,7 +79,6 @@ jQuery.ajaxTransport( function( options ) {
 							if ( type === "abort" ) {
 								xhr.abort();
 							} else if ( type === "error" ) {
-
 								// Support: IE <=9 only
 								// On a manual native abort, IE9 throws
 								// errors on any property access that is not readyState
@@ -125,10 +122,8 @@ jQuery.ajaxTransport( function( options ) {
 					xhr.onabort = errorCallback;
 				} else {
 					xhr.onreadystatechange = function() {
-
 						// Check readyState before timeout as it changes
 						if ( xhr.readyState === 4 ) {
-
 							// Allow onerror to be called first,
 							// but that will not handle a native abort
 							// Also, save errorCallback to a variable
@@ -146,11 +141,9 @@ jQuery.ajaxTransport( function( options ) {
 				callback = callback( "abort" );
 
 				try {
-
 					// Do send the request (this may raise an exception)
 					xhr.send( options.hasContent && options.data || null );
 				} catch ( e ) {
-
 					// #14683: Only rethrow if this hasn't been notified as an error yet
 					if ( callback ) {
 						throw e;
@@ -166,5 +159,4 @@ jQuery.ajaxTransport( function( options ) {
 		};
 	}
 } );
-
 } );

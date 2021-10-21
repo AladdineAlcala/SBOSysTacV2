@@ -4,16 +4,13 @@
 			  Stéphane Raimbault <stephane.raimbault@gmail.com> */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['fr'] = {
 	closeText: 'Fermer',
 	prevText: 'Précédent',
@@ -35,5 +32,4 @@ datepicker.regional['fr'] = {
 datepicker.setDefaults(datepicker.regional['fr']);
 
 return datepicker.regional['fr'];
-
 }));

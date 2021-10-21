@@ -2,16 +2,13 @@
 /* Written by Antonello Pasella (antonello.pasella@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['it-CH'] = {
 	closeText: 'Chiudi',
 	prevText: '&#x3C;Prec',
@@ -33,5 +30,4 @@ datepicker.regional['it-CH'] = {
 datepicker.setDefaults(datepicker.regional['it-CH']);
 
 return datepicker.regional['it-CH'];
-
 }));

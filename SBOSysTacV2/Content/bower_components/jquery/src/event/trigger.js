@@ -8,7 +8,6 @@ define( [
 	"../var/isWindow",
 	"../event"
 ], function( jQuery, document, dataPriv, acceptData, hasOwn, isFunction, isWindow ) {
-
 "use strict";
 
 var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
@@ -17,9 +16,7 @@ var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
 	};
 
 jQuery.extend( jQuery.event, {
-
 	trigger: function( event, data, elem, onlyHandlers ) {
-
 		var i, cur, tmp, bubbleType, ontype, handle, special, lastElement,
 			eventPath = [ elem || document ],
 			type = hasOwn.call( event, "type" ) ? event.type : event,
@@ -38,7 +35,6 @@ jQuery.extend( jQuery.event, {
 		}
 
 		if ( type.indexOf( "." ) > -1 ) {
-
 			// Namespaced trigger; create a regexp to match event type in handle()
 			namespaces = type.split( "." );
 			type = namespaces.shift();
@@ -78,7 +74,6 @@ jQuery.extend( jQuery.event, {
 		// Determine event propagation path in advance, per W3C events spec (#9951)
 		// Bubble up to document, then to window; watch for a global ownerDocument var (#9724)
 		if ( !onlyHandlers && !special.noBubble && !isWindow( elem ) ) {
-
 			bubbleType = special.delegateType || type;
 			if ( !rfocusMorph.test( bubbleType + type ) ) {
 				cur = cur.parentNode;
@@ -122,15 +117,12 @@ jQuery.extend( jQuery.event, {
 
 		// If nobody prevented the default action, do it now
 		if ( !onlyHandlers && !event.isDefaultPrevented() ) {
-
 			if ( ( !special._default ||
 				special._default.apply( eventPath.pop(), data ) === false ) &&
 				acceptData( elem ) ) {
-
 				// Call a native DOM method on the target with the same name as the event.
 				// Don't do default actions on window, that's where global variables be (#6170)
 				if ( ontype && isFunction( elem[ type ] ) && !isWindow( elem ) ) {
-
 					// Don't re-trigger an onFOO event when we call its FOO() method
 					tmp = elem[ ontype ];
 
@@ -177,11 +169,9 @@ jQuery.extend( jQuery.event, {
 
 		jQuery.event.trigger( e, null, elem );
 	}
-
 } );
 
 jQuery.fn.extend( {
-
 	trigger: function( type, data ) {
 		return this.each( function() {
 			jQuery.event.trigger( type, data, this );

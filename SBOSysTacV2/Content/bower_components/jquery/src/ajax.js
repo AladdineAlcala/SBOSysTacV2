@@ -13,7 +13,6 @@ define( [
 	"./deferred",
 	"./serialize" // jQuery.param
 ], function( jQuery, document, isFunction, rnothtmlwhite, location, nonce, rquery ) {
-
 "use strict";
 
 var
@@ -54,10 +53,8 @@ var
 
 // Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
 function addToPrefiltersOrTransports( structure ) {
-
 	// dataTypeExpression is optional and defaults to "*"
 	return function( dataTypeExpression, func ) {
-
 		if ( typeof dataTypeExpression !== "string" ) {
 			func = dataTypeExpression;
 			dataTypeExpression = "*";
@@ -68,10 +65,8 @@ function addToPrefiltersOrTransports( structure ) {
 			dataTypes = dataTypeExpression.toLowerCase().match( rnothtmlwhite ) || [];
 
 		if ( isFunction( func ) ) {
-
 			// For each dataType in the dataTypeExpression
 			while ( ( dataType = dataTypes[ i++ ] ) ) {
-
 				// Prepend if requested
 				if ( dataType[ 0 ] === "+" ) {
 					dataType = dataType.slice( 1 ) || "*";
@@ -88,7 +83,6 @@ function addToPrefiltersOrTransports( structure ) {
 
 // Base inspection function for prefilters and transports
 function inspectPrefiltersOrTransports( structure, options, originalOptions, jqXHR ) {
-
 	var inspected = {},
 		seekingTransport = ( structure === transports );
 
@@ -99,7 +93,6 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 			var dataTypeOrTransport = prefilterOrFactory( options, originalOptions, jqXHR );
 			if ( typeof dataTypeOrTransport === "string" &&
 				!seekingTransport && !inspected[ dataTypeOrTransport ] ) {
-
 				options.dataTypes.unshift( dataTypeOrTransport );
 				inspect( dataTypeOrTransport );
 				return false;
@@ -137,7 +130,6 @@ function ajaxExtend( target, src ) {
  * - returns the corresponding response
  */
 function ajaxHandleResponses( s, jqXHR, responses ) {
-
 	var ct, type, finalDataType, firstDataType,
 		contents = s.contents,
 		dataTypes = s.dataTypes;
@@ -164,7 +156,6 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 	if ( dataTypes[ 0 ] in responses ) {
 		finalDataType = dataTypes[ 0 ];
 	} else {
-
 		// Try convertible dataTypes
 		for ( type in responses ) {
 			if ( !dataTypes[ 0 ] || s.converters[ type + " " + dataTypes[ 0 ] ] ) {
@@ -212,7 +203,6 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 
 	// Convert to each sequential dataType
 	while ( current ) {
-
 		if ( s.responseFields[ current ] ) {
 			jqXHR[ s.responseFields[ current ] ] = response;
 		}
@@ -226,31 +216,25 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 		current = dataTypes.shift();
 
 		if ( current ) {
-
 			// There's only work to do if current dataType is non-auto
 			if ( current === "*" ) {
-
 				current = prev;
 
 			// Convert response if prev dataType is non-auto and differs from current
 			} else if ( prev !== "*" && prev !== current ) {
-
 				// Seek a direct converter
 				conv = converters[ prev + " " + current ] || converters[ "* " + current ];
 
 				// If none found, seek a pair
 				if ( !conv ) {
 					for ( conv2 in converters ) {
-
 						// If conv2 outputs current
 						tmp = conv2.split( " " );
 						if ( tmp[ 1 ] === current ) {
-
 							// If prev can be converted to accepted input
 							conv = converters[ prev + " " + tmp[ 0 ] ] ||
 								converters[ "* " + tmp[ 0 ] ];
 							if ( conv ) {
-
 								// Condense equivalence converters
 								if ( conv === true ) {
 									conv = converters[ conv2 ];
@@ -268,7 +252,6 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 
 				// Apply converter (if not an equivalence)
 				if ( conv !== true ) {
-
 					// Unless errors are allowed to bubble, catch and return them
 					if ( conv && s.throws ) {
 						response = conv( response );
@@ -291,7 +274,6 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 }
 
 jQuery.extend( {
-
 	// Counter for holding the number of active queries
 	active: 0,
 
@@ -343,7 +325,6 @@ jQuery.extend( {
 		// Data converters
 		// Keys separate source (or catchall "*") and destination types with a single space
 		converters: {
-
 			// Convert anything to text
 			"* text": String,
 
@@ -385,7 +366,6 @@ jQuery.extend( {
 
 	// Main method
 	ajax: function( url, options ) {
-
 		// If url is an object, simulate pre-1.5 signature
 		if ( typeof url === "object" ) {
 			options = url;
@@ -495,11 +475,9 @@ jQuery.extend( {
 					var code;
 					if ( map ) {
 						if ( completed ) {
-
 							// Execute the appropriate callbacks
 							jqXHR.always( map[ jqXHR.status ] );
 						} else {
-
 							// Lazy-add the new callbacks in a way that preserves old ones
 							for ( code in map ) {
 								statusCode[ code ] = [ statusCode[ code ], map[ code ] ];
@@ -551,7 +529,6 @@ jQuery.extend( {
 				s.crossDomain = originAnchor.protocol + "//" + originAnchor.host !==
 					urlAnchor.protocol + "//" + urlAnchor.host;
 			} catch ( e ) {
-
 				// If there is an error parsing the URL, assume it is crossDomain,
 				// it can be rejected by the transport if it is invalid
 				s.crossDomain = true;
@@ -593,7 +570,6 @@ jQuery.extend( {
 
 		// More options handling for requests with no content
 		if ( !s.hasContent ) {
-
 			// Remember the hash so we can put it back
 			uncached = s.url.slice( cacheURL.length );
 
@@ -652,7 +628,6 @@ jQuery.extend( {
 		// Allow custom headers/mimetypes and early abort
 		if ( s.beforeSend &&
 			( s.beforeSend.call( callbackContext, jqXHR, s ) === false || completed ) ) {
-
 			// Abort if not done already and return
 			return jqXHR.abort();
 		}
@@ -695,7 +670,6 @@ jQuery.extend( {
 				completed = false;
 				transport.send( requestHeaders, done );
 			} catch ( e ) {
-
 				// Rethrow post-completion exceptions
 				if ( completed ) {
 					throw e;
@@ -746,7 +720,6 @@ jQuery.extend( {
 
 			// If successful, handle type chaining
 			if ( isSuccess ) {
-
 				// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
 				if ( s.ifModified ) {
 					modified = jqXHR.getResponseHeader( "Last-Modified" );
@@ -775,7 +748,6 @@ jQuery.extend( {
 					isSuccess = !error;
 				}
 			} else {
-
 				// Extract error from statusText and normalize for non-aborts
 				error = statusText;
 				if ( status || !statusText ) {
@@ -833,7 +805,6 @@ jQuery.extend( {
 
 jQuery.each( [ "get", "post" ], function( i, method ) {
 	jQuery[ method ] = function( url, data, callback, type ) {
-
 		// Shift arguments if data argument was omitted
 		if ( isFunction( data ) ) {
 			type = type || callback;

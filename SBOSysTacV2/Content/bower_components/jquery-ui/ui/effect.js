@@ -10,16 +10,13 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define( [ "jquery" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 var dataSpace = "ui-effects-",
 
 	// Create a local jQuery because jQuery Color relies on it and the
@@ -41,7 +38,6 @@ $.effects = {
  * Date: Wed Jan 16 08:47:09 2013 -0600
  */
 (function( jQuery, undefined ) {
-
 	var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color columnRuleColor outlineColor textDecorationColor textEmphasisColor",
 
 	// plusequals test for += 100 -= 100
@@ -231,7 +227,6 @@ function stringParse( string ) {
 
 	// Found a stringParser that handled it
 	if ( rgba.length ) {
-
 		// if this came from a parsed string, force "transparent" when alpha is 0
 		// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
 		if ( rgba.join() === "0,0,0,0" ) {
@@ -287,10 +282,8 @@ color.fn = jQuery.extend( color.prototype, {
 				each( spaces, function( spaceName, space ) {
 					var cache = space.cache;
 					each( space.props, function( key, prop ) {
-
 						// if the cache doesn't exist, and we know how to convert
 						if ( !inst[ cache ] && space.to ) {
-
 							// if the value was null, we don't need to copy it
 							// if the key was alpha, we don't need to copy it either
 							if ( key === "alpha" || red[ key ] == null ) {
@@ -439,7 +432,6 @@ color.fn = jQuery.extend( color.prototype, {
 		}
 
 		return "#" + jQuery.map( rgba, function( v ) {
-
 			// default to 0 when nulls exist
 			v = ( v || 0 ).toString( 16 );
 			return v.length === 1 ? "0" + v : v;
@@ -532,7 +524,6 @@ each( spaces, function( spaceName, space ) {
 
 	// makes rgba() and hsla()
 	color.fn[ spaceName ] = function( value ) {
-
 		// generate a cache for this space if it doesn't exist
 		if ( to && !this[ cache ] ) {
 			this[ cache ] = to( this._rgba );
@@ -647,7 +638,6 @@ color.hook = function( hook ) {
 			jQuery.cssHooks[ hook ].set( fx.elem, fx.start.transition( fx.end, fx.pos ) );
 		};
 	});
-
 };
 
 color.hook( stepHooks );
@@ -690,14 +680,12 @@ colors = jQuery.Color.names = {
 
 	_default: "#ffffff"
 };
-
 })( jQuery );
 
 /******************************************************************************/
 /****************************** CLASS ANIMATIONS ******************************/
 /******************************************************************************/
 (function() {
-
 var classAnimationActions = [ "add", "remove", "toggle" ],
 	shorthandStyles = {
 		border: 1,
@@ -829,7 +817,6 @@ $.effects.animateClass = function( value, duration, easing, callback ) {
 
 		// once all animations have completed:
 		$.when.apply( $, allAnimations.get() ).done(function() {
-
 			// set the final class
 			applyClassChange();
 
@@ -894,7 +881,6 @@ $.fn.extend({
 		}, speed, easing, callback );
 	}
 });
-
 })();
 
 /******************************************************************************/
@@ -902,7 +888,6 @@ $.fn.extend({
 /******************************************************************************/
 
 (function() {
-
 $.extend( $.effects, {
 	version: "1.11.4",
 
@@ -965,7 +950,6 @@ $.extend( $.effects, {
 
 	// Wraps the element around a wrapper that copies position properties
 	createWrapper: function( element ) {
-
 		// if the element is already wrapped, return it
 		if ( element.parent().is( ".ui-effects-wrapper" )) {
 			return element.parent();
@@ -1068,7 +1052,6 @@ $.extend( $.effects, {
 
 // return an effect options object for the given parameters:
 function _normalizeArguments( effect, options, speed, callback ) {
-
 	// allow passing all options as the first parameter
 	if ( $.isPlainObject( effect ) ) {
 		options = effect;
@@ -1240,7 +1223,6 @@ $.fn.extend({
 		return val;
 	}
 });
-
 })();
 
 /******************************************************************************/
@@ -1248,7 +1230,6 @@ $.fn.extend({
 /******************************************************************************/
 
 (function() {
-
 // based on easing equations from Robert Penner (http://www.robertpenner.com/easing)
 
 var baseEasings = {};
@@ -1293,9 +1274,7 @@ $.each( baseEasings, function( name, easeIn ) {
 			1 - easeIn( p * -2 + 2 ) / 2;
 	};
 });
-
 })();
 
 return $.effects;
-
 }));

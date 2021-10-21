@@ -23,7 +23,7 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
     setViewerLayoutType : function(id, l) {
         this._viewerLayoutType[id] = l;
     },
-    
+
     setPromptData : function(id, d, forIParams) {
         if (!forIParams){
             /* Full prompt UI data */
@@ -42,30 +42,30 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
         this._paramCtrl[id] = c;
         this._iParam[id] = p;
     },
-    
+
     getShowMinUI : function (id) {
         return this.hasIParamPromptUnitData(id);
     },
-    
+
     getWidth : function (id) {
         if(this.hasIParamPromptUnitData(id))
             return 300;
         else
             return this.getSWFWidth(id);
     },
-    
+
     getHeight : function (id) {
         if(this.hasIParamPromptUnitData(id))
             return 315;
         else
             return this.getSWFHeight(id);
     },
-    
+
     getScreenHeight : function (id) {
         var lDim = MochiKit.Style.getElementDimensions(getLayer(id));
         return lDim.h - 2;
     },
-    
+
     getScreenWidth : function (id) {
         var lDim = MochiKit.Style.getElementDimensions(getLayer(id));
         return lDim.w - 2;
@@ -80,26 +80,26 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
         if (this._viewerLayoutType[id]) {
             layout = this._viewerLayoutType[id];
         }
-        
+
         var min = layout === lTypes.FIXED ? 0 : 480;
         var sH = this.getScreenHeight(id);
         return Math.max(min, sH - 200);
     },
-    
+
     getSWFWidth : function(id) {
         var sW = this.getScreenWidth(id);
         return Math.min(600, sW - 20);
     },
-    
+
     getAllowFullScreen : function(id)
     {
         return !this.hasIParamPromptUnitData(id);
     },
-    
+
     hasIParamPromptUnitData : function (id) {
         return (this._iPromptUnitData[id] != null) && (this._iParamData[id] != null) && (this._iParam[id] != null);
     },
-    
+
     _addIParamPromptUnitData : function(id, unitID, names, data) {
         if (!this.hasIParamPromptUnitData(id)) {
             this._iPromptUnitData[id] = [];
@@ -116,12 +116,12 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
         if (!this.hasIParamPromptUnitData(id)) {
             return;
         }
-        
+
         delete this._iPromptUnitData[id];
         delete this._iParamData[id];
         delete this._iParam[id];
     },
-    
+
     ///////////////////////////
     // Callbacks
     //////////////////////////
@@ -133,10 +133,10 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
                 return this._iPromptUnitData[id][promptUUID];
             }
         }
-        
+
         return this._promptData[id];
     },
-    
+
     /**
      * Flex callback to start moving the dialog
      */
@@ -146,15 +146,15 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
             if (this._moveArea) {
                 return;
             }
-        
+
             this._moveArea = document.createElement('div');
             this._moveArea.id = bobj.uniqueId();
-        
+
             MOVE_STYLE = this._moveArea.style;
-        
+
             var STYLE = swf.style;
             var P_STYLE = swf.parentNode.style;
-        
+
             MOVE_STYLE.top = P_STYLE.top;
             MOVE_STYLE.left = P_STYLE.left;
             MOVE_STYLE.width = STYLE.width ? STYLE.width : swf.width + 'px';
@@ -167,7 +167,7 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
             MOVE_STYLE.opacity = 0.50;
             MOVE_STYLE.filter = 'alpha(opacity=50)';
             MOVE_STYLE.zIndex = bobj.constants.modalLayerIndex - 1;
-        
+
             document.body.appendChild(this._moveArea);
             document.body.style.cursor = 'move';
         }
@@ -180,10 +180,10 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
         if (this._moveArea) {
             var p = MochiKit.Style.getElementPosition(this._moveArea);
             this.move(id, p.x, p.y);
-        
+
             document.body.removeChild(this._moveArea);
             delete this._moveArea;
-        
+
             document.body.style.cursor = 'default';
         }
     },
@@ -196,19 +196,19 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
     drag : function(id, x, y) {
         var LOG = bobj.crv.logger;
         LOG.info('doMove Called viewer:' + id + ' x:' + x + ' y:' + y);
-    
+
         var l = getLayer(id);
         if (!l) {
             LOG.error('Shifting SWF could not find the viewer:' + id);
             return;
         }
-    
+
         var m = this._moveArea;
         if (!m) {
             LOG.error('Unable to move SWF, no move area available');
             return;
         }
-    
+
         var mX = m.offsetLeft;
         var mY = m.offsetTop;
         var mH = m.offsetHeight;
@@ -217,28 +217,27 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
         var vY = l.offsetTop;
         var vH = l.offsetHeight;
         var vW = l.offsetWidth;
-    
+
         var newX = mX + x;
         var newY = mY + y;
-    
+
         if (newY < vY) {
             newY = vY;
         } else if (newY + mH > vY + vH) {
             newY = vH - mH;
         }
-    
+
         if (newX < vX) {
             newX = vX;
         } else if (newX + mW > vX + vW) {
             newX = vW - mW;
         }
-    
+
         m.style.top = newY + 'px';
         m.style.left = newX + 'px';
-    
+
         LOG.info('Moved the SWF to x:' + newX + ' y:' + newY);
     },
-
 
     /**
      * Flex callback when finished moving the dialog
@@ -250,7 +249,7 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
             MochiKit.Style.setElementPosition(swf.parentNode, p);
         }
     },
-    
+
     setParamValues : function(id, valueData) {
         bobj.crv.logger.info('setting parameter values');
         if (this.hasIParamPromptUnitData(id)){
@@ -264,7 +263,7 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
     _setFullParamValues : function (id, valueData) {
         bobj.event.publish('crprompt_flexparam', id, valueData);
     },
-    
+
     _setIParamValues : function (id, valueData) {
         var param = this._iParam[id];
         var ctrl = this._paramCtrl[id];
@@ -274,29 +273,29 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
         if (!param || !ctrl || !data || !unitData || valueData.length != 1) {
             return;
         }
-        
+
         var vPromptUnit = valueData[0];
         var vPrompts = vPromptUnit.prompts;
         for (var i = 0, len = vPrompts.length; i < len; i++) {
             var vPrompt = vPrompts[i];
-            
+
             if (!vPrompt || !vPrompt.name || !vPrompt.values) {
                 continue;
             }
 
             ctrl.updateParameter(decodeURI(vPrompt.name), this._convertFlexValues(vPrompt, param.valueDataType));
         }
-        
+
         ctrl._updateToolbar();
-    
+
         this._updatePromptData(id, vPromptUnit, param.valueDataType);
-    
+
         this.closeDialog(id);
     },
 
     _updatePromptData: function (id, newUnitData, type){
         var newPrompts = newUnitData.prompts;
-        
+
         var data = this._iPromptUnitData[id][newUnitData.id];
         var unitData = data.promptUnits[0];
         var prompts = unitData.prompts;
@@ -311,33 +310,32 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
             }
         }
     },
-    
+
     _unescapeFlexValues: function (fValues, type){
         if (type != bobj.crv.params.DataTypes.STRING) {
             return fValues;
         }
-        
+
         for (var i = 0, len = fValues.length; i < len; i++) {
             this._unescapeFlexValue(fValues[i], type);
         }
-        
+
         return fValues;
-    }, 
-    
+    },
+
     _unescapeFlexValue: function (fValue, type) {
         if (type != bobj.crv.params.DataTypes.STRING) {
             return;
         }
-       
+
         if ((fValue.value !== undefined && fValue.value !== null)){
             fValue.value = decodeURI(fValue.value);
-            
+
             if (fValue.labels !== undefined && fValue.labels !== null){
                for (var i = 0, len = fValue.labels.length; i < len; i++) {
                    fValue.labels[i] = decodeURI(fValue.labels[i]);
                }
             }
-            
         } else {
             // Range
             if (fValue.start){
@@ -349,7 +347,7 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
             }
         }
     },
-    
+
     _getDescriptionIndex: function (prompt)
     {
        var vIndex = prompt.lovValueIndex;
@@ -362,10 +360,10 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
                 }
             }
        }
-    
+
        return -1;
     },
-    
+
     _convertFlexValues: function (prompt, type){
         var dIndex = this._getDescriptionIndex(prompt);
         var fValues = prompt.values;
@@ -383,7 +381,7 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
             if (dIndex > -1 && fValue.labels && fValue.labels.length > dIndex){
                jsValue.desc = decodeURI(fValue.labels[dIndex]);
             }
-        	
+
             var Type = bobj.crv.params.DataTypes;
             switch (type) {
                 case Type.DATE:
@@ -394,8 +392,7 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
                 default:
                     jsValue.value = decodeURI(fValue.value);
                     break;
-            }   
-            
+            }
         } else {
             // Range
             if (fValue.start){
@@ -426,14 +423,14 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
                 dValue.m = parseInt(parts[1], 10) - 1;
                 dValue.d = parseInt(parts[2].substring(parts[2].length - 1, 0), 10);
                 break;
-                
+
             case Type.TIME:
                 dValue.h = parseInt(parts[0].substring(5), 10);
                 dValue.min = parseInt(parts[1], 10);
                 dValue.s = parseInt(parts[2].substring(parts[2].length - 1, 0), 10);
                 dValue.ms = 0;
                 break;
-                
+
             case Type.DATE_TIME:
                 dValue.y = parseInt(parts[0].substring(9), 10);
                 dValue.m = parseInt(parts[1], 10) - 1;
@@ -447,71 +444,70 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
         return dValue;
     },
 
-        
     logon : function(id, logonData) {
         bobj.crv.logger.info('logging on');
         this.closeDialog(id);
         bobj.event.publish('crprompt_flexlogon', id, logonData);
     },
-    
+
     processingCancel : function(id) {
         var v = getWidgetFromID(id);
         if (v && v._reportProcessing) {
             v._reportProcessing.cancelShow();
         }
     },
-    
+
     processingDelayedShow : function(id) {
         var v = getWidgetFromID(id);
         if (v && v._reportProcessing) {
             v._reportProcessing.delayedShow();
         }
     },
-    
+
     logger : function(text) {
         bobj.crv.logger.info(text);
     },
-    
+
     getSWFBaseURL : function() {
         return bobj.crvUri("../../swf/");
     },
-    
+
     getSWFID : function() {
         return bobj.uniqueId();
     },
-    
+
     getZIndex : function() {
         return bobj.constants.modalLayerIndex;
     },
-    
+
     getUseSavedData : function(id) {
         return this.hasIParamPromptUnitData(id);
     },
-    
+
     closeDialog : function(id) {
         var v = getWidgetFromID(id);
         if (v) {
             v.hideFlexPromptDialog();
         }
     },
-    
+
     getUseOKCancelButtons : function(id) {
         return this.hasIParamPromptUnitData(id);
     },
-    
+
     getIsDialog : function(id) {
         return true;
     },
-    
+
     getShouldAutoResize : function(id) {
         return true;
     },
-    
+
     setVisibility : function(id) {
         var swf = bobj.crv.params.FlexParameterBridge.getSWF(id);
         if (swf) {
             var P_STYLE = swf.parentNode.style;
-            
+
             P_STYLE.position = 'absolute';
             P_STYLE.visibility = 'visible';
             P_STYLE.borderStyle = 'none';
@@ -522,14 +518,14 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
             }
         }
     },
-    
+
     getReportStateInfo : function(id) {
         var s = bobj.crv.stateManager.getComponentState(id);
         if (s && s.common && s.common.reqCtx) {
             return MochiKit.Base.serializeJSON(s.common.reqCtx);
         }
     },
-    
+
     setReportStateInfo : function(id, rsInfo) {
         var s = bobj.crv.stateManager.getComponentState(id);
         if (s && s.common && s.common.reqCtx) {
@@ -537,11 +533,11 @@ bobj.crv.params.ViewerFlexParameterAdapter = {
         }
     },
 
-    sendAsyncRequest : function(id, args) {        
-        bobj.event.publish('crprompt_asyncrequest', id, args);    
+    sendAsyncRequest : function(id, args) {
+        bobj.event.publish('crprompt_asyncrequest', id, args);
     },
-    
+
     readyToShow: function(id) {
     	this.processingCancel(id);
-    }    
+    }
 };

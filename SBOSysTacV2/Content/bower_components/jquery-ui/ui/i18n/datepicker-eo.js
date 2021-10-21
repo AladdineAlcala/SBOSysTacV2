@@ -2,16 +2,13 @@
 /* Written by Olivier M. (olivierweb@ifrance.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['eo'] = {
 	closeText: 'Fermi',
 	prevText: '&#x3C;Anta',
@@ -33,5 +30,4 @@ datepicker.regional['eo'] = {
 datepicker.setDefaults(datepicker.regional['eo']);
 
 return datepicker.regional['eo'];
-
 }));

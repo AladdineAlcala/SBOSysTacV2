@@ -2,7 +2,6 @@ define( [
 	"../core",
 	"../css"
 ], function( jQuery ) {
-
 "use strict";
 
 function Tween( elem, options, prop, end, easing ) {
@@ -78,7 +77,6 @@ Tween.propHooks = {
 			return !result || result === "auto" ? 0 : result;
 		},
 		set: function( tween ) {
-
 			// Use step hook for back compat.
 			// Use cssHook if its there.
 			// Use .style if available and use plain properties where available.
@@ -119,5 +117,4 @@ jQuery.fx = Tween.prototype.init;
 
 // Back compat <1.8 extension point
 jQuery.fx.step = {};
-
 } );

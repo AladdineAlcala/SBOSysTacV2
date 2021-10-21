@@ -1,15 +1,15 @@
 <!DOCTYPE HTML>
 <html>
-<head>  
-<meta charset="UTF-8">
-<script>
+<head>
+    <meta charset="UTF-8">
+    <script>
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
 	title:{
 		text: "Crude Oil Reserves vs Production, 2016"
-	},	
+	},
 	axisY: {
 		title: "Billions of Barrels",
 		titleFontColor: "#4F81BC",
@@ -23,7 +23,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		lineColor: "#C0504E",
 		labelFontColor: "#C0504E",
 		tickColor: "#C0504E"
-	},	
+	},
 	toolTip: {
 		shared: true
 	},
@@ -35,7 +35,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		type: "column",
 		name: "Proven Oil Reserves (bn)",
 		legendText: "Proven Oil Reserves",
-		showInLegend: true, 
+		showInLegend: true,
 		dataPoints:[
 			{ label: "Saudi", y: 266.21 },
 			{ label: "Venezuela", y: 302.25 },
@@ -46,7 +46,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		]
 	},
 	{
-		type: "column",	
+		type: "column",
 		name: "Oil Production (million/day)",
 		legendText: "Oil Production",
 		axisYType: "secondary",
@@ -74,10 +74,10 @@ function toggleDataSeries(e) {
 }
 
 }
-</script>
+    </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<script src="../../canvasjs.min.js"></script>
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+    <script src="../../canvasjs.min.js"></script>
 </body>
 </html>

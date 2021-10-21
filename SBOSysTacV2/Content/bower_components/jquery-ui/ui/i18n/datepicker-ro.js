@@ -5,16 +5,13 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['ro'] = {
 	closeText: 'Închide',
 	prevText: '&#xAB; Luna precedentă',
@@ -36,5 +33,4 @@ datepicker.regional['ro'] = {
 datepicker.setDefaults(datepicker.regional['ro']);
 
 return datepicker.regional['ro'];
-
 }));

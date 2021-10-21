@@ -3,16 +3,13 @@
 /* Corrected by Igor Milla (igor.fsp.milla@gmail.com). */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['uk'] = {
 	closeText: 'Закрити',
 	prevText: '&#x3C;',
@@ -34,5 +31,4 @@ datepicker.regional['uk'] = {
 datepicker.setDefaults(datepicker.regional['uk']);
 
 return datepicker.regional['uk'];
-
 }));

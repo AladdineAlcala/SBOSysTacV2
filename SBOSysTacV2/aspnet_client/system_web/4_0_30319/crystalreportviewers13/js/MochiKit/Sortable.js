@@ -528,4 +528,3 @@ MochiKit.Sortable.Sortable = {
         }
     }
 };
-

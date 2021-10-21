@@ -10,16 +10,13 @@
  */
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define( [ "jquery" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
-
 var widget_uuid = 0,
 	widget_slice = Array.prototype.slice;
 
@@ -28,7 +25,6 @@ $.cleanData = (function( orig ) {
 		var events, elem, i;
 		for ( i = 0; (elem = elems[i]) != null; i++ ) {
 			try {
-
 				// Only trigger remove when necessary to save time
 				events = $._data( elem, "events" );
 				if ( events && events.remove ) {
@@ -214,7 +210,6 @@ $.widget.bridge = function( name, object ) {
 				}
 			});
 		} else {
-
 			// Allow multiple hashes to be passed on init
 			if ( args.length ) {
 				options = $.widget.extend.apply( null, [ options ].concat(args) );
@@ -554,5 +549,4 @@ $.each( { show: "fadeIn", hide: "fadeOut" }, function( method, defaultEffect ) {
 });
 
 return $.widget;
-
 }));

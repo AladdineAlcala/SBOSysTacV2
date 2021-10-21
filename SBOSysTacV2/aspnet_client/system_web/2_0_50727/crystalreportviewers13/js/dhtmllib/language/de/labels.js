@@ -7,12 +7,11 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
 File: labels.js
-
 
 =============================================================
 */
@@ -94,7 +93,7 @@ _closeDialog="Fenster schließen"
 
 _lstMoveUpLab="Nach oben"
 _lstMoveDownLab="Nach unten"
-_lstMoveLeftLab="Nach links" 
+_lstMoveLeftLab="Nach links"
 _lstMoveRightLab="Nach rechts"
 _lstNewNodeLab="Verschachtelten Filter hinzufügen"
 _lstAndLabel="UND"
@@ -142,7 +141,7 @@ _calendarSelectionLab="Ausgewählter Tag"
 
 _menuCheckLab="Aktiviert"
 _menuDisableLab="Deaktiviert"
-	
+
 _level="Ebene"
 _closeTab="Registerkarte schließen"
 _of=" von "

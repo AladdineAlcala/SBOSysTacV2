@@ -49,7 +49,6 @@
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
 /**
  * Responsive is a plug-in for the DataTables library that makes use of
  * DataTables' ability to change the visibility of columns, changing the
@@ -282,7 +281,6 @@ $.extend( Responsive.prototype, {
 		this._resize();
 	},
 
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
 	 */
@@ -421,7 +419,6 @@ $.extend( Responsive.prototype, {
 
 		return display;
 	},
-
 
 	/**
 	 * Create the internal `columns` array with information about the columns
@@ -567,7 +564,6 @@ $.extend( Responsive.prototype, {
 		this.s.columns = columns;
 	},
 
-
 	/**
 	 * Show the details for the child row
 	 *
@@ -593,7 +589,6 @@ $.extend( Responsive.prototype, {
 			}
 		}
 	},
-
 
 	/**
 	 * Initialisation for the details handler
@@ -674,7 +669,6 @@ $.extend( Responsive.prototype, {
 			} );
 	},
 
-
 	/**
 	 * Get the details to pass to a renderer for a row
 	 * @param  {int} rowIdx Row index
@@ -701,7 +695,6 @@ $.extend( Responsive.prototype, {
 		} );
 	},
 
-
 	/**
 	 * Find a breakpoint object from a name
 	 *
@@ -720,7 +713,6 @@ $.extend( Responsive.prototype, {
 		}
 	},
 
-
 	/**
 	 * Re-create the contents of the child rows as the display has changed in
 	 * some way.
@@ -738,7 +730,6 @@ $.extend( Responsive.prototype, {
 			that._detailsDisplay( dt.row( idx ), true );
 		} );
 	},
-
 
 	/**
 	 * Alter the table display for a resized viewport. This involves first
@@ -765,7 +756,7 @@ $.extend( Responsive.prototype, {
 				break;
 			}
 		}
-		
+
 		// Show the columns for that break point
 		var columnsVis = this._columnsVisiblity( breakpoint );
 		this.s.current = columnsVis;
@@ -809,7 +800,6 @@ $.extend( Responsive.prototype, {
 			}
 		}
 	},
-
 
 	/**
 	 * Determine the width of each column in the table so the auto column hiding
@@ -896,7 +886,7 @@ $.extend( Responsive.prototype, {
 		if ( this.c.details.type === 'inline' ) {
 			$(clonedTable).addClass( 'dtr-inline collapsed' );
 		}
-		
+
 		// It is unsafe to insert elements with the same name into the DOM
 		// multiple times. For example, cloning and inserting a checked radio
 		// clears the chcecked state of the original radio.
@@ -905,7 +895,7 @@ $.extend( Responsive.prototype, {
 		// A position absolute table would take the table out of the flow of
 		// our container element, bypassing the height and width (Scroller)
 		$( clonedTable ).css( 'position', 'relative' )
-		
+
 		var inserted = $('<div/>')
 			.css( {
 				width: 1,
@@ -955,7 +945,6 @@ $.extend( Responsive.prototype, {
 		}
 	},
 
-
 	/**
 	 * Update the cell tab indexes for keyboard accessibility. This is called on
 	 * every table draw - that is potentially inefficient, but also the least
@@ -993,7 +982,6 @@ $.extend( Responsive.prototype, {
 	}
 } );
 
-
 /**
  * List of default breakpoints. Each item in the array is an object with two
  * properties:
@@ -1011,7 +999,6 @@ Responsive.breakpoints = [
 	{ name: 'mobile-l', width: 480 },
 	{ name: 'mobile-p', width: 320 }
 ];
-
 
 /**
  * Display methods - functions which define how the hidden data should be shown
@@ -1116,7 +1103,6 @@ Responsive.display = {
 	}
 };
 
-
 var _childNodeStore = {};
 
 function _childNodes( dt, row, col ) {
@@ -1161,7 +1147,6 @@ function _childNodesRestore( dt, row, col ) {
 
 	_childNodeStore[ name ] = undefined;
 }
-
 
 /**
  * Display methods - functions which define how the hidden data should be shown
@@ -1302,7 +1287,6 @@ Responsive.defaults = {
 	orthogonal: 'display'
 };
 
-
 /*
  * API
  */
@@ -1355,7 +1339,6 @@ Api.registerPlural( 'columns().responsiveHidden()', 'column().responsiveHidden()
 	}, 1 );
 } );
 
-
 /**
  * Version information
  *
@@ -1363,7 +1346,6 @@ Api.registerPlural( 'columns().responsiveHidden()', 'column().responsiveHidden()
  * @static
  */
 Responsive.version = '2.2.3';
-
 
 $.fn.dataTable.Responsive = Responsive;
 $.fn.DataTable.Responsive = Responsive;
@@ -1387,7 +1369,6 @@ $(document).on( 'preInit.dt.dtr', function (e, settings, json) {
 		}
 	}
 } );
-
 
 return Responsive;
 }));

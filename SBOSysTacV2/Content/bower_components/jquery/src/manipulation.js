@@ -27,7 +27,6 @@ define( [
 	rcheckableType, rtagName, rscriptType,
 	wrapMap, getAll, setGlobalEval, buildFragment, support,
 	dataPriv, dataUser, acceptData, DOMEval, nodeName ) {
-
 "use strict";
 
 var
@@ -52,7 +51,6 @@ var
 function manipulationTarget( elem, content ) {
 	if ( nodeName( elem, "table" ) &&
 		nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
-
 		return jQuery( elem ).children( "tbody" )[ 0 ] || elem;
 	}
 
@@ -123,7 +121,6 @@ function fixInput( src, dest ) {
 }
 
 function domManip( collection, args, callback, ignored ) {
-
 	// Flatten any nested arrays
 	args = concat.apply( [], args );
 
@@ -171,7 +168,6 @@ function domManip( collection, args, callback, ignored ) {
 
 					// Keep references to cloned scripts for later restoration
 					if ( hasScripts ) {
-
 						// Support: Android <=4.0 only, PhantomJS 1 only
 						// push.apply(_, arraylike) throws on ancient WebKit
 						jQuery.merge( scripts, getAll( node, "script" ) );
@@ -193,9 +189,7 @@ function domManip( collection, args, callback, ignored ) {
 					if ( rscriptType.test( node.type || "" ) &&
 						!dataPriv.access( node, "globalEval" ) &&
 						jQuery.contains( doc, node ) ) {
-
 						if ( node.src && ( node.type || "" ).toLowerCase()  !== "module" ) {
-
 							// Optional AJAX dependency, but won't run scripts if not present
 							if ( jQuery._evalUrl ) {
 								jQuery._evalUrl( node.src );
@@ -246,7 +240,6 @@ jQuery.extend( {
 		// Fix IE cloning issues
 		if ( !support.noCloneChecked && ( elem.nodeType === 1 || elem.nodeType === 11 ) &&
 				!jQuery.isXMLDoc( elem ) ) {
-
 			// We eschew Sizzle here for performance reasons: https://jsperf.com/getall-vs-sizzle/2
 			destElements = getAll( clone );
 			srcElements = getAll( elem );
@@ -305,7 +298,6 @@ jQuery.extend( {
 					elem[ dataPriv.expando ] = undefined;
 				}
 				if ( elem[ dataUser.expando ] ) {
-
 					// Support: Chrome <=35 - 45+
 					// Assign undefined instead of using delete, see Data#remove
 					elem[ dataUser.expando ] = undefined;
@@ -376,7 +368,6 @@ jQuery.fn.extend( {
 
 		for ( ; ( elem = this[ i ] ) != null; i++ ) {
 			if ( elem.nodeType === 1 ) {
-
 				// Prevent memory leaks
 				jQuery.cleanData( getAll( elem, false ) );
 
@@ -410,7 +401,6 @@ jQuery.fn.extend( {
 			// See if we can take a shortcut and just use innerHTML
 			if ( typeof value === "string" && !rnoInnerhtml.test( value ) &&
 				!wrapMap[ ( rtagName.exec( value ) || [ "", "" ] )[ 1 ].toLowerCase() ] ) {
-
 				value = jQuery.htmlPrefilter( value );
 
 				try {

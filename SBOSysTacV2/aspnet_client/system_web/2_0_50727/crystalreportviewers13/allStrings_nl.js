@@ -140,12 +140,11 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
 File: labels.js
-
 
 =============================================================
 */
@@ -227,7 +226,7 @@ _closeDialog="Venster sluiten"
 
 _lstMoveUpLab="Omhoog"
 _lstMoveDownLab="Omlaag"
-_lstMoveLeftLab="Naar links" 
+_lstMoveLeftLab="Naar links"
 _lstMoveRightLab="Naar rechts"
 _lstNewNodeLab="Genest filter toevoegen"
 _lstAndLabel="AND"
@@ -275,7 +274,7 @@ _calendarSelectionLab="Geselecteerde dag"
 
 _menuCheckLab="Ingeschakeld"
 _menuDisableLab="Uitgeschakeld"
-	
+
 _level="Niveau"
 _closeTab="Tabblad sluiten"
 _of=" van "

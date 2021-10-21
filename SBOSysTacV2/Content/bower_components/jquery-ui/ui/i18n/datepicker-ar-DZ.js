@@ -3,16 +3,13 @@
 
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
 		// AMD. Register as an anonymous module.
 		define([ "../datepicker" ], factory );
 	} else {
-
 		// Browser globals
 		factory( jQuery.datepicker );
 	}
 }(function( datepicker ) {
-
 datepicker.regional['ar-DZ'] = {
 	closeText: 'إغلاق',
 	prevText: '&#x3C;السابق',
@@ -33,5 +30,4 @@ datepicker.regional['ar-DZ'] = {
 datepicker.setDefaults(datepicker.regional['ar-DZ']);
 
 return datepicker.regional['ar-DZ'];
-
 }));

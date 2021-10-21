@@ -10,7 +10,6 @@ define( [
 	"./traversing/findFilter",
 	"./selector"
 ], function( jQuery, indexOf, dir, siblings, rneedsContext, nodeName ) {
-
 "use strict";
 
 var rparentsprev = /^(?:parents|prev(?:Until|All))/,
@@ -49,7 +48,6 @@ jQuery.fn.extend( {
 		if ( !rneedsContext.test( selectors ) ) {
 			for ( ; i < l; i++ ) {
 				for ( cur = this[ i ]; cur && cur !== context; cur = cur.parentNode ) {
-
 					// Always skip document fragments
 					if ( cur.nodeType < 11 && ( targets ?
 						targets.index( cur ) > -1 :
@@ -57,7 +55,6 @@ jQuery.fn.extend( {
 						// Don't pass non-elements to Sizzle
 						cur.nodeType === 1 &&
 							jQuery.find.matchesSelector( cur, selectors ) ) ) {
-
 						matched.push( cur );
 						break;
 					}
@@ -70,7 +67,6 @@ jQuery.fn.extend( {
 
 	// Determine the position of an element within the set
 	index: function( elem ) {
-
 		// No argument, return index in parent
 		if ( !elem ) {
 			return ( this[ 0 ] && this[ 0 ].parentNode ) ? this.first().prevAll().length : -1;
@@ -171,7 +167,6 @@ jQuery.each( {
 		}
 
 		if ( this.length > 1 ) {
-
 			// Remove duplicates
 			if ( !guaranteedUnique[ name ] ) {
 				jQuery.uniqueSort( matched );

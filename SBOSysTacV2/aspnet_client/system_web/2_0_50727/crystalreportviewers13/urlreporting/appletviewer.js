@@ -27,9 +27,9 @@ function writeJavaViewer_part1(browser, jdkVer, type, lang, pvLang, rptName, sf,
 		document.write("<param name=ReportName value=\"" + url + rptName + "\">");
 		if (sf != "")
 			document.write("<param name=SelectionFormula value=\"" + sf 	 + "\">");
-	 	document.write("<param name=ServerParameters value=\"" + url + rptName + "\">");	 	
+	 	document.write("<param name=ServerParameters value=\"" + url + rptName + "\">");
 		document.write("<param name=PromptOnRefresh value=\"" + promptOnRefresh + "\">");
-		document.write("<param name=ReportParameter value=\"" + param + "\">");				 
+		document.write("<param name=ReportParameter value=\"" + param + "\">");
 	} else if (browser == "safari") {
 		document.write("<APPLET");
 		document.write("	WIDTH=\"100%\" HEIGHT=\"100%\" ");
@@ -43,48 +43,48 @@ function writeJavaViewer_part1(browser, jdkVer, type, lang, pvLang, rptName, sf,
 			document.write("<param name=SelectionFormula value=\"" + sf      + "\">");
 		document.write("<param name=ServerParameters value=\"" + url + rptName + "\">");
 		document.write("<param name=PromptOnRefresh value=\"" + promptOnRefresh + "\">");
-		document.write("<param name=ReportParameter value=\"" + param + "\">");	
-	} else {	 
+		document.write("<param name=ReportParameter value=\"" + param + "\">");
+	} else {
 		document.write("<EMBED MAYSCRIPT name=\"AppletViewer\" scriptable=\"true\" ");
 		document.write("style=\"width: 100%; height: 100%;\"");
 		document.write("pluginspage=\"http://java.sun.com/j2se/1.4/download.html\"");
 		document.write("type=\"application/x-java-applet;version=1.4\"");
 		document.write("java_codebase=\"" + gPath + viewerPath + "JavaViewer/\"");
 		document.write("code=\"com.crystaldecisions.ReportViewer.ReportViewer\"");
-		document.write("archive=\"" + getArchiveParameters(lang) + "\"");		
+		document.write("archive=\"" + getArchiveParameters(lang) + "\"");
 		document.write("Language=\"" + lang + "\"");
 		document.write("PreferredViewingLanguage=\"" + pvLang + "\"");
 		document.write("ReportName=\"" + url + rptName + "\"");
 		document.write("SelectionFormula=\"" + sf + "\"");
 		document.write("ServerParameters=\"" + url + rptName + "\"");
 		document.write("PromptOnRefresh=\"" + promptOnRefresh + "\"");
-		document.write("ReportParameter=\"" + param + "\"");		
+		document.write("ReportParameter=\"" + param + "\"");
 	}
 }
 
 function writeJavaViewer_part2(browser, bDrillDown, bExport, bGroupTree,
-							bShowGroupTree, bPrint, bRefresh, bSearch, 
+							bShowGroupTree, bPrint, bRefresh, bSearch,
 							bZoom, bSearchExpert, bSelectExpert, bLogo)
-{	 
+{
 	if (browser == "msie" || browser == "safari")
-	{		
+	{
 		document.write("<param name=CanDrillDown value=\"" + bDrillDown + "\">");
-		document.write("<param name=HasExportButton value=\"" + bExport + "\">");	
+		document.write("<param name=HasExportButton value=\"" + bExport + "\">");
 		document.write("<param name=HasGroupTree value=\"" + bGroupTree + "\">");
 		document.write("<param name=ShowGroupTree value=\"" + bShowGroupTree + "\">");
 		document.write("<param name=HasPrintButton value=\"" + 	bPrint + "\">");
 		document.write("<param name=HasRefreshButton value=\"" + bRefresh + "\">");
-		
+
 		document.write("<param name=HasTextSearchControls value=\"" + bSearch + "\">");
 		document.write("<param name=HasZoomControl value=\"" + bZoom + "\">");
 		document.write("<param name=HasSearchExpert value=\"" + bSearchExpert + "\">");
 		document.write("<param name=HasSelectExpert value=\"" + bSelectExpert +"\">");
-		document.write("<param name=ShowLogo value=\"" + bLogo + "\">");	 
+		document.write("<param name=ShowLogo value=\"" + bLogo + "\">");
 		if (browser == "msie")
-			document.write("</OBJECT>");	 
+			document.write("</OBJECT>");
 		else if (browser == "safari")
 			document.write("</APPLET>");
-	} else {	 		
+	} else {
 		document.write("CanDrillDown=\"" + bDrillDown + "\"");
 		document.write("HasExportButton=\"" + bExport + "\"");
 		document.write("HasGroupTree=\"" + bGroupTree + "\"");

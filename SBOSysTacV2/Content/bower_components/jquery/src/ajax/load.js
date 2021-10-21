@@ -8,7 +8,6 @@ define( [
 	"../manipulation",
 	"../selector"
 ], function( jQuery, stripAndCollapse, isFunction ) {
-
 "use strict";
 
 /**
@@ -26,7 +25,6 @@ jQuery.fn.load = function( url, params, callback ) {
 
 	// If it's a function
 	if ( isFunction( params ) ) {
-
 		// We assume that it's the callback
 		callback = params;
 		params = undefined;
@@ -48,7 +46,6 @@ jQuery.fn.load = function( url, params, callback ) {
 			dataType: "html",
 			data: params
 		} ).done( function( responseText ) {
-
 			// Save response for use in complete callback
 			response = arguments;
 
@@ -73,5 +70,4 @@ jQuery.fn.load = function( url, params, callback ) {
 
 	return this;
 };
-
 } );

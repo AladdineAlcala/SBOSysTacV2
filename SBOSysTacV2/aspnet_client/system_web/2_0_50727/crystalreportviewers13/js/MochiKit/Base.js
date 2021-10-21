@@ -63,7 +63,7 @@ MochiKit.Base.update(MochiKit.Base, {
             return n++;
         };
     },
-        
+
     clone: function (obj) {
         var me = arguments.callee;
         if (arguments.length == 1) {
@@ -71,7 +71,7 @@ MochiKit.Base.update(MochiKit.Base, {
             return new me();
         }
     },
-  
+
 //    _flattenArray: function (res, lst) {
 //        for (var i = 0; i < lst.length; i++) {
 //            var o = lst[i];
@@ -103,8 +103,7 @@ MochiKit.Base.update(MochiKit.Base, {
 //        return res;
 //    },
 
-
-    extend: function (self, obj, /* optional */skip) {        
+    extend: function (self, obj, /* optional */skip) {
         // Extend an array with an array-like object starting
         // from the skip index
         if (!skip) {
@@ -134,7 +133,6 @@ MochiKit.Base.update(MochiKit.Base, {
         // ghetto array-like to a real array
         return self;
     },
-
 
     updatetree: function (self, obj/*, ...*/) {
         if (self === null) {
@@ -178,7 +176,7 @@ MochiKit.Base.update(MochiKit.Base, {
 //        }
 //        return rval;
 //    },
-        
+
 //    items: function (obj) {
 //        var rval = [];
 //        var e;
@@ -200,10 +198,9 @@ MochiKit.Base.update(MochiKit.Base, {
         module[name] = func;
     },
 
-
     operator: {
         // unary logic operators
-//        truth: function (a) { return !!a; }, 
+//        truth: function (a) { return !!a; },
 //        lognot: function (a) { return !a; },
         identity: function (a) { return a; }
 //
@@ -270,7 +267,7 @@ MochiKit.Base.update(MochiKit.Base, {
             var typ = arguments[i];
             types[typ] = typ;
         }
-        return function () { 
+        return function () {
             for (var i = 0; i < arguments.length; i++) {
                 if (!(typeof(arguments[i]) in types)) {
                     return false;
@@ -339,7 +336,6 @@ MochiKit.Base.update(MochiKit.Base, {
         }
         return true;
     },
-
 
     xmap: function (fn/*, obj... */) {
         if (fn === null) {
@@ -467,7 +463,6 @@ MochiKit.Base.update(MochiKit.Base, {
         return rval;
     },
 
-
     _wrapDumbFunction: function (func) {
         return function () {
             // fast path!
@@ -484,7 +479,7 @@ MochiKit.Base.update(MochiKit.Base, {
             return eval("(func(" + args.join(",") + "))");
         };
     },
-            
+
     methodcaller: function (func/*, args... */) {
         var args = MochiKit.Base.extend(null, arguments, 1);
         if (typeof(func) == "function") {
@@ -497,7 +492,7 @@ MochiKit.Base.update(MochiKit.Base, {
             };
         }
     },
-    
+
     method: function (self, func) {
         var m = MochiKit.Base;
         return m.bind.apply(this, m.extend([func, self], arguments, 2));
@@ -524,7 +519,7 @@ MochiKit.Base.update(MochiKit.Base, {
             return args[0];
         };
     },
-        
+
     bind: function (func, self/* args... */) {
         if (typeof(func) == "string") {
             func = self[func];
@@ -688,7 +683,7 @@ MochiKit.Base.update(MochiKit.Base, {
         return "[" + m.map(m.repr, o).join(", ") + "]";
     },
 
-    reprString: function (o) { 
+    reprString: function (o) {
         return ('"' + o.replace(/(["\\])/g, '\\$1') + '"'
             ).replace(/[\f]/g, "\\f"
             ).replace(/[\b]/g, "\\b"
@@ -704,7 +699,6 @@ MochiKit.Base.update(MochiKit.Base, {
     registerJSON: function (name, check, wrap, /* optional */override) {
         MochiKit.Base.jsonRegistry.register(name, check, wrap, override);
     },
-
 
     evalJSON: function () {
         return eval("(" + arguments[0] + ")");
@@ -790,7 +784,6 @@ MochiKit.Base.update(MochiKit.Base, {
         }
         return "{" + res.join(", ") + "}";
     },
-            
 
     objEqual: function (a, b) {
         return (MochiKit.Base.compare(a, b) === 0);
@@ -845,7 +838,7 @@ MochiKit.Base.update(MochiKit.Base, {
         var m = MochiKit.Base;
         return m.bind.apply(this, m.extend([func, undefined], arguments, 1));
     },
-     
+
     listMinMax: function (which, lst) {
         if (lst.length === 0) {
             return null;
@@ -864,7 +857,7 @@ MochiKit.Base.update(MochiKit.Base, {
     objMax: function (/* obj... */) {
         return MochiKit.Base.listMinMax(1, arguments);
     },
-            
+
     objMin: function (/* obj... */) {
         return MochiKit.Base.listMinMax(-1, arguments);
     },
@@ -910,7 +903,7 @@ MochiKit.Base.update(MochiKit.Base, {
 
         return sum/count;
     },
-    
+
     median: function(/* lst... */) {
         /* http://www.nist.gov/dads/HTML/median.html */
         var data = MochiKit.Base.flattenArguments(arguments);
@@ -925,7 +918,7 @@ MochiKit.Base.update(MochiKit.Base, {
             return data[(data.length - 1) / 2];
         }
     },
-    
+
     findValue: function (lst, value, start/* = 0 */, /* optional */end) {
         if (typeof(end) == "undefined" || end === null) {
             end = lst.length;
@@ -941,7 +934,7 @@ MochiKit.Base.update(MochiKit.Base, {
         }
         return -1;
     },
-    
+
     nodeWalk: function (node, visitor) {
         var nodes = [node];
         var extend = MochiKit.Base.extend;
@@ -953,7 +946,6 @@ MochiKit.Base.update(MochiKit.Base, {
         }
     },
 
-       
     nameFunctions: function (namespace) {
         var base = namespace.NAME;
         if (typeof(base) == 'undefined') {
@@ -972,7 +964,6 @@ MochiKit.Base.update(MochiKit.Base, {
             }
         }
     },
-
 
     queryString: function (names, values) {
         // check to see if names is a string or a DOM element, and if
@@ -1010,7 +1001,6 @@ MochiKit.Base.update(MochiKit.Base, {
         return rval.join("&");
     },
 
-
     parseQueryString: function (encodedString, useArrays) {
         var pairs = encodedString.replace(/\+/g, "%20").split("&");
         var o = {};
@@ -1040,7 +1030,7 @@ MochiKit.Base.update(MochiKit.Base, {
         return o;
     }
 });
-    
+
 MochiKit.Base.AdapterRegistry = function () {
     this.pairs = [];
 };
@@ -1075,7 +1065,6 @@ MochiKit.Base.AdapterRegistry.prototype = {
         return false;
     }
 };
-
 
 MochiKit.Base.EXPORT = [
     "flattenArray",
@@ -1178,7 +1167,7 @@ MochiKit.Base.__new__ = function () {
 
     // convenience
     m.noop = m.operator.identity;
-    
+
     // Backwards compat
     m.forward = m.forwardCall;
     m.find = m.findValue;
@@ -1214,7 +1203,6 @@ MochiKit.Base.__new__ = function () {
 
     m.NotFound = new m.NamedError("MochiKit.Base.NotFound");
 
-
     m.listMax = m.partial(m.listMinMax, 1);
     m.listMin = m.partial(m.listMinMax, -1);
 
@@ -1223,9 +1211,9 @@ MochiKit.Base.__new__ = function () {
 
     m.merge = m.partial(m.update, null);
     m.zip = m.partial(m.map, null);
-    
+
     m.average = m.mean;
-    
+
     m.comparatorRegistry = new m.AdapterRegistry();
     m.registerComparator("dateLike", m.isDateLike, m.compareDateLike);
     m.registerComparator("arrayLike", m.isArrayLike, m.compareArrayLike);
@@ -1244,7 +1232,6 @@ MochiKit.Base.__new__ = function () {
     };
 
     m.nameFunctions(this);
-
 };
 
 MochiKit.Base.__new__();

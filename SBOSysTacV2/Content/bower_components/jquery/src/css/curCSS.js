@@ -6,7 +6,6 @@ define( [
 	"./support",
 	"../selector" // Get jQuery.contains
 ], function( jQuery, rboxStyle, rnumnonpx, getStyles, support ) {
-
 "use strict";
 
 function curCSS( elem, name, computed ) {
@@ -36,7 +35,6 @@ function curCSS( elem, name, computed ) {
 		// This is against the CSSOM draft spec:
 		// https://drafts.csswg.org/cssom/#resolved-values
 		if ( !support.pixelBoxStyles() && rnumnonpx.test( ret ) && rboxStyle.test( name ) ) {
-
 			// Remember the original values
 			width = style.width;
 			minWidth = style.minWidth;

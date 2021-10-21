@@ -7,12 +7,11 @@ All rights reserved
 
 Use and support of this software is governed by the terms
 and conditions of the software license agreement and support
-policy of Business Objects S.A. and/or its subsidiaries. 
+policy of Business Objects S.A. and/or its subsidiaries.
 The Business Objects products and technology are protected
 by the US patent number 5,555,403 and 6,247,008
 
 File: labels.js
-
 
 =============================================================
 */
@@ -94,7 +93,7 @@ _closeDialog="关闭窗口"
 
 _lstMoveUpLab="向上移动"
 _lstMoveDownLab="向下移动"
-_lstMoveLeftLab="向左移动" 
+_lstMoveLeftLab="向左移动"
 _lstMoveRightLab="向右移动"
 _lstNewNodeLab="添加嵌套过滤器"
 _lstAndLabel="和"
@@ -142,7 +141,7 @@ _calendarSelectionLab="选定日"
 
 _menuCheckLab="已选中"
 _menuDisableLab="已禁用"
-	
+
 _level="级别"
 _closeTab="关闭选项卡"
 _of="/"
