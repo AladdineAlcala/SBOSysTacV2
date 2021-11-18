@@ -44,7 +44,7 @@ namespace SBOSysTacV2.ViewModel
                 cancelledBooking = new CancelBookingViewModel()
                 {
                     TransId = booking.trn_Id,
-                    CustomerFullname = Utilities.getfullname(booking.Customer.lastname, booking.Customer.firstname, booking.Customer.middle),
+                    CustomerFullname = Utilities.Getfullname(booking.Customer.lastname, booking.Customer.firstname, booking.Customer.middle),
                     EventDate = (DateTime)booking.startdate,
                     PackageDesc = booking.Package.p_descripton,
                     NoofPax =(int) booking.noofperson,

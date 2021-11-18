@@ -60,7 +60,7 @@ namespace SBOSysTacV2.ViewModel
                     totalAmount = totalAmount + (hasLocationExtendedCharge * Convert.ToInt32(bookingdetails.no_of_pax));
                 }
 
-                var hasCateringdiscounted = transdetails.getCateringdiscount(Convert.ToInt32(bookingdetails.no_of_pax));
+                var hasCateringdiscounted = transdetails.GetCateringdiscountByPax(Convert.ToInt32(bookingdetails.no_of_pax));
 
                 if (hasCateringdiscounted > 0)
                 {
@@ -106,7 +106,7 @@ namespace SBOSysTacV2.ViewModel
             {
                 var noofpax = bookings.noofperson;
 
-                var amount = transdetails.getCateringdiscount(Convert.ToInt32(noofpax));
+                var amount = transdetails.GetCateringdiscountByPax(Convert.ToInt32(noofpax));
                 discountedAmount = Convert.ToDecimal(amount * noofpax);
             }
 

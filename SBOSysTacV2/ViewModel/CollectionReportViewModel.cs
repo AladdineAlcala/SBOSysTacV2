@@ -46,7 +46,7 @@ namespace SBOSysTacV2.ViewModel
                         {
                             transId = p.payNo,
                             payDate = Convert.ToDateTime(p.dateofPayment),
-                            customer = Utilities.getfullname_nonreverse(c.lastname,c.firstname,c.middle),
+                            customer = Utilities.Getfullname_nonreverse(c.lastname,c.firstname,c.middle),
                             occassion = item.occasion,
                             venue = item.venue,
                             eventDate = Convert.ToDateTime(item.startdate),

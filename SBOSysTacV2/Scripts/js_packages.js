@@ -5,25 +5,34 @@
         e.preventDefault();
         e.stopPropagation();
 
-        debugger;
-
-        var selected = $(this).attr('id');
-        var filter;
-
-        if (selected === 'rad_all') {
-
-            filter = 'all';
-        }
-        else if (selected === 'rad_vip') {
-
-            filter = 'vip';
-        } else {
-
-            filter = 'regular';
-
-        }
+        /*    debugger;*/
 
         $('#spinn-loader').show();
+
+
+        var selected = $(this).attr('id');
+        var filter="";
+
+        switch (selected) {
+
+            case 'rad_vip':
+                filter = 'vip';
+                break;
+            case 'radregular':
+                filter = 'regular';
+                break;
+
+            case 'rad_packmeal':
+                filter = 'pm';
+                break;
+
+            default:
+                filter = 'all';
+        }
+
+        
+
+       
 
         $.ajax({
             type: 'Get',

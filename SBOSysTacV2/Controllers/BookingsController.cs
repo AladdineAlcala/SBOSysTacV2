@@ -212,15 +212,15 @@ namespace SBOSysTacV2.Controllers
 
 
         [HttpGet]
-        public ActionResult GetPackageonBooking(int? transId)
+        public ActionResult GetPackageonBooking(int transId)
         {
              PackageBookingViewModel pBooking=new PackageBookingViewModel();
-             BookMenusViewModel bm = new BookMenusViewModel();
 
-             pBooking = packageBook.GetBookingDetails().FirstOrDefault(x => x.transactionId==transId);
+            //pBooking = packageBook.GetBookingDetails().FirstOrDefault(x => x.transactionId==transId);
+            pBooking.transactionId = transId;
 
+            return PartialView("GetPackageonBooking", pBooking);
 
-            return View(pBooking);
         }
 
 
@@ -247,14 +247,14 @@ namespace SBOSysTacV2.Controllers
         [HttpGet]
         public ActionResult getPartialView_AmountDue(int transId)
         {
-            List<BookingAddon> addonslist = new List<BookingAddon>();
-            TransactionDetailsViewModel _transDetails = new TransactionDetailsViewModel();
+            TransactionDetailsViewModel transDetails;
 
             try
             {
                 //var transId = transModel.transactionId;
-                _transDetails = transactionDetails.GetTransactionDetails().FirstOrDefault(x => x.transactionId.Equals(transId));
+                //transDetails = transactionDetails.GetTransactionDetails().FirstOrDefault(x => x.transactionId.Equals(transId));
 
+                transDetails = transactionDetails.GetTransactionDetailsById(transId);
                
 
                 decimal packageTotal = 0;
@@ -265,46 +265,44 @@ namespace SBOSysTacV2.Controllers
                 decimal fpAmount = 0;
                 decimal bookdiscountAmount = 0;
                 decimal cateringdiscountAmount = 0;
-                string bookdiscountCode = string.Empty;
+                string discountCode=null;
 
-                var packageAmount = _transDetails.Package_Trans.p_amountPax;
-                var packageType = _transDetails.Package_Trans.p_type;
-                int no_of_pax = Convert.ToInt32(_transDetails.Booking_Trans.noofperson);
+                var packageAmount = transDetails.Package_Trans.p_amountPax;
+                var packageType = transDetails.Package_Trans.p_type.TrimEnd();
+                int noOfPax = Convert.ToInt32(transDetails.Booking_Trans.noofperson);
 
 
-                addonslist = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId).ToList();
+                var addonslist = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId).ToList();
                 addonsTotal = addonslist.Sum(y => Convert.ToDecimal(y.AddonAmount));
 
 
-                if (_transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value
+                if (transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value
                 {
                     extendedLocationAmount = transactionDetails.Get_extendedAmountLoc(transId);
                 }
-              
-
-                //belowminPax = packageType.Trim() == "vip" ? 0 : transactionDetails.GetBelowMinPaxAmount(no_of_pax);
+                
 
                 dpAmount = transactionDetails.GetTotalDownPayment(transId);
                 fpAmount = transactionDetails.GetFullPayment(transId);
-                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : transactionDetails.getCateringdiscount(no_of_pax);
+                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : transactionDetails.GetCateringdiscountByPax(noOfPax);
              
-                //var cateringTotalAmount=cateringdiscountAmount * no_of_pax;
-                packageTotal = Convert.ToDecimal(packageAmount) * no_of_pax;
+               
+                packageTotal = Convert.ToDecimal(packageAmount) * noOfPax;
 
                 var subtotal = (packageTotal + addonsTotal + extendedLocationAmount + belowminPax);
 
                 //get discount information
                 bookdiscountAmount = transactionDetails.Get_bookingDiscountbyTrans(transId, subtotal);
-                bookdiscountCode = transactionDetails.Get_bookingDiscounDetailstbyTrans(transId);
+                discountCode = transactionDetails.Get_bookingDiscounDetailstbyTrans(transId);
 
-                _transDetails.TotaAddons = addonsTotal;
-                _transDetails.extLocAmount = extendedLocationAmount;
+                transDetails.TotaAddons = addonsTotal;
+                transDetails.extLocAmount = extendedLocationAmount;
                 //_transDetails.TotaBelowMinPax = belowminPax;
-                _transDetails.TotaDp = dpAmount;
-                _transDetails.Fullpaymnt = fpAmount;
-                _transDetails.book_discounts = bookdiscountAmount;
-                _transDetails.bookdiscountdetails = bookdiscountCode;
-                _transDetails.cateringdiscount = cateringdiscountAmount;
+                transDetails.TotaDp = dpAmount;
+                transDetails.fullpaymnt = fpAmount;
+                transDetails.book_discounts = bookdiscountAmount;
+                transDetails.bookdiscountdetails = discountCode;
+                transDetails.cateringdiscount = cateringdiscountAmount;
 
 
             }
@@ -314,7 +312,7 @@ namespace SBOSysTacV2.Controllers
                 throw;
             }
 
-            return PartialView("_BookingsAmountDuePartial", _transDetails);
+            return PartialView("_BookingsAmountDuePartial", transDetails);
         }
 
 
@@ -353,15 +351,18 @@ namespace SBOSysTacV2.Controllers
 
         }
         
-        public ActionResult GetListofCourse(int transactionId)
+        public ActionResult GetListofCourse(int transactionId,int courseId)
         {
+
             BookMenusViewModel bookMenus=new BookMenusViewModel();
 
             bookMenus.transId = transactionId;
+            bookMenus.courseid = courseId;
 
             return PartialView("_GetListofMainCourse", bookMenus);
         }
 
+        [HttpGet]
         //[ActionName("LoadCustomerByBookNo")]
         public ActionResult GetListofCourseforChange(int bookmenuNo)
         {
@@ -372,8 +373,10 @@ namespace SBOSysTacV2.Controllers
                 {
                     transId = (int) bm.trn_Id,
                     menuId = bm.menuid,
+                    dept=m.Department.deptName,
                     menu_name = m.menu_name,
                     menu_No = bm.No,
+                    courseid= (int)m.CourserId,
                     serving = (decimal) bm.serving
 
                 }).FirstOrDefault(x => x.menu_No==bookmenuNo);
@@ -381,12 +384,32 @@ namespace SBOSysTacV2.Controllers
             return PartialView("_GetListofMainCourse_Change",bookMenus);
         }
 
-
-        public ActionResult LoadListMenus()
+        [HttpGet]
+        public ActionResult LoadListMenus(int courseid)
         {
-            var listofmainmenu = mainmenulistviewmodel.ListofMainMenu().ToList();
 
-            return Json(new {data=listofmainmenu }, JsonRequestBehavior.AllowGet);
+            var listmenudata = new List<MainMenuListViewModel>();
+
+            var listofmenu = mainmenulistviewmodel.ListofMainMenu().ToList();
+
+            //========== Check courseid for posible multiple course .. e.g  ( Pork/Beef/Checken ) ==================
+
+            var coursecategoryhasBar = mainmenulistviewmodel.Check_BarCourseCategory(courseid);
+
+            if (coursecategoryhasBar)
+            {
+                var listWithBar = mainmenulistviewmodel.MainMenuList_with_Bar(courseid);
+
+                    listmenudata= listofmenu.Where(l1 => listWithBar.Any(l2 => l1.courseid == l2.Key)).ToList();
+            }
+            else
+            {
+                listmenudata= listofmenu.Where(t => t.courseid == courseid).ToList();
+            }
+
+            //var menulistbycourse = listofmenu.Find(t => t.courseid == courseid);
+
+            return Json(new {data= listmenudata }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -522,7 +545,7 @@ namespace SBOSysTacV2.Controllers
                 string _message = "";
                 string menu_details = "";
                 dynamic StatMessageString = String.Empty;
-                 var url = "";
+                var url = "";
 
                 try
                 {
@@ -534,7 +557,7 @@ namespace SBOSysTacV2.Controllers
                     TransactionDetailsViewModel td = new TransactionDetailsViewModel();
                     Book_Menus isExistMenu = _dbcontext.Book_Menus.AsNoTracking().FirstOrDefault(x => x.trn_Id == modifiedBookMenu.transId && x.menuid == modifiedBookMenu.menuId);
 
-                var menu = _dbcontext.Menus.FirstOrDefault(x => x.menuid == modifiedBookMenu.menuId);
+                    var menu = _dbcontext.Menus.FirstOrDefault(x => x.menuid == modifiedBookMenu.menuId);
 
                     if (menu != null)
                     {
@@ -558,62 +581,62 @@ namespace SBOSysTacV2.Controllers
 
                                 //check serving if not exceed to no of pax
 
-                                        var noofPax = _dbcontext.Bookings.FirstOrDefault(x => x.trn_Id == modifiedBookMenu.transId) .noofperson;
+                        var noofPax = _dbcontext.Bookings.FirstOrDefault(x => x.trn_Id == modifiedBookMenu.transId) .noofperson;
 
-                                        if (isExistMenu.serving != 0)
+                        if (isExistMenu.serving != 0)
+                        {
+
+                                if (isExistMenu.serving < noofPax)
+                                {
+                                        //_dbcontext.Book_Menus.Attach(modifiedbookMenu);
+                                        //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
+                                        //_dbcontext.SaveChanges();
+
+
+                                        url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = modifiedBookMenu.transId });
+
+                                        modifysuccess = true;
+                                        _message = menu_details + " succesfully updated";
+
+                                        StatMessageString = new
                                         {
+                                            param1 = 200,
+                                            param2 = _message
+                                        };
+                                    }
 
-                                                                        if (isExistMenu.serving < noofPax)
-                                                                        {
-                                                                                //_dbcontext.Book_Menus.Attach(modifiedbookMenu);
-                                                                                //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
-                                                                                //_dbcontext.SaveChanges();
-
-
-                                                                                url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = modifiedBookMenu.transId });
-
-                                                                                modifysuccess = true;
-                                                                                _message = menu_details + " succesfully updated";
-
-                                                                                StatMessageString = new
-                                                                                {
-                                                                                    param1 = 200,
-                                                                                    param2 = _message
-                                                                                };
-                                                                         }
-
-                                                                        else
-                                                                        {
-                                                                                     modifysuccess = true;
-                                                                                    _message = menu_details + " succesfully updated";
-
-                                                                                    StatMessageString = new
-                                                                                    {
-                                                                                        param1 = 404,
-                                                                                        param2 = _message
-                                                                                    };
-                                                                        }
-                                         }
-                                        else
-                                        {
-
-                                                //_dbcontext.Book_Menus.Attach(modifiedbookMenu);
-                                                //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
-                                                _dbcontext.SaveChanges();
-
-
-                                                url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = modifiedBookMenu.transId });
-
+                                else
+                                {
                                                 modifysuccess = true;
-                                                _message = menu_details + " succesfully updated";
+                                            _message = menu_details + " succesfully updated";
 
-                                                StatMessageString = new
-                                                {
-                                                param1 = 200,
+                                            StatMessageString = new
+                                            {
+                                                param1 = 404,
                                                 param2 = _message
-                                                };
+                                            };
+                                }
+                            }
+                        else
+                        {
 
-                                          }
+                                //_dbcontext.Book_Menus.Attach(modifiedbookMenu);
+                                //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
+                                _dbcontext.SaveChanges();
+
+
+                                url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = modifiedBookMenu.transId });
+
+                                modifysuccess = true;
+                                _message = menu_details + " succesfully updated";
+
+                                StatMessageString = new
+                                {
+                                param1 = 200,
+                                param2 = _message
+                                };
+
+                            }
                     }
                     else //new menu selected
                     {
@@ -1311,7 +1334,7 @@ namespace SBOSysTacV2.Controllers
                     startdate = reservationinfo.resDate,
                     enddate = reservationinfo.resDate,
                     serve_status = false,
-                    fullname = Utilities.getfullname(customer.lastname,customer.firstname,customer.middle),
+                    fullname = Utilities.Getfullname(customer.lastname,customer.firstname,customer.middle),
                     reservationId = reservationId,
                    Servicetype_ListItems = booking.GetServiceType_SelectListItems()
                };
@@ -1567,8 +1590,7 @@ namespace SBOSysTacV2.Controllers
                 return PartialView("GetSelectedAddons_Modify", modifyselectedaddons);
             }
 
-            var success = false;
-            var ReturnUrl = string.Empty;
+           
 
             //var isaddonsexist =
             //    _dbcontext.BookingAddons.Any(x => x.addonId == modifyselectedaddons.addonId &&
@@ -1596,8 +1618,8 @@ namespace SBOSysTacV2.Controllers
 
             ModelState.Clear();
 
-            success = true;
-            ReturnUrl = Url.Action("GetListofAddons", "Bookings", new { transId = modifyselectedaddons.bookingNo });
+            bool success = true;
+            string ReturnUrl = Url.Action("GetListofAddons", "Bookings", new { transId = modifyselectedaddons.bookingNo });
 
 
 

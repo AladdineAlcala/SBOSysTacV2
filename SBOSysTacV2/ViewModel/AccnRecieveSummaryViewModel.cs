@@ -42,7 +42,7 @@ namespace SBOSysTacV2.ViewModel
                     select new AccnRecieveSummaryViewModel
                     {
                         cusId = Convert.ToInt32(b.c_Id),
-                        cusname = Utilities.getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
+                        cusname = Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
                         transId = b.trn_Id,
                         transDate = Convert.ToDateTime(b.startdate),
                         duedate = eventdatedue,

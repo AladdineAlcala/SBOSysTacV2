@@ -46,7 +46,7 @@ namespace SBOSysTacV2.ViewModel
                     {
                         reservationId = s.resId,
                         customerId = s.c_Id,
-                        fullname = Utilities.getfullname(s.Customer.lastname,s.Customer.firstname,s.Customer.middle),
+                        fullname = Utilities.Getfullname(s.Customer.lastname,s.Customer.firstname,s.Customer.middle),
                         noofperson = s.noofPax,
                         occasion =s.occasion,
                         reserveDate = s.resDate,

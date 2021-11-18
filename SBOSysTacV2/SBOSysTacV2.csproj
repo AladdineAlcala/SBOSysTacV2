@@ -543,6 +543,7 @@
     <Compile Include="ViewModel\PackageBookingViewModel.cs" />
     <Compile Include="ViewModel\PackageDetailsLocationViewModel.cs" />
     <Compile Include="ViewModel\PackageViewModel.cs" />
+    <Compile Include="ViewModel\Package_MenusBookViewModel.cs" />
     <Compile Include="ViewModel\PaymentsDetailsViewModel.cs" />
     <Compile Include="ViewModel\PaymentsViewModel.cs" />
     <Compile Include="ViewModel\PaymentTransViewModel.cs" />
@@ -6034,6 +6035,7 @@
     <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\customStyle\card.css" />
     <Content Include="Content\customStyle\customStyle.css" />
+    <Content Include="Content\customStyle\spinner.css" />
     <Content Include="Content\customStyle\typehead.css" />
     <Content Include="Content\dist\css\AdminLTE.css" />
     <Content Include="Content\dist\css\AdminLTE.min.css" />
@@ -7375,8 +7377,6 @@
     <Content Include="Content\build\less\users-list.less" />
     <Content Include="Content\build\less\variables.less" />
     <Content Include="Content\build\scss\_variables.scss" />
-    <Content Include="Content\dist\css\adminlte.css.map" />
-    <Content Include="Content\dist\css\adminlte.min.css.map" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="Images\sals.ico" />
@@ -7601,6 +7601,8 @@
     <Content Include="DataSet\CollectionReportDataset.xsc">
       <DependentUpon>CollectionReportDataset.xsd</DependentUpon>
     </Content>
+    <Content Include="Content\dist\css\adminlte.css.map" />
+    <Content Include="Content\dist\css\adminlte.min.css.map" />
     <None Include="DataSet\CollectionReportDataset.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -7668,6 +7670,7 @@
     <Content Include="Scripts\typeahead.bundle.min.js" />
     <Content Include="Scripts\typeahead.jquery.js" />
     <Content Include="Scripts\typeahead.jquery.min.js" />
+    <Content Include="Checklist.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -7691,7 +7694,7 @@
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Menus\Index.cshtml" />
     <Content Include="Views\Packages\_packagebody.cshtml" />
-    <Content Include="Views\Packages\_packages.cshtml" />
+    <Content Include="Views\Packages\_packagesNew.cshtml" />
     <Content Include="Views\Packages\PackageDetails.cshtml" />
     <Content Include="Views\Packages\_PackageCoverage.cshtml" />
     <Content Include="Views\Bookings\Index.cshtml" />
@@ -7792,6 +7795,7 @@
     <Content Include="Views\Inquiry\BookingTransactionHistory.cshtml" />
     <Content Include="Views\Inquiry\_BookingTransLog.cshtml" />
     <Content Include="Views\Inquiry\AdminReportsMonthlyCash_Index.cshtml" />
+    <Content Include="Views\Bookings\_BookingInfo.cshtml" />
     <None Include="Web.developtment_testConfig.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

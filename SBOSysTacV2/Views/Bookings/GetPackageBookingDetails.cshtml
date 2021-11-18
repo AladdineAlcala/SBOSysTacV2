@@ -4,168 +4,144 @@
 
 
 
+
 @{
-    var fullname = Utilities.getfullname(Model.Customer.lastname, Model.Customer.firstname, Model.Customer.middle);
-    string status = "";
+    var fullname = Utilities.Getfullname(Model.Customer.lastname, Model.Customer.firstname, Model.Customer.middle);
+    var status = "";
 
-    if (Model.Booking_Trans.iscancelled == true)
-    {
-        status = "Cancelled";
-    }
-    else
-    {
-        status = Model.Booking_Trans.serve_status == true ? "Served" : "UnServed";
-    }
+    status = Model.Booking_Trans.iscancelled == true ? "Cancelled" : Model.Booking_Trans.serve_status == true ? "Served" : "UnServed";
 }
-@*<section class="content-header">
-    <h1>
-        Transaction
-        <small>#@Model.transactionId</small>
-    </h1>
-</section>*@
 
-<div class="pad margin no-print" style="padding-left: 0 !important; padding-right: 0 !important; margin-bottom: 0; padding-bottom: 0;">
-    <div class="callout callout-info" style="margin-bottom: 5px; padding-bottom: 8px;">
-        <h4>Book No : @Model.transactionId </h4>
-        @*<div class="transNo">Book No.</div> <span>@Model.transactionId</span>*@
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="callout callout-info bg-light-blue my-1 py-1">
+                <h4 class="my-1 text-black bold">Booking No : </h4>
+                <h2 class="my-1">@Model.transactionId</h2>
+                @*<div class="transNo">Book No.</div> <span>@Model.transactionId</span>*@
+            </div>
+        </div>
+
     </div>
-</div>
+    <!-- end of row-->
 
-<div class="row" style="margin-bottom:3px;">
-    <div class="col-sm-6 col-sm-offset-6">
-        <div class="button-group pull-right" style="margin-right:12px;">
-            <a class="btn bg-olive btn-flat" href="@Url.Action("Index", "Bookings")"><i class="fa fa-reply"></i> Bookings </a>
-            <a class="btn bg-olive btn-flat" href="@Url.Action("GetPackageonBooking", "Bookings",new {transId =Model.transactionId})"><i class="fa fa-reply"></i> Menus </a>
-            @{
-                int transId = Model.transactionId;
+    <div class="row">
+        <div class="pad mb-5">
+            <div class="row">
 
-                if (Model.hasDiscountEnable(transId))
-                {
-                    <button class="btn bg-olive btn-flat" type="button" data-id="@Model.transactionId" id="remove_discount"><i class="fa fa-rouble"></i> Remove Discount </button>
-                }
-                else
-                {
-                    <button class="btn bg-olive btn-flat" type="button" data-id="@Model.transactionId" id="addDiscount"><i class="fa fa-rouble"></i> Create Discount </button>
-                }
-            }
-           
-          
-            @*<a class="btn bg-olive btn-flat" href="#"><i class="fa fa-print"></i>  </a>*@
+                <div class="col-xs-6">
 
-            @*<a class="btn bg-olive btn-flat" href="@Url.Action("PrintContractOption","Bookings",new {transId=Model.transactionId})"><i class="fa fa-print"></i> Print Contract </a>*@
-        </div>
-    </div>
-</div>
+                    <div class="card-body">
+
+                        <div class="col-sm-8">
+                            <h2 class="mb-3 mt-1 text-bold">@fullname </h2>
+                            <ul class=" ml-4 mb-0 fa-ul text-muted">
+                                <li class="text"><span class="fa-li"><i class="fa fa-lg fa-home"></i> </span> <b class="text-info mr-1">Address:</b> @Model.Customer.address</li>
+                                <li class="text"><span class="fa-li"><i class="fa fa-lg fa-phone"></i></span> <b class="text-info mr-1">Phone #:</b> @String.Format("{0} / {1}", Model.Customer.contact1, Model.Customer.contact2)</li>
+                            </ul>
+                        </div>
+
+                    </div>
 
 
-<div class="row">
-    <section class="invoice" style="margin-top: 0; padding-top: 0;">
-        <div class="row" style="margin-bottom: 0; padding-bottom: 0;">
-            <div class="col-xs-6">
-                <h2 class="page-header"  style="margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid  #c8c8a6; color: #2f4f4f;">
-                    <i class="fa fa-address-card"></i> @fullname
-              
-                </h2>
-            </div>
-            <div class="col-xs-6">
-                <small class="pull-right bookdetails" style="padding-top: 12px;"><b>Trn Date:</b>
-                  
-                    @Model.Booking_Trans.transdate.Value.ToString("MMM d, yyyy h:mm tt")</small>
-
-            </div>
-        </div>
-        
-
-        <div class="control-label col-sm-2"> BOOKING STATUS:</div> <span class="bookdetails">@status</span>
-        
-        
-
-        <br/>
-        <div class="clearfix"></div>
-        <br/>
-
-        <div class="row">
-            
-           
-
-
-            <div class="col-sm-6">
-
-                <div class="control-label text-bold col-sm-4 titlehead"> Event Details</div>
-                <br/>
-                <div class="clearfix"></div>
-                <div class="control-label col-sm-4"> OCCASION:</div> <span class="bookdetails">@Html.DisplayFor(m => m.Booking_Trans.occasion)</span>
-                <br/>
-                <div class="control-label col-sm-4"> VENUE:</div> <span class="bookdetails">@Html.DisplayFor(m => m.Booking_Trans.venue)</span>
-                <br/>
-                <div class="control-label col-sm-4"> DATE:</div> <span class="bookdetails"> @Model.Booking_Trans.startdate.Value.ToString("MMM d, yyyy h:mm tt")</span>
-                <br/>
-                <div class="control-label col-sm-4"> EVENTCOLOR:</div> <span class="bookdetails"> @Html.DisplayFor(m => m.Booking_Trans.eventcolor) </span>
-                <br/>
-                <div class="control-label col-sm-4"> TYPE OF SERVICE:</div><span class="bookdetails">@Html.DisplayFor(m => m.Booking_Trans.serviceType)</span>
-                <br/>
-                <div class="control-label col-sm-4">NOTES :</div>
-                <br/>
-                <span class="bookdetails col-sm-12">@Html.DisplayFor(m => m.Booking_Trans.refernce)</span>
-
-            </div>
-
-            <div class="col-sm-6">
-                <div class="control-label text-bold col-sm-6 titlehead"> Package Details</div>
-                <br/>
-                <div class="clearfix"></div>
-                <div class="control-label col-sm-4"> PACKAGE:</div> <span class="bookdetails"> @Html.DisplayFor(m => m.Package_Trans.p_descripton)</span>
-                <br/>
-                <div class="control-label col-sm-4"> TYPE:</div> <span class="bookdetails">@Html.DisplayFor(m => m.Package_Trans.p_type)</span>
-
-                <br/>
-                <div class="control-label col-sm-4"> AMOUNT PER PAX:</div> <span class="bookdetails">@Html.DisplayFor(m => m.Package_Trans.p_amountPax)</span>
-
-                <br/>
-                <div class="control-label col-sm-4"> No. OF HEADS:</div><span class="bookdetails"> @Html.DisplayFor(m => m.Booking_Trans.noofperson)</span>
-                <br/>
-                @*<div class="control-label col-sm-4"> DP:</div> <span class="bookdetails"> Php @String.Format("{0:N}", Model.TotaDp)</span>
-
-            <br />
-
-            <div class="control-label col-sm-4"> FP:</div> <span class="bookdetails">Php @String.Format("{0:N}", Model.Fullpaymnt)</span>
-            <br />*@
-
-
-            </div>
-        </div>
-        <div class="row" style="margin-top: 10px;">
-            <div class="col-sm-6">
-           
-
-                <div class="control-label text-bold col-sm-5 titlehead">
-                    Booking Created
                 </div>
-                <div class="clearfix"></div>
-                <br/>
-                <div class="control-label col-sm-4">Last Update By:</div> <span class="bookdetails">@Html.DisplayFor(m => m.Booking_Trans.b_createdbyUserName)</span>
-                <br/>
-                <div class="control-label col-sm-4">Updated Date:</div> <span class="bookdetails">@Model.Booking_Trans.b_updatedDate.ToString("MMM d, yyyy h:mm tt")</span>
+
+                <div class="col-xs-6">
+                    <small class="pull-right bookdetails" style="padding-top: 12px;">
+                        <b>Trn Date:</b>
+
+                        @Model.Booking_Trans.transdate.Value.ToString("MMM d, yyyy h:mm tt")
+                    </small>
+
+                </div>
             </div>
+        </div>
 
-            <div class="col-sm-6">
+    </div>
+    <!-- end of row -->
 
-                <div class="col-xs-10">
-                    <p class="lead" style="margin-bottom: 10px;">AMOUNT DUE</p>
-                    <div class="table-responsive" id="amountDue">
-                        @{
+    <div class="row">
+        <div class="col-md-12">
+            <div class=" card card-primary card-outline card-outline-tabs" style="margin-left:5px;width:90%;">
 
-                            Html.RenderAction("getPartialView_AmountDue", new { transId = Model.transactionId });
-                        }
+                <div class="card-header">
+
+                    <ul class="nav nav-tabs" id="bookingTab" role="tablist">
+                        <li class="nav-item active">
+                            <a class="nav-link" id="booking_info-tab" data-toggle="pill" href="#tabpane_bookinginfo" role="tab" aria-controls="tabpane_bookinginfo" aria-selected="true">Booking Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="menu_info-tab" data-toggle="pill" href="#tabpane_menuinfo" role="tab" aria-controls="tabpane_menuinfo" aria-selected="false">Menus / Add-ons and Upgrades</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="statement_info-tab" data-toggle="pill" href="#tabpane_statementinfo" role="tab" aria-controls="tabpane_statementinfo" aria-selected="false">Statement of Account</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <!-- card header-->
+                <div class="card-body">
+
+                    <div class="tab-content" id="bookingTabContent">
+
+                        <div class="tab-pane fade active in" id="tabpane_bookinginfo" role="tabpanel" aria-labelledby="booking_info-tab">
+
+                            <div class="row">
+                                <div class="col-md-10">
+                                    @{
+                                        Html.RenderPartial("_BookingInfo", Model);
+                                    }
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="tab-pane fade" id="tabpane_menuinfo" role="tabpanel" aria-labelledby="menu_info-tab">
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    @{
+                                        Html.RenderPartial("GetPackageonBooking", Model);
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="tabpane_statementinfo" role="tabpanel" aria-labelledby="statement_info-tab">
+                            <p class="lead" style="margin: 10px;">AMOUNT DUE</p>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="table-responsive" id="amountDue">
+                                        @{
+
+                                            Html.RenderAction("getPartialView_AmountDue", new { transId = Model.transactionId });
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
+                <!-- /.card body -->
+
 
             </div>
         </div>
+    </div>
+</section>
 
-    </section>
-</div>
+
+
 
 
 <div class="modal fade" id="modalAddDiscount">
@@ -187,7 +163,136 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+<!---------------------------------------------------------------------------------------------------------------------------- -->
+<!--===========================================================================================================================-->
+<!--==================   MODALS FOR PACKAGE MENUS =============================================================================-->
+<!--===========================================================================================================================-->
+<!--==================   NOV. 12 ,2021 =============================================================================-->
 
+<div class="modal fade" id="modal-searchPackageBooking">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Select Menus</h4>
+            </div>
+            <div class="modal-body" id="modalPackagecontent" style="padding-top: 0;margin-top:0">
+
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline" id="btnSavelocation">Save changes</button>*@
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<div class="modal fade" id="modal-Addons">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Additional Information and Add-ons</h4>
+            </div>
+            <div class="modal-body" id="modal_addoncontents">
+
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline" id="btnSavelocation">Save changes</button>*@
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade" id="modal-modifyAddons">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Modify Information and Add-ons</h4>
+            </div>
+            <div class="modal-body" id="modal_modifyaddoncontents">
+
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline" id="btnSavelocation">Save changes</button>*@
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade" id="modal-change_menu">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Select Menus</h4>
+            </div>
+            <div class="modal-body" id="modal_changemenu_content">
+
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline" id="btnSavelocation">Save changes</button>*@
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<div class="modal fade" id="modal-seletedaddons">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body" id="modal-content_selectedaddon">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div id="modalLightbox" class="menuimgmodal">
+    <span class="menuimg-close">&times;</span>
+    <div class="menuimgmodal-content" id="imgcontent">
+
+    </div>
+</div>
+
+<!--============================================================================================================================-->
+<!--============================================================================================================================-->
+<!--============================================================================================================================-->
 
 @section scripts
 {
@@ -201,9 +306,30 @@
             bookUrl_SelectDiscount: "@Url.Action("GetDiscountDetails", "Bookings")",
             bookurl_bookingdue:"@Url.Action("GetDiscountDetails", "Bookings",new {transId="tId"})"
         }
+
+        var PackageBookingUrl = {
+            urlSearchpackagebooking: "@Url.Action("GetListofCourse", "Bookings")",
+            urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourseforChange", "Bookings")",
+            urlChangeMenu_on_Booking: "@Url.Action("Change_Menu_on_Booking", "Bookings")",
+            urlMenuList: "@Url.Action("LoadListMenus", "Bookings")",
+            urlMenuList_Modify: "@Url.Action("LoadListMenus", "Bookings",new { courseId= "courseid"})",
+            urlAddMenustoBooking: "@Url.Action("AddMenusToPackage", "Bookings")",
+            urlModifyBookingAddOns: "@Url.Action("ModifyAddOns", "Bookings")",
+            urlAddOnsInformation: "@Url.Action("AddOnsInformation", "Bookings")",
+            urlAddOnsUpgrades: "@Url.Action("Get_AddonsandUpgrades", "Bookings")",
+            urlRemoveBookingMenus: "@Url.Action("RemoveMenufromListofBookings", "Bookings")",
+            urlRemoveBookingAddOns: "@Url.Action("RemoveAddons", "Bookings")",
+            urlGetListAddonsbyCat: "@Url.Action("Get_AddonsandUpgradesByCat", "Bookings")",
+            urlGetSelectedAddons: "@Url.Action("GetSelectedAddons", "Bookings")"
+
+        }
+
     </script>
 
-    
+
     @Scripts.Render("~/Scripts/js_bookings.js")
+
+    @Scripts.Render("~/Scripts/js_packagebooking.js")
+
 
 }

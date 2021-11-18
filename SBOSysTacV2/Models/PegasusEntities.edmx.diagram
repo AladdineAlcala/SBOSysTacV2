@@ -20,7 +20,7 @@
         <EntityTypeShape EntityType="PegasusEntitiesModel.Customer" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.Department" Width="1.5" PointX="3.75" PointY="26" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.Discount" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PegasusEntitiesModel.Menu" Width="1.5" PointX="6" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PegasusEntitiesModel.Menu" Width="1.5" PointX="7" PointY="22.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.PackageAreaCoverage" Width="1.5" PointX="6" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.PackageBody" Width="1.5" PointX="3" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.Package" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />

@@ -34,7 +34,7 @@ namespace SBOSysTacV2.ViewModel
                     select new SalesSummaryViewModel()
                     {
                         transId = b.trn_Id,
-                        accountname = Utilities.getfullname(b.Customer.lastname, b.Customer.firstname,b.Customer.middle),
+                        accountname = Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname,b.Customer.middle),
                         dateTrans =Convert.ToDateTime(p.dateofPayment),
                         reference = p.particular,
                         particular = b.Package.p_descripton,

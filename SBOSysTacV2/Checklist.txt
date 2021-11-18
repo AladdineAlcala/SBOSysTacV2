@@ -1,0 +1,17 @@
+﻿
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  Red Error   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+
+
+
+
+
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  Blue Error >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+1. Bookings Refresh Button - When click not refreshing or showing all data when previous operation search and search box not empty or deleted searched text.

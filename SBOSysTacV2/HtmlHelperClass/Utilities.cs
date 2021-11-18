@@ -47,12 +47,13 @@ namespace SBOSysTacV2.HtmlHelperClass
             catch (NullReferenceException)
             {
 
-                id = id + 1;
+                id++;
             }
 
             catch (FormatException)
             {
-                id = id + 1;
+                int v = id + 1;
+                id = v;
             }
 
             return (string.Format("{0:0000}",id));
@@ -82,12 +83,12 @@ namespace SBOSysTacV2.HtmlHelperClass
             catch (NullReferenceException)
             {
 
-                id = id + 1;
+                id++;
             }
 
             catch (FormatException)
             {
-                id = id + 1;
+                id++;
             }
 
             return (string.Format("{0:0000}", id));
@@ -117,61 +118,60 @@ namespace SBOSysTacV2.HtmlHelperClass
 
 
             }
+
             catch (NullReferenceException)
             {
 
-                id = id + 1;
+                id++;
             }
 
             catch (FormatException)
             {
-                id = id + 1;
+                id++;
             }
 
             return String.Format("{0:0000000}",id);
         }
 
       
-
-
-            public static string getfullname(string last, string first, string middle)
+            public static string Getfullname(string last, string first, string middle)
             {
                 string conCat = " ";
 
                 if (!string.IsNullOrEmpty(last))
                 {
-                    conCat += last + " ,";
+                    conCat += Capfirstletter(last).Trim() + " ,";
                 }
                 if (!string.IsNullOrEmpty(first))
                 {
-                    conCat += first + " ";
+                    conCat += Capfirstletter(first).Trim() + " ";
                 }
 
                 if (!string.IsNullOrEmpty(middle))
                 {
-                    conCat += middle + " ";
+                    conCat += middle.ToUpper().Trim() + " ";
                 }
 
                 return conCat.Trim();
             }
 
-            public static string getfullname_nonreverse(string last, string first, string middle)
+            public static string Getfullname_nonreverse(string last, string first, string middle)
             {
                 string conCat = " ";
 
            
                 if (!string.IsNullOrEmpty(first))
                 {
-                    conCat += first.Trim() + " ";
+                    conCat += Capfirstletter(first).Trim() + " ";
                 }
                 if (!string.IsNullOrEmpty(middle))
                 {
-                    conCat += middle.Trim() + ". ";
+                    conCat += middle.Trim().ToUpper() + ". ";
                 }
 
                 if (!string.IsNullOrEmpty(last))
                 {
-                    conCat += last.Trim() + " ";
+                    conCat += Capfirstletter(last).Trim() + " ";
                 }
             
 
@@ -221,7 +221,7 @@ namespace SBOSysTacV2.HtmlHelperClass
 
         }
 
-        public static string capfirstletter(string wordstring)
+        public static string Capfirstletter(string wordstring)
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(wordstring.ToLower());
         }

@@ -41,7 +41,7 @@ namespace SBOSysTacV2.ViewModel
                 select new ContractReceiptViewModel()
                 {
                     transId = b.trn_Id,
-                    fullname = Utilities.getfullname(b.Customer.lastname,b.Customer.firstname,b.Customer.middle),
+                    fullname = Utilities.Getfullname(b.Customer.lastname,b.Customer.firstname,b.Customer.middle),
                     dateofTrans =Convert.ToDateTime(b.transdate),
                     address = b.Customer.address,
                     occassion = b.occasion,

@@ -20,7 +20,7 @@ namespace SBOSysTacV2.ViewModel
         public Decimal TotaDp { get; set; }
         public Decimal extLocAmount { get; set; }
         public Decimal cateringdiscount { get; set; }
-        public Decimal Fullpaymnt { get; set; }
+        public Decimal fullpaymnt { get; set; }
 
 
         private PegasusEntities _dbEntities = new PegasusEntities();
@@ -61,6 +61,38 @@ namespace SBOSysTacV2.ViewModel
             return _list;
 
         }
+
+        public TransactionDetailsViewModel GetTransactionDetailsById(int transId)
+        {
+            var bookings = bvm.GetListofBookings().ToList();
+
+            var bookingsList = new TransactionDetailsViewModel();
+            try
+            {
+
+                bookingsList = (from b in bookings
+                    join c in _dbEntities.Customers on b.c_Id equals c.c_Id
+                    join p in _dbEntities.Packages on b.pId equals p.p_id
+                    where b.trn_Id == transId
+                    select new TransactionDetailsViewModel()
+                    {
+                        transactionId = b.trn_Id,
+                        Booking_Trans = b,
+                        Customer = c,
+                        Package_Trans = p
+                    }).Single();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return bookingsList;
+
+        }
+
 
         public decimal GetTotalBookingAmount(int transId)
         {
@@ -423,11 +455,10 @@ namespace SBOSysTacV2.ViewModel
             return discountAplied;
         }
 
-        public decimal getCateringdiscount(int noofPax)
+        public decimal GetCateringdiscountByPax(int paxcount)
         {
             decimal amount = 0;
-            var cateringdiscount =
-                _dbEntities.CateringDiscounts.FirstOrDefault(x => x.DiscPaxMin <= noofPax && x.DiscPaxMax >= noofPax);
+            var cateringdiscount = _dbEntities.CateringDiscounts.FirstOrDefault(x => x.DiscPaxMin <= paxcount && x.DiscPaxMax >= paxcount);
 
             if (cateringdiscount != null)
             {

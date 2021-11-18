@@ -56,11 +56,11 @@ namespace SBOSysTacV2.ViewModel
             {
                 EventDate = (DateTime) x.startdate,
                 cId = x.Customer.c_Id,
-                Client = Utilities.getfullname(x.Customer.lastname,x.Customer.firstname,x.Customer.middle),
+                Client = Utilities.Getfullname(x.Customer.lastname,x.Customer.firstname,x.Customer.middle),
                 Occasion = x.occasion,
                 Venue = x.venue,
                 noofPax = (int)x.noofperson,
-                PackageRate=x.Package.p_type.Trim()!="vip"? (decimal)x.Package.p_amountPax - transactionDetails.getCateringdiscount((int)x.noofperson): (decimal)x.Package.p_amountPax,
+                PackageRate=x.Package.p_type.Trim()!="vip"? (decimal)x.Package.p_amountPax - transactionDetails.GetCateringdiscountByPax((int)x.noofperson): (decimal)x.Package.p_amountPax,
                 Addons = x.BookingAddons.Any() ? string.Join(", ",x.BookingAddons.Select(t=>t.Addondesc)):String.Empty,
                 AddonsTotal = x.BookingAddons.Any() ? x.BookingAddons.Select(t =>Convert.ToDecimal(t.AddonAmount)).Sum() : 0,
                 AmountPaid = x.Payments.Any() ? x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum() : 0,

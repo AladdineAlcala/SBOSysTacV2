@@ -207,6 +207,7 @@
           <Property Name="nopax_id" Type="int" />
           <Property Name="p_min" Type="int" />
           <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="date_Created" Type="datetime" />
         </EntityType>
         <EntityType Name="Packages_No_Pax_applicable">
           <Key>
@@ -216,7 +217,7 @@
           <Property Name="package_n_pax" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'PegasusTac.dbo.PackagesRangeBelowMin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PackagesRangeBelowMin">
           <Key>
             <PropertyRef Name="no" />
@@ -290,9 +291,7 @@ warning 6002: The table/view 'PegasusTac.dbo.PackagesRangeBelowMin' does not hav
           <Property Name="servicetypedetails" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <Association Name="FK_AddonDetails_AddonCategory">
-          <End Role="AddonCategory" Type="Self.AddonCategory" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="AddonCategory" Type="Self.AddonCategory" Multiplicity="0..1" />
           <End Role="AddonDetails" Type="Self.AddonDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AddonCategory">
@@ -304,9 +303,7 @@ warning 6002: The table/view 'PegasusTac.dbo.PackagesRangeBelowMin' does not hav
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AddonDetails_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
           <End Role="AddonDetails" Type="Self.AddonDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
@@ -510,9 +507,7 @@ warning 6002: The table/view 'PegasusTac.dbo.PackagesRangeBelowMin' does not hav
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Payments_Bookings">
-          <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1" />
           <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bookings">
@@ -923,6 +918,7 @@ warning 6002: The table/view 'PegasusTac.dbo.PackagesRangeBelowMin' does not hav
           <NavigationProperty Name="Bookings" Relationship="Self.FK_Bookings_Packages" FromRole="Packages" ToRole="Bookings" />
           <NavigationProperty Name="PackageAreaCoverages" Relationship="Self.FK_PackageAreaCoverage_Packages" FromRole="Packages" ToRole="PackageAreaCoverage" />
           <NavigationProperty Name="PackageBodies" Relationship="Self.FK_PackageBody_Packages" FromRole="Packages" ToRole="PackageBody" />
+          <Property Name="date_Created" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Packages_No_Pax_applicable">
           <Key>
@@ -1612,6 +1608,7 @@ warning 6002: The table/view 'PegasusTac.dbo.PackagesRangeBelowMin' does not hav
           <EntitySetMapping Name="Packages">
             <EntityTypeMapping TypeName="PegasusEntitiesModel.Package">
               <MappingFragment StoreEntitySet="Packages">
+                <ScalarProperty Name="date_Created" ColumnName="date_Created" />
                 <ScalarProperty Name="p_id" ColumnName="p_id" />
                 <ScalarProperty Name="p_type" ColumnName="p_type" />
                 <ScalarProperty Name="p_descripton" ColumnName="p_descripton" />

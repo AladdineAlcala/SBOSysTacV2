@@ -156,7 +156,7 @@ namespace SBOSysTacV2.Controllers
                     {
                         transId = l.trn_Id,
                         cusId = l.c_Id,
-                        cusfullname = Utilities.getfullname_nonreverse(l.Customer.lastname, l.Customer.firstname, l.Customer.middle),
+                        cusfullname = Utilities.Getfullname_nonreverse(l.Customer.lastname, l.Customer.firstname, l.Customer.middle),
                         occasion = l.occasion,
                         venue = l.venue,
                         bookdatetime = l.startdate,

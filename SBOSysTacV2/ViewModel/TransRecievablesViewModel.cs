@@ -48,7 +48,7 @@ namespace SBOSysTacV2.ViewModel
                         _evtDate = b.startdate,
                         _cusId = b.c_Id,
                         _cusfullname =
-                        Utilities.getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
+                        Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
                         _address = b.Customer.address,
                         _contact = b.Customer.contact1,
                         _occasion = b.occasion,
@@ -153,7 +153,7 @@ namespace SBOSysTacV2.ViewModel
             }
             catch (Exception e)
             {
-                
+                Console.WriteLine(e);
                 throw;
             }
 

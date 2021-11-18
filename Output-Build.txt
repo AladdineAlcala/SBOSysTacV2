@@ -1,2 +1,4 @@
 ﻿Build started...
-========== Build: 0 succeeded, 0 failed, 1 up-to-date, 0 skipped ==========
+1>------ Build started: Project: SBOSysTacV2, Configuration: Debug Any CPU ------
+1>  SBOSysTacV2 -> D:\SBOSysTacV2\SBOSysTacV2\bin\SBOSysTacV2.dll
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

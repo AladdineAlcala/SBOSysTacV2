@@ -12,7 +12,6 @@ $(document).ready(function () {
 
     });
 
- 
 
     ////Custom date validation overide for date formats
     $.validator.methods.date = function (value, element) {
@@ -35,6 +34,12 @@ $(document).ready(function () {
 
     //    }
     //    );
+
+
+
+
+
+
 
 
     var hassuperadminrights = $('#has_superadminRight').val();
@@ -309,8 +314,11 @@ $(document).ready(function () {
 
             e.preventDefault();
 
+            $('#spinn-loader').show();
 
             var trnsId = $(this).attr("id");
+
+            
 
             $.ajax({
                 type: 'Get',
@@ -318,7 +326,15 @@ $(document).ready(function () {
                 data: { transactionId: trnsId },
                 success: function (result) {
                     if (result.success) {
-                        window.location.href = bookingsUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", trnsId);
+
+                        setTimeout(function () {
+
+                            window.location.href = bookingsUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", trnsId);
+
+                            // $('#spinn-loader').hide();
+                        }, 600);
+
+                        
                     }
                     else {
 
@@ -328,9 +344,15 @@ $(document).ready(function () {
                             type: "info"
 
                         });
-                      
+
                     }
+                },
+                done: function () {
+
+                    $('#spinn-loader').hide();
                 }
+
+                
             });
 
 
@@ -880,9 +902,10 @@ $(document).ready(function () {
                     {
                         'autowidth': true, 'targets': 6, "data": "trn_Id", "orderable": false, "searchable": false, "className": "text-center",
                         "mRender": function (data) {
-                            return '<button class="btn btn-flat btn-xs bg-olive get_menupackage" id=' + data + '><i class="fa fa-cube fa-sm"></i> Menus </button>' +
+
+                            return ' <button class="btn btn-flat getdetails" id=' + data + '><i class="fa fa-chevron-right fa-md"></i></button>';
                               
-                                ' <button class="btn btn-flat bg-purple btn-xs getdetails" id=' + data + '><i class="fa fa-info-circle fa-sm"></i> Details </button>';
+                               
                         }
                     }
 
@@ -985,7 +1008,12 @@ $(document).ready(function () {
 
 
 
-  
+    var targetElement = document.querySelector("#btn-collapse");
+    targetElement.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.currentTarget.classList.toggle("glyphicon-minus");
+
+    });
 
 
 
@@ -1203,16 +1231,40 @@ $(document).on('click', '.btn-selectPackage', function () {
     } else {
         $('#hidden_areaid').val($areasel);
     }
-   
-
+    
     $('#loc_isextended').prop('checked', false);
 
+    var selectedval = $('#packageTypeSelectList option:selected').val();
 
-    if ($('#packageTypeSelectList option:selected').text() !== "vip") {
-        $('#packageloc_app').html("Vip");
-    } else {
-        $('#packageloc_app').html($('#areaSelectList option:selected').text());
+    //if ($('#packageTypeSelectList option:selected').text() !== "vip") {
+
+    //    $('#packageloc_app').html("Vip");
+
+    //} else {
+
+    //    $('#packageloc_app').html($('#areaSelectList option:selected').text());
+    //}
+
+    switch (selectedval) {
+
+        case 'vip':
+            $('#packageloc_app').html('VIP')
+            break;
+
+        case 'regular':
+            $('#packageloc_app').html('Regular')
+            break;
+
+        case 'pm':
+            $('#packageloc_app').html('PackMeals')
+            break;
+
+        default:
+            $('#packageloc_app').html('VIP')
     }
+
+    
+
     var package_Name = $(this).closest('tr').find('td:nth-child(1)').text();
 
     var $checkbox = $(this).closest('tr').find('td:nth-child(4)').find('input[type="checkbox"]');
@@ -1568,4 +1620,6 @@ $(document).on('click', '#addDiscount', function (e) {
 function currencyFormat(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
+
+
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
@@ -11,7 +12,7 @@ namespace SBOSysTacV2.ViewModel
 {
     public class BookMenusViewModel
     {
-        public int menu_No { get; set; }
+        public int? menu_No { get; set; }
         public int transId { get; set; }
         [Required]
         public string menuId { get; set; }
@@ -19,8 +20,8 @@ namespace SBOSysTacV2.ViewModel
         public string menu_name { get; set; }
         public int courseid { get; set; }
         public string coursename { get; set; }
-        public decimal serving { get; set; }
-        public string servingstringpax { get; set; }
+        public decimal? serving { get; set; }
+        public int servingpax { get; set; }
         public string dept { get; set; }
         public string menuImageFilename { get; set; }
         public string oldMenuId { get; set; }
@@ -29,27 +30,35 @@ namespace SBOSysTacV2.ViewModel
         {
             IOrderedEnumerable<BookMenusViewModel> bookMenusList;
 
-            var _dbentities = new PegasusEntities();
+            var packageBookMenus = new Package_MenusBookViewModel();
+
+
+            //var _dbentities = new PegasusEntities();
 
             try
             {
-                var bookmenus = (from bkm in _dbentities.Book_Menus select bkm).Where(t => t.trn_Id == transid).ToList();
 
-                //join m in _dbentities.Menus on bkm.menuid equals m.menuid
-                //select bkm);
+                //var bookmenus = (from bkm in _dbentities.Book_Menus select bkm).Where(t => t.trn_Id == transid).ToList();
+
+                var bookmenus = this.Get_Menu_on_PackageByTransId(transid).ToList();
+
+
 
                 bookMenusList = (from bm in bookmenus
+
                     select new BookMenusViewModel()
                     {
-                        menu_No = bm.No,
-                        transId = (int)bm.trn_Id,
-                        menuId = bm.menuid,
-                        menu_name = bm.Menu.menu_name,
-                        courseid = (int)bm.Menu.CourserId,
-                        coursename = bm.Menu.CourseCategory.Course,
-                        dept = bm.Menu.Department.deptName,
-                        menuImageFilename = bm.Menu.image,
-                        servingstringpax = get_servingstrpax(bm.No)
+                        transId = (int)bm.transId,
+                        menu_No = bm.menu_No,
+                        menuId = bm.menuId,
+                        menu_name = bm.menu_name,
+                        courseid = (int)bm.courseid,
+                        coursename = bm.coursename,
+                        dept = bm.dept,
+                        menuImageFilename = bm.menuImageFilename,
+                        serving=bm.serving,
+                        servingpax = bm.servingpax
+
                     }).ToList().OrderBy(x => x.courseid);
 
             }
@@ -59,7 +68,7 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
-            _dbentities.Dispose();
+            //_dbentities.Dispose();
 
             return bookMenusList;
         }
@@ -168,5 +177,21 @@ namespace SBOSysTacV2.ViewModel
 
             return count=count<0?0:count;
         }
+
+
+        public List<BookMenusViewModel> Get_Menu_on_PackageByTransId(int transId)
+        {
+            List<BookMenusViewModel> listmenus = new List<BookMenusViewModel>();
+
+            var dbEntities = new PegasusEntities();
+
+            listmenus = dbEntities.Database.SqlQuery<BookMenusViewModel>("exec GetPackageBookMenus @trId ", new SqlParameter("@trId", transId)).ToList();
+
+            dbEntities.Dispose();
+
+
+            return listmenus;
+        }
+
     }
 }

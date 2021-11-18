@@ -1,46 +1,43 @@
-﻿using System;
-using System.Collections;
+﻿using PagedList;
+using SBOSysTacV2.HtmlHelperClass;
+using SBOSysTacV2.Models;
+using SBOSysTacV2.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
-using SBOSysTacV2.Models;
-using SBOSysTacV2.HtmlHelperClass;
-using SBOSysTacV2.ViewModel;
-using PagedList;
 
 namespace SBOSysTacV2.Controllers
 {
     public class PackagesController : Controller
     {
-      
+
         private PegasusEntities _dbcontext;
-        private PackageDetailsLocationViewModel packagesIndex=new PackageDetailsLocationViewModel();
-        private PackageAreaLocationViewModel packageArea=new PackageAreaLocationViewModel();
-        private AreaPackageViewModel areaPackage= new AreaPackageViewModel();
-        private PackageBookingViewModel pb=new PackageBookingViewModel();
-        private PackageViewModel pviewmodel=new PackageViewModel();
-        private PackageBodyViewModel pbody=new PackageBodyViewModel();
+        private PackageDetailsLocationViewModel packagesIndex = new PackageDetailsLocationViewModel();
+        private PackageAreaLocationViewModel packageArea = new PackageAreaLocationViewModel();
+        private AreaPackageViewModel areaPackage = new AreaPackageViewModel();
+        private PackageBookingViewModel pb = new PackageBookingViewModel();
+        private PackageViewModel pviewmodel = new PackageViewModel();
+        private PackageBodyViewModel pbody = new PackageBodyViewModel();
 
 
         public PackagesController()
         {
-            ViewBag.ActiveForm= Utilities.ActiveForm;
-            _dbcontext =new PegasusEntities();
+            ViewBag.ActiveForm = Utilities.ActiveForm;
+            _dbcontext = new PegasusEntities();
         }
 
         // GET: Packages
-        public ActionResult Index(string currentFilter, string searchString,string packagetype,int?page)
+        public ActionResult Index(string currentFilter, string searchString, string packagetype, int? page)
         {
 
-            var packageIndexDetails=new List<PackageDetailsLocationViewModel>();
+            var packageIndexDetails = new List<PackageDetailsLocationViewModel>();
 
             ViewBag.FormTitle = "Package Buffet Details";
 
-            if (searchString!=null)
+            if (searchString != null)
             {
                 page = 1;
             }
@@ -65,10 +62,10 @@ namespace SBOSysTacV2.Controllers
                 //            ).ToList();
 
 
-                packageIndexDetails =packagesIndex.GetPackageDetailsView()
+                packageIndexDetails = packagesIndex.GetPackageDetailsView()
                                         .Where(loc =>
                                         {
-                                            return loc.Packages.p_amountPax != null 
+                                            return loc.Packages.p_amountPax != null
                                                         && ((loc.PackageAreaDetails.Any(area => area.pAreaDetail.ToLower()
                                                       .Contains(searchString.ToLower()))) || (loc.Packages.p_amountPax.Value.ToString(CultureInfo.InvariantCulture).Contains(searchString)));
                                         }).ToList();
@@ -76,7 +73,7 @@ namespace SBOSysTacV2.Controllers
             }
             else
             {
-                if (packagetype!= "all" || string.IsNullOrEmpty(packagetype))
+                if (packagetype != "all" || string.IsNullOrEmpty(packagetype))
                 {
                     packageIndexDetails = !string.IsNullOrEmpty(packagetype)
                         ? packagesIndex.GetPackageDetailsView()
@@ -97,10 +94,10 @@ namespace SBOSysTacV2.Controllers
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_packageListPartialView", packageIndexDetails.ToList().ToPagedList(pageNumber,pageSize) as PagedList<PackageDetailsLocationViewModel>);
+                return PartialView("_packageListPartialView", packageIndexDetails.ToList().ToPagedList(pageNumber, pageSize) as PagedList<PackageDetailsLocationViewModel>);
             }
 
-            return View(packageIndexDetails.ToPagedList(pageNumber,pageSize)as PagedList<PackageDetailsLocationViewModel>);
+            return View(packageIndexDetails.ToPagedList(pageNumber, pageSize) as PagedList<PackageDetailsLocationViewModel>);
         }
 
 
@@ -108,11 +105,11 @@ namespace SBOSysTacV2.Controllers
         {
             Utilities.ActiveForm = " ";
             ViewBag.FormTitle = "Create New Buffet Package";
-            
+
             return View();
         }
 
-        [HttpGet,ChildActionOnly]
+        [HttpGet, ChildActionOnly]
         public ActionResult PackageForm()
         {
             Utilities.ActiveForm = " ";
@@ -123,10 +120,10 @@ namespace SBOSysTacV2.Controllers
                 packageNoPax_listitem = pviewmodel.GetPackageNoofPaxListItems()
             };
 
-            return PartialView("_packages", packagevm);
+            return PartialView("_packagesNew", packagevm);
         }
 
-        [HttpGet,ChildActionOnly]
+        [HttpGet, ChildActionOnly]
         public ActionResult PackageBody()
         {
             ViewBag.ActiveForm = Utilities.ActiveForm;
@@ -147,20 +144,20 @@ namespace SBOSysTacV2.Controllers
 
                 return PartialView("_packages", newpackage);
             }
-           
-
-            string packagename = string.Empty;
 
 
-            if (!String.IsNullOrEmpty(newpackage.p_descripton))
-            {
-                packagename = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(newpackage.p_descripton);
-            }
-            else
-            {
-                packagename = newpackage.p_descripton;
-            }
-            
+            string packagename = !String.IsNullOrEmpty(newpackage.p_descripton) ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(newpackage.p_descripton) : newpackage.p_descripton;
+
+
+            //if (!String.IsNullOrEmpty(newpackage.p_descripton))
+            //{
+            //    packagename = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(newpackage.p_descripton);
+            //}
+            //else
+            //{
+            //    packagename = newpackage.p_descripton;
+            //}
+
             var packagedata = new Package
             {
                 p_id = Convert.ToInt32(newpackage.p_id),
@@ -169,21 +166,22 @@ namespace SBOSysTacV2.Controllers
                 p_amountPax = Convert.ToDecimal(newpackage.p_amountPax),
                 p_min = newpackage.p_min,
                 isActive = true,
-                nopax_id = newpackage.packagenopax_id
+                nopax_id = newpackage.packagenopax_id,
+                date_Created=DateTime.Now
 
             };
 
             _dbcontext.Packages.Add(packagedata);
             _dbcontext.SaveChanges();
-           
-            Utilities.ActiveForm= "newPackagebody";
-          
+
+            Utilities.ActiveForm = "newPackagebody";
+
             Utilities.PackageBodyModel.package_Id = Convert.ToInt32(packagedata.p_id);
             Utilities.PackageBodyModel.package_name = packagedata.p_descripton;
 
             var url = Url.Action("Package_Body_Details", "Packages");
 
-            return Json(new {success=true,url=url }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, url = url }, JsonRequestBehavior.AllowGet);
             //return PartialView("_packagebody", Utilities.PackageBodyModel);
 
         }
@@ -197,15 +195,15 @@ namespace SBOSysTacV2.Controllers
                 package_name = Utilities.PackageBodyModel.package_name
             };
 
-        
+
             return PartialView("_packagebody", packagebody);
         }
 
         //add course to package
         [HttpPost]
-        public ActionResult AddCoursetoPackageBody(int packageId,int courseId)
+        public ActionResult AddCoursetoPackageBody(int packageId, int courseId)
         {
-           
+
             bool isrecordexist = false;
 
             string _url = String.Empty;
@@ -224,8 +222,8 @@ namespace SBOSysTacV2.Controllers
                 }
                 else
                 {
-                    
-                    var coursepackagebody=new PackageBody()
+
+                    var coursepackagebody = new PackageBody()
                     {
                         p_id = packageId,
                         courseId = courseId
@@ -235,7 +233,7 @@ namespace SBOSysTacV2.Controllers
                     _dbcontext.SaveChanges();
 
                     _url = Url.Action("DisplaySelectedMenus", "Packages", new { _packageId = packageId });
-                  
+
 
                 }
 
@@ -247,7 +245,7 @@ namespace SBOSysTacV2.Controllers
             }
 
 
-            return Json(new {is_recordexist= isrecordexist,url= _url }, JsonRequestBehavior.AllowGet);
+            return Json(new { is_recordexist = isrecordexist, url = _url }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -281,7 +279,7 @@ namespace SBOSysTacV2.Controllers
 
             //var package_id = packagebodyDetails.p_id;
 
-            return Json(new {success=true, packageId = packagebodyDetails.p_id },JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, packageId = packagebodyDetails.p_id }, JsonRequestBehavior.AllowGet);
 
 
         }
@@ -293,7 +291,7 @@ namespace SBOSysTacV2.Controllers
 
             Package package = new Package();
             package = _dbcontext.Packages.Find(packageId);
-         
+
             //IQueryable<PackageAreaCoverage> areaCoverage =
             //(from areacover in _dbcontext.PackageAreaCoverages.Include(x=>x.Area) where areacover.p_id == (Int32) packageId  orderby areacover.p_id select areacover);
 
@@ -309,19 +307,19 @@ namespace SBOSysTacV2.Controllers
                 //  PackageAreaCoverages = areaCoverage.ToPagedList(pageIndex,dataCount)
             };
 
-          
+
 
             return View(P_details);
         }
 
 
         //Display all courses in packagebody
-        [HttpGet,ChildActionOnly]
+        [HttpGet, ChildActionOnly]
         public ActionResult DisplayPackageBodyCourses(int packageId)
         {
 
             //display courses for this package
-            var cps=new Course_PackageSelectionViewModel();
+            var cps = new Course_PackageSelectionViewModel();
 
             var listofcourses = cps.GetAllCoursesforPackage(packageId).ToList();
 
@@ -336,8 +334,8 @@ namespace SBOSysTacV2.Controllers
 
             var listofselectedpackagebodymenus = pbody.GetAllMenusinPackage().Where(pid => pid.package_Id == _packageId)
                 .ToList();
-             
-            
+
+
             return PartialView("_selectedmenuspartial", listofselectedpackagebodymenus);
         }
 
@@ -345,9 +343,9 @@ namespace SBOSysTacV2.Controllers
         [HttpGet]
         public ActionResult AddPackageCoverage(int packageId)
         {
-          
-           
-            PackageAreaLocationViewModel p_area=new PackageAreaLocationViewModel()
+
+
+            PackageAreaLocationViewModel p_area = new PackageAreaLocationViewModel()
             {
                 p_id = packageId,
                 //AreasSelectList = packageArea.GetArea_SelectListItems()
@@ -364,10 +362,10 @@ namespace SBOSysTacV2.Controllers
 
             var packageCoverage = new PackageAreaCoverage()
             {
-                p_id=packageAreaViewModel.p_id,
-                aID=packageAreaViewModel.aID,
-                is_extended=packageAreaViewModel.is_extended,
-                ext_amount=packageAreaViewModel.ext_amount,
+                p_id = packageAreaViewModel.p_id,
+                aID = packageAreaViewModel.aID,
+                is_extended = packageAreaViewModel.is_extended,
+                ext_amount = packageAreaViewModel.ext_amount,
 
             };
 
@@ -376,11 +374,11 @@ namespace SBOSysTacV2.Controllers
             _dbcontext.PackageAreaCoverages.Add(packageCoverage);
             _dbcontext.SaveChanges();
 
-            return Json(new {success=true, packageId = packageAreaViewModel.p_id},JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, packageId = packageAreaViewModel.p_id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public ActionResult ModifyPackageLocation(int packageId,int p_area_No)
+        public ActionResult ModifyPackageLocation(int packageId, int p_area_No)
         {
 
             var dbentities = new PegasusEntities();
@@ -393,7 +391,7 @@ namespace SBOSysTacV2.Controllers
                 {
                     p_id = packageId,
                     p_areaNo = p_area_No,
-                  
+
                     aID = Convert.ToInt32(packageareacoverage.aID),
                     is_extended = Convert.ToBoolean(packageareacoverage.is_extended),
                     ext_amount = Convert.ToDecimal(packageareacoverage.ext_amount
@@ -403,7 +401,7 @@ namespace SBOSysTacV2.Controllers
                 };
 
                 var arealoc = (dbentities.PackageAreaCoverages.Join(dbentities.Areas, p => p.aID, pa => pa.aID,
-                        (p, pa) => new {areano = p.p_areaNo, area_detail = pa.AreaDetails}))
+                        (p, pa) => new { areano = p.p_areaNo, area_detail = pa.AreaDetails }))
                     .ToList().FirstOrDefault(x => x.areano == p_area_No);
                 if (arealoc != null)
                 {
@@ -411,7 +409,7 @@ namespace SBOSysTacV2.Controllers
                 }
 
             }
-        
+
 
             return PartialView("_modifypackagelocationCoverage", p_area);
         }
@@ -425,10 +423,10 @@ namespace SBOSysTacV2.Controllers
 
             var packageCoverage = new PackageAreaCoverage()
             {
-                
+
                 p_id = packageAreaViewModel.p_id,
                 aID = packageAreaViewModel.aID,
-                p_areaNo = (int) packageAreaViewModel.p_areaNo,
+                p_areaNo = (int)packageAreaViewModel.p_areaNo,
                 is_extended = packageAreaViewModel.is_extended,
                 ext_amount = packageAreaViewModel.ext_amount
 
@@ -437,7 +435,7 @@ namespace SBOSysTacV2.Controllers
 
 
             _dbcontext.PackageAreaCoverages.Attach(packageCoverage);
-            _dbcontext.Entry(packageCoverage).State=EntityState.Modified;
+            _dbcontext.Entry(packageCoverage).State = EntityState.Modified;
             _dbcontext.SaveChanges();
 
             return Json(new { success = true, packageId = packageAreaViewModel.p_id }, JsonRequestBehavior.AllowGet);
@@ -448,14 +446,14 @@ namespace SBOSysTacV2.Controllers
         [HttpPost]
         public ActionResult RemovePackage(int packageId)
         {
-            Package package=new Package();
+            Package package = new Package();
             package = _dbcontext.Packages.Find(packageId);
             bool success = false;
 
             //==check package if has existing/active bookings
             bool hasExistingBooking = pb.VerifyPackagehasBookings(packageId);
 
-            if (hasExistingBooking==false)
+            if (hasExistingBooking == false)
             {
 
                 try
@@ -467,9 +465,9 @@ namespace SBOSysTacV2.Controllers
                         _dbcontext.PackageBodies.Remove(packagebody);
                         _dbcontext.Entry(packagebody).State = EntityState.Deleted;
                     }
-                  
 
-                  
+
+
                     _dbcontext.Packages.Remove(package);
 
                     _dbcontext.SaveChanges();
@@ -483,13 +481,13 @@ namespace SBOSysTacV2.Controllers
                     throw;
                 }
 
-              
 
-              
+
+
             }
-            
 
-            return Json(new {success=success,package_name=package.p_descripton}, JsonRequestBehavior.AllowGet);
+
+            return Json(new { success = success, package_name = package.p_descripton }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -506,7 +504,7 @@ namespace SBOSysTacV2.Controllers
             return PartialView("_searchPackage", packagebyAreaDistinct);
         }
 
-        
+
         public JsonResult GetAreas(string query)
         {
             var areaList = packageArea.GetSelect2AreaViewModels().Where(x => x.text.ToLower().Contains(query.ToLower())).ToList();
@@ -518,14 +516,14 @@ namespace SBOSysTacV2.Controllers
         //search and load to table => packages
         public JsonResult GetPackagesByLocation(int? areaId)
         {
-           
-            var packagesbyLocation=new List<AreaPackageViewModel>();
+
+            var packagesbyLocation = new List<AreaPackageViewModel>();
 
             try
             {
                 packagesbyLocation = areaPackage.GetAreasByPackages()
                                     .Where(x => x.areaId.Equals(areaId))
-                                    .OrderBy(x=>x.packageId).ToList();
+                                    .OrderBy(x => x.packageId).ToList();
 
             }
             catch (Exception e)
@@ -534,14 +532,14 @@ namespace SBOSysTacV2.Controllers
                 throw;
             }
 
-            return Json(new {data= packagesbyLocation}, JsonRequestBehavior.AllowGet);
+            return Json(new { data = packagesbyLocation }, JsonRequestBehavior.AllowGet);
         }
 
 
 
         public JsonResult getResultSearchPackageBooking(string searchstr, string selectedId)
         {
-         
+
 
             var packages = new List<AreaPackageViewModel>();
 
@@ -549,19 +547,19 @@ namespace SBOSysTacV2.Controllers
             {
                 packages = areaPackage.GetPackageByType()
                     .Where(x => x.pType == searchstr.Trim())
-                    .OrderByDescending(order=>order.packageId).ToList();
+                    .OrderByDescending(order => order.packageId).ToList();
             }
-            else if(selectedId == "areaSelectList")
+            else if (selectedId == "areaSelectList")
             {
                 if (!string.IsNullOrEmpty(searchstr))
                 {
                     packages = areaPackage.GetAreasByPackages()
                         .Where(x => x.areaId.Equals(Convert.ToInt32(searchstr)))
                          .OrderByDescending(order => order.packageId).ToList();
-                        
-                       
+
+
                 }
-                
+
 
             }
 
@@ -574,17 +572,17 @@ namespace SBOSysTacV2.Controllers
 
             //packagesbytype = areaPackage.GetPackageByType().ToList();
 
-            return Json(new {data= packages},JsonRequestBehavior.AllowGet);
+            return Json(new { data = packages }, JsonRequestBehavior.AllowGet);
         }
 
 
         //load package on booking
 
         [HttpGet]
-       [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin)]
+        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin)]
         public ActionResult ModifyPackage(int packageId)
-       {
-           ViewBag.packageId = packageId;
+        {
+            ViewBag.packageId = packageId;
             Utilities.ActiveForm = "";
 
             ViewBag.ActiveForm = Utilities.ActiveForm;
@@ -598,16 +596,16 @@ namespace SBOSysTacV2.Controllers
             //ViewBag.ActiveForm = Utilities.ActiveForm;
 
             var package = _dbcontext.Packages.Find(packageId);
-            var packageviewmodel=new PackageViewModel();
+            var packageviewmodel = new PackageViewModel();
 
             if (package != null)
             {
 
                 packageviewmodel.p_id = package.p_id;
-                packageviewmodel.packagetype =Convert.ToString(package.p_type).Trim();
+                packageviewmodel.packagetype = Convert.ToString(package.p_type).Trim();
                 packageviewmodel.packageNoPax_listitem = pviewmodel.GetPackageNoofPaxListItems();
                 packageviewmodel.p_descripton = package.p_descripton;
-                packageviewmodel.p_amountPax =Convert.ToDecimal(package.p_amountPax);
+                packageviewmodel.p_amountPax = Convert.ToDecimal(package.p_amountPax);
                 packageviewmodel.p_min = package.p_min;
                 packageviewmodel.packagenopax_id = Convert.ToInt32(package.nopax_id);
 
@@ -640,14 +638,14 @@ namespace SBOSysTacV2.Controllers
                 Utilities.PackageBodyModel.package_Id = Convert.ToInt32(packagemodify.p_id);
                 Utilities.PackageBodyModel.package_name = packagemodify.p_descripton;
 
-              
+
 
             }
 
-     
+
             _dbcontext.SaveChanges();
 
-         
+
 
             Utilities.ActiveForm = "modifyPackagebody";
 
@@ -662,7 +660,7 @@ namespace SBOSysTacV2.Controllers
         [HttpGet]
         public ActionResult PackageBody_Modify(int packageId)
         {
-           // Utilities.ActiveForm = "modifyPackagebody";
+            // Utilities.ActiveForm = "modifyPackagebody";
 
             Utilities.PackageBodyModel.package_Id = Convert.ToInt32(packageId);
 
@@ -704,7 +702,7 @@ namespace SBOSysTacV2.Controllers
             _dbcontext.SaveChanges();
 
 
-       
+
 
             //Utilities.ActiveForm = "";
 
@@ -738,7 +736,7 @@ namespace SBOSysTacV2.Controllers
             PackageDetailsLocationViewModel P_details = new PackageDetailsLocationViewModel()
             {
                 PackageId = packageId,
-                Packages = (from p in _dbcontext.Packages where p.p_id==packageId select p).FirstOrDefault(),
+                Packages = (from p in _dbcontext.Packages where p.p_id == packageId select p).FirstOrDefault(),
                 PackageAreaCoverages = areaCoverage.ToPagedList(pageIndex, dataCount)
             };
 
@@ -752,22 +750,22 @@ namespace SBOSysTacV2.Controllers
         {
             bool success = false;
 
-            int packageId=0;
+            int packageId = 0;
             var packageAreaCoverage = _dbcontext.PackageAreaCoverages.Find(pAreaNo);
 
             if (packageAreaCoverage != null)
             {
-                packageId =Convert.ToInt32(packageAreaCoverage.p_id);
+                packageId = Convert.ToInt32(packageAreaCoverage.p_id);
 
                 _dbcontext.PackageAreaCoverages.Remove(packageAreaCoverage);
                 _dbcontext.SaveChanges();
 
                 success = true;
             }
-          
-            var url=Url.Action("get_ListofPackagesbyLocation", "Packages", new { packageId = packageId });
 
-            return Json(new {success=success,url= url }, JsonRequestBehavior.AllowGet);
+            var url = Url.Action("get_ListofPackagesbyLocation", "Packages", new { packageId = packageId });
+
+            return Json(new { success = success, url = url }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -775,8 +773,8 @@ namespace SBOSysTacV2.Controllers
         public ActionResult RemoveSelectedPackageCourse(int packageId, int courseId)
         {
             var _success = false;
-            string _url=String.Empty;
-            
+            string _url = String.Empty;
+
             try
             {
                 bool hasExistingBooking = pb.VerifyPackagehasBookings(packageId);
@@ -795,7 +793,7 @@ namespace SBOSysTacV2.Controllers
 
                         _success = true;
                     }
-                    _url = Url.Action("DisplaySelectedMenus", "Packages", new {_packageId = packageId});
+                    _url = Url.Action("DisplaySelectedMenus", "Packages", new { _packageId = packageId });
                 }
                 else
                 {
@@ -812,15 +810,15 @@ namespace SBOSysTacV2.Controllers
             }
 
 
-            return Json(new {success=_success, url= _url }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = _success, url = _url }, JsonRequestBehavior.AllowGet);
         }
 
 
         [HttpPost]
         [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin)]
-        public ActionResult PackageStatus(bool bolStat,int pId)
+        public ActionResult PackageStatus(bool bolStat, int pId)
         {
-           var packageStat=new Package();
+            var packageStat = new Package();
             var url = String.Empty;
             try
             {
@@ -839,9 +837,9 @@ namespace SBOSysTacV2.Controllers
                 throw;
             }
 
-           
 
-            return Json(new {success=true,url=url}, JsonRequestBehavior.AllowGet);
+
+            return Json(new { success = true, url = url }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

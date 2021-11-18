@@ -43,7 +43,7 @@ namespace SBOSysTacV2.ViewModel
                     select new PrintContractDetails()
                     {
                         transId = booking.trn_Id,
-                        customerfullname = Utilities.getfullname(booking.Customer.lastname, booking.Customer.firstname, booking.Customer.middle),
+                        customerfullname = Utilities.Getfullname(booking.Customer.lastname, booking.Customer.firstname, booking.Customer.middle),
                         customeraddress = booking.Customer.address,
                         contactno = booking.Customer.contact1,
                         datetimesched = Convert.ToDateTime(booking.startdate),

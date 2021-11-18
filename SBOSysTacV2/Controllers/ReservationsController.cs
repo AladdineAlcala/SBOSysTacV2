@@ -134,7 +134,7 @@ namespace SBOSysTacV2.Controllers
                 {
                     reservationId = reservation.resId,
                     customerId = reservation.c_Id,
-                    fullname =Utilities.getfullname(customer.lastname,customer.firstname,customer.middle),
+                    fullname =Utilities.Getfullname(customer.lastname,customer.firstname,customer.middle),
                     reserveDate = reservation.resDate,
                     noofperson = reservation.noofPax,
                     occasion = reservation.occasion,

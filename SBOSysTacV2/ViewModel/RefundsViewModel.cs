@@ -42,7 +42,7 @@ namespace SBOSysTacV2.ViewModel
                         _tId = b.trn_Id,
                         _trEvtDate = b.startdate,
                         _cusId = b.c_Id,
-                        _cusfullname = Utilities.getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
+                        _cusfullname = Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
                         _occasion = b.occasion,
                         _evtVenue=b.venue,
                         _iscancelledbooking = b.is_cancelled,

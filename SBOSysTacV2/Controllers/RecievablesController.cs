@@ -41,7 +41,7 @@ namespace SBOSysTacV2.Controllers
                 select new CustomerViewModel()
                 {
                     customerId = cus.c_Id,
-                    fullname = Utilities.getfullname(cus.lastname, cus.firstname, cus.middle)
+                    fullname = Utilities.Getfullname(cus.lastname, cus.firstname, cus.middle)
 
                 }).FirstOrDefault();
 

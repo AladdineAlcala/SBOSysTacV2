@@ -2,13 +2,13 @@
 @model PackageBookingViewModel
     
 
-    <div class="box box-primary">
+    <div id="menuslist" class="box box-primary">
         <div class="box-header">
             <i class="ion ion-clipboard"></i>
-            <h3 class="box-title">Booking Menus:</h3>
-            <div class="box-tools pull-right">
+            <h3 class="box-title">Menus:</h3>
+            @*<div class="box-tools pull-right">
                 <button id="add_maincourse" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-search"></i></button>
-            </div>
+            </div>*@
 
         </div>
         <!--box-header-->
@@ -17,49 +17,67 @@
                 @{
                     int counter = 0;
                 }
-            @foreach (var menu in Model.BookMenuses)
-            {
+                @foreach (var menu in Model.BookMenuses)
+                {
 
-                counter += 1;
+                    counter += 1;
 
-                <li class="item">
-                    <div class="product product-img" data-id="@counter">
-
-
-                        @if (string.IsNullOrEmpty(menu.menuImageFilename))
-                        {
-                            @:<img src="@Url.Content("~/Content/dist/img/default-50x50.gif")" alt="@menu.coursename" class="imglightbox">
-                        }
-                        else
-                        {
-                            @:<img src="@Url.Content(String.Format("~/Content/UploadedImages/{0}", menu.menuImageFilename))" alt="@menu.coursename" class="imglightbox">
-                        }
+                    <li class="item my-1 py-1">
+                        @*<div class="product product-img" data-id="@counter">
 
 
+                            @if (string.IsNullOrEmpty(menu.menuImageFilename))
+                            {
+                                @:<img src="@Url.Content("~/Content/dist/img/default-50x50.gif")" alt="@menu.coursename" class="imglightbox img-size-50">
+                            }
+                            else
+                            {
+                                @:<img src="@Url.Content(String.Format("~/Content/UploadedImages/{0}", menu.menuImageFilename))" alt="@menu.coursename" class="imglightbox">
+                            }
 
-                    </div>
-                    <div class="product product-info">
-                        <span class="product-title">
-                            @menu.menu_name
-                        </span>
-                        <span class="product-description">
-                            @menu.coursename
-                        </span>
-                      
-                    </div>
-                    <div class="tools" data-id="@Model.transactionId">
-                        <i class="fa fa-edit" id="menu_change" data-menuid="@menu.menu_No"></i>
-                        <i class="fa fa-trash-o" id="menu_remove" data-menuid="@menu.menu_No"></i>
-                    </div>
-                </li>
 
-            }
+
+                        </div>*@
+
+                        <div id="course" class="product product-info" data-id="@menu.courseid">
+                            <i class="fa fa-clipboard" aria-hidden="true"></i>
+                            <span class="product-title">
+                                @menu.coursename
+
+                            </span>
+                            <span class="product-description my-1">
+                                @menu.menu_name
+                            </span>
+
+                        </div>
+
+                        <div class="tools" data-transid="@Model.transactionId">
+
+                            @if (!menu.menu_No.HasValue)
+                            {
+                                <i class="fa fa-plus-circle fa-lg" id="menu_add"></i>
+                                @*<i class="fa fa-trash-o" id="menu_remove" data-menuid="@menu.menu_No"></i>*@
+                            }
+                            else
+                            {
+                                <i class="fa fa-edit fa-lg" id="menu_change" data-menuid="@menu.menu_No"></i>
+                                <i class="fa fa-trash-o fa-lg" id="menu_remove" data-menuid="@menu.menu_No"></i>
+                            }
+
+                            @*<i class="fa fa-edit" id="@(!menu.menu_No.HasValue?"menu_add".ToString().Trim():"menu_change".ToString().Trim()) " data-menuid="@menu.menu_No"></i>*@
+
+                        </div>
+                    </li>
+
+                }
 
             </ul> 
            
         </div>
         <!--box-body-->
     </div>
+
+
 
 <script type="text/javascript">
 

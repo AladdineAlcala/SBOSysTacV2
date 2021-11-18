@@ -23,7 +23,7 @@ namespace SBOSysTacV2.ViewModel
                                select new CustomerViewModel()
                 {
                     customerId =(int) l.c_Id,
-                    fullname = Utilities.getfullname(l.lastname,l.firstname,l.middle)
+                    fullname = Utilities.Getfullname(l.lastname,l.firstname,l.middle)
                 };
 
             return customerlist.ToList();
@@ -44,7 +44,7 @@ namespace SBOSysTacV2.ViewModel
                 if (customer != null)
                 {
 
-                    full = Utilities.getfullname(customer.lastname, customer.firstname, customer.middle);
+                    full = Utilities.Getfullname(customer.lastname, customer.firstname, customer.middle);
 
                 }
             }

@@ -157,7 +157,7 @@ namespace SBOSysTacV2.Controllers
 
                 dpAmount = transactionDetails.GetTotalDownPayment(transId);
                 fpAmount = transactionDetails.GetFullPayment(transId);
-                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : transactionDetails.getCateringdiscount(no_of_pax);
+                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : transactionDetails.GetCateringdiscountByPax(no_of_pax);
 
                 //var cateringTotalAmount=cateringdiscountAmount * no_of_pax;
                 packageTotal = Convert.ToDecimal(packageAmount) * no_of_pax;
@@ -172,7 +172,7 @@ namespace SBOSysTacV2.Controllers
                 _transDetails.extLocAmount = extendedLocationAmount;
                 //_transDetails.TotaBelowMinPax = belowminPax;
                 _transDetails.TotaDp = dpAmount;
-                _transDetails.Fullpaymnt = fpAmount;
+                _transDetails.fullpaymnt = fpAmount;
                 _transDetails.book_discounts = bookdiscountAmount;
                 _transDetails.bookdiscountdetails = bookdiscountCode;
                 _transDetails.cateringdiscount = cateringdiscountAmount;

@@ -100,7 +100,7 @@ namespace SBOSysTacV2.Controllers
                     {
                         transId = l.trn_Id,
                         cusId = l.c_Id,
-                        cusfullname = Utilities.getfullname_nonreverse(l.Customer.lastname, l.Customer.firstname, l.Customer.middle),
+                        cusfullname = Utilities.Getfullname_nonreverse(l.Customer.lastname, l.Customer.firstname, l.Customer.middle),
                         occasion = l.occasion,
                         venue = l.venue,
                         bookdatetime = l.startdate,
@@ -215,7 +215,7 @@ namespace SBOSysTacV2.Controllers
                     select new SalesSummaryViewModel()
                     {
                         transId = b.trn_Id,
-                        accountname = Utilities.getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
+                        accountname = Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
                         dateTrans = Convert.ToDateTime(b.startdate),
                         //reference =p==null?"No reference" :p.particular,
                         particular = b.Package.p_descripton + " @ " + b.Package.p_amountPax +" /pax x " + b.noofperson ,
@@ -323,7 +323,7 @@ namespace SBOSysTacV2.Controllers
 
                 dpAmount = transactionDetails.GetTotalDownPayment(transId);
                 fpAmount = transactionDetails.GetFullPayment(transId);
-                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : transactionDetails.getCateringdiscount(no_of_pax);
+                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : transactionDetails.GetCateringdiscountByPax(no_of_pax);
 
                 //var cateringTotalAmount=cateringdiscountAmount * no_of_pax;
                 packageTotal = Convert.ToDecimal(packageAmount) * no_of_pax;
@@ -338,7 +338,7 @@ namespace SBOSysTacV2.Controllers
                 _transDetails.extLocAmount = extendedLocationAmount;
                 //_transDetails.TotaBelowMinPax = belowminPax;
                 _transDetails.TotaDp = dpAmount;
-                _transDetails.Fullpaymnt = fpAmount;
+                _transDetails.fullpaymnt = fpAmount;
                 _transDetails.book_discounts = bookdiscountAmount;
                 _transDetails.bookdiscountdetails = bookdiscountCode;
                 _transDetails.cateringdiscount = cateringdiscountAmount;
@@ -385,7 +385,7 @@ namespace SBOSysTacV2.Controllers
                 select new CancelBookingViewModel()
                 {
                     TransId =(int) l.trn_Id,
-                    CustomerFullname = Utilities.getfullname(l.Booking.Customer.lastname, l.Booking.Customer.firstname, l.Booking.Customer.middle),
+                    CustomerFullname = Utilities.Getfullname(l.Booking.Customer.lastname, l.Booking.Customer.firstname, l.Booking.Customer.middle),
                     ReasonforCancel = l.reasoncancelled,
                     CancelDate =Convert.ToDateTime(l.cancelledDated)
 

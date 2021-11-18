@@ -35,7 +35,7 @@ namespace SBOSysTacV2.ViewModel
         public string packagename { get; set; }
         public string packageType { get; set; }
         public bool? serve_status { get; set; }
-        public bool iscancelled { get; set; }
+        public bool? iscancelled { get; set; }
         [Display(Name = "Event Motf:")]
         public string eventcolor { get; set; }
         [Display(Name = "Customer:")]
@@ -107,7 +107,7 @@ namespace SBOSysTacV2.ViewModel
                                     serviceType = s.servicetypedetails,
                                     eventcolor = b.eventcolor,
                                     pId = Convert.ToInt32(b.p_id),
-                                    fullname = Utilities.getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
+                                    fullname = Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
                                     b_createdbyUser = b.b_createdbyUser,
                                     b_createdbyUserName = _user.UserName,
                                     refernce = b.reference,
@@ -181,7 +181,7 @@ namespace SBOSysTacV2.ViewModel
                                       serviceType = s.servicetypedetails,
                                       eventcolor = b.eventcolor,
                                       pId = Convert.ToInt32(b.p_id),
-                                      fullname = Utilities.getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
+                                      fullname = Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
                                       b_createdbyUser = b.b_createdbyUser,
                                       b_createdbyUserName = _user.UserName,
                                       refernce = b.reference,

@@ -8,10 +8,11 @@
             <div class="box box-success box-solid">
                 @using (Ajax.BeginForm("AddMenusToPackage", "Bookings", new AjaxOptions() { HttpMethod = "Post", OnSuccess = "OnSuccess", UpdateTargetId = "modalcontent" }, new {@id= "frmaddmenus" }))
                 {
-                        @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
                     @Html.ValidationSummary(true)
 
+                    @*@Html.HiddenFor(x=>x.courseid,new {@id="hiddencourseId"})*@
                     @Html.HiddenFor(x =>x.menuId,new { @id= "hiddenmenuId"})
                     @Html.HiddenFor(x =>x.transId,new { @id= "hdntransId" })
 
@@ -66,6 +67,9 @@
 <script>
     jQuery(function ($) {
 
-        LoadDataTabletoModal();
+   /*      alert('LoadDataTabletoModal execute from page');*/
+        /*$('#hiddencourseId').val()*/
+
+       /* LoadDataTabletoModal();*/
     });
 </script>

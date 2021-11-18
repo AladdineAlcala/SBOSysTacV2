@@ -609,7 +609,7 @@ namespace SBOSysTacV2.Controllers
                     uId = userprofile.Id,
                     username = userprofile.UserName,
                     emailAdd = userprofile.Email,
-                    fullname = Utilities.getfullname_nonreverse(userprofile.Lastname,userprofile.Firstname,userprofile.Middle),
+                    fullname = Utilities.Getfullname_nonreverse(userprofile.Lastname,userprofile.Firstname,userprofile.Middle),
                     roles = string.Join(",", UserManager.GetRoles(userId))
 
                 };

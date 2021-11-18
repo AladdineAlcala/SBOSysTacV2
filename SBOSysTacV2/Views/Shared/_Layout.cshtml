@@ -54,7 +54,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
-                
+
                 @*<div style="margin-left:250px; width: 400px;">sdadas </div>*@
 
                 @*@Html.Partial("_logInUserPartial")*@
@@ -69,18 +69,18 @@
         </header>
 
         <!-- =============================================== -->
-        
+
         @if (Request.IsAuthenticated)
         {
 
 
             @Html.Partial("_sideBar_left")
         }
-        
+
 
         <div class="content-wrapper">
 
-                @*<section class="content-header">
+            @*<section class="content-header">
                     <h1>
                         @ViewBag.FormTitle
 
@@ -97,29 +97,30 @@
                 </section>*@
 
 
-                @RenderBody()
+            @RenderBody()
 
-            </div>
+        </div>
 
-    
+
 
         @Html.Partial("_footer")
 
-      
+
 
     </div>
     <!-- ./wrapper -->
-    
 
-  
+ 
+
+
 
     @Scripts.Render("~/bundles/javascripts")
 
     @Scripts.Render("~/bundles/AjaxExtensions")
     @Scripts.Render("~/Content/bower_components/fullcalendar/dist/fullcalendar.min.js")
-    
+
     @Scripts.Render("~/bundles/Charts")
-    
+
     @*@Scripts.Render("~/Content/bower_components/canvasjs-2.3.1/canvasjs.min.js")*@
 
     @RenderSection("scripts", required: false)
@@ -129,21 +130,21 @@
     @Scripts.Render("~/Scripts/js_admin.js")
 
     @*@Scripts.Render("~/Scripts/jquery.signalR-2.4.0.min.js")
-    <script src="~/signalr/hubs"></script>
-    
-    @Scripts.Render("~/Scripts/js_SignalRNotify.js")*@
-    
- 
-    
-<script type="text/javascript">
+        <script src="~/signalr/hubs"></script>
+
+        @Scripts.Render("~/Scripts/js_SignalRNotify.js")*@
+
+
+
+    <script type="text/javascript">
 
     var UserlProfile= {
         url_userProfile: "@Url.Action("GetProfileInformation", "Account",new {userId= "userid" })"
-     
-              
+
+
     }
-</script>
-  
+    </script>
+
 
 
 </body>

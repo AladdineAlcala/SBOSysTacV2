@@ -148,17 +148,128 @@ $(document).on('click', '#tbl-maincourse tbody tr', function () {
 
             //alert(tr.children('td:eq(1)').html());
 
+            $('#txtserving').val('1');
+
         } else {
             $('#hiddenmenuId').val(" ");
             $('#txtselectedmenu').val(" ");
             $selectedId = "";
+            $('#txtserving').val(' ');
         }
 
     //  console.log($selectedId);
 
 });
 
-function LoadDataTabletoModal() {
+
+//=======================================================================================================================
+// ====================  Function Discription : Add new menu to list of menus selected by customer..
+// ====================  Fucntion Controller : Bookings
+//=====================  Function Action :  GetListofCourse
+//=====================  Function Parameter :  
+//=======================================================================================================================
+
+$(document).on('click', '#menu_add', function (e) {
+    e.preventDefault();
+
+    debugger;
+
+    var elem = $(this).closest('li').find('div[id=course]');
+    var courseId = elem.attr('data-id');
+
+    //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourse", "Bookings")",
+
+    $.ajax({
+        type: 'Get',
+        url: PackageBookingUrl.urlSearchpackagebooking,  
+        contentType: 'application/html;charset=utf8',
+        data: { transactionId: $(this).closest('div.tools').data('transid'), courseId: courseId },
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            var modal = $('#modal-searchPackageBooking');
+
+            modal.find('#modalPackagecontent').html(result);
+
+            //var insertopt = 0;
+            RegisterAjaxFormEvents();
+
+            LoadDataTabletoModal(courseId);
+
+            modal.modal({
+                backdrop: 'static',
+                keyboard: false
+            }, 'show');
+
+        }, error: function (xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
+
+
+
+    });
+
+
+
+});
+
+
+
+$(document).on('click', '#menu_change', function (e) {
+    e.preventDefault();
+
+    // var menu_No = $(this).attr("data-menuid");
+    // data: { transactionId: $(this).closest('td').attr('data-id'), bookmenuNo: $(this).attr("data-menuid") },
+    debugger;
+
+    var elem = $(this).closest('li').find('div[id=course]');
+    var selectedcourseId = elem.attr('data-id');
+
+
+    $.ajax({
+        type: 'Get',
+        url: PackageBookingUrl.urlSearchpackagebookingbybookNo,    //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourseforChange", "Bookings")",
+        contentType: 'application/html;charset=utf8',
+        data: { bookmenuNo: $(this).attr("data-menuid") },
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            //var modal = $('#modal-change_menu');
+
+            //modal.find('#modal_changemenu_content').html(result);
+
+            var modal = $('#modal-searchPackageBooking');
+
+            modal.find('#modalcontent').html(result);
+
+
+            RegisterAjaxFormEventsModify();
+
+            LoadDataTabletoModal(selectedcourseId);
+
+
+            modal.modal({
+                backdrop: 'static',
+                keyboard: false
+            }, 'show');
+
+        }, error: function (xhr, ajaxOptions, thrownError) {
+
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
+
+
+
+    });
+
+
+
+});
+
+
+function LoadDataTabletoModal(_courseId) {
    
     if ($.fn.dataTable.isDataTable('#tbl-maincourse')) {
 
@@ -168,20 +279,14 @@ function LoadDataTabletoModal() {
 
     }
 
-    //var opt = 1;
-    //var opturl = new String;
+    debugger;
 
-    //if (opt === 1) {
-    //    opturl = PackageBookingUrl.urlMenuList_Modify.replace("courseid",);
-
-    //} else {
-        
-    //}
+    //var courseid = _courseId;
 
     $tblMainCourse = $('#tbl-maincourse').DataTable(
         {
-            bLengthChange: false,
 
+            bLengthChange: false,
             select: {
                 style: 'os',
                 //style: 'multi',
@@ -193,12 +298,13 @@ function LoadDataTabletoModal() {
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-6'i><'col-sm-6'p>>",
 
-
+            //==============>>>>>>  "@Url.Action("LoadListMenus", "Bookings")",  <<<<<<<<<<<<<<<<<<<<<
             "ajax":
             {
-                "url": PackageBookingUrl.urlMenuList,
-                "type": "Get",
-                "datatype": "json"
+                "url": PackageBookingUrl.urlMenuList,   
+                "data": { courseId: _courseId},
+                 "type": "Get",
+                 "datatype": "json"
             },
 
             //  "aoColumns": [{   "sTitle": "<input type='checkbox' id='selectAll'></input>"}],
@@ -251,176 +357,14 @@ function LoadDataTabletoModal() {
         });
 
 
-    //============ add selected menus for package booking ======================
-
-
-    //var menustolist = function (opt) {
-
-    //    if ($selectedObj == null) {
-
-    //        //alert('No Menus Selected');
-
-    //        Swal.fire('No Menus Selected!', 'Please try again', 'error');
-
-    //    } else {
-            
-    //        if ($selectedObj.hasClass('selected')) {
-
-    //            //addoperation
-    //            if (opt === 0) {
-                    
-    //                var trId = $("#hdntransId").val();
-                            
-    //                $.ajax({
-    //                                type: "post",
-    //                                url: PackageBookingUrl.urlAddMenustoBooking,
-    //                                ajaxasync: true,
-    //                                data: { transacId: trId, menuId: $selectedId },
-    //                                cache: false,
-    //                                success: function (data) {
-
-    //                                    if (data.isRecordExist) {
-
-    //                                        Swal.fire({
-    //                                            title: 'Unable to process!',
-    //                                            text: data.message,
-    //                                            type: 'warning'
-                  
-                        
-    //                                        });
-
-
-    //                                    } else {
-
-    //                                        Swal.fire({
-    //                                            title: "Success",
-    //                                            text: "It was succesfully added!",
-    //                                            type: "success"
-                
-
-    //                                            });
-
-    //                                        setTimeout(function () {
-
-    //                                            LoadDataTabletoModal(opt);
-
-    //                                            $('#bookmenus').load(data.url);
-
-    //                                            // $('#spinn-loader').hide();
-
-                                              
-
-    //                                        }, 1000);
-
-    //                                        $selectedObj = null;
-    //                                        $selectedId = null;
-
-                  
-
-         
-    //                                    }
-
-    //                                }
-
-    //                            });
-
-
-
-    //            }
-              
-    //            //change operation
-    //            if (opt === 1) {
-
-    //                var bookmenu_No = $("#hdnchbookmenuNo").val();
-    //                var trId = $("#hdntransId").val();
-
-    //                //console.log(bookmenuNo);
-
-    //                Swal.fire({
-    //                    title: "Are You Sure ?",
-    //                    text: "Confirm changing package menu. ?",
-    //                    type: "question",
-    //                    showCancelButton: true,
-    //                    confirmButtonColor: '#3085d6',
-    //                    cancelButtonColor: '#d33',
-    //                    confirmButtonText: 'Yes, update it!'
-
-    //                }).then((result) => {
-
-    //                    if (result.value) {
-
-    //                        $.ajax({
-    //                            type: "post",
-    //                            url: PackageBookingUrl.urlChangeMenu_on_Booking,
-    //                            ajaxasync: true,
-    //                            data: { transId: trId, bookmenuNo: bookmenu_No, selected_menuId: $selectedId },
-    //                            cache: false,
-    //                            success: function (data) {
-
-    //                                if (data.isRecordExist) {
-
-    //                                    Swal.fire({
-    //                                        title: 'Unable to process!',
-    //                                        text: data.message,
-    //                                        type: 'warning'
-
-
-    //                                    });
-
-
-    //                                } else {
-
-    //                                    Swal.fire({
-    //                                        title: "Success",
-    //                                        text: "It was succesfully updated!",
-    //                                        type: "success"
-
-
-    //                                    });
-
-    //                                    setTimeout(function () {
-
-    //                                        //LoadDataTabletoModal();
-    //                                        $('#bookmenus').load(data.url);
-
-    //                                        // $('#spinn-loader').hide();
-    //                                    }, 1000);
-
-    //                                    $selectedObj = null;
-    //                                    $selectedId = null;
-
-    //                                    $('#modal-searchPackageBooking').modal('hide');
-
-
-    //                                }
-    //                            }
-
-    //                        });
-
-
-
-    //                    }
-    //                });
-
-
-
-    //            }
-
-
-    //        }
-
-    //    }
-        
-
-    //};
-
+   
 
 }
 
 
 
 
-function LoadDataTabletoModalModify(menuId) {
+function LoadDataTabletoModalModify() {
 
     if ($.fn.dataTable.isDataTable('#tbl-maincourse')) {
 
@@ -458,7 +402,7 @@ function LoadDataTabletoModalModify(menuId) {
 
             "ajax":
             {
-                "url": PackageBookingUrl.urlMenuList,
+                "url": PackageBookingUrl.urlMenuList,  //==============>>>>>>  "@Url.Action("LoadListMenus", "Bookings")",  <<<<<<<<<<<<<<<<<<<<<
                 "type": "Get",
                 "datatype": "json"
             },
@@ -519,44 +463,6 @@ function LoadDataTabletoModalModify(menuId) {
 }
 
 
-$(document).on('click', '#add_maincourse', function (e) {
-    e.preventDefault();
-
-    $.ajax({
-        type: 'Get',
-        url: PackageBookingUrl.urlSearchpackagebooking,
-        contentType: 'application/html;charset=utf8',
-        data: { transactionId: $(this).data('id') },
-        datatype: 'html',
-        cache: false,
-        success: function (result) {
-
-            var modal = $('#modal-searchPackageBooking');
-
-            modal.find('#modalcontent').html(result);
-
-            //var insertopt = 0;
-            RegisterAjaxFormEvents();
-
-            LoadDataTabletoModal();
-
-
-            modal.modal({
-                backdrop: 'static',
-                keyboard: false
-            }, 'show');
-
-        }, error: function (xhr, ajaxOptions, thrownError) {
-            Swal.fire('Error adding record!', 'Please try again', 'error');
-        }
-
-
-
-    });
-
-
-
-});
 
 
 
@@ -1027,52 +933,6 @@ $(document).on('click', '#btn_modifyaddOns',
 
 
 
-$(document).on('click', '#menu_change', function (e) {
-    e.preventDefault();
-
-   // var menu_No = $(this).attr("data-menuid");
-   // data: { transactionId: $(this).closest('td').attr('data-id'), bookmenuNo: $(this).attr("data-menuid") },
-
-    $.ajax({
-        type: 'Get',
-        url: PackageBookingUrl.urlSearchpackagebookingbybookNo,
-        contentType: 'application/html;charset=utf8',
-        data: {bookmenuNo: $(this).attr("data-menuid") },
-        datatype: 'html',
-        cache: false,
-        success: function (result) {
-
-            //var modal = $('#modal-change_menu');
-
-            //modal.find('#modal_changemenu_content').html(result);
-
-            var modal = $('#modal-searchPackageBooking');
-
-            modal.find('#modalcontent').html(result);
-
-        
-            RegisterAjaxFormEventsModify();
-
-            LoadDataTabletoModal();
-
-
-            modal.modal({
-                backdrop: 'static',
-                keyboard: false
-            }, 'show');
-
-        }, error: function (xhr, ajaxOptions, thrownError) {
-
-            Swal.fire('Error adding record!', 'Please try again', 'error');
-        }
-
-
-
-    });
-
-
-   
-});
 
 
 

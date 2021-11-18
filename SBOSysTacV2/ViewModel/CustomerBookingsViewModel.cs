@@ -44,7 +44,7 @@ namespace SBOSysTacV2.ViewModel
                     {
                         transId = l.trn_Id,
                         cusId = l.c_Id,
-                        cusfullname= Utilities.getfullname_nonreverse(l.Customer.lastname, l.Customer.firstname, l.Customer.middle),
+                        cusfullname= Utilities.Getfullname_nonreverse(l.Customer.lastname, l.Customer.firstname, l.Customer.middle),
                         occasion = l.occasion,
                         venue = l.venue,
                         bookdatetime = l.startdate,
@@ -86,7 +86,7 @@ namespace SBOSysTacV2.ViewModel
                     {
                         transId = r.resId,
                         cusId = r.c_Id,
-                        cusfullname = Utilities.getfullname_nonreverse(r.Customer.lastname, r.Customer.firstname, r.Customer.middle),
+                        cusfullname = Utilities.Getfullname_nonreverse(r.Customer.lastname, r.Customer.firstname, r.Customer.middle),
                         occasion = r.occasion,
                         venue = r.eventVenue,
                         bookdatetime = r.resDate,
