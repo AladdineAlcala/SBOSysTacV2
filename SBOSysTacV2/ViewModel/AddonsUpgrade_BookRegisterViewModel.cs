@@ -9,7 +9,7 @@ namespace SBOSysTacV2.ViewModel
 {
     public class AddonsUpgrade_BookRegisterViewModel
     {
-        public int BookTransId { get; set; }
+        public int bookaddon_No { get; set; }
         public int addonsCatId { get; set; }
         public IEnumerable<SelectListItem> selectlistAddonCat { get; set; }
 

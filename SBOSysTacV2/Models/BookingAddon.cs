@@ -14,14 +14,19 @@ namespace SBOSysTacV2.Models
     
     public partial class BookingAddon
     {
-        public int No { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BookingAddon()
+        {
+            this.BookAddonsDetails = new HashSet<BookAddonsDetail>();
+        }
+    
+        public int bookaddonNo { get; set; }
         public Nullable<int> trn_Id { get; set; }
-        public Nullable<int> addonId { get; set; }
         public string Addondesc { get; set; }
         public string Note { get; set; }
-        public Nullable<decimal> addonQty { get; set; }
-        public Nullable<decimal> AddonAmount { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookAddonsDetail> BookAddonsDetails { get; set; }
         public virtual Booking Booking { get; set; }
     }
 }

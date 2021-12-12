@@ -5,12 +5,14 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.Models;
 
 namespace SBOSysTacV2.ViewModel
 {
     public class MainMenuListViewModel
     {
+        public int menuNo { get; set; }
         public string menuId { get; set; }
         public string menu_name { get; set; }
         public int courseid { get; set; }
@@ -62,7 +64,7 @@ namespace SBOSysTacV2.ViewModel
 
         public List<KeyValuePair<int,string>> MainMenuList_with_Bar(int id)
         {
-            const char separator = '/';
+        
             var list = new List<KeyValuePair<int, string>>();
 
             var _dbentities = new PegasusEntities();
@@ -71,37 +73,70 @@ namespace SBOSysTacV2.ViewModel
 
             var coursecat = coursecatList.Single(t => t.CourserId == id);
            
-            var removeList = coursecatList.FindAll(t => t.Course.Contains(separator));
+            var removeList = coursecatList.FindAll(t => t.Course.Contains(Utilities.Separator));
 
-            var coursecat_arr = coursecat.Course.ToLower().Split(separator);
-
-            if (removeList != null)
+            var coursecat_arr = coursecat.Course.ToLower().Split(Utilities.Separator);
+             
+            if (removeList.Count > 0)
             {
-                coursecatList.RemoveAll(item => removeList.Contains(item));
+                _ = coursecatList.RemoveAll(item => removeList.Contains(item));
             }
-
-
-            // var courseCat = coursecatList.Where(t2 => coursecat_arr.Count(t1 => t2.Course.Contains(t1)) == 0);
 
 
             if (coursecat_arr.Length > 0)
             {
-                foreach (var course in coursecat_arr)
+                list.AddRange(from item in coursecat_arr select coursecatList.FirstOrDefault(t => t.Course.ToLower().Trim().Contains(item.ToLower().Trim())) into m where m != null select new KeyValuePair<int, string>(m.CourserId, m.Course));
+
+                //list.AddRange(from course in coursecat_arr select course.Trim() into _course select coursecatList.FirstOrDefault(t => t.Course.ToLower().Contains(_course.ToLower().Trim())) into courseCat select new KeyValuePair<int, string>(courseCat.CourserId, courseCat.Course));
+            }
+
+            //if (list.Count <= 0)
+            //{
+            //    //var m = _dbentities.CourseCategories.ToList().Find(t => t.CourserId == id);
+
+            //    list.AddRange(new[] {new KeyValuePair<int, string>(, m.Course)});
+
+            //}
+
+            return list;
+        }
+
+
+        public IEnumerable<MainMenuListViewModel> GetBookMenuCourseByTransId(int transId)
+        {
+            var bookmenucourseList = new List<MainMenuListViewModel>();
+
+
+            try
+            {
+                using (var _dbentities = new PegasusEntities())
                 {
-                    var _course = course.Trim();
+                    bookmenucourseList = (from bm in _dbentities.Book_Menus
+                        join m in _dbentities.Menus on bm.menuid equals m.menuid
+                        join c in _dbentities.CourseCategories
+                            on m.CourserId equals c.CourserId
+                        where bm.trn_Id == transId
+                        select new MainMenuListViewModel()
+                        {
+                            menuNo = bm.No,
+                            menuId = m.menuid,
+                            menu_name = m.menu_name,
+                            courseid = c.CourserId,
+                            course = c.Course,
+                            isMainMenu = c.Main_Bol
 
-                    //var courseCat=(from c in _dbentities.CourseCategories where c.Course.Contains(_course) select c).ToList();
-                    var courseCat = coursecatList.FirstOrDefault(t => t.Course.ToLower().Contains(_course));
-
-                    list.Add(new KeyValuePair<int, string>(courseCat.CourserId, courseCat.Course));
-
+                        }).OrderBy(x => x.course).ToList();
                 }
 
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
-            _dbentities.Dispose();
 
-            return list;
+            return bookmenucourseList;
         }
 
     }

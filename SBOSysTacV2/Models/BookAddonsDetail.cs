@@ -12,14 +12,14 @@ namespace SBOSysTacV2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AuditLogDetail
+    public partial class BookAddonsDetail
     {
-        public int Id { get; set; }
-        public string ColumnName { get; set; }
-        public string OriginalValue { get; set; }
-        public string NewValue { get; set; }
-        public Nullable<int> AuditLogId { get; set; }
+        public int addondetail_Id { get; set; }
+        public Nullable<int> bookaddonNo { get; set; }
+        public Nullable<decimal> qty { get; set; }
+        public Nullable<decimal> amount { get; set; }
+        public Nullable<int> addonId { get; set; }
     
-        public virtual AuditLog AuditLog { get; set; }
+        public virtual BookingAddon BookingAddon { get; set; }
     }
 }

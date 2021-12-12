@@ -275,7 +275,7 @@ namespace SBOSysTacV2.Reports.ReportViewers
                     //select c).ToList();
 
 
-                    conBookMenus = bm.LisofMenusBook(Convert.ToInt32(paramTransId)).ToList();
+                    conBookMenus = bm.ListofMenusBook(Convert.ToInt32(paramTransId)).ToList();
 
                     addons = add.ListofAddons().Where(x => x.TransId == Convert.ToInt32(paramTransId)).ToList();
 

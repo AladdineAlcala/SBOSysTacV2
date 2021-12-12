@@ -15,7 +15,7 @@ namespace SBOSysTacV2.ViewModel
         public Package Package { get; set; }
         public PackageBody PackageBody { get; set; }
         public IEnumerable<BookMenusViewModel> BookMenuses { get; set; }
-        public IEnumerable<AddonsViewModel> AddOns { get; set; }
+        public IEnumerable<AddonsViewModel> BookAddOns { get; set; }
 
         private PegasusEntities _dbEntities=new PegasusEntities();
       
@@ -62,7 +62,54 @@ namespace SBOSysTacV2.ViewModel
             return (listofpackage.Any()?true:false);
         }
 
-       
+
+        public bool CheckCourseHasBar(string coursename)
+        {
+            return coursename.Contains(Utilities.Separator);
+        }
+
+
+        public string GetMenusForCourseHasBar(int trnId, string course,ref int? _menuNo)
+        {
+
+            var mainmenu_viewmodel = new MainMenuListViewModel();
+            var _courselist=new List<KeyValuePair<int, string>>();
+            _menuNo =0;
+
+            try
+            {
+                var splitCourse = course.ToLower().Split(Utilities.Separator);
+                var _course = _dbEntities.CourseCategories.ToList();
+
+                var removeList = _course.FindAll(t => t.Course.Contains(Utilities.Separator));
+
+                //    .Where(t1 => splitCourse.Any(t2 => t1.Course.ToLower() == t2.ToLower().Trim())).ToList();
+                _ = _course.RemoveAll(item => removeList.Contains(item));
+
+                 _courselist = (from item in splitCourse select _course.FirstOrDefault(t => t.Course.ToLower().Contains(item.ToLower().Trim())) into c where c != null select new KeyValuePair<int, string>(c.CourserId, c.Course)).ToList();
+
+                var bookmenucourse = mainmenu_viewmodel.GetBookMenuCourseByTransId(trnId);
+
+                var bookmenu= bookmenucourse.FirstOrDefault(li => _courselist.Any(l2 => li.courseid == l2.Key));
+
+                if (bookmenu != null)
+                {
+                    _menuNo = bookmenu.menuNo;
+                    return bookmenu.menu_name;
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
+            return string.Empty;
+
+        }
     }
 
 

@@ -1,8 +1,9 @@
 ﻿@using SBOSysTacV2.ViewModel
 @model PackageBookingViewModel
-    
 
-    <div id="menuslist" class="box box-primary">
+
+
+<div id="menuslist" class="box box-primary">
         <div class="box-header">
             <i class="ion ion-clipboard"></i>
             <h3 class="box-title">Menus:</h3>
@@ -14,15 +15,22 @@
         <!--box-header-->
         <div class="box-body">
             <ul class="products-list product-list-in-box">
-                @{
-                    int counter = 0;
-                }
+
+                @{ var counter = 0; }
+
                 @foreach (var menu in Model.BookMenuses)
                 {
 
                     counter += 1;
 
+                    int? _menuNo = 0;
+
+                    
+
+                    var menuName = (!String.IsNullOrEmpty(menu.menu_name) ? menu.menu_name : Model.CheckCourseHasBar(menu.coursename) ? Model.GetMenusForCourseHasBar(Model.transactionId, menu.coursename, ref _menuNo) : menu.menu_name);
+
                     <li class="item my-1 py-1">
+
                         @*<div class="product product-img" data-id="@counter">
 
 
@@ -35,41 +43,44 @@
                                 @:<img src="@Url.Content(String.Format("~/Content/UploadedImages/{0}", menu.menuImageFilename))" alt="@menu.coursename" class="imglightbox">
                             }
 
-
-
                         </div>*@
+                        
+
 
                         <div id="course" class="product product-info" data-id="@menu.courseid">
-                            <i class="fa fa-clipboard" aria-hidden="true"></i>
+                            @*<i class="fa fa-clipboard" aria-hidden="true"></i>*@
+                            <span class="menu-counter">@counter</span>
                             <span class="product-title">
                                 @menu.coursename
 
                             </span>
-                            <span class="product-description my-1">
-                                @menu.menu_name
-                            </span>
+                            <div class="ml-5 my-2 py-1" >
+                                <span class="product-description">
+                                    @(string.IsNullOrEmpty(menuName)?"":menuName.ToUpper())
+                                </span>
+                            </div>
 
                         </div>
 
                         <div class="tools" data-transid="@Model.transactionId">
 
-                            @if (!menu.menu_No.HasValue)
+                            @if (string.IsNullOrEmpty(menuName))
                             {
                                 <i class="fa fa-plus-circle fa-lg" id="menu_add"></i>
-                                @*<i class="fa fa-trash-o" id="menu_remove" data-menuid="@menu.menu_No"></i>*@
+
                             }
                             else
                             {
-                                <i class="fa fa-edit fa-lg" id="menu_change" data-menuid="@menu.menu_No"></i>
-                                <i class="fa fa-trash-o fa-lg" id="menu_remove" data-menuid="@menu.menu_No"></i>
+                                <i class="fa fa-edit fa-lg" id="menu_change" data-menuid="@(!String.IsNullOrEmpty(Convert.ToString(menu.menu_No)) ? menu.menu_No : _menuNo)"></i>
+                                <i class="fa fa-trash-o fa-lg" id="menu_remove" data-menuid="@(!String.IsNullOrEmpty(Convert.ToString(menu.menu_No)) ? menu.menu_No : _menuNo)"></i>
                             }
 
-                            @*<i class="fa fa-edit" id="@(!menu.menu_No.HasValue?"menu_add".ToString().Trim():"menu_change".ToString().Trim()) " data-menuid="@menu.menu_No"></i>*@
+
 
                         </div>
                     </li>
 
-                }
+                 }
 
             </ul> 
            

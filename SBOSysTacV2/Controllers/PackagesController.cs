@@ -142,7 +142,7 @@ namespace SBOSysTacV2.Controllers
 
                 newpackage.packageNoPax_listitem = pviewmodel.GetPackageNoofPaxListItems();
 
-                return PartialView("_packages", newpackage);
+                return PartialView("_packagesNew", newpackage);
             }
 
 

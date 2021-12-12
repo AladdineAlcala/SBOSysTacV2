@@ -1,38 +1,39 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using SBOSysTacV2.HtmlHelperClass;
+using SBOSysTacV2.Models;
+using SBOSysTacV2.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using SBOSysTacV2.HtmlHelperClass;
-using SBOSysTacV2.Models;
-using SBOSysTacV2.ViewModel;
+using System.Web.SessionState;
 
 namespace SBOSysTacV2.Controllers
 {
-   [Authorize]
+    [Authorize]
     public class BookingsController : Controller
     {
 
         private PegasusEntities _dbcontext;
-        private BookingsViewModel booking=new BookingsViewModel();
-        private PackageBookingViewModel packageBook=new PackageBookingViewModel();
-        private MainMenuListViewModel mainmenulistviewmodel=new MainMenuListViewModel();
-        private AddonsViewModel addonsviewmodel=new AddonsViewModel();
-        private TransactionDetailsViewModel transactionDetails=new TransactionDetailsViewModel();
-        private ContractReceiptViewModel cr=new ContractReceiptViewModel();
-        private AddonsUpgrade_BookRegisterViewModel addupgradereg=new AddonsUpgrade_BookRegisterViewModel();
-        private SelectedAddonsViewModel seladdons=new SelectedAddonsViewModel();
-        private BookMenusViewModel bookMenusView=new BookMenusViewModel(); 
-        private CancelBookingViewModel cancelledBooking=new CancelBookingViewModel();
-       
+        private BookingsViewModel booking = new BookingsViewModel();
+        private PackageBookingViewModel packageBook = new PackageBookingViewModel();
+        private MainMenuListViewModel mainmenulistviewmodel = new MainMenuListViewModel();
+        private AddonsViewModel addonsviewmodel = new AddonsViewModel();
+        private TransactionDetailsViewModel transactionDetails = new TransactionDetailsViewModel();
+        private ContractReceiptViewModel cr = new ContractReceiptViewModel();
+        private AddonsUpgrade_BookRegisterViewModel addupgradereg = new AddonsUpgrade_BookRegisterViewModel();
+        private SelectedAddonsViewModel seladdons = new SelectedAddonsViewModel();
+        private BookMenusViewModel bookMenusView = new BookMenusViewModel();
+        private CancelBookingViewModel cancelledBooking = new CancelBookingViewModel();
+
 
 
 
         public BookingsController()
         {
-            _dbcontext=new PegasusEntities();
+            _dbcontext = new PegasusEntities();
         }
 
         // GET: Bookings
@@ -45,12 +46,12 @@ namespace SBOSysTacV2.Controllers
 
 
         [HttpGet]
-        [OutputCache(Duration =60)]
+        [OutputCache(Duration = 60)]
         public ActionResult LoadBookings()
         {
             var bookings = booking.GetListofBookings().OrderBy(d => d.startdate).ToList();
 
-            return Json(new {data=bookings}, JsonRequestBehavior.AllowGet);
+            return Json(new { data = bookings }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -88,11 +89,11 @@ namespace SBOSysTacV2.Controllers
 
             bool success = false;
 
-          //  _dbcontext.Configuration.ProxyCreationEnabled = false;
+            //  _dbcontext.Configuration.ProxyCreationEnabled = false;
 
-            DateTime createdDate=DateTime.Now;
+            DateTime createdDate = DateTime.Now;
             int transactionId = 0;
-            decimal amountPax=0;
+            decimal amountPax = 0;
             var firstOrDefault = _dbcontext.Packages.FirstOrDefault(x => x.p_id == bookingViewModel.pId);
 
             if (firstOrDefault != null)
@@ -144,7 +145,7 @@ namespace SBOSysTacV2.Controllers
 
                         success = true;
 
-                        return Json(new {success = success, trnsId = transactionId}, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = success, trnsId = transactionId }, JsonRequestBehavior.AllowGet);
                     }
                     catch (Exception e)
                     {
@@ -154,7 +155,7 @@ namespace SBOSysTacV2.Controllers
 
                 }
 
-             
+
 
 
             }
@@ -162,7 +163,7 @@ namespace SBOSysTacV2.Controllers
 
             //bookingViewModel.Servicetype_ListItems = booking.GetServiceType_SelectListItems();
 
-            return Json(new { success = false}, JsonRequestBehavior.AllowGet);
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -170,7 +171,7 @@ namespace SBOSysTacV2.Controllers
         //booking customer exist 
         [HttpPost]
         public JsonResult IsCustomerRegistered(string fullname)
-      {
+        {
             bool customerexist;
 
             string[] splitfullname = fullname.Split(',');
@@ -189,14 +190,17 @@ namespace SBOSysTacV2.Controllers
 
         public bool Hascustomerexist(string lname)
         {
-         
+
             return _dbcontext.Customers.Any(x => x.lastname == lname);
         }
 
 
+      
+
+
         public ActionResult GetPackageId(int? transactionId)
         {
-            var booking=new Booking();
+            var booking = new Booking();
             var is_success = false;
 
             booking = _dbcontext.Bookings.Find(transactionId);
@@ -206,7 +210,7 @@ namespace SBOSysTacV2.Controllers
                 is_success = true;
             }
 
-            return Json(new {success= is_success }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = is_success }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -214,7 +218,7 @@ namespace SBOSysTacV2.Controllers
         [HttpGet]
         public ActionResult GetPackageonBooking(int transId)
         {
-             PackageBookingViewModel pBooking=new PackageBookingViewModel();
+            PackageBookingViewModel pBooking = new PackageBookingViewModel();
 
             //pBooking = packageBook.GetBookingDetails().FirstOrDefault(x => x.transactionId==transId);
             pBooking.transactionId = transId;
@@ -231,7 +235,9 @@ namespace SBOSysTacV2.Controllers
             try
             {
 
-                _transDetails = transactionDetails.GetTransactionDetails().FirstOrDefault(x => x.transactionId.Equals(transId));
+                //_transDetails = transactionDetails.GetTransactionDetails().FirstOrDefault(x => x.transactionId.Equals(transId));
+
+                _transDetails = transactionDetails.GetTransactionDetailsById(transId);
 
             }
             catch (Exception e)
@@ -245,17 +251,18 @@ namespace SBOSysTacV2.Controllers
         }
 
         [HttpGet]
-        public ActionResult getPartialView_AmountDue(int transId)
+        public ActionResult GetPartialView_AmountDue(TransactionDetailsViewModel transDetails)
         {
-            TransactionDetailsViewModel transDetails;
+          
 
             try
             {
                 //var transId = transModel.transactionId;
                 //transDetails = transactionDetails.GetTransactionDetails().FirstOrDefault(x => x.transactionId.Equals(transId));
 
-                transDetails = transactionDetails.GetTransactionDetailsById(transId);
-               
+                //transDetails = transactionDetails.GetTransactionDetailsById(transId);
+
+                var transId = transDetails.transactionId;
 
                 decimal packageTotal = 0;
                 decimal addonsTotal = 0;
@@ -265,28 +272,38 @@ namespace SBOSysTacV2.Controllers
                 decimal fpAmount = 0;
                 decimal bookdiscountAmount = 0;
                 decimal cateringdiscountAmount = 0;
-                string discountCode=null;
+                string discountCode = null;
 
                 var packageAmount = transDetails.Package_Trans.p_amountPax;
                 var packageType = transDetails.Package_Trans.p_type.TrimEnd();
                 int noOfPax = Convert.ToInt32(transDetails.Booking_Trans.noofperson);
 
 
-                var addonslist = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId).ToList();
-                addonsTotal = addonslist.Sum(y => Convert.ToDecimal(y.AddonAmount));
+                //var addonslist = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId).ToList();
+
+                var querybookaddon = _dbcontext.BookingAddons.Join(_dbcontext.BookAddonsDetails,
+                    bookaddon => bookaddon.bookaddonNo, bookaddondetails => bookaddondetails.bookaddonNo,
+                    (bookaddon, bookaddondetails) => new { BookingAddon = bookaddon, BookAddonsDetail = bookaddondetails }).Where(t => t.BookingAddon.trn_Id == transId);
+
+                var addonsList = querybookaddon.Select(t => t.BookAddonsDetail.amount * t.BookAddonsDetail.qty);
+                if (addonsList.Count()!=0)
+                {
+                    addonsTotal = (decimal)addonsList.Sum();
+                }
+               
 
 
                 if (transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value
                 {
                     extendedLocationAmount = transactionDetails.Get_extendedAmountLoc(transId);
                 }
-                
+
 
                 dpAmount = transactionDetails.GetTotalDownPayment(transId);
                 fpAmount = transactionDetails.GetFullPayment(transId);
                 cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : transactionDetails.GetCateringdiscountByPax(noOfPax);
-             
-               
+
+
                 packageTotal = Convert.ToDecimal(packageAmount) * noOfPax;
 
                 var subtotal = (packageTotal + addonsTotal + extendedLocationAmount + belowminPax);
@@ -323,11 +340,11 @@ namespace SBOSysTacV2.Controllers
             PackageBookingViewModel pBooking = new PackageBookingViewModel();
             BookMenusViewModel bm = new BookMenusViewModel();
 
-            pBooking.BookMenuses = bm.LisofMenusBook(transactionId).ToList();
+            pBooking.BookMenuses = bm.ListofMenusBook(transactionId).ToList();
             pBooking.transactionId = transactionId;
 
 
-            return PartialView("_ListofBookMenus",pBooking);
+            return PartialView("_ListofBookMenus", pBooking);
         }
 
 
@@ -336,30 +353,30 @@ namespace SBOSysTacV2.Controllers
         [HttpGet]
         public ActionResult GetListofAddons(int transId)
         {
-
-            // ViewBag.transId = transid;
-
+            AddonsViewModel addonsViewModel = new AddonsViewModel();
             PackageBookingViewModel pBooking = new PackageBookingViewModel();
-            AddonsViewModel addonsViewModel=new AddonsViewModel();
 
-            pBooking.AddOns = addonsViewModel.ListofAddons().Where(x => x.TransId.Equals(transId)).OrderBy(o=>o.No).ToList();
+            var listaddons = addonsViewModel.ListofAddons();
+            return PartialView("_GetListofAddons", new PackageBookingViewModel()
+            {
+                transactionId = transId,
+                BookAddOns = listaddons.Where(x => x.TransId.Equals(transId)).OrderBy(x => x.bookaddonNo).ToList()
 
-            pBooking.transactionId = transId;
-
-
-            return PartialView("_GetListofAddons",pBooking);
+            });
 
         }
-        
-        public ActionResult GetListofCourse(int transactionId,int courseId)
+
+        public ActionResult GetListofCourse(int transactionId, int courseId)
         {
 
-            BookMenusViewModel bookMenus=new BookMenusViewModel();
+            BookMenusViewModel bookMenus = new BookMenusViewModel();
 
-            bookMenus.transId = transactionId;
-            bookMenus.courseid = courseId;
+            return PartialView("_GetListofMainCourse", new BookMenusViewModel()
+            {
+                transId = transactionId,
+                courseid = courseId
+            });
 
-            return PartialView("_GetListofMainCourse", bookMenus);
         }
 
         [HttpGet]
@@ -367,21 +384,21 @@ namespace SBOSysTacV2.Controllers
         public ActionResult GetListofCourseforChange(int bookmenuNo)
         {
 
-           var  bookMenus = (from bm in _dbcontext.Book_Menus
-                join m in _dbcontext.Menus on bm.menuid equals m.menuid
-                select new BookMenusViewModel()
-                {
-                    transId = (int) bm.trn_Id,
-                    menuId = bm.menuid,
-                    dept=m.Department.deptName,
-                    menu_name = m.menu_name,
-                    menu_No = bm.No,
-                    courseid= (int)m.CourserId,
-                    serving = (decimal) bm.serving
+            var bookMenus = (from bm in _dbcontext.Book_Menus
+                             join m in _dbcontext.Menus on bm.menuid equals m.menuid
+                             select new BookMenusViewModel()
+                             {
+                                 transId = (int)bm.trn_Id,
+                                 menuId = bm.menuid,
+                                 dept = m.Department.deptName,
+                                 menu_name = m.menu_name,
+                                 menu_No = bm.No,
+                                 courseid = (int)m.CourserId,
+                                 serving = (decimal)bm.serving
 
-                }).FirstOrDefault(x => x.menu_No==bookmenuNo);
+                             }).FirstOrDefault(x => x.menu_No == bookmenuNo);
 
-            return PartialView("_GetListofMainCourse_Change",bookMenus);
+            return PartialView("_GetListofMainCourse_Change", bookMenus);
         }
 
         [HttpGet]
@@ -400,16 +417,16 @@ namespace SBOSysTacV2.Controllers
             {
                 var listWithBar = mainmenulistviewmodel.MainMenuList_with_Bar(courseid);
 
-                    listmenudata= listofmenu.Where(l1 => listWithBar.Any(l2 => l1.courseid == l2.Key)).ToList();
+                listmenudata = listWithBar.Count <= 0 ? listofmenu.Where(t => t.courseid == courseid).ToList() : listofmenu.Where(l1 => listWithBar.Any(l2 => l1.courseid == l2.Key)).ToList();
             }
             else
             {
-                listmenudata= listofmenu.Where(t => t.courseid == courseid).ToList();
+                listmenudata = listofmenu.Where(t => t.courseid == courseid).ToList();
             }
 
             //var menulistbycourse = listofmenu.Find(t => t.courseid == courseid);
 
-            return Json(new {data= listmenudata }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = listmenudata }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -420,7 +437,7 @@ namespace SBOSysTacV2.Controllers
             string _message = "";
             string menu_details = "";
 
-            dynamic ShowErrMessageString = String.Empty;
+            dynamic showErrMessageString = String.Empty;
 
             var url = "";
 
@@ -446,60 +463,60 @@ namespace SBOSysTacV2.Controllers
                     }
 
 
-                    if (isExistMenu==null)
+                    if (isExistMenu == null)
                     {
                         TransactionDetailsViewModel td = new TransactionDetailsViewModel();
 
                         //=====check if selected course is a main menu
                         if (td.isSelectedMenuMainCourse(bookmenus.menuId) == true)
                         {
-                                        var bookings = _dbcontext.Bookings.Find(bookmenus.transId);
-                                        if (bookmenus.get_totalselectedMainMenus(bookmenus.transId) <
-                                            bookMenusView.Get_PackageMainMenusInt(Convert.ToInt32(bookings.p_id)))
-                                        {
+                            var bookings = _dbcontext.Bookings.Find(bookmenus.transId);
+                            if (bookmenus.get_totalselectedMainMenus(bookmenus.transId) <
+                                bookMenusView.Get_PackageMainMenusInt(Convert.ToInt32(bookings.p_id)))
+                            {
 
-                                            var bookMenu = new Book_Menus()
-                                            {
-                                                trn_Id = bookmenus.transId,
-                                                menuid = bookmenus.menuId,
-                                                serving = bookmenus.serving
-                                            };
+                                var bookMenu = new Book_Menus()
+                                {
+                                    trn_Id = bookmenus.transId,
+                                    menuid = bookmenus.menuId,
+                                    serving = bookmenus.serving
+                                };
 
-                                            _dbcontext.Book_Menus.Add(bookMenu);
-                                            _dbcontext.SaveChanges();
+                                _dbcontext.Book_Menus.Add(bookMenu);
+                                _dbcontext.SaveChanges();
 
 
-                                            url = Url.Action("GetListofBookMenus", "Bookings",
-                                                new {transactionId = bookMenu.trn_Id});
-                                        }
+                                url = Url.Action("GetListofBookMenus", "Bookings",
+                                    new { transactionId = bookMenu.trn_Id });
+                            }
 
-                                        else // exceed on total number count of main menu
-                                        {
-                                            isRecordExist = true;
-                                            _message = menu_details + "  already exceed on maximum main menu count";
+                            else // exceed on total number count of main menu
+                            {
+                                isRecordExist = true;
+                                _message = menu_details + "  already exceed on maximum main menu count";
 
-                                            ShowErrMessageString = new
-                                            {
-                                                param1 = 404,
-                                                param2 = _message
-                                            };
-                                        }
+                                showErrMessageString = new
+                                {
+                                    param1 = 404,
+                                    param2 = _message
+                                };
+                            }
 
                         }
                         else
                         {
-                                        var bookMenu = new Book_Menus()
-                                        {
-                                            trn_Id = bookmenus.transId,
-                                            menuid = bookmenus.menuId,
-                                            serving = bookmenus.serving
-                                        };
+                            var bookMenu = new Book_Menus()
+                            {
+                                trn_Id = bookmenus.transId,
+                                menuid = bookmenus.menuId,
+                                serving = bookmenus.serving
+                            };
 
-                                        _dbcontext.Book_Menus.Add(bookMenu);
-                                        _dbcontext.SaveChanges();
+                            _dbcontext.Book_Menus.Add(bookMenu);
+                            _dbcontext.SaveChanges();
 
 
-                                        url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = bookMenu.trn_Id });
+                            url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = bookMenu.trn_Id });
                         }
 
 
@@ -509,7 +526,7 @@ namespace SBOSysTacV2.Controllers
                         isRecordExist = true;
                         _message = menu_details + " already in the list";
 
-                        ShowErrMessageString = new
+                        showErrMessageString = new
                         {
                             param1 = 404,
                             param2 = _message
@@ -524,7 +541,7 @@ namespace SBOSysTacV2.Controllers
                 }
 
 
-                return Json(new { isRecordExist = isRecordExist, ShowErrMessageString, url = url }, JsonRequestBehavior.AllowGet);
+                return Json(new { isRecordExist = isRecordExist, ShowErrMessageString = showErrMessageString, url = url }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -533,7 +550,7 @@ namespace SBOSysTacV2.Controllers
         [HttpPost]
         public ActionResult Change_Menu_on_Booking(BookMenusViewModel modifiedBookMenu)
         {
-           
+
 
             if (!ModelState.IsValid)
             {
@@ -541,135 +558,135 @@ namespace SBOSysTacV2.Controllers
             }
 
 
-                bool modifysuccess = false;
-                string _message = "";
-                string menu_details = "";
-                dynamic StatMessageString = String.Empty;
-                var url = "";
+            bool modifysuccess = false;
+            string _message = "";
+            string menu_details = "";
+            dynamic StatMessageString = String.Empty;
+            var url = "";
 
-                try
+            try
+            {
+
+
+
+                //var url = "";
+
+                TransactionDetailsViewModel td = new TransactionDetailsViewModel();
+                Book_Menus isExistMenu = _dbcontext.Book_Menus.AsNoTracking().FirstOrDefault(x => x.trn_Id == modifiedBookMenu.transId && x.menuid == modifiedBookMenu.menuId);
+
+                var menu = _dbcontext.Menus.FirstOrDefault(x => x.menuid == modifiedBookMenu.menuId);
+
+                if (menu != null)
                 {
-                   
-
-                  
-                    //var url = "";
-
-                    TransactionDetailsViewModel td = new TransactionDetailsViewModel();
-                    Book_Menus isExistMenu = _dbcontext.Book_Menus.AsNoTracking().FirstOrDefault(x => x.trn_Id == modifiedBookMenu.transId && x.menuid == modifiedBookMenu.menuId);
-
-                    var menu = _dbcontext.Menus.FirstOrDefault(x => x.menuid == modifiedBookMenu.menuId);
-
-                    if (menu != null)
-                    {
-                        menu_details = menu.menu_name;
-                    }
+                    menu_details = menu.menu_name;
+                }
 
 
-                    var bookMenus = _dbcontext.Book_Menus.FirstOrDefault(x => x.No == modifiedBookMenu.menu_No);
+                var bookMenus = _dbcontext.Book_Menus.FirstOrDefault(x => x.No == modifiedBookMenu.menu_No);
 
-                    if (bookMenus != null)
-                    {
-                        //bookMenus.No = modifiedBookMenu.menu_No;
-                        bookMenus.trn_Id = modifiedBookMenu.transId;
-                        bookMenus.menuid = modifiedBookMenu.menuId;
-                        bookMenus.serving = modifiedBookMenu.serving;
-                    }
+                if (bookMenus != null)
+                {
+                    //bookMenus.No = modifiedBookMenu.menu_No;
+                    bookMenus.trn_Id = modifiedBookMenu.transId;
+                    bookMenus.menuid = modifiedBookMenu.menuId;
+                    bookMenus.serving = modifiedBookMenu.serving;
+                }
 
 
                 if (isExistMenu != null) //menu selected was the same 
-                        {
+                {
 
-                                //check serving if not exceed to no of pax
+                    //check serving if not exceed to no of pax
 
-                        var noofPax = _dbcontext.Bookings.FirstOrDefault(x => x.trn_Id == modifiedBookMenu.transId) .noofperson;
+                    var noofPax = _dbcontext.Bookings.FirstOrDefault(x => x.trn_Id == modifiedBookMenu.transId).noofperson;
 
-                        if (isExistMenu.serving != 0)
-                        {
-
-                                if (isExistMenu.serving < noofPax)
-                                {
-                                        //_dbcontext.Book_Menus.Attach(modifiedbookMenu);
-                                        //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
-                                        //_dbcontext.SaveChanges();
-
-
-                                        url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = modifiedBookMenu.transId });
-
-                                        modifysuccess = true;
-                                        _message = menu_details + " succesfully updated";
-
-                                        StatMessageString = new
-                                        {
-                                            param1 = 200,
-                                            param2 = _message
-                                        };
-                                    }
-
-                                else
-                                {
-                                                modifysuccess = true;
-                                            _message = menu_details + " succesfully updated";
-
-                                            StatMessageString = new
-                                            {
-                                                param1 = 404,
-                                                param2 = _message
-                                            };
-                                }
-                            }
-                        else
-                        {
-
-                                //_dbcontext.Book_Menus.Attach(modifiedbookMenu);
-                                //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
-                                _dbcontext.SaveChanges();
-
-
-                                url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = modifiedBookMenu.transId });
-
-                                modifysuccess = true;
-                                _message = menu_details + " succesfully updated";
-
-                                StatMessageString = new
-                                {
-                                param1 = 200,
-                                param2 = _message
-                                };
-
-                            }
-                    }
-                    else //new menu selected
+                    if (isExistMenu.serving != 0)
                     {
 
-                        // _dbcontext.Book_Menus.Attach(modifiedbookMenu);
+                        if (isExistMenu.serving < noofPax)
+                        {
+                            //_dbcontext.Book_Menus.Attach(modifiedbookMenu);
+                            //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
+                            //_dbcontext.SaveChanges();
+
+
+                            url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = modifiedBookMenu.transId });
+
+                            modifysuccess = true;
+                            _message = menu_details + " succesfully updated";
+
+                            StatMessageString = new
+                            {
+                                param1 = 200,
+                                param2 = _message
+                            };
+                        }
+
+                        else
+                        {
+                            modifysuccess = true;
+                            _message = menu_details + " succesfully updated";
+
+                            StatMessageString = new
+                            {
+                                param1 = 404,
+                                param2 = _message
+                            };
+                        }
+                    }
+                    else
+                    {
+
+                        //_dbcontext.Book_Menus.Attach(modifiedbookMenu);
                         //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
                         _dbcontext.SaveChanges();
 
-                        url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = modifiedBookMenu.transId});
+
+                        url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = modifiedBookMenu.transId });
 
                         modifysuccess = true;
                         _message = menu_details + " succesfully updated";
 
                         StatMessageString = new
                         {
-                            param1 = 404,
+                            param1 = 200,
                             param2 = _message
                         };
 
-
-                         
-
-                        }//end existmenu
-
+                    }
                 }
-                catch (Exception e)
+                else //new menu selected
                 {
-                    Console.WriteLine(e);
-                    throw;
-                }// end try
 
-            
-            return Json(new {success=modifysuccess, StatMessageString,url= url }, JsonRequestBehavior.AllowGet);
+                    // _dbcontext.Book_Menus.Attach(modifiedbookMenu);
+                    //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
+                    _dbcontext.SaveChanges();
+
+                    url = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = modifiedBookMenu.transId });
+
+                    modifysuccess = true;
+                    _message = menu_details + " succesfully updated";
+
+                    StatMessageString = new
+                    {
+                        param1 = 404,
+                        param2 = _message
+                    };
+
+
+
+
+                }//end existmenu
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }// end try
+
+
+            return Json(new { success = modifysuccess, StatMessageString, url = url }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -683,7 +700,7 @@ namespace SBOSysTacV2.Controllers
                 TransId = transactionId
             };
 
-            return PartialView("_AddOnsInformation",addons);
+            return PartialView("_AddOnsInformation", addons);
         }
 
 
@@ -696,10 +713,10 @@ namespace SBOSysTacV2.Controllers
 
             var _addons = new BookingAddon
             {
-               trn_Id = addons.TransId,
-               Addondesc = addons.AddonsDescription,
-               Note = addons.AddonNote,
-               AddonAmount = addons.AddonAmount
+                trn_Id = addons.TransId,
+                Addondesc = addons.AddonsDescription,
+                Note = addons.AddonNote,
+                //AddonAmount = addons.AddonAmount
             };
 
             _dbcontext.BookingAddons.Add(_addons);
@@ -707,9 +724,9 @@ namespace SBOSysTacV2.Controllers
 
             ModelState.Clear();
 
-            var ReturnUrl = Url.Action("GetListofAddons", "Bookings", new { transId=addons.TransId });
+            var ReturnUrl = Url.Action("GetListofAddons", "Bookings", new { transId = addons.TransId });
 
-            return Json(new {success=true,url=ReturnUrl }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, url = ReturnUrl }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -719,7 +736,7 @@ namespace SBOSysTacV2.Controllers
             bool success = true;
             var returnUrl = "";
 
-            Book_Menus bm=new Book_Menus();
+            Book_Menus bm = new Book_Menus();
 
             try
             {
@@ -732,7 +749,7 @@ namespace SBOSysTacV2.Controllers
                     _dbcontext.Book_Menus.Remove(bm);
                     _dbcontext.SaveChanges();
 
-                returnUrl = Url.Action("GetListofBookMenus", "Bookings", new {transactionId = transactionId});
+                    returnUrl = Url.Action("GetListofBookMenus", "Bookings", new { transactionId = transactionId });
 
                 }
                 else
@@ -748,7 +765,7 @@ namespace SBOSysTacV2.Controllers
             }
 
 
-            return Json(new {success=success,url=returnUrl }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = success, url = returnUrl }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -763,21 +780,21 @@ namespace SBOSysTacV2.Controllers
 
             if (addons != null)
             {
-                if (addons.addonId==null)
+                if (addons.addonId == null)
                 {
                     view = "_ModifyAddOns";
-                  
+
 
                 }
                 else
                 {
 
-                    var selectedaddons = seladdons.GetSelectedAddons(addonItemNo);
+                    //var selectedaddons = seladdons.GetSelectedAddons(addonItemNo);
 
                     //view = "GetSelectedAddons_Modify";
 
-
-                    return PartialView("GetSelectedAddons_Modify", selectedaddons);
+                    //return PartialView("GetSelectedAddons_Modify", selectedaddons);
+                    return PartialView("GetSelectedAddons_Modify");
                 }
 
             }
@@ -797,11 +814,11 @@ namespace SBOSysTacV2.Controllers
 
             var _addons = new BookingAddon
             {
-                No = modifyaddons.No,
+                bookaddonNo = modifyaddons.bookaddonNo,
                 trn_Id = modifyaddons.TransId,
                 Addondesc = modifyaddons.AddonsDescription,
                 Note = modifyaddons.AddonNote,
-                AddonAmount = modifyaddons.AddonAmount
+                //AddonAmount = modifyaddons.AddonAmount
             };
 
             _dbcontext.BookingAddons.Attach(_addons);
@@ -817,35 +834,53 @@ namespace SBOSysTacV2.Controllers
         }
 
 
-        public ActionResult RemoveAddons(int addonNo)
+        public ActionResult RemoveBookingAddon(int addonNo)
         {
 
-
-            BookingAddon ba=new BookingAddon();
+            BookingAddon ba = new BookingAddon();
             int transactionId;
-            string returnUrl=String.Empty;
+            string returnUrl = String.Empty;
             bool success = true;
+            var message = string.Empty;
+            ;
+
 
             try
             {
                 ba = _dbcontext.BookingAddons.Find(addonNo);
 
-                if (ba!= null)
+                if (ba != null)
                 {
-                    transactionId = Convert.ToInt32(ba.trn_Id);
+                    var query = (from b in _dbcontext.BookAddonsDetails where b.bookaddonNo == ba.bookaddonNo select b).Count();
+
+                    if (query <= 0)
+                    {
+                        transactionId = Convert.ToInt32(ba.trn_Id);
 
 
-                    _dbcontext.BookingAddons.Remove(ba);
-                    _dbcontext.SaveChanges();
+                        _dbcontext.BookingAddons.Remove(ba);
+                        _dbcontext.SaveChanges();
 
 
-                    returnUrl= Url.Action("GetListofAddons", "Bookings", new { transId = transactionId });
+                        returnUrl = Url.Action("GetListofAddons", "Bookings", new { transId = transactionId });
+
+
+
+                    }
+                    else
+                    {
+                        success = false;
+                        message = "Pls remove data from booking addon details link to this record";
+                    }
                 }
 
                 else
                 {
+                    message = "Unable to remove record..Pls. check error";
                     success = false;
                 }
+
+                            
             }
             catch (Exception e)
             {
@@ -854,7 +889,7 @@ namespace SBOSysTacV2.Controllers
             }
 
 
-            return Json(new {success=success,url=returnUrl}, JsonRequestBehavior.AllowGet);
+            return Json(new { success = success, url = returnUrl,message }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -863,9 +898,9 @@ namespace SBOSysTacV2.Controllers
         public ActionResult EditBooking(int transId)
         {
 
-            Booking editBooking=new Booking();
-            BookingsViewModel bookingviewmodel=new BookingsViewModel();
-            CustomerViewModel cus=new CustomerViewModel();
+            Booking editBooking = new Booking();
+            BookingsViewModel bookingviewmodel = new BookingsViewModel();
+            CustomerViewModel cus = new CustomerViewModel();
 
             editBooking = _dbcontext.Bookings.Find(transId);
 
@@ -882,7 +917,7 @@ namespace SBOSysTacV2.Controllers
                 bookingviewmodel.serve_status = editBooking.serve_stat;
                 bookingviewmodel.eventcolor = editBooking.eventcolor;
 
-                bookingviewmodel.pId =Convert.ToInt32(editBooking.p_id);
+                bookingviewmodel.pId = Convert.ToInt32(editBooking.p_id);
                 bookingviewmodel.fullname = cus.get_CustomerFullname(Convert.ToInt32(editBooking.c_Id));
 
                 bookingviewmodel.Servicetype_ListItems = booking.GetServiceType_SelectListItems();
@@ -895,12 +930,12 @@ namespace SBOSysTacV2.Controllers
                     bookingviewmodel.packagename = _dbcontext.Packages.Where(x => x.p_id == editBooking.p_id)
                         .Select(p => p.p_descripton).Single();
 
-                   
+
                 }
 
 
 
-                if (editBooking.Package.p_type.Trim()!="vip")
+                if (editBooking.Package.p_type.Trim() != "vip")
                 {
 
                     if (editBooking.extendedAreaId != null)
@@ -914,10 +949,10 @@ namespace SBOSysTacV2.Controllers
 
                             bookingviewmodel.area_desc = area.AreaDetails;
                         }
-                      
-                       
+
+
                     }
-                    
+
 
                 }
 
@@ -929,7 +964,7 @@ namespace SBOSysTacV2.Controllers
                 bookingviewmodel.refernce = editBooking.reference;
                 bookingviewmodel.b_createdbyUser = User.Identity.GetUserId();
                 bookingviewmodel.b_createdbyUserName = User.Identity.GetUserName();
-                bookingviewmodel.b_updatedDate=DateTime.Now;
+                bookingviewmodel.b_updatedDate = DateTime.Now;
             }
 
             return View(bookingviewmodel);
@@ -937,13 +972,13 @@ namespace SBOSysTacV2.Controllers
 
 
 
-        [HttpPost,ValidateInput(true)]
+        [HttpPost, ValidateInput(true)]
         [ValidateAntiForgeryToken]
         public ActionResult EditBooking(BookingsViewModel bookingViewModel)
         {
             if (!ModelState.IsValid) return View(bookingViewModel);
-                
-            DateTime createdDate=DateTime.Now;
+
+            DateTime createdDate = DateTime.Now;
             //  _dbcontext.Configuration.ProxyCreationEnabled = false;
             bool success = false;
 
@@ -980,19 +1015,19 @@ namespace SBOSysTacV2.Controllers
                 updatedBooking.b_createdbyUser = User.Identity.GetUserId();
             }
 
-          
+
 
 
 
             try
             {
-               
+
                 _dbcontext.SaveChanges();
 
 
                 success = true;
 
-                return Json(new { success = success, trnsId= updatedBooking.trn_Id}, JsonRequestBehavior.AllowGet);
+                return Json(new { success = success, trnsId = updatedBooking.trn_Id }, JsonRequestBehavior.AllowGet);
 
             }
             catch (DbEntityValidationException ex)
@@ -1020,10 +1055,10 @@ namespace SBOSysTacV2.Controllers
         {
             bool success = false;
 
-            Booking booking=new Booking();
+            Booking booking = new Booking();
             Book_Discount bk = new Book_Discount();
 
-            BookingAddon bookaddons=new BookingAddon();
+            BookingAddon bookaddons = new BookingAddon();
 
             booking = _dbcontext.Bookings.Find(transId);
             IEnumerable<Book_Menus> bookmenustransList = _dbcontext.Book_Menus.Where(x => x.trn_Id == transId);
@@ -1046,7 +1081,7 @@ namespace SBOSysTacV2.Controllers
                     {
                         _dbcontext.Book_Discount.Remove(bk);
                     }
-                  
+
 
                     _dbcontext.SaveChanges();
 
@@ -1062,7 +1097,7 @@ namespace SBOSysTacV2.Controllers
 
             }
 
-            return Json(new {success = success}, JsonRequestBehavior.AllowGet);
+            return Json(new { success = success }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -1076,7 +1111,7 @@ namespace SBOSysTacV2.Controllers
 
             try
             {
-                if (booking!=null)
+                if (booking != null)
                 {
                     if (booking.startdate <= datenow)
                     {
@@ -1090,7 +1125,7 @@ namespace SBOSysTacV2.Controllers
                     }
                     else
                     {
-                        return Json(new {success = false},JsonRequestBehavior.AllowGet);
+                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                     }
 
                 }
@@ -1102,7 +1137,7 @@ namespace SBOSysTacV2.Controllers
                 Console.WriteLine(e);
                 throw;
             }
-            return Json(new {success=success}, JsonRequestBehavior.AllowGet);
+            return Json(new { success = success }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -1120,13 +1155,13 @@ namespace SBOSysTacV2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveCancelledBooking(CancelBookingViewModel cancelBookingView)
         {
-           
+
             if (!ModelState.IsValid)
             {
                 return View("CancelBooking", cancelBookingView);
             }
 
-         
+
 
             var newcancelledBooking = new CancelledBooking()
             {
@@ -1134,7 +1169,7 @@ namespace SBOSysTacV2.Controllers
                 trn_Id = cancelBookingView.TransId,
                 cancelledDated = cancelBookingView.CancelDate,
                 reasoncancelled = cancelBookingView.ReasonforCancel,
-                isrefundable = cancelBookingView.isRefundable?true:false
+                isrefundable = cancelBookingView.isRefundable ? true : false
 
             };
 
@@ -1152,14 +1187,14 @@ namespace SBOSysTacV2.Controllers
 
                 //_dbcontext.Bookings.Attach(booking);
                 _dbcontext.Entry(booking).Property(x => x.is_cancelled).IsModified = true;
-               
+
 
 
             }
 
             _dbcontext.SaveChanges();
 
-            return Json(new {success=true}, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -1181,7 +1216,7 @@ namespace SBOSysTacV2.Controllers
                 selPrintOpt = selprintopt
 
             };
-            
+
             //var contractReciept=new ContractReceiptViewModel();
 
             //contractReciept = cr.getContractReciept(pOption.Id);
@@ -1197,12 +1232,12 @@ namespace SBOSysTacV2.Controllers
             var pOption = new PrintOptionViewModel()
             {
                 Id = transId,
-                selPrintOpt ="distribution"
+                selPrintOpt = "distribution"
 
             };
 
 
-            return View("~/Views/Shared/ReportContainer.cshtml",pOption);
+            return View("~/Views/Shared/ReportContainer.cshtml", pOption);
         }
 
 
@@ -1217,7 +1252,7 @@ namespace SBOSysTacV2.Controllers
             var discountView = new DiscountCodeViewModel()
             {
                 transId = transactionId,
-                DiscountSelectlist =dc.GetListofDiscount()
+                DiscountSelectlist = dc.GetListofDiscount()
             };
 
             return PartialView("_AddBookingDiscount", discountView);
@@ -1246,7 +1281,7 @@ namespace SBOSysTacV2.Controllers
                 _dbcontext.Book_Discount.Add(bookDiscount);
                 _dbcontext.SaveChanges();
 
-                url = @Url.Action("getPartialView_AmountDue", "Bookings", new {transId = newdiscount.transId});
+                url = @Url.Action("getPartialView_AmountDue", "Bookings", new { transId = newdiscount.transId });
 
             }
             catch (Exception e)
@@ -1255,9 +1290,9 @@ namespace SBOSysTacV2.Controllers
                 throw;
             }
 
-              
-           
-            return Json(new {success=true,url=url }, JsonRequestBehavior.AllowGet);
+
+
+            return Json(new { success = true, url = url }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -1294,8 +1329,8 @@ namespace SBOSysTacV2.Controllers
                 throw;
             }
 
-           
-            return Json(new {success=success,url=url}, JsonRequestBehavior.AllowGet);
+
+            return Json(new { success = success, url = url }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -1303,16 +1338,17 @@ namespace SBOSysTacV2.Controllers
         public ActionResult GetDiscountDetails(int discountId)
         {
 
-            var discountdetails = (from d in _dbcontext.Discounts where d.disc_Id==discountId
-                select new
-                {
-                    discType=d.disctype,
-                    discountAmount=d.discount1,
-                    discStart=d.discStartdate,
-                    discEnd=d.discEnddate
-                }).FirstOrDefault();
+            var discountdetails = (from d in _dbcontext.Discounts
+                                   where d.disc_Id == discountId
+                                   select new
+                                   {
+                                       discType = d.disctype,
+                                       discountAmount = d.discount1,
+                                       discStart = d.discStartdate,
+                                       discEnd = d.discEnddate
+                                   }).FirstOrDefault();
 
-            return Json(new {discountdetails}, JsonRequestBehavior.AllowGet);
+            return Json(new { discountdetails }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult BookReservation(int reservationId)
@@ -1324,7 +1360,7 @@ namespace SBOSysTacV2.Controllers
 
             if (reservationinfo != null)
             {
-               bookingviewModel = new BookingsViewModel()
+                bookingviewModel = new BookingsViewModel()
                 {
                     transdate = DateTime.Now,
                     c_Id = reservationinfo.c_Id,
@@ -1334,11 +1370,11 @@ namespace SBOSysTacV2.Controllers
                     startdate = reservationinfo.resDate,
                     enddate = reservationinfo.resDate,
                     serve_status = false,
-                    fullname = Utilities.Getfullname(customer.lastname,customer.firstname,customer.middle),
+                    fullname = Utilities.Getfullname(customer.lastname, customer.firstname, customer.middle),
                     reservationId = reservationId,
-                   Servicetype_ListItems = booking.GetServiceType_SelectListItems()
-               };
-               
+                    Servicetype_ListItems = booking.GetServiceType_SelectListItems()
+                };
+
             }
 
 
@@ -1384,9 +1420,9 @@ namespace SBOSysTacV2.Controllers
                 transactionId = newBooking.trn_Id;
                 var _reservationId = bookingViewModel.reservationId;
 
-                var reservation=new Reservation();
+                var reservation = new Reservation();
                 reservation = _dbcontext.Reservations.Find(_reservationId);
-               
+
 
                 if (reservation != null)
                 {
@@ -1396,7 +1432,7 @@ namespace SBOSysTacV2.Controllers
                     _dbcontext.Entry(reservation).Property(x => x.reserveStat).IsModified = true;
                     _dbcontext.SaveChanges();
                 }
-              
+
 
 
                 success = true;
@@ -1487,48 +1523,57 @@ namespace SBOSysTacV2.Controllers
                 throw;
             }
 
-            return Json(new {success= success }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = success }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public ActionResult Get_AddonsandUpgrades(int transactionId)
+        public ActionResult Get_AddonsandUpgrades(int bookaddonNo)
         {
 
-            var addonsupgradesbookregister =
-                new AddonsUpgrade_BookRegisterViewModel
-                {
-                    selectlistAddonCat = addupgradereg.Get_SelectListAddonCat(),
-                    BookTransId = transactionId
-                };
-
-
-            return PartialView(addonsupgradesbookregister); 
+            return PartialView("_Get_AddonsandUpgrades",new AddonsUpgrade_BookRegisterViewModel
+            {
+                bookaddon_No = bookaddonNo,
+                selectlistAddonCat = addupgradereg.Get_SelectListAddonCat()
+               
+            });
         }
 
         public ActionResult Get_AddonsandUpgradesByCat(int addonCatId)
         {
 
-            var listofaddons = addonsviewmodel.GetListofAddonDetails().Where(catid => catid.addoncatId == addonCatId) .ToList();
+            var listofaddons = addonsviewmodel.GetListofAddonDetails().Where(catid => catid.addoncatId == addonCatId).ToList();
 
-            return Json(new {data= listofaddons}, JsonRequestBehavior.AllowGet);
+            return Json(new { data = listofaddons }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetSelectedAddons(int selectedaddonId,int bookId)
+        public ActionResult GetSelectedAddons(int selectedaddonId, int addonNo)
         {
 
             var seladdonsviewmodel = new SelectedAddonsViewModel();
-            var addons = _dbcontext.AddonDetails.Find(selectedaddonId);
+            var addonDetail = _dbcontext.AddonDetails.Find(selectedaddonId);
+            
 
-            if (addons != null)
+            if (addonDetail != null)
             {
-                seladdonsviewmodel = new SelectedAddonsViewModel()
-                {
-                    addonId = addons.addonId,
-                    bookingNo = bookId,
-                    addondetails = addons.addondescription,
-                    unit = addons.unit,
-                    amount =  (decimal) addons.amount
-                };
+                seladdonsviewmodel = (from a in _dbcontext.AddonDetails
+                    join b in _dbcontext.AddonCategories on a.addoncatId equals b.addoncatId
+                    where a.addonId == selectedaddonId
+                    select new SelectedAddonsViewModel
+                    {
+                        bookaddon_No = addonNo,
+                        addon_Id = selectedaddonId,
+                        booking_No =
+                            (int) _dbcontext.BookingAddons.FirstOrDefault(t => t.bookaddonNo == addonNo).trn_Id,
+                        addon_details = a.addondescription,
+                        unit = a.unit,
+                        amount = a.amount
+                        //orderQty =Convert.ToDecimal(from ba in _dbcontext.BookingAddons
+                        //    join bk in _dbcontext.Bookings on ba.trn_Id equals bk.trn_Id
+                        //    where ba.bookaddonNo == addonNo
+                        //          select new { bk.noofperson })
+                    }).Single();
+
+
             }
 
 
@@ -1536,48 +1581,154 @@ namespace SBOSysTacV2.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult GetAddOnsDetails(int addon_No)
+        {
+            return PartialView("_GetAddOnsDetails",new BookingAddonsViewModel()
+            {
+                bookaddon_No = addon_No,
+
+                BookingAddon = _dbcontext.BookingAddons.FirstOrDefault(t => t.bookaddonNo == addon_No),
+
+
+                BookAddOn_Details = _dbcontext.BookAddonsDetails.Where(t => t.bookaddonNo == addon_No).Select(t => new BookingAddonDetailsViewModel()
+                {
+                    addondetail_Id = t.addondetail_Id,
+                    bookaddon_No = (int)t.bookaddonNo,
+                    addon_Id = (int)t.addonId,
+                    addon_description = _dbcontext.AddonDetails.FirstOrDefault(a=>a.addonId==t.addonId).addondescription,
+                    addon_qty = (decimal)t.qty,
+                    addon_amount = (decimal)t.amount
+                }).ToList()
+
+            });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveSelectedAddon(SelectedAddonsViewModel selectedaddons)
+        public ActionResult SaveSelectedAddon(SelectedAddonsViewModel selectedaddon)
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("GetSelectedAddons", selectedaddons);
+                return PartialView("GetSelectedAddons", selectedaddon);
             }
 
             var success = false;
-            var ReturnUrl = string.Empty;
 
-           var isaddonsexist =
-                _dbcontext.BookingAddons.Any(x => x.addonId == selectedaddons.addonId &&
-                                                  x.trn_Id == selectedaddons.bookingNo);
+         
 
-            if (isaddonsexist == false)
+            var is_addonsexist = _dbcontext.BookAddonsDetails.Any(x => x.addonId == selectedaddon.addon_Id 
+                                 && x.bookaddonNo == selectedaddon.bookaddon_No);
+
+            if (is_addonsexist == false)
             {
-                var _addons = new BookingAddon
-                {
-                    trn_Id = selectedaddons.bookingNo,
-                    addonId = selectedaddons.addonId,
-                    Addondesc = selectedaddons.addondetails + " (" + selectedaddons.unit + " )",
-                    Note = selectedaddons.orderQty + " @ " + selectedaddons.amount,
-                    addonQty = selectedaddons.orderQty,
-                    AddonAmount = selectedaddons.amount * selectedaddons.orderQty
-                };
 
-                _dbcontext.BookingAddons.Add(_addons);
+                var addondetails = new BookAddonsDetail
+                        {
+                            bookaddonNo = selectedaddon.bookaddon_No,
+                            addonId = selectedaddon.addon_Id,
+                            qty = selectedaddon.orderQty,
+                            amount = selectedaddon.amount
+                        };
+
+                _dbcontext.BookAddonsDetails.Add(addondetails);
                 _dbcontext.SaveChanges();
 
                 ModelState.Clear();
 
                 success = true;
-                ReturnUrl = Url.Action("GetListofAddons", "Bookings", new { transId = selectedaddons.bookingNo });
+              
 
             }
 
-            
+            var ReturnUrl = new[]
+            {
+                Url.Action("GetAddOnsDetails", "Bookings", new { addon_No = selectedaddon.bookaddon_No }),
+                Url.Action("GetListofAddons", "Bookings", new { transId = selectedaddon.booking_No })
+            };
 
-            return Json(new { success = success, url = ReturnUrl }, JsonRequestBehavior.AllowGet);
+            return Json(new {success, url = ReturnUrl}, JsonRequestBehavior.AllowGet);
 
+        }
+
+        [HttpGet]
+        public ActionResult ModifyAddonDetail(int selAddonDetailId)
+        {
+            BookAddonSelectedViewModel seladdonsviewmodel=null;
+
+            var addonDetail = _dbcontext.BookAddonsDetails.FirstOrDefault(t=>t.addondetail_Id==selAddonDetailId);
+
+            if (addonDetail != null)
+            {
+                seladdonsviewmodel = new BookAddonSelectedViewModel()
+                {
+                    BookingAddonsDetail = addonDetail,
+                    SelectedBookAddonsDetail = (from a in _dbcontext.AddonDetails where a.addonId==addonDetail.addonId select new SelectedAddonsViewModel()
+                    {
+                        addondetail_No = addonDetail.addondetail_Id,
+                        booking_No = (int)addonDetail.BookingAddon.trn_Id,
+                        bookaddon_No = (int) addonDetail.bookaddonNo,
+                        addon_Id = a.addonId,
+                        addon_details = a.addondescription,
+                        unit = a.unit,
+                        amount = (decimal)addonDetail.amount,
+                        orderQty = (decimal)addonDetail.qty
+                    }).Single()
+                    //SelectedBookAddonsDetail =(from bkc in _dbcontext.AddonDetails where bkc.addonId == addonDetail.addonId select bkc).Single()
+                };
+            }
+
+
+            return PartialView("_ModifyAddonDetail", seladdonsviewmodel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateSelectedAddonDetail(BookAddonSelectedViewModel UpdatedUpdateSelectedAddonDetail)
+        {
+            if (!ModelState.IsValid) return PartialView("_ModifyAddonDetail", UpdatedUpdateSelectedAddonDetail);
+
+
+            var success = false;
+
+            var selectedaddonDetail = UpdatedUpdateSelectedAddonDetail.SelectedBookAddonsDetail;
+
+            try
+            {
+               
+                var addondetails = new BookAddonsDetail
+                {
+                    addondetail_Id = selectedaddonDetail.addondetail_No,
+                    addonId = UpdatedUpdateSelectedAddonDetail.BookingAddonsDetail.addonId,
+                    bookaddonNo = UpdatedUpdateSelectedAddonDetail.BookingAddonsDetail.bookaddonNo,
+                    qty = selectedaddonDetail.orderQty,
+                    amount = selectedaddonDetail.amount
+                };
+
+                _dbcontext.BookAddonsDetails.Attach(addondetails);
+                _dbcontext.Entry(addondetails).State = EntityState.Modified;
+                _dbcontext.SaveChanges();
+
+                ModelState.Clear();
+
+                success = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+           
+
+            var ReturnUrl = new[]
+            {
+                Url.Action("GetAddOnsDetails", "Bookings", new { addon_No =UpdatedUpdateSelectedAddonDetail.BookingAddonsDetail.bookaddonNo }),
+                Url.Action("GetListofAddons", "Bookings", new { transId = UpdatedUpdateSelectedAddonDetail.SelectedBookAddonsDetail.booking_No })
+            };
+
+
+
+            return Json(new {success,url=ReturnUrl }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -1590,7 +1741,7 @@ namespace SBOSysTacV2.Controllers
                 return PartialView("GetSelectedAddons_Modify", modifyselectedaddons);
             }
 
-           
+            bool success = false;
 
             //var isaddonsexist =
             //    _dbcontext.BookingAddons.Any(x => x.addonId == modifyselectedaddons.addonId &&
@@ -1603,13 +1754,13 @@ namespace SBOSysTacV2.Controllers
 
             var _addons = new BookingAddon
             {
-                No = modifyselectedaddons.No,
-                trn_Id = modifyselectedaddons.bookingNo,
-                addonId = modifyselectedaddons.addonId,
-                Addondesc = modifyselectedaddons.addondetails + " (" + modifyselectedaddons.unit + " )",
+                //bookaddonNo = modifyselectedaddons.addondetail_No,
+                //trn_Id = modifyselectedaddons.bookingNo,
+                ////addonId = modifyselectedaddons.addonId,
+                //Addondesc = modifyselectedaddons.addondetails + " (" + modifyselectedaddons.unit + " )",
                 Note = modifyselectedaddons.orderQty + " @ " + modifyselectedaddons.amount,
-                addonQty = modifyselectedaddons.orderQty,
-                AddonAmount = modifyselectedaddons.amount * modifyselectedaddons.orderQty
+                //addonQty = modifyselectedaddons.orderQty,
+                //AddonAmount = modifyselectedaddons.amount * modifyselectedaddons.orderQty
             };
 
             _dbcontext.BookingAddons.Attach(_addons);
@@ -1618,15 +1769,65 @@ namespace SBOSysTacV2.Controllers
 
             ModelState.Clear();
 
-            bool success = true;
-            string ReturnUrl = Url.Action("GetListofAddons", "Bookings", new { transId = modifyselectedaddons.bookingNo });
+            success = true;
 
+            string ReturnUrl = Url.Action("GetListofAddons", "Bookings", new { transId = modifyselectedaddons.booking_No });
 
-
-
-            return Json(new { success = success, url = ReturnUrl }, JsonRequestBehavior.AllowGet);
+            return Json(new {success, ReturnUrl }, JsonRequestBehavior.AllowGet);
 
         }
+
+        [HttpPost]
+        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin, UserPermessionLevelEnum.user)]
+        public ActionResult RemoveAddonDetail(int addondetailId ,int trans_id)
+        {
+            bool success = false;
+            
+            var bookaddonDetail = _dbcontext.BookAddonsDetails.Find(addondetailId);
+            int? bookaddon_No = null;
+            try
+            {
+
+                if (bookaddonDetail != null)
+                {
+                    bookaddon_No = bookaddonDetail.bookaddonNo;
+
+                    _dbcontext.BookAddonsDetails.Remove(bookaddonDetail);
+                    _dbcontext.SaveChanges();
+
+                    success = true;
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
+            var returnUrl = new[]
+            {
+                Url.Action("GetAddOnsDetails", "Bookings", new {addon_No =bookaddon_No}),
+                Url.Action("GetListofAddons", "Bookings", new {transId = trans_id})
+            };
+
+            return Json(new {success, url=returnUrl },JsonRequestBehavior.AllowGet);
+        }
+
+
+        //----------------------------------------------------------------------------------------------------------------------------
+        //======================================  BOOKING Miscellaneous/Other Charges ======================================================
+        //----------------------------------------------------------------------------------------------------------------------------
+        [HttpGet]
+        public ActionResult GetBookingOtherCharges(int transId)
+        {
+
+
+            return PartialView("_GetBookingOtherCharges");
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

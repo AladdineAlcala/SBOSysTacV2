@@ -310,7 +310,7 @@ namespace SBOSysTacV2.Controllers
 
 
                 addonslist = _dbEntities.BookingAddons.Where(x => x.trn_Id == transId).ToList();
-                addonsTotal = addonslist.Sum(y => Convert.ToDecimal(y.AddonAmount));
+                //addonsTotal = addonslist.Sum(y => Convert.ToDecimal(y.AddonAmount));
 
 
                 if (_transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value

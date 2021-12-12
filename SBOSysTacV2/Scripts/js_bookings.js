@@ -6,6 +6,8 @@ var $areasel;
 $(document).ready(function () {
 
 
+
+
     $('#packageselect').select2({
 
         dropdownParent: $('#modal-searchPackage')
@@ -18,29 +20,6 @@ $(document).ready(function () {
         //return this.optional(element) || moment(value, "DD-MMM-YYYY HH:mm A", true).isValid();
         return this.optional(element) || moment(value, "MM/DD/YYYY HH:mm A", true).isValid();
     }
-
-    ////init datetimepcker
-    //$('#event_date').datetimepicker(
-    //    {
-    //        //format: "DD-MMM-YYYY",
-    //        //defaultDate: dateNow
-
-    //        //maxDate: moment(),
-    //        allowInputToggle: true,
-    //        enabledHours: false,
-    //        locale: moment().local('en'),
-    //        format: "DD-MMM-YYYY HH:mm A",
-    //        defaultDate: dateNow
-
-    //    }
-    //    );
-
-
-
-
-
-
-
 
     var hassuperadminrights = $('#has_superadminRight').val();
 
@@ -56,18 +35,6 @@ $(document).ready(function () {
   
     $tablebookings.button(4).disable();
 
-
-    //=== check if user has superadmin rights
-
-    //if (hassuperadminrights === 'true') {
-
-    //    $tablebookings.button(4).enable();
-
-    //}
-
-
-
-    //  $('#tbl_eventsBooking_filter input').addClass('form-control');
 
     $('#btn_regbooking').on('click', function (e) {
 
@@ -318,18 +285,16 @@ $(document).ready(function () {
 
             var trnsId = $(this).attr("id");
 
-            
-
             $.ajax({
                 type: 'Get',
-                url: bookingsUrl.bookUrl_getPackageId,
+                url: bookingsUrl.bookUrl_getPackageId,  //"@Url.Action("GetPackageId","Bookings")",
                 data: { transactionId: trnsId },
                 success: function (result) {
                     if (result.success) {
 
                         setTimeout(function () {
 
-                            window.location.href = bookingsUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", trnsId);
+                            window.location.href = bookingsUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", trnsId);  //"@Url.Action("GetPackageBookingDetails", "Bookings",new {transId = "trans_Id"})",
 
                             // $('#spinn-loader').hide();
                         }, 600);
@@ -795,11 +760,14 @@ $(document).ready(function () {
         $tablebookings = $('#tbl_eventsBooking').DataTable(
             {
                 "serverSide": false,
-                "processing": true,
-                "language": {
 
-                    'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only"> Loading data Pls. wait....</span>'
+                "processing": true,
+
+                "language": {
+                    'infoFiltered': "",
+                    'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:40px;color:rgb(75, 183, 245);"></i><span class="sr-only"> Loading ....</span>'
                 },
+
                 "paging": true,
 
                 "order": [[3, 'asc']],
@@ -846,6 +814,7 @@ $(document).ready(function () {
                         "render":function(data,type,row) {
 
                             if (row.no_of_lackingMenus > 0) {
+
                                 return '<span class="name">' +
                                     toProperCase(data) +
                                     '</span> </br>' +
@@ -994,6 +963,7 @@ $(document).ready(function () {
 
 
 
+
     onrefreshBooking = function() {
         
         $('#tbl_eventsBooking').DataTable().ajax.reload();
@@ -1006,18 +976,88 @@ $(document).ready(function () {
         //$tablebookings.button(5).disable();
     };
 
+    var selAddons = document.querySelectorAll("div.addons > i");
+
+   /* function unCheckAll(ele) {
+
+        for (let i = 0; i < ele.length; i++) {
+            ele[i].classList.remove("fa-check-square-o");
+            ele[i].classList.add("fa-square-o");
+
+        }
+    }
+
+    function hideAll() {
+
+        var ele = document.querySelectorAll("div.addontools");
+
+        for (let i = 0; i < ele.length; i++) {
+            ele[i].classList.add("hide");
+        }
+    }
 
 
-    var targetElement = document.querySelector("#btn-collapse");
-    targetElement.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.currentTarget.classList.toggle("glyphicon-minus");
+    for (let i = 0; i < selAddons.length; i++) {
+        selAddons[i].addEventListener("click", function (e) {
+            e.preventDefault();
 
-    });
+            unCheckAll(selAddons);
+
+            hideAll();
+
+            var tgt = e.currentTarget;
 
 
 
-});//======== document end =============================
+            tgt.classList.toggle("fa-square-o");
+            tgt.classList.toggle("fa-check-square-o");
+
+            //console.log(e);
+
+            displayEventButtons(tgt);
+
+            console.log(e.target.getAttribute("data-id"));
+
+            console.log("from bookingjs");
+        });
+    }
+
+    function displayEventButtons(node) {    //display delete /edit icons
+
+        // console.log(node);
+
+        var parentNode = node.parentNode.parentNode;
+        var targetElement = parentNode.nextElementSibling.firstElementChild;
+        targetElement.classList.remove("hide");
+
+    }*/
+
+
+
+   
+
+});
+//---------------------------------------------------------------------------------------------------------------------------
+//=================================== document end =============================
+//----------------------------------------------------------------------------------------------------------------------------\
+
+
+//$(window).on('load', function () {
+
+//    var targetElem = document.querySelector('#bookingsection .box-body')
+
+//    let div = document.createElement('div');
+//    div.classList.add('overlay-wrapper');
+//    targetElem.insertAfter(div, targetElem.nextSibling);
+
+//    console.log(targetElem);
+ 
+
+
+//})
+
+
+
 
 
 
@@ -1050,6 +1090,9 @@ $(document).on('change', '#' +
 
     });
 
+
+
+
 $(document).on('change', '#' +
     'packageTypeSelectList' +
     '', function (e) {
@@ -1057,7 +1100,7 @@ $(document).on('change', '#' +
         e.preventDefault();
         e.stopPropagation();
 
-        debugger;
+/*        debugger;*/
 
     var selId = "";
         selId = $(this).attr('id');
@@ -1090,7 +1133,10 @@ $(document).on('change', '#' +
         }
     
 
-    });
+});
+
+
+
 
 $(document).on('change', '#' +
     'noofPaxSelectList' +
@@ -1171,7 +1217,7 @@ var LoadDataTableSearch = function(data,selectedId) {
             },
 
             {
-                'width': '10%', 'targets': 4,
+                'width': '20%', 'targets': 4,
                 'data': "packageId",
                 'searchable': false,
                 'orderable': false,
@@ -1184,7 +1230,8 @@ var LoadDataTableSearch = function(data,selectedId) {
 
                     if (row.isActive === true) {
 
-                        return '<button class="btn bg-olive btn-flat btn-sm btn-selectPackage" type="button" id="' + packageId + '"> <i class="fa fa-check-square-o"></i> Select </button>';
+                        return '<button class="btn btn-info btn-flat btn-sm btn-viewPackageDetails" type="button" id="' + packageId + '"> <i class="fa fa-binoculars"></i> View </button>'+ ' '
+                             + '<button class="btn bg-olive btn-flat btn-sm btn-selectPackage" type="button" id="' + packageId + '"> <i class="fa fa-check-square-o"></i> Select </button>';
 
                     } else {
 
@@ -1300,6 +1347,14 @@ $(document).on('click', '.btn-selectPackage', function () {
     // alert(package_Name);
 
 });
+
+
+$(document).on('click', '.btn-viewPackageDetails', function(e) {
+
+     alert('adasdas');
+});
+
+
 
 
 $(document).on('click', '#addDiscount', function (e) {
@@ -1620,6 +1675,4 @@ $(document).on('click', '#addDiscount', function (e) {
 function currencyFormat(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
-
-
 

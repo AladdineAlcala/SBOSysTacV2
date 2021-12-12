@@ -97,7 +97,7 @@ namespace SBOSysTacV2.ViewModel
                                     occasion = b.occasion,
                                     packagename = b.Package.p_descripton,
                                     packageType = b.Package.p_type.Trim(),
-                                    amoutperPax =Convert.ToDecimal(b.Package.p_amountPax),
+                                    amoutperPax =Convert.ToDecimal(b.p_amount),   //Important Note :: Change amount per pax from booking (b.p_amount ) data  previous data ===>>>( b.Package.p_amountPax )  ; change date  12/12/21
                                     venue = b.venue,
                                     typeofservice = b.typeofservice,
                                     startdate = b.startdate,
@@ -171,7 +171,7 @@ namespace SBOSysTacV2.ViewModel
                                       occasion = b.occasion,
                                       packagename = b.Package.p_descripton,
                                       packageType = b.Package.p_type.Trim(),
-                                      amoutperPax = Convert.ToDecimal(b.Package.p_amountPax),
+                                      amoutperPax = Convert.ToDecimal(b.p_amount),   //Important Note :: Change amount per pax from booking (b.p_amount ) data  previous data ===>>>( b.Package.p_amountPax )  ; change date  12/12/21
                                       venue = b.venue,
                                       typeofservice = b.typeofservice,
                                       startdate = b.startdate,

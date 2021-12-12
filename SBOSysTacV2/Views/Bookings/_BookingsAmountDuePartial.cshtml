@@ -80,7 +80,7 @@
 
             <tr style="margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px;">
 
-                <th style="width: 60%; margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px; font-weight: normal;"> <span id="btn-collapse" data-toggle="collapse" class="glyphicon glyphicon-plus mx-1 text-sm" data-target="#discount"></span> Less: Discount </th>
+                <th style="width: 60%; margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px; font-weight: normal;"> <span id="btn-collapse" data-toggle="collapse" class="glyphicon glyphicon-chevron-right mx-1 text-sm" data-target="#discount"></span> Less: Discount </th>
                 <td class="text-right bookdetails" style="width: 60%; margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;"> <h4 class="my-1 text-bold">@String.Format("({0:N})", totaldiscount)</h4></td>
 
             </tr>
@@ -92,12 +92,13 @@
                     <div class="collapse" id="discount">
                         
                         <table class="table m-0 p-0" id="table-discount">
+
                             <tr>
                                 <th style="width: 60%; margin-top: 0px; margin-bottom: 0px; padding-left: 40px; padding-top: 2px; padding-bottom: 2px; font-weight: normal;">Catering Discount :<small class="text-muted">@(catdescountdetails)</small></th>
                                 <td class="text-right bookdetails" style="width: 60%; margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;"> <h5 class="my-1">@String.Format("{0:N}", cateringdiscount * noofPax)</h5></td>
 
                             </tr>
-                          
+
                         </table>
 
                     </div>

@@ -20,7 +20,6 @@ namespace SBOSysTacV2.ViewModel
         [Required(ErrorMessage = "Amount per head Required")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal p_amountPax { get; set; }
-       
         public int? p_min { get; set; }
         [Required(ErrorMessage = "Minimum total pax Required")]
         public int packagenopax_id { get; set; }

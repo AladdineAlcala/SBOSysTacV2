@@ -26,21 +26,17 @@ namespace SBOSysTacV2.ViewModel
         public string menuImageFilename { get; set; }
         public string oldMenuId { get; set; }
 
-        public IEnumerable<BookMenusViewModel> LisofMenusBook(int transid)
+        public IEnumerable<BookMenusViewModel> ListofMenusBook(int transid)
         {
             IOrderedEnumerable<BookMenusViewModel> bookMenusList;
 
             var packageBookMenus = new Package_MenusBookViewModel();
 
 
-            //var _dbentities = new PegasusEntities();
-
             try
             {
 
-                //var bookmenus = (from bkm in _dbentities.Book_Menus select bkm).Where(t => t.trn_Id == transid).ToList();
-
-                var bookmenus = this.Get_Menu_on_PackageByTransId(transid).ToList();
+                var bookmenus = Get_Menu_on_PackageByTransId(transid).ToList();
 
 
 

@@ -32,7 +32,6 @@ namespace SBOSysTacV2.Models
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
         public virtual DbSet<Book_Discount> Book_Discount { get; set; }
         public virtual DbSet<Book_Menus> Book_Menus { get; set; }
-        public virtual DbSet<BookingAddon> BookingAddons { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<CancelledBooking> CancelledBookings { get; set; }
         public virtual DbSet<CateringDiscount> CateringDiscounts { get; set; }
@@ -52,5 +51,7 @@ namespace SBOSysTacV2.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<ServiceType> ServiceTypes { get; set; }
         public virtual DbSet<PackagesRangeBelowMin> PackagesRangeBelowMins { get; set; }
+        public virtual DbSet<BookAddonsDetail> BookAddonsDetails { get; set; }
+        public virtual DbSet<BookingAddon> BookingAddons { get; set; }
     }
 }

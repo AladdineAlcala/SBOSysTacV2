@@ -34,7 +34,7 @@
 
                     <div class="card-body">
 
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                             <h2 class="mb-3 mt-1 text-bold">@fullname </h2>
                             <ul class=" ml-4 mb-0 fa-ul text-muted">
                                 <li class="text"><span class="fa-li"><i class="fa fa-lg fa-home"></i> </span> <b class="text-info mr-1">Address:</b> @Model.Customer.address</li>
@@ -48,11 +48,11 @@
                 </div>
 
                 <div class="col-xs-6">
-                    <small class="pull-right bookdetails" style="padding-top: 12px;">
+                    <h5 class="pull-right bookdetails mr-3" style="padding-top: 12px;">
                         <b>Trn Date:</b>
 
                         @Model.Booking_Trans.transdate.Value.ToString("MMM d, yyyy h:mm tt")
-                    </small>
+                    </h5>
 
                 </div>
             </div>
@@ -74,7 +74,9 @@
                         <li class="nav-item">
                             <a class="nav-link" id="menu_info-tab" data-toggle="pill" href="#tabpane_menuinfo" role="tab" aria-controls="tabpane_menuinfo" aria-selected="false">Menus / Add-ons and Upgrades</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link" id="otherCharges_info-tab" data-toggle="pill" href="#tabpane_otherchargesinfo" role="tab" aria-controls="tabpane_otherchargesinfo" aria-selected="false">Other Charges</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" id="statement_info-tab" data-toggle="pill" href="#tabpane_statementinfo" role="tab" aria-controls="tabpane_statementinfo" aria-selected="false">Statement of Account</a>
                         </li>
@@ -113,6 +115,18 @@
                             </div>
 
                         </div>
+                        <div class="tab-pane fade" id="tabpane_otherchargesinfo" role="tabpanel" aria-labelledby="otherCharges_info-tab">
+
+                            <div class="row">
+                                <div class="col-md-8">
+
+                                    @{
+                                        Html.RenderAction("GetBookingOtherCharges",new{transId=Model.transactionId});
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
 
                         <div class="tab-pane fade" id="tabpane_statementinfo" role="tabpanel" aria-labelledby="statement_info-tab">
                             <p class="lead" style="margin: 10px;">AMOUNT DUE</p>
@@ -122,7 +136,7 @@
                                     <div class="table-responsive" id="amountDue">
                                         @{
 
-                                            Html.RenderAction("getPartialView_AmountDue", new { transId = Model.transactionId });
+                                            Html.RenderAction("GetPartialView_AmountDue", new { transDetails=Model});
                                         }
 
                                     </div>
@@ -239,7 +253,7 @@
 </div>
 <!-- /.modal -->
 
-<div class="modal fade" id="modal-change_menu">
+<!--<div class="modal fade" id="modal-change_menu">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -251,16 +265,8 @@
             <div class="modal-body" id="modal_changemenu_content">
 
             </div>
-            <div class="modal-footer">
-                @*<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline" id="btnSavelocation">Save changes</button>*@
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+            <div class="modal-footer">-->
+
 
 
 <div class="modal fade" id="modal-seletedaddons">
@@ -318,11 +324,33 @@
             urlAddOnsInformation: "@Url.Action("AddOnsInformation", "Bookings")",
             urlAddOnsUpgrades: "@Url.Action("Get_AddonsandUpgrades", "Bookings")",
             urlRemoveBookingMenus: "@Url.Action("RemoveMenufromListofBookings", "Bookings")",
-            urlRemoveBookingAddOns: "@Url.Action("RemoveAddons", "Bookings")",
+            urlRemoveBookingAddOns: "@Url.Action("RemoveBookingAddon", "Bookings")",
+            urlRemoveBookingAddOnDetail: "@Url.Action("RemoveAddonDetail", "Bookings")",
+            urlModifyBookingAddOnDetail: "@Url.Action("ModifyAddonDetail", "Bookings")",
             urlGetListAddonsbyCat: "@Url.Action("Get_AddonsandUpgradesByCat", "Bookings")",
-            urlGetSelectedAddons: "@Url.Action("GetSelectedAddons", "Bookings")"
+            urlGetSelectedAddons: "@Url.Action("GetSelectedAddons", "Bookings")",
+            urlGetAddOnDetailsListByAddonId: "@Url.Action("GetAddOnsDetails","Bookings",new { addon_No = "addonNo" })"
 
         }
+
+
+        $(function() {
+
+            var targetElement = document.querySelector("#btn-collapse");
+
+            targetElement.addEventListener("click",
+                function(e) {
+                    e.preventDefault();
+                    e.currentTarget.classList.toggle("glyphicon-chevron-down");
+                });
+
+
+
+        });
+
+        
+       
+
 
     </script>
 

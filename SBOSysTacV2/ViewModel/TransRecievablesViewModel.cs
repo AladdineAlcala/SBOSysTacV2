@@ -62,25 +62,25 @@ namespace SBOSysTacV2.ViewModel
                         _refunds = (from re in db_entities.Refunds select re).FirstOrDefault(t => t.trn_Id == b.trn_Id)
 
                     }).Select(p => new TransRecievablesViewModel()
-                {
-                    transId = p._tId,
-                    transDate = Convert.ToDateTime(p._trDate),
-                    bookdatetime = Convert.ToDateTime(p._evtDate),
-                    cusId = Convert.ToInt32(p._cusId),
-                    cusfullname = p._cusfullname,
-                    address = p._address,
-                    contact = p._contact,
-                    occasion = p._occasion,
-                    venue = p._venue,
-                    iscancelled = Convert.ToBoolean(p._iscancelledbooking),
-                    packagedetails = p._packagedetails,
-                    p_amountperPax = Convert.ToDecimal(p._pAmountperPax),
-                    totalPackageAmount = p._tpackageAmt,
-                    totalPayment = Convert.ToDecimal(p._totapayment),
-                        //balance = Convert.ToDecimal(p._totapayment)> p._tpackageAmt?Convert.ToDecimal(p._refunds) > 0 ? Convert.ToDecimal(((p._tpackageAmt - p._totapayment) + Convert.ToDecimal(p._refunds.rf_Amount))) : Convert.ToDecimal(p._tpackageAmt - p._totapayment): p._tpackageAmt,
-                    balance = Convert.ToDecimal(p._totapayment) > p._tpackageAmt ? p._refunds!=null ? Convert.ToDecimal(((p._tpackageAmt - p._totapayment) + Convert.ToDecimal(p._refunds.rf_Amount))) : Convert.ToDecimal(p._tpackageAmt - p._totapayment) : p._refunds != null?0: p._tpackageAmt==p._totapayment?0: p._tpackageAmt>p._totapayment?Convert.ToDecimal(p._tpackageAmt-p._totapayment):p._tpackageAmt,
-                        refunds = p._refunds != null ? Convert.ToDecimal(p._refunds.rf_Amount) : 0
-                }).ToList();
+                    {
+                        transId = p._tId,
+                        transDate = Convert.ToDateTime(p._trDate),
+                        bookdatetime = Convert.ToDateTime(p._evtDate),
+                        cusId = Convert.ToInt32(p._cusId),
+                        cusfullname = p._cusfullname,
+                        address = p._address,
+                        contact = p._contact,
+                        occasion = p._occasion,
+                        venue = p._venue,
+                        iscancelled = Convert.ToBoolean(p._iscancelledbooking),
+                        packagedetails = p._packagedetails,
+                        p_amountperPax = Convert.ToDecimal(p._pAmountperPax),
+                        totalPackageAmount = p._tpackageAmt,
+                        totalPayment = Convert.ToDecimal(p._totapayment),
+                            //balance = Convert.ToDecimal(p._totapayment)> p._tpackageAmt?Convert.ToDecimal(p._refunds) > 0 ? Convert.ToDecimal(((p._tpackageAmt - p._totapayment) + Convert.ToDecimal(p._refunds.rf_Amount))) : Convert.ToDecimal(p._tpackageAmt - p._totapayment): p._tpackageAmt,
+                        balance = Convert.ToDecimal(p._totapayment) > p._tpackageAmt ? p._refunds!=null ? Convert.ToDecimal(((p._tpackageAmt - p._totapayment) + Convert.ToDecimal(p._refunds.rf_Amount))) : Convert.ToDecimal(p._tpackageAmt - p._totapayment) : p._refunds != null?0: p._tpackageAmt==p._totapayment?0: p._tpackageAmt>p._totapayment?Convert.ToDecimal(p._tpackageAmt-p._totapayment):p._tpackageAmt,
+                            refunds = p._refunds != null ? Convert.ToDecimal(p._refunds.rf_Amount) : 0
+                    }).ToList();
             }
 
             catch (Exception e)

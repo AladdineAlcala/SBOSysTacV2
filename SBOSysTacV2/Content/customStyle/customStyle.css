@@ -355,18 +355,41 @@ ul.myErrorClass, input.myErrorClass, select.myErrorClass {
         font-family: courier, courier new, serif;
     }
 
-.products-list .product-title {
+.product-list-in-box > .item {
+    border-bottom: none;
+}
+
+    .products-list .product-title {
     font-size: 18px;
     color: #75C5FA;
     margin-left:10px;
 }
 
 .products-list .product-description {
-    margin-top: 8px;
+    margin-top: 3px;
     color: #0A0201;
-    margin-left:25px;
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+/*    margin-left:25px;*/
 }
 
+div#course {
+    width: 78%;
+}
+
+div#course > div {
+    border-bottom: 1px solid;
+    height: 30px;
+}
+
+div#course > .menu-counter {
+    font-weight: bold;
+    font-size: 1.6rem;
+
+}
+div#course >.menu-counter::after {
+    content: ".";
+}
 #menuslist{
     height:100%;
 }
@@ -851,4 +874,47 @@ table#table-discount {
     flex-grow: 1;
     text-align: center;
 }
+
+.form-check {
+    position: relative;
+    display: block;
+    padding-left: 1.25rem;
+}
+
+.form-check-input {
+    position: absolute;
+    margin-top: 0.3rem;
+    margin-left: -1.25rem;
+}
+
+.form-check-input[disabled] ~ .form-check-label,
+.form-check-input:disabled ~ .form-check-label {
+    color: #6c757d;
+}
+
+.form-check-label {
+    margin-bottom: 0;
+}
+
+.form-check-inline {
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-left: 0;
+    margin-right: 0.75rem;
+}
+
+.form-check-inline .form-check-input {
+    position: static;
+    margin-top: 0;
+    margin-right: 0.3125rem;
+    margin-left: 0;
+}
+
+div.addons>i {
+    cursor: pointer;
+}
+
+
 

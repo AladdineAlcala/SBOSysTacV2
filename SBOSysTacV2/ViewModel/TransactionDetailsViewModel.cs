@@ -35,21 +35,23 @@ namespace SBOSysTacV2.ViewModel
 
             // _dbEntities.Configuration.ProxyCreationEnabled = false;
 
-            _bookingsViewModel = bvm.GetListofBookings().ToList();
+            _bookingsViewModel = bvm.GetListofBookings().ToList();  // 1.  from 
+
+
             try
             {
 
 
                 _list = (from b in _bookingsViewModel
                          join c in _dbEntities.Customers on b.c_Id equals c.c_Id
-                    join p in _dbEntities.Packages on b.pId equals p.p_id
-                    select new TransactionDetailsViewModel()
-                    {
-                        transactionId = b.trn_Id,
-                        Booking_Trans = b,
-                        Customer = c,
-                        Package_Trans = p
-                    }).ToList();
+                        join p in _dbEntities.Packages on b.pId equals p.p_id
+                        select new TransactionDetailsViewModel()
+                        {
+                            transactionId = b.trn_Id,
+                            Booking_Trans = b,
+                            Customer = c,
+                            Package_Trans = p
+                        }).ToList();
 
             }
             catch (Exception e)
@@ -64,23 +66,32 @@ namespace SBOSysTacV2.ViewModel
 
         public TransactionDetailsViewModel GetTransactionDetailsById(int transId)
         {
-            var bookings = bvm.GetListofBookings().ToList();
+            var bookings = bvm.GetListofBookings(transId);
 
             var bookingsList = new TransactionDetailsViewModel();
             try
             {
 
-                bookingsList = (from b in bookings
-                    join c in _dbEntities.Customers on b.c_Id equals c.c_Id
-                    join p in _dbEntities.Packages on b.pId equals p.p_id
-                    where b.trn_Id == transId
-                    select new TransactionDetailsViewModel()
-                    {
-                        transactionId = b.trn_Id,
-                        Booking_Trans = b,
-                        Customer = c,
-                        Package_Trans = p
-                    }).Single();
+                //bookingsList = (from b in bookings
+                //    join c in _dbEntities.Customers on b.c_Id equals c.c_Id
+                //    join p in _dbEntities.Packages on b.pId equals p.p_id
+                //    where b.trn_Id == transId
+                //    select new TransactionDetailsViewModel()
+                //    {
+                //        transactionId = b.trn_Id,
+                //        Booking_Trans = b,
+                //        Customer = c,
+                //        Package_Trans = p
+                //    }).Single();
+
+
+                bookingsList = new TransactionDetailsViewModel()
+                {
+                    transactionId = transId,
+                    Booking_Trans = bookings,
+                    Customer =(from c in _dbEntities.Customers where c.c_Id==bookings.c_Id select c).Single(),
+                    Package_Trans = (from p in _dbEntities.Packages where  p.p_id==bookings.pId select p).Single()
+                };
 
             }
             catch (Exception e)
@@ -113,7 +124,7 @@ namespace SBOSysTacV2.ViewModel
 
                 var addonslist = _dbEntities.BookingAddons.Where(x => x.trn_Id == transId).ToList();
 
-                totalAddons = addonslist.Sum(y => Convert.ToDecimal(y.AddonAmount));
+                //totalAddons = addonslist.Sum(y => Convert.ToDecimal(y.AddonAmount));
 
                 totalpackage = package + totalAddons;
 

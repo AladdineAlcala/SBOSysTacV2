@@ -39,7 +39,7 @@ $(document).ready(function () {
                 'data': null,
                 'defaultContent': ''
             },
-            { "orderable": true, "targets": 1, "data": "No" },
+            { "orderable": true, "targets": 1, "data": "addonId" },
          
             { "orderable": true, "targets": 2, "data": "addoncategory" },
             { "orderable": true, "targets": 3, "data": "AddonsDescription" },

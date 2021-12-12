@@ -227,9 +227,11 @@ $(document).on('click', '#menu_change', function (e) {
     var selectedcourseId = elem.attr('data-id');
 
 
+    //----------------      PACKAGE MENU > MENU CHANGE OPTION   -------------------------------------------------- 
+    //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourseforChange", "Bookings")",
     $.ajax({
         type: 'Get',
-        url: PackageBookingUrl.urlSearchpackagebookingbybookNo,    //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourseforChange", "Bookings")",
+        url: PackageBookingUrl.urlSearchpackagebookingbybookNo,   
         contentType: 'application/html;charset=utf8',
         data: { bookmenuNo: $(this).attr("data-menuid") },
         datatype: 'html',
@@ -242,7 +244,7 @@ $(document).on('click', '#menu_change', function (e) {
 
             var modal = $('#modal-searchPackageBooking');
 
-            modal.find('#modalcontent').html(result);
+            modal.find('#modalPackagecontent').html(result);
 
 
             RegisterAjaxFormEventsModify();
@@ -464,16 +466,13 @@ function LoadDataTabletoModalModify() {
 
 
 
-
-
-
 $(document).on('click', '#addon_Information', function (e) {
 
     e.preventDefault();
 
     $.ajax({
         type: 'Get',
-        url: PackageBookingUrl.urlAddOnsInformation,
+        url: PackageBookingUrl.urlAddOnsInformation, /*"@Url.Action("AddOnsInformation", "Bookings")",*/
         contentType: 'application/html;charset=utf8',
         data: { transactionId: $(this).data('id') },
         datatype: 'html',
@@ -492,15 +491,19 @@ $(document).on('click', '#addon_Information', function (e) {
     });
 });
 
+
+
 $(document).on('click', '#addon_upgrades', function (e) {
 
     e.preventDefault();
+
+    // urlAddOnsUpgrades: "@Url.Action("Get_AddonsandUpgrades", "Bookings")",
 
     $.ajax({
         type: 'Get',
         url: PackageBookingUrl.urlAddOnsUpgrades,
         contentType: 'application/html;charset=utf8',
-        data: { transactionId: $(this).data('id') },
+        data: { bookaddonNo: $(this).data('id') },
         datatype: 'html',
         cache: false,
         success: function (result) {
@@ -521,6 +524,8 @@ $(document).on('click', '#addon_upgrades', function (e) {
 
     });
 });
+
+
 
 $(document).on('change',
     '#' +
@@ -549,7 +554,7 @@ $(document).on('change',
                                         bLengthChange: false,
                                         bFilter: false,
                                         ajax: {
-                                            url: PackageBookingUrl.urlGetListAddonsbyCat,
+                                            url: PackageBookingUrl.urlGetListAddonsbyCat,   // urlGetListAddonsbyCat: "@Url.Action("Get_AddonsandUpgradesByCat", "Bookings")",
                                             data: {addonCatId: $(this).val() },
                                             type: "Get",
                                             datatype: "json"
@@ -587,13 +592,13 @@ $(document).on('change',
                                                  ,
                                                  {
                                                      'width':'4%', 'targets': 4,
-                                                     'data': "No",
+                                                     'data': "addonId",
                                                      'searchable': false,
                                                      'orderable': false,
                                                      'className': 'dt-body-center text-center',
                                                      render: function (data, type, row) {
                                                          var addonNo = data;
-
+                                                        /* console.log(data);*/
                                                          return '<button class="btn bg-olive btn-flat btn-sm" type="button" id="btn-selectaddon"  data-id="' + addonNo + '"> <i class="fa fa-check-square-o"></i> Select </button>';
 
                                                      }
@@ -609,8 +614,7 @@ $(document).on('change',
     });
 
 
-$(document).on('click', '#btn_saveaddOns',
-    function (e) {
+$(document).on('click', '#btn_saveaddOns', function (e) {
         e.preventDefault();
 
         Swal.fire({
@@ -625,6 +629,8 @@ $(document).on('click', '#btn_saveaddOns',
         }).then((result) => {
 
             if (result.value) {
+
+                ///Bookings/SaveAddons
 
                 var formUrl = $('#save_addons').attr('action');
 
@@ -656,6 +662,8 @@ $(document).on('click', '#btn_saveaddOns',
                                 //$('#addonDescription').val("");
 
                                 $('#addons').load(data.url);
+
+
                                 $('#modal-Addons').modal('hide');
                             }
                         },
@@ -746,7 +754,7 @@ $(document).on('click', '#menu_remove', function (e) {
 $(document).on('click', '#addons_remove', function (e) {
     e.preventDefault();
 
-    var addonId = $(this).attr("data-id");
+    var bookaddonNo = $(this).attr("data-id");
 
         Swal.fire({
             title: "Are You Sure ?",
@@ -761,12 +769,17 @@ $(document).on('click', '#addons_remove', function (e) {
 
             if (result.value) {
 
+
+                //Check Selected Addon if has addon Details 
+
+
+
                 $.ajax({
 
                     type: "post",
                     url: PackageBookingUrl.urlRemoveBookingAddOns,
                     ajaxasync: true,
-                    data: { addonNo: addonId },
+                    data: { addonNo: bookaddonNo },
                     cache: false,
                     success: function (data) {
 
@@ -781,12 +794,13 @@ $(document).on('click', '#addons_remove', function (e) {
 
                             $('#addons').load(data.url);
 
-                            setTimeout(function () { $("#modal-Addons").modal('hide') }, 300);
+
+                            //setTimeout(function () { $("#modal-Addons").modal('hide') }, 300);
                         }
                         else {
                             Swal.fire({
-                                title: 'ERROR!',
-                                text: 'Unable to remove record..',
+                                title: 'Unable to remove record... !',
+                                text: data.message,
                                 type: 'error'
                             });
                         }
@@ -802,10 +816,189 @@ $(document).on('click', '#addons_remove', function (e) {
   
 });
 
+//========================= MODIFY ADDONS DETAILS =====================================================
+
+
+$(document).on('click', '#addon-detail_Modify', function (e) {
+    e.preventDefault();
 
 
 
-$(document).on('click', '#btn_canceladdon', function (e) {
+
+    $.ajax({
+        type: 'Get',
+        url: PackageBookingUrl.urlModifyBookingAddOnDetail,  /*"@Url.Action("ModifyAddonDetail", "Bookings")",*/
+        contentType: 'application/html;charset=utf8',
+        data: { selAddonDetailId: $(this).closest('tr').attr('data-id')},
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+            var modal = $('#modal-Addons');
+
+            modal.find('#modal_addoncontents').html(result);
+
+            modal.modal({
+                backdrop: 'static',
+                keyboard: false
+            }, 'show');
+        }
+
+    });
+});
+
+
+//============================= UPDATE ADDONS DETAIL ==================================================
+
+$(document).on('click', '#btn_updateselctedaddondetail', function (e) {
+    e.preventDefault();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Updating Addons..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Save it!',
+        //closeOnConfirm: true, closeOnCancel: true
+    }).then((result) => {
+
+        if (result.value) {
+
+            ///Bookings/UpdateSelectedAddonDetail
+
+            var formUrl = $('#selectedaddonformmodify').attr('action');
+
+            var form = $('[id*=selectedaddonformmodify]');
+
+            $.validator.unobtrusive.parse(form);
+            form.validate();
+
+
+            if (form.valid()) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: formUrl,
+                    data: form.serialize(),
+                    datatype: 'json',
+                    cache: false,
+                    success: function (data) {
+                        if (data.success) {
+
+                            Swal.fire({
+                                title: "Success",
+                                text: "It was succesfully Updated",
+                                type: "success"
+
+
+                            });
+
+                            //$('#addonDescription').val("");
+
+                            $('#addonsdetails').load(data.url[0]);
+
+                            $('#addons').load(data.url[1]);
+
+
+
+                            $('#modal-Addons').modal('hide');
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire('Error adding record!', 'Please try again', 'error');
+                    }
+                });
+            } else {
+                $.each(form.validate().errorList,
+                    function (key, value) {
+                        $errorSpan = $("span[data-valmsg-for='" + value.element.id + "']");
+                        $errorSpan.html("<span style='color:#a94442'>" + value.message + "</span>");
+                        $errorSpan.show();
+                    });
+            }
+
+        }
+    });
+
+
+});
+
+
+
+//========================= REMOVE ADDONDETAILS ========================================================
+
+$(document).on('click', '#addon-detail_Remove', function (e) {
+    e.preventDefault();
+
+    var __targetElem = $(this).closest('tr');
+    var __addondetailId = __targetElem.attr('data-id');
+    var __transId = $('#hiddenTransId').val();
+
+
+     Swal.fire({
+         title: "Are You Sure ?",
+         text: "Confirm Removing This Addon..",
+         type: "question",
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Yes, Remove it!'
+         //closeOnConfirm: true, closeOnCancel: true
+     }).then((result) => {
+ 
+         if (result.value) {
+ 
+             $.ajax({
+ 
+                 type: "post",
+                 url: PackageBookingUrl.urlRemoveBookingAddOnDetail,
+                 ajaxasync: true,
+                 data: { addondetailId: __addondetailId, trans_id: __transId},
+                 cache: false,
+                 success: function (data) {
+ 
+                     if (data.success) {
+
+                         Swal.fire({
+                             title: "Success",
+                             text: "It was succesfully removed!",
+                             type: "success"
+                         });
+
+                         setTimeout(function () {
+
+                             console.log(data.url[1]);
+                             $('#addons').load(data.url[1]);
+
+                         }, 1000);
+
+                         __targetElem.remove();
+                     }
+                     else {
+                         Swal.fire({
+                             title: 'ERROR!',
+                             text: 'Unable to remove record..',
+                             type: 'error'
+                         });
+                     }
+ 
+                 }
+             });
+ 
+         }
+ 
+     });//end then
+ 
+
+
+});
+
+
+
+
+
+$(document).on('click', '#btn_canceladdon,#btn_cancelselectedaddondetail', function (e) {
     e.preventDefault();
 
     setTimeout(function () { $("#modal-Addons").modal('hide') }, 300);
@@ -939,40 +1132,40 @@ $(document).on('click', '#btn_modifyaddOns',
 $(document).on('click', '#btn-selectaddon',function(e) {
         e.preventDefault();
 
-        var addonId = $(this).attr("data-id");
-        var transId = $('#transbookingId').val();
+        var selectedaddon_id = $(this).attr("data-id");
+        var addon_no = $('#bookaddon_No').val();
 
          //alert(addonId);   
         $('#modal-Addons').modal('hide');
 
-            $('#modal-Addons').on('hidden.bs.modal',
-                function() {
-                    // Load up a new modal...
-                
-                    $.ajax({
-                        type: 'Get',
-                        url: PackageBookingUrl.urlGetSelectedAddons,
-                        contentType: 'application/html;charset=utf8',
-                        data: { selectedaddonId: addonId,bookId:transId},
-                        datatype: 'html',
-                        cache: false,
-                        success: function (result) {
-                            var modal = $('#modal-seletedaddons');
 
-                            modal.find('#modal-content_selectedaddon').html(result);
+            $('#modal-Addons').on('hidden.bs.modal', function() {
+                            // Load up a new modal...
+                        
+                                $.ajax({
+                                    type: 'Get',
+                                    url: PackageBookingUrl.urlGetSelectedAddons,    /* @Url.Action("GetSelectedAddons", "Bookings")"*/
+                                    contentType: 'application/html;charset=utf8',
+                                    data: { selectedaddonId: selectedaddon_id, addonNo: addon_no},
+                                    datatype: 'html',
+                                    cache: false,
+                                    success: function (result) {
+                                        var modal = $('#modal-seletedaddons');
 
-                            modal.modal({
-                                backdrop: 'static',
-                                keyboard: false
-                            }, 'show');
-                        }
+                                        modal.find('#modal-content_selectedaddon').html(result);
 
-                    });
+                                        modal.modal({
+                                            backdrop: 'static',
+                                            keyboard: false
+                                        }, 'show');
+                                    }
+
+                                });
 
 
-                  
+                          
 
-             });
+            });
 
    
 
@@ -996,7 +1189,7 @@ $(document).on('click', '#btn_regselctedaddons',
 
             if (result.value) {
 
-                var formUrl = $('#selectedaddonform').attr('action');
+                var formUrl = $('#selectedaddonform').attr('action');     /*Bookings/SaveSelectedAddon*/
 
                 var form = $('[id*=selectedaddonform]');
 
@@ -1023,9 +1216,13 @@ $(document).on('click', '#btn_regselctedaddons',
 
                                 });
 
-                                //$('#addonDescription').val("");
 
-                                $('#addons').load(data.url);
+                              //  console.log(data.url[0]);
+
+                                $('#addonsdetails').load(data.url[0]);
+
+                                $('#addons').load(data.url[1]);
+
                                 $('#modal-seletedaddons').modal('hide');
                             }
                             else
@@ -1097,7 +1294,7 @@ $(document).on('click', '#btn_modifyselctedaddons',
                         data: form.serialize(),
                         datatype: 'json',
                         cache: false,
-                        success: function (data) {
+                        success: function(data) {
                             if (data.success) {
 
                                 Swal.fire({
@@ -1111,9 +1308,8 @@ $(document).on('click', '#btn_modifyselctedaddons',
                                 //$('#addonDescription').val("");
 
                                 $('#addons').load(data.url);
-                                $('#modal-modifyAddons').modal('hide');
-                            }
-                            else {
+                               
+                            } else {
                                 Swal.fire({
                                     title: "Failed",
                                     text: "Add on selected already in the list",
@@ -1122,15 +1318,18 @@ $(document).on('click', '#btn_modifyselctedaddons',
 
                                 });
 
-                                //$('#addonDescription').val("");
 
-                                //$('#addons').load(data.url);
-                                $('#modal-seletedaddons').modal('hide');
+                             
+
+
                             }
+
+                            $('#modal-modifyAddons').modal('hide');
                         },
-                        error: function (xhr, ajaxOptions, thrownError) {
+                        error: function(xhr, ajaxOptions, thrownError) {
                             Swal.fire('Error adding record!', 'Please try again', 'error');
                         }
+
                     });
                 } else {
                     $.each(form.validate().errorList,
@@ -1168,7 +1367,7 @@ var imglightcontent = document.getElementById("imgcontent");
 $(document).on('click', '.imglightbox', function (e) {
     e.preventDefault();
 
-    debugger;
+    /*debugger;*/
 
     var counter = $(this).closest('div').data('id');
 
@@ -1234,7 +1433,7 @@ InsertImages(imglightcontent, $tblBookMenu);
 
 function InsertImages(element, object) {
 
-    debugger;
+   /* debugger;*/
     var imagesdemo = "";
     let i = 0;
 

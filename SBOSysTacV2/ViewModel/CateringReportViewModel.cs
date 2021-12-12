@@ -62,7 +62,7 @@ namespace SBOSysTacV2.ViewModel
                 noofPax = (int)x.noofperson,
                 PackageRate=x.Package.p_type.Trim()!="vip"? (decimal)x.Package.p_amountPax - transactionDetails.GetCateringdiscountByPax((int)x.noofperson): (decimal)x.Package.p_amountPax,
                 Addons = x.BookingAddons.Any() ? string.Join(", ",x.BookingAddons.Select(t=>t.Addondesc)):String.Empty,
-                AddonsTotal = x.BookingAddons.Any() ? x.BookingAddons.Select(t =>Convert.ToDecimal(t.AddonAmount)).Sum() : 0,
+                //AddonsTotal = x.BookingAddons.Any() ? x.BookingAddons.Select(t =>Convert.ToDecimal(t.AddonAmount)).Sum() : 0,
                 AmountPaid = x.Payments.Any() ? x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum() : 0,
                 PaymentMode = x.Payments.Any()? x.Payments.Select(t => t.pay_means).FirstOrDefault():"---",
                 Status = x.Payments.Any()?"pd":"unpd",

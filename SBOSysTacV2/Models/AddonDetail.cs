@@ -19,7 +19,7 @@ namespace SBOSysTacV2.Models
         public Nullable<int> deptId { get; set; }
         public string addondescription { get; set; }
         public string unit { get; set; }
-        public Nullable<decimal> amount { get; set; }
+        public decimal amount { get; set; }
     
         public virtual AddonCategory AddonCategory { get; set; }
         public virtual Department Department { get; set; }

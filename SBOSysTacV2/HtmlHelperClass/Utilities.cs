@@ -13,6 +13,7 @@ using System.Web.Hosting;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Web.UI.WebControls;
+using CrystalDecisions.ReportSource;
 
 namespace SBOSysTacV2.HtmlHelperClass
 {
@@ -21,6 +22,8 @@ namespace SBOSysTacV2.HtmlHelperClass
 
         public static string ActiveForm;
         public static PackageBodyViewModel PackageBodyModel=new PackageBodyViewModel();
+        public const char Separator = '/';
+
 
         public static string MenusCode_Generator()
         {

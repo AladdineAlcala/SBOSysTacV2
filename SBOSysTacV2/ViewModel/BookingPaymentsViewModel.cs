@@ -44,7 +44,7 @@ namespace SBOSysTacV2.ViewModel
 
                 totalPackage_Amount = (bookingdetails != null) ? Convert.ToDecimal(bookingdetails.packageAmount) * Convert.ToInt32(bookingdetails.no_of_pax) : 0;
 
-                addons = bookingdetails.addons.Count > 0 ? Convert.ToDecimal(bookingdetails.addons.Sum(x => x.AddonAmount)) : 0;
+                //addons = bookingdetails.addons.Count > 0 ? Convert.ToDecimal(bookingdetails.addons.Sum(x => x.AddonAmount)) : 0;
 
                 // get transaction discount
                 totalAmount = totalPackage_Amount + addons;
@@ -122,7 +122,7 @@ namespace SBOSysTacV2.ViewModel
 
             _dbcontext.Dispose();
 
-            return (Convert.ToDecimal(addonsList.Sum(x => x.AddonAmount)));
+            return Convert.ToDecimal(100);
         }
 
         public IEnumerable<PaymentsViewModel> GetPaymentDetaiilsBooking(int transId)

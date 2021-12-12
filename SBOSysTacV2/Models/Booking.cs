@@ -19,10 +19,10 @@ namespace SBOSysTacV2.Models
         {
             this.Book_Discount = new HashSet<Book_Discount>();
             this.Book_Menus = new HashSet<Book_Menus>();
-            this.BookingAddons = new HashSet<BookingAddon>();
             this.Refunds = new HashSet<Refund>();
             this.CancelledBookings = new HashSet<CancelledBooking>();
             this.Payments = new HashSet<Payment>();
+            this.BookingAddons = new HashSet<BookingAddon>();
         }
     
         public int trn_Id { get; set; }
@@ -50,8 +50,6 @@ namespace SBOSysTacV2.Models
         public virtual ICollection<Book_Discount> Book_Discount { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book_Menus> Book_Menus { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BookingAddon> BookingAddons { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Package Package { get; set; }
         public virtual ServiceType ServiceType { get; set; }
@@ -61,5 +59,7 @@ namespace SBOSysTacV2.Models
         public virtual ICollection<CancelledBooking> CancelledBookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookingAddon> BookingAddons { get; set; }
     }
 }

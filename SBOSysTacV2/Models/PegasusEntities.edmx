@@ -69,17 +69,24 @@
           <Property Name="menuid" Type="nvarchar" MaxLength="20" />
           <Property Name="serving" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="BookAddonsDetail">
+          <Key>
+            <PropertyRef Name="addondetail_Id" />
+          </Key>
+          <Property Name="addondetail_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bookaddonNo" Type="int" />
+          <Property Name="addonId" Type="int" />
+          <Property Name="qty" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="amount" Type="decimal" Precision="19" Scale="4" />
+        </EntityType>
         <EntityType Name="BookingAddons">
           <Key>
-            <PropertyRef Name="No" />
+            <PropertyRef Name="bookaddonNo" />
           </Key>
-          <Property Name="No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bookaddonNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="trn_Id" Type="int" />
-          <Property Name="addonId" Type="int" />
           <Property Name="Addondesc" Type="nvarchar" MaxLength="50" />
           <Property Name="Note" Type="nvarchar" MaxLength="50" />
-          <Property Name="addonQty" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="AddonAmount" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Bookings">
           <Key>
@@ -380,6 +387,18 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BookAddonsDetail_BookingAddons">
+          <End Role="BookingAddons" Type="Self.BookingAddons" Multiplicity="0..1" />
+          <End Role="BookAddonsDetail" Type="Self.BookAddonsDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookingAddons">
+              <PropertyRef Name="bookaddonNo" />
+            </Principal>
+            <Dependent Role="BookAddonsDetail">
+              <PropertyRef Name="bookaddonNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BookingAddons_Bookings">
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -564,6 +583,7 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <EntitySet Name="AuditLogs" EntityType="Self.AuditLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Book_Discount" EntityType="Self.Book_Discount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Book_Menus" EntityType="Self.Book_Menus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookAddonsDetail" EntityType="Self.BookAddonsDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookingAddons" EntityType="Self.BookingAddons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CancelledBookings" EntityType="Self.CancelledBookings" Schema="dbo" store:Type="Tables" />
@@ -618,6 +638,10 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <AssociationSet Name="FK_Book_Menus_Menu" Association="Self.FK_Book_Menus_Menu">
             <End Role="Menu" EntitySet="Menu" />
             <End Role="Book_Menus" EntitySet="Book_Menus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookAddonsDetail_BookingAddons" Association="Self.FK_BookAddonsDetail_BookingAddons">
+            <End Role="BookingAddons" EntitySet="BookingAddons" />
+            <End Role="BookAddonsDetail" EntitySet="BookAddonsDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_BookingAddons_Bookings" Association="Self.FK_BookingAddons_Bookings">
             <End Role="Bookings" EntitySet="Bookings" />
@@ -754,19 +778,6 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <NavigationProperty Name="Booking" Relationship="Self.FK_Book_Menus_Bookings" FromRole="Book_Menus" ToRole="Bookings" />
           <NavigationProperty Name="Menu" Relationship="Self.FK_Book_Menus_Menu" FromRole="Book_Menus" ToRole="Menu" />
         </EntityType>
-        <EntityType Name="BookingAddon">
-          <Key>
-            <PropertyRef Name="No" />
-          </Key>
-          <Property Name="No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="trn_Id" Type="Int32" />
-          <Property Name="addonId" Type="Int32" />
-          <Property Name="Addondesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Note" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="addonQty" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="AddonAmount" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="Booking" Relationship="Self.FK_BookingAddons_Bookings" FromRole="BookingAddons" ToRole="Bookings" />
-        </EntityType>
         <EntityType Name="Booking">
           <Key>
             <PropertyRef Name="trn_Id" />
@@ -793,13 +804,13 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <Property Name="b_updatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Book_Discount" Relationship="Self.FK_Book_Discount_Bookings" FromRole="Bookings" ToRole="Book_Discount" />
           <NavigationProperty Name="Book_Menus" Relationship="Self.FK_Book_Menus_Bookings" FromRole="Bookings" ToRole="Book_Menus" />
-          <NavigationProperty Name="BookingAddons" Relationship="Self.FK_BookingAddons_Bookings" FromRole="Bookings" ToRole="BookingAddons" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Bookings_Customer" FromRole="Bookings" ToRole="Customer" />
           <NavigationProperty Name="Package" Relationship="Self.FK_Bookings_Packages" FromRole="Bookings" ToRole="Packages" />
           <NavigationProperty Name="ServiceType" Relationship="Self.FK_Bookings_ServiceType" FromRole="Bookings" ToRole="ServiceType" />
           <NavigationProperty Name="Refunds" Relationship="Self.FK_Refunds_Bookings" FromRole="Bookings" ToRole="Refunds" />
           <NavigationProperty Name="CancelledBookings" Relationship="PegasusEntitiesModel.FK_CancelledBookings_Bookings" FromRole="Booking" ToRole="CancelledBooking" />
           <NavigationProperty Name="Payments" Relationship="PegasusEntitiesModel.FK_Payments_Bookings" FromRole="Booking" ToRole="Payment" />
+          <NavigationProperty Name="BookingAddons" Relationship="PegasusEntitiesModel.FK_BookingAddons_Bookings" FromRole="Booking" ToRole="BookingAddon" />
         </EntityType>
         <EntityType Name="CancelledBooking">
           <Key>
@@ -1111,20 +1122,6 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BookingAddons_Bookings">
-          <End Role="Bookings" Type="Self.Booking" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="BookingAddons" Type="Self.BookingAddon" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Bookings">
-              <PropertyRef Name="trn_Id" />
-            </Principal>
-            <Dependent Role="BookingAddons">
-              <PropertyRef Name="trn_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Bookings_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="Bookings" Type="Self.Booking" Multiplicity="*" />
@@ -1259,7 +1256,6 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <EntitySet Name="AuditLogs" EntityType="Self.AuditLog" />
           <EntitySet Name="Book_Discount" EntityType="Self.Book_Discount" />
           <EntitySet Name="Book_Menus" EntityType="Self.Book_Menus" />
-          <EntitySet Name="BookingAddons" EntityType="Self.BookingAddon" />
           <EntitySet Name="Bookings" EntityType="Self.Booking" />
           <EntitySet Name="CancelledBookings" EntityType="Self.CancelledBooking" />
           <EntitySet Name="CateringDiscounts" EntityType="Self.CateringDiscount" />
@@ -1311,10 +1307,6 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
             <End Role="Menu" EntitySet="Menus" />
             <End Role="Book_Menus" EntitySet="Book_Menus" />
           </AssociationSet>
-          <AssociationSet Name="FK_BookingAddons_Bookings" Association="Self.FK_BookingAddons_Bookings">
-            <End Role="Bookings" EntitySet="Bookings" />
-            <End Role="BookingAddons" EntitySet="BookingAddons" />
-          </AssociationSet>
           <AssociationSet Name="FK_Bookings_Customer" Association="Self.FK_Bookings_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Bookings" EntitySet="Bookings" />
@@ -1363,7 +1355,17 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
             <End Role="Booking" EntitySet="Bookings" />
             <End Role="Payment" EntitySet="Payments" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="BookAddonsDetails" EntityType="PegasusEntitiesModel.BookAddonsDetail" />
+          <EntitySet Name="BookingAddons" EntityType="PegasusEntitiesModel.BookingAddon" />
+          <AssociationSet Name="FK_BookAddonsDetail_BookingAddons" Association="PegasusEntitiesModel.FK_BookAddonsDetail_BookingAddons">
+            <End Role="BookingAddon" EntitySet="BookingAddons" />
+            <End Role="BookAddonsDetail" EntitySet="BookAddonsDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookingAddons_Bookings" Association="PegasusEntitiesModel.FK_BookingAddons_Bookings">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="BookingAddon" EntitySet="BookingAddons" />
+          </AssociationSet>
+          </EntityContainer>
         <Association Name="FK_CancelledBookings_Bookings">
           <End Type="PegasusEntitiesModel.Booking" Role="Booking" Multiplicity="0..1" />
           <End Type="PegasusEntitiesModel.CancelledBooking" Role="CancelledBooking" Multiplicity="*" />
@@ -1390,7 +1392,55 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="BookAddonsDetail">
+          <Key>
+            <PropertyRef Name="addondetail_Id" />
+          </Key>
+          <Property Name="addondetail_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bookaddonNo" Type="Int32" />
+          <Property Name="qty" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="amount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="BookingAddon" Relationship="PegasusEntitiesModel.FK_BookAddonsDetail_BookingAddons" FromRole="BookAddonsDetail" ToRole="BookingAddon" />
+          <Property Name="addonId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="BookingAddon">
+          <Key>
+            <PropertyRef Name="bookaddonNo" />
+          </Key>
+          <Property Name="bookaddonNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="trn_Id" Type="Int32" />
+          <Property Name="Addondesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BookAddonsDetails" Relationship="PegasusEntitiesModel.FK_BookAddonsDetail_BookingAddons" FromRole="BookingAddon" ToRole="BookAddonsDetail" />
+          <NavigationProperty Name="Booking" Relationship="PegasusEntitiesModel.FK_BookingAddons_Bookings" FromRole="BookingAddon" ToRole="Booking" />
+        </EntityType>
+        <Association Name="FK_BookAddonsDetail_BookingAddons">
+          <End Type="PegasusEntitiesModel.BookingAddon" Role="BookingAddon" Multiplicity="0..1" />
+          <End Type="PegasusEntitiesModel.BookAddonsDetail" Role="BookAddonsDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookingAddon">
+              <PropertyRef Name="bookaddonNo" />
+            </Principal>
+            <Dependent Role="BookAddonsDetail">
+              <PropertyRef Name="bookaddonNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookingAddons_Bookings">
+          <End Type="PegasusEntitiesModel.Booking" Role="Booking" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PegasusEntitiesModel.BookingAddon" Role="BookingAddon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="trn_Id" />
+            </Principal>
+            <Dependent Role="BookingAddon">
+              <PropertyRef Name="trn_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1464,19 +1514,6 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
                 <ScalarProperty Name="trn_Id" ColumnName="trn_Id" />
                 <ScalarProperty Name="menuid" ColumnName="menuid" />
                 <ScalarProperty Name="serving" ColumnName="serving" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BookingAddons">
-            <EntityTypeMapping TypeName="PegasusEntitiesModel.BookingAddon">
-              <MappingFragment StoreEntitySet="BookingAddons">
-                <ScalarProperty Name="No" ColumnName="No" />
-                <ScalarProperty Name="trn_Id" ColumnName="trn_Id" />
-                <ScalarProperty Name="addonId" ColumnName="addonId" />
-                <ScalarProperty Name="Addondesc" ColumnName="Addondesc" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="addonQty" ColumnName="addonQty" />
-                <ScalarProperty Name="AddonAmount" ColumnName="AddonAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1703,6 +1740,27 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
                 <ScalarProperty Name="pMin" ColumnName="pMin" />
                 <ScalarProperty Name="pMax" ColumnName="pMax" />
                 <ScalarProperty Name="Amt_added" ColumnName="Amt_added" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookAddonsDetails">
+            <EntityTypeMapping TypeName="PegasusEntitiesModel.BookAddonsDetail">
+              <MappingFragment StoreEntitySet="BookAddonsDetail">
+                <ScalarProperty Name="addonId" ColumnName="addonId" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="bookaddonNo" ColumnName="bookaddonNo" />
+                <ScalarProperty Name="addondetail_Id" ColumnName="addondetail_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookingAddons">
+            <EntityTypeMapping TypeName="PegasusEntitiesModel.BookingAddon">
+              <MappingFragment StoreEntitySet="BookingAddons">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Addondesc" ColumnName="Addondesc" />
+                <ScalarProperty Name="trn_Id" ColumnName="trn_Id" />
+                <ScalarProperty Name="bookaddonNo" ColumnName="bookaddonNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

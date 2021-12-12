@@ -1,0 +1,50 @@
+﻿@using SBOSysTacV2.ViewModel
+@model BookingAddonsViewModel
+
+@Html.HiddenFor(model => model.BookingAddon.trn_Id, new {id = "hiddenTransId"})
+
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title text-blue">Add-on List</h3>
+        <div class="box-tools">
+            <button id="addon_upgrades" class="btn btn-sm btn-default" data-id="@Model.bookaddon_No"><i class="fa fa-plus"></i></button>
+        </div>
+
+    </div>
+
+    <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Add-on Description</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-right">Amount</th>
+                    <th class="text-right">Total</th>
+                </tr>
+                </thead>
+            <tbody>
+            @{
+                foreach (var item in Model.BookAddOn_Details)
+                {
+                    <tr data-id="@item.addondetail_Id">
+                        
+                        <td style="width: 70px;">
+                            <div class="addontools text-center">
+                                <span> <i class="fa fa-trash-o mr-2" id="addon-detail_Remove"></i></span>
+                                <span><i class="fa fa-edit ml-2" id="addon-detail_Modify"></i></span>
+                            </div>
+                        </td>
+
+                        <td>@item.addon_description</td>
+                        <td class="text-center">@String.Format("{0:0.0}", item.addon_qty)</td>
+                        <td class="text-right text-bold">@String.Format("{0:N}", item.addon_amount)</td>
+                        <td class="text-right text-bold">@String.Format("{0:N}", item.addon_qty * item.addon_amount)</td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+
+    </div>
+</div>

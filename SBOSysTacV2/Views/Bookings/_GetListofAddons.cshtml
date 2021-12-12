@@ -2,53 +2,68 @@
 @model PackageBookingViewModel
 
 @{
-    var totalAddons = Model.AddOns.Sum(x => x.AddonAmount);
+    var totalAddons = Model.BookAddOns.Sum(x => x.AddonAmount);
 }
 
 <div class="box box-primary">
     <div class="box-header">
         <h3 class="box-title text-blue">Additional Information/Addons and Uprades</h3>
         <div class="box-tools">
-            <button id="addon_Information" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-info-circle"></i></button>
-            <button id="addon_upgrades" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-glass"></i></button>
+            <button id="addon_Information" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-lg fa-cart-arrow-down"></i></button>
+            @*<button id="addon_upgrades" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-lg fa-glass"></i></button>*@
         </div>
 
     </div>
     <!--box-header-->
-    <div class="box-body table-responsive no-padding" style="height: 330px;">
+    <div class="box-body table-responsive no-padding">
         <table class="table table-hover">
             <tbody>
-            @foreach (var item in Model.AddOns)
-            {
-                <tr>
-                    <td class="addontools">
-                        <span><i class="fa fa-trash" id="addons_remove" data-id="@item.No"></i></span>
-                        <span><i class="fa fa-edit" id="addons_modify" data-id="@item.No"></i></span>
-                     
-                    </td>
+                @foreach (var item in Model.BookAddOns)
+                {
+                    <tr>
+                        <td style="width: 40px;" class="text-center">
 
-                    <td>@item.AddonsDescription </td>
-                    <td>@item.AddonNote</td>
-                    @{
-                        if (item.AddonAmount > 0)
-                        {
-                            <td class="text-right">@(String.Format("{0:N}", item.AddonAmount))</td>
+                            <div class="tools addons">
+                                @*<i class="fa fa-square-o fa-lg" data-id="@item.bookaddonNo"></i>*@
+                                
+                                <i class="fa @(item.isSelected?"fa-check-square-o":"fa-square-o") fa-lg" data-id="@item.bookaddonNo"></i>
+
+                            </div>
+
+                        </td>
+
+                        <td style="width: 70px;" class="text-center">
+
+                            <div class="addontools mx-1 text-center hide">
+                                <span><i class="fa fa-trash" id="addons_remove" data-id="@item.bookaddonNo"></i></span>
+                                <span><i class="fa fa-edit" id="addons_modify" data-id="@item.bookaddonNo"></i></span>
+                            </div>
+                                
+                        </td>
+
+                        <td>@item.AddonsDescription </td>
+
+                        <td>@item.AddonNote</td>
+                        @{
+                            if (item.AddonAmount > 0)
+                            {
+                                <td class="text-right">@(String.Format("{0:N}", item.AddonAmount))</td>
+                            }
+                            else
+                            {
+                                <td class="text-right">- - -</td>
+                            }
                         }
-                        else
-                        {
-                            <td class="text-right">- - -</td>
-                        }
-                    }
-                  
-                </tr>
-            }
+
+                    </tr>
+                }
             </tbody>
             <tfoot>
-            <tr>
-                <td class="text-right text-bold" colspan="2">Total:</td>
-               
-                <td class="text-right text-bold" colspan="3">Php : @(String.Format("{0:N}", totalAddons))</td>
-            </tr>
+                <tr>
+                    <td class="text-right text-bold" colspan="2">Total:</td>
+
+                    <td class="text-right text-bold" colspan="3">Php : @(String.Format("{0:N}", totalAddons))</td>
+                </tr>
             </tfoot>
 
 
@@ -58,3 +73,75 @@
     </div>
     <!--box-body-->
 </div>
+
+
+
+<script type="text/javascript">
+
+    var selAddons = document.querySelectorAll("div.addons > i");
+
+    function UnCheckAll(ele) {
+
+        for (var i = 0; i < ele.length; i++) {
+            ele[i].classList.remove("fa-check-square-o");
+            ele[i].classList.add("fa-square-o");
+
+        }
+    }
+
+    function HideAll() {
+
+        var ele = document.querySelectorAll("div.addontools");
+
+        for (var i = 0; i < ele.length; i++) {
+            ele[i].classList.add("hide");
+        }
+    }
+
+
+    for (var i = 0; i < selAddons.length; i++) {
+        selAddons[i].addEventListener("click", function (e) {
+            e.preventDefault();
+
+            UnCheckAll(selAddons);
+
+            HideAll();
+
+            var tgt = e.currentTarget;
+
+            tgt.classList.toggle("fa-square-o");
+            tgt.classList.toggle("fa-check-square-o");
+
+            displayEventButtons(tgt);
+
+           @* console.log(e.target.getAttribute("data-id"));*@
+
+            @* console.log("from partialview");*@
+
+            // Display table for addons
+            displayAddOnsTable(e.target.getAttribute("data-id"));
+
+
+        });
+    }
+
+    function displayAddOnsTable(_addonId) {
+
+        @*"@Url.Action("GetAddOnsDetails","Bookings",new { addon_No = "addonNo" })"*@
+
+        $('#addonsdetails').load(PackageBookingUrl.urlGetAddOnDetailsListByAddonId.replace("addonNo", _addonId));
+
+
+    }
+
+
+    function displayEventButtons(node) {    //display delete /edit icons
+
+        // console.log(node);
+
+        var parentNode = node.parentNode.parentNode;
+        var targetElement = parentNode.nextElementSibling.firstElementChild;
+        targetElement.classList.remove("hide");
+       
+    }
+</script>

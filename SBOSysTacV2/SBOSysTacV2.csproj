@@ -279,6 +279,9 @@
     <Compile Include="Models\AuditLogDetail.cs">
       <DependentUpon>PegasusEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BookAddonsDetail.cs">
+      <DependentUpon>PegasusEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Booking.cs">
       <DependentUpon>PegasusEntities.tt</DependentUpon>
     </Compile>
@@ -510,6 +513,9 @@
     <Compile Include="ViewModel\AreaPackageViewModel.cs" />
     <Compile Include="ViewModel\AuditChangesLog.cs" />
     <Compile Include="ViewModel\AuditLogViewModel.cs" />
+    <Compile Include="ViewModel\BookAddonSelectedViewModel.cs" />
+    <Compile Include="ViewModel\BookingAddonDetailsViewModel.cs" />
+    <Compile Include="ViewModel\BookingAddonsViewModel.cs" />
     <Compile Include="ViewModel\BookingHistoryLogViewModel.cs" />
     <Compile Include="ViewModel\BookingPaymentsViewModel.cs" />
     <Compile Include="ViewModel\BookingRefundViewModel.cs" />
@@ -7776,7 +7782,7 @@
     <Content Include="Views\AddonCategory\Index.cshtml" />
     <Content Include="Views\AddonCategory\Create_AddonCategory.cshtml" />
     <Content Include="Views\AddonCategory\Modify_AddonCategory.cshtml" />
-    <Content Include="Views\Bookings\Get_AddonsandUpgrades.cshtml" />
+    <Content Include="Views\Bookings\_Get_AddonsandUpgrades.cshtml" />
     <Content Include="Views\Bookings\GetSelectedAddons.cshtml" />
     <Content Include="Views\Bookings\GetSelectedAddons_Modify.cshtml" />
     <Content Include="Views\Packages\get_ListofPackageCourse.cshtml" />
@@ -7796,6 +7802,9 @@
     <Content Include="Views\Inquiry\_BookingTransLog.cshtml" />
     <Content Include="Views\Inquiry\AdminReportsMonthlyCash_Index.cshtml" />
     <Content Include="Views\Bookings\_BookingInfo.cshtml" />
+    <Content Include="Views\Bookings\_GetAddOnsDetails.cshtml" />
+    <Content Include="Views\Bookings\_ModifyAddonDetail.cshtml" />
+    <Content Include="Views\Bookings\_GetBookingOtherCharges.cshtml" />
     <None Include="Web.developtment_testConfig.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

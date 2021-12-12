@@ -10,7 +10,7 @@ namespace SBOSysTacV2.ViewModel
 {
     public class AddonsViewModel
     {
-        public int No { get; set; }
+        public int bookaddonNo { get; set; }
         public int TransId { get; set; }
         [Display(Name = "Add-on Description :")]
         [Required(ErrorMessage = "Add on information required")]
@@ -28,6 +28,8 @@ namespace SBOSysTacV2.ViewModel
         [Required(ErrorMessage = "Department required")]
         public int deptId { get; set; }
         public string deptname { get; set; }
+        public bool isSelected { get; set; } = false;
+
         public IEnumerable<SelectListItem>  addonscatselectlist { get; set; }
         public IEnumerable<SelectListItem> deptincharge_list { get; set; }
 
@@ -38,15 +40,27 @@ namespace SBOSysTacV2.ViewModel
             var _dbentities = new PegasusEntities();
             try
             {
-                list = (from a in _dbentities.BookingAddons
-                    select new AddonsViewModel
-                    {
-                        No = a.No,
-                        TransId = (int) a.trn_Id,
-                        AddonsDescription = a.Addondesc,
-                        AddonAmount = (decimal) a.AddonAmount,
-                        AddonNote = a.Note
-                    }).ToList();
+                list = (from bal in _dbentities.BookingAddons
+                        select new
+                            {
+                                _bookaddonNo = bal.bookaddonNo,
+                                _TransId = (int) bal.trn_Id,
+                                _AddonsDescription = bal.Addondesc,
+
+                                _Addons = bal.BookAddonsDetails.Select(g => new {g.addonId, tota = g.amount * g.qty}),
+                                _AddonNote = bal.Note
+                            }).Select(p => new AddonsViewModel()
+                            {
+                                
+                                bookaddonNo = p._bookaddonNo,
+                                TransId = p._TransId,
+                                AddonsDescription = p._AddonsDescription,
+                                AddonNote = p._AddonNote,
+                                AddonAmount = p._Addons.Sum(t=>t.tota)!=null ? (decimal)p._Addons.Sum(t => t.tota):0
+                                //AddonAmount = p._Addons!= null? Convert.ToDecimal(p._Addons.Select(t => t.tota).Sum()) :0
+
+                            }).ToList();
+
             }
             catch (Exception e)
             {
@@ -55,7 +69,7 @@ namespace SBOSysTacV2.ViewModel
             }
 
 
-            return list.ToList();
+            return list;
         }
 
 
@@ -66,11 +80,11 @@ namespace SBOSysTacV2.ViewModel
 
             var addons = new AddonsViewModel
             {
-                No = modifiedaddons.No,
+                bookaddonNo = modifiedaddons.bookaddonNo,
                 TransId =Convert.ToInt32(modifiedaddons.trn_Id),
-                addonId = modifiedaddons.addonId,
+                //addonId = modifiedaddons.addonId,
                 AddonsDescription = modifiedaddons.Addondesc,
-                AddonAmount =Convert.ToDecimal(modifiedaddons.AddonAmount),
+                //AddonAmount =Convert.ToDecimal(modifiedaddons.AddonAmount),
                 AddonNote = modifiedaddons.Note
             };
 
@@ -101,7 +115,7 @@ namespace SBOSysTacV2.ViewModel
             list = (from a in dbcontext.AddonDetails join b in dbcontext.AddonCategories on a.addoncatId equals b.addoncatId 
                 select new AddonsViewModel()
                 {
-                    No=a.addonId,
+                    addonId = a.addonId,
                     addoncatId = (int) a.addoncatId,
                     addoncategory = b.addoncatdesc,
                     AddonsDescription = a.addondescription,
