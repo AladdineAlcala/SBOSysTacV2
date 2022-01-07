@@ -19,5 +19,6 @@ namespace SBOSysTacV2.Models
         public Nullable<int> courseId { get; set; }
     
         public virtual Package Package { get; set; }
+        public virtual CourseCategory CourseCategory { get; set; }
     }
 }

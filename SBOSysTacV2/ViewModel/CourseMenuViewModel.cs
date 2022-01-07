@@ -26,9 +26,13 @@ namespace SBOSysTacV2.ViewModel
         public string Note { get; set; }
         public DateTime? dateAdded { get; set; }
 
+        [Display(Name = "Price per Serve:")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal? price { get; set; } = 0;
+
         [Display(Name = "Course Category:")]
         [Required(ErrorMessage = "Course Category Required")]
-        public int? CourserId { get; set; }
+        public int? courseId { get; set; }
 
         public string picUrl { get; set; }
 
@@ -54,7 +58,7 @@ namespace SBOSysTacV2.ViewModel
 
             var listofcoursecategories = _dbEntities.CourseCategories.AsEnumerable().Select(x => new SelectListItem
             {
-                Value = x.CourserId.ToString(),
+                Value = x.courseId.ToString(),
                 Text = x.Course
             }).ToList();
 
@@ -75,9 +79,10 @@ namespace SBOSysTacV2.ViewModel
                         menudesc = m.menu_name,
                         departmentincharge = m.Department.deptName,
                         coursecategory = m.CourseCategory.Course,
+                        price = m.price,
                         Note = m.note,
                         dateAdded = m.date_added,
-                        CourserId = m.CourserId,
+                        courseId = m.courseId,
                         deptId = m.deptId,
                         picUrl = m.image
                     }).ToList();

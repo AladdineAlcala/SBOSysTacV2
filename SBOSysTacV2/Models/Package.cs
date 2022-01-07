@@ -30,6 +30,7 @@ namespace SBOSysTacV2.Models
         public Nullable<int> p_min { get; set; }
         public bool isActive { get; set; }
         public Nullable<System.DateTime> date_Created { get; set; }
+        public Nullable<System.DateTime> date_Updated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }

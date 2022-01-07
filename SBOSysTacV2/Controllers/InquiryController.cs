@@ -31,19 +31,11 @@ namespace SBOSysTacV2.Controllers
 
 
         [HttpGet]
-        public ActionResult CustomerBookingHistory()
-        {
+        public ActionResult CustomerBookingHistory() => View();
 
-            return View();
-        }
 
         [HttpGet]
-        public ActionResult GetCustomerBookings()
-        {
-
-
-            return PartialView("CustomerBookingsPartialView");
-        }
+        public ActionResult GetCustomerBookings() => PartialView("CustomerBookingsPartialView");
 
 
         [HttpGet]
@@ -54,32 +46,24 @@ namespace SBOSysTacV2.Controllers
 
             try
             {
-                cusbookings = cb.GetCusBookings().Where(x => x.cusId == cusId).ToList();
-
+                cusbookings = cb.GetCusBookingsById(cusId).ToList();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
             //Thread.Sleep(3000);
 
             return Json(new { data = cusbookings }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult BookingScheduleIndex()
-        {
-
-            return View();
-
-        }
+        public ActionResult BookingScheduleIndex() => View();
 
         [HttpGet]
-        public ActionResult GetBookingScheduleFilter()
-        {
-            return PartialView("GetBookingScheduleFilter_Partial");
-        }
+        public ActionResult GetBookingScheduleFilter()=> PartialView("GetBookingScheduleFilter_Partial");
+
 
         public ActionResult GetBookingScheduleDataTableList(DateTime startDate, DateTime endDate,string filter)
         {

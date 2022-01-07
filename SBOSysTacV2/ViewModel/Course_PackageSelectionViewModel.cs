@@ -24,9 +24,9 @@ namespace SBOSysTacV2.ViewModel
 
             var listofcourses = (from cc in coursecat select new Course_PackageSelectionViewModel()
                                 {
-                                    courseId = cc.CourserId,
+                                    courseId = cc.courseId,
                                     coursename = cc.Course,
-                                    isSelected = CheckCourseisSelected(_packageid,cc.CourserId)
+                                    isSelected = CheckCourseisSelected(_packageid,cc.courseId)
                   
                                 })
                                 .ToList();

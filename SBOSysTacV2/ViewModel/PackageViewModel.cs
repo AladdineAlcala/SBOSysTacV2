@@ -23,6 +23,9 @@ namespace SBOSysTacV2.ViewModel
         public int? p_min { get; set; }
         [Required(ErrorMessage = "Minimum total pax Required")]
         public int packagenopax_id { get; set; }
+
+        public DateTime dateCreated { get; set; }=DateTime.Now;
+        public DateTime dateUpdated { get; set; }=DateTime.Now;
         public IEnumerable<SelectListItem> packageNoPax_listitem { get; set; }
 
 
@@ -39,6 +42,7 @@ namespace SBOSysTacV2.ViewModel
 
             return new SelectList(packagenoofpax, "Value", "Text");
         }
+
 
     }
 }

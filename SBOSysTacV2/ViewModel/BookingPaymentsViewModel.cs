@@ -16,8 +16,18 @@ namespace SBOSysTacV2.ViewModel
         public BookingsViewModel Bookings { get; set; }
         public IEnumerable<PaymentsViewModel> PaymentList { get; set; }
 
-        private TransactionDetailsViewModel transdetails = new TransactionDetailsViewModel();
+        private TransactionDetailsViewModel transdetails;
 
+        private PackageBookingViewModel package_book_vm;
+
+        private BookMenusViewModel book_menus_vm;
+
+        public BookingPaymentsViewModel()
+        {
+            package_book_vm = new PackageBookingViewModel();
+            transdetails = new TransactionDetailsViewModel();
+            book_menus_vm = new BookMenusViewModel();
+        }
         //get totalPackageAmount
         public decimal Get_TotalAmountBook(int transId)
         {
@@ -30,51 +40,68 @@ namespace SBOSysTacV2.ViewModel
             {
                 decimal totalPackage_Amount = 0;
                 decimal addons = 0;
+                decimal discount = 0;
+                int noofpax = 0;
 
-                var bookingdetails = (from books in _dbcontext.Bookings
-                                      join packages in _dbcontext.Packages on books.p_id equals packages.p_id
-                                      //join bookaddons in _dbcontext.BookingAddons on books.trn_Id equals bookaddons.trn_Id
-                                      where books.trn_Id == transId
-                                      select new
-                                      {
-                                          packageAmount = packages.p_amountPax,
-                                          no_of_pax = books.noofperson,
-                                          addons = books.BookingAddons
-                                      }).FirstOrDefault();
+                decimal hasLocationExtendedCharge = 0;
 
-                totalPackage_Amount = (bookingdetails != null) ? Convert.ToDecimal(bookingdetails.packageAmount) * Convert.ToInt32(bookingdetails.no_of_pax) : 0;
 
-                //addons = bookingdetails.addons.Count > 0 ? Convert.ToDecimal(bookingdetails.addons.Sum(x => x.AddonAmount)) : 0;
+                  var package = package_book_vm.GetPackageByTransaction_Id(transId);
 
-                // get transaction discount
-                totalAmount = totalPackage_Amount + addons;
-
-                var discount = this.getBookingTransDiscount(transId, totalAmount);
-
-                totalAmount = discount > 0 ? (totalAmount - discount) : totalAmount;
-
-                var hasLocationExtendedCharge = transdetails.Get_extendedAmountLoc(transId);
-
-                if (hasLocationExtendedCharge > 0)
+                if (package.p_type.TrimEnd() != "sd")
                 {
-                    totalAmount = totalAmount + (hasLocationExtendedCharge * Convert.ToInt32(bookingdetails.no_of_pax));
+                    var bookingdetails = (from books in _dbcontext.Bookings
+                        join packages in _dbcontext.Packages on books.p_id equals packages.p_id
+                        //join bookaddons in _dbcontext.BookingAddons on books.trn_Id equals bookaddons.trn_Id
+                        where books.trn_Id == transId
+                        select new
+                        {
+                            packageAmount = packages.p_amountPax,
+                            no_of_pax =books.noofperson,
+                            addons = books.BookingAddons
+                        }).FirstOrDefault();
+
+                    noofpax =(int)(bookingdetails.no_of_pax);
+
+                    totalPackage_Amount = (bookingdetails != null) ? Convert.ToDecimal(bookingdetails.packageAmount) * noofpax : 0;
+
+                    // get transaction discount
+                    totalAmount = totalPackage_Amount + addons;
+
+                    discount = this.getBookingTransDiscount(transId, totalAmount);
+
+                    totalAmount = discount > 0 ? (totalAmount - discount) : totalAmount;
+
+                    hasLocationExtendedCharge = transdetails.Get_extendedAmountLoc(transId);
+
+                    if (hasLocationExtendedCharge > 0)
+                    {
+                        totalAmount = totalAmount + (hasLocationExtendedCharge * noofpax);
+                    }
+
+
+                    var hasCateringdiscounted = transdetails.GetCateringdiscountByPax(noofpax);
+
+                    if (hasCateringdiscounted > 0)
+                    {
+                        totalAmount = totalAmount - (hasCateringdiscounted * noofpax);
+                    }
+
+
                 }
 
-                var hasCateringdiscounted = transdetails.GetCateringdiscountByPax(Convert.ToInt32(bookingdetails.no_of_pax));
-
-                if (hasCateringdiscounted > 0)
+                else
                 {
-                    totalAmount = totalAmount - (hasCateringdiscounted * Convert.ToInt32(bookingdetails.no_of_pax));
+
+                    totalAmount = book_menus_vm.ComputeAmountForSnacksByTransId(transId);
+
                 }
+               
 
-                //var belowminpax = transdetails.GetBelowMinPaxAmount(Convert.ToInt32(b.noofperson));
+               
 
-                //if (belowminpax > 0)
-                //{
-                //    var belowminpaxAmt = belowminpax * Convert.ToInt32(b.noofperson);
 
-                //    totalAmount = totalAmount + belowminpaxAmt;
-                //}
+    
             }
             catch (Exception e)
             {

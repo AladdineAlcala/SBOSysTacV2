@@ -19,7 +19,7 @@ namespace SBOSysTacV2.ViewModel
         {
             var context=new PegasusEntities();
 
-            var listofmenusselected = (from pb in context.PackageBodies join cc in context.CourseCategories on pb.courseId equals cc.CourserId 
+            var listofmenusselected = (from pb in context.PackageBodies join cc in context.CourseCategories on pb.courseId equals cc.courseId 
                 select new PackageBodyViewModel()
                 {
                     package_Id = (int) pb.p_id,

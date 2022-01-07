@@ -1,18 +1,39 @@
-﻿<div class="mx-3">
-    
+﻿@using SBOSysTacV2.ViewModel
+@model TransactionDetailsViewModel
+
+<div class="mx-3">
+
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title"> Other/Miscellaneous Charges</h3>
-        </div>
-    
-        <div class="box-body table-responsive no-padding">
-        
-            <table class="table table-hover">
-                <tbody>
-                <tr>
 
-                </tr>
+            <div class="box-tools">
+                <button id="addon_otherCharges" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-lg fa-search-plus"></i></button>
+
+            </div>
+        </div>
+
+        <div class="box-body table-responsive no-padding">
+
+            <table class="table table-hover">
+
+                <tbody>
+                    @foreach (var item in Model.BookOtherCharges)
+                    {
+                        <tr>
+                            <td class="col-md-2" data-id="@item.ch_Id">
+
+                                <button class="btn btn-xs btn-primary" id="modify_otherCharge"><i class="fa fa-edit"></i> </button>
+                                <button class="btn btn-xs btn-danger" id="remove_otherCharge"><i class="fa fa-remove"></i> </button>
+                            </td>
+                            <td>@item.ch_desc</td>
+                            <td>@item.note</td>
+                            <td class="col-md-2 text-right text-bold">@String.Format("{0:N}",item.amount)</td>
+                        </tr>
+
+                    }
                 </tbody>
+
             </table>
         </div>
     </div>

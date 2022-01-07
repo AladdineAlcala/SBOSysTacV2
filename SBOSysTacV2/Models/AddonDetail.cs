@@ -14,14 +14,22 @@ namespace SBOSysTacV2.Models
     
     public partial class AddonDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AddonDetail()
+        {
+            this.BookAddonsDetails = new HashSet<BookAddonsDetail>();
+        }
+    
         public int addonId { get; set; }
         public Nullable<int> addoncatId { get; set; }
         public Nullable<int> deptId { get; set; }
         public string addondescription { get; set; }
         public string unit { get; set; }
-        public decimal amount { get; set; }
+        public Nullable<decimal> amount { get; set; }
     
         public virtual AddonCategory AddonCategory { get; set; }
         public virtual Department Department { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookAddonsDetail> BookAddonsDetails { get; set; }
     }
 }

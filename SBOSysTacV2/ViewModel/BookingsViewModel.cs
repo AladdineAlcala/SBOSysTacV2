@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using SBOSysTacV2.HtmlHelperClass;
 using System.Data.Entity.Core;
@@ -141,6 +142,22 @@ namespace SBOSysTacV2.ViewModel
 
         }
 
+
+        public Booking GetBookingByTransaction(int _transId)
+        {
+            var booking = new Booking();
+
+            using (var _dbcontext = new PegasusEntities())
+            {
+                booking = (_dbcontext.Bookings.Where(c => c.trn_Id == _transId)).Include(c => c.Customer)
+                    .Single();
+            }
+
+            return booking;
+
+        }
+
+
         public BookingsViewModel GetListofBookings(int _transId)
         {
             var _dbcontext = new PegasusEntities();
@@ -270,6 +287,8 @@ namespace SBOSysTacV2.ViewModel
 
           
         }
+
+
 
     }
 

@@ -18,15 +18,15 @@ function RegisterAjaxFormEventsModify() {
 
 }
 
-function OnSuccess(data) {
+function BookmenuAddSuccess(data) {
 
-    //debugger;
+    debugger;
 
             if (data.isRecordExist === false) {
 
                         Swal.fire({
                             title: "Success",
-                            text: "It was succesfully added!",
+                            text: "Menu was successfully added!",
                             type: "success"
 
 
@@ -34,14 +34,17 @@ function OnSuccess(data) {
 
                         setTimeout(function() {
 
-                            //LoadDataTabletoModal();
+                                if (data.packageType != "sd") {
 
-                                $('#bookmenus').load(data.url);
-                              
-                                // $('#spinn-loader').hide();
+                                    $('#bookmenus').load(data.url);
 
-                            },
-                            1000);
+                                } else {
+
+                                    $('#booking_details').load(data.url);
+                                }
+                               
+
+                            }, 1000);
 
      
             }
@@ -177,11 +180,11 @@ $(document).on('click', '#menu_add', function (e) {
     var elem = $(this).closest('li').find('div[id=course]');
     var courseId = elem.attr('data-id');
 
-    //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourse", "Bookings")",
+   
 
     $.ajax({
         type: 'Get',
-        url: PackageBookingUrl.urlSearchpackagebooking,  
+        url: PackageBookingUrl.urlSearchpackagebooking,   //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourse", "Bookings")",
         contentType: 'application/html;charset=utf8',
         data: { transactionId: $(this).closest('div.tools').data('transid'), courseId: courseId },
         datatype: 'html',
@@ -281,7 +284,7 @@ function LoadDataTabletoModal(_courseId) {
 
     }
 
-    debugger;
+   // debugger;
 
     //var courseid = _courseId;
 
@@ -300,10 +303,10 @@ function LoadDataTabletoModal(_courseId) {
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-6'i><'col-sm-6'p>>",
 
-            //==============>>>>>>  "@Url.Action("LoadListMenus", "Bookings")",  <<<<<<<<<<<<<<<<<<<<<
+           
             "ajax":
             {
-                "url": PackageBookingUrl.urlMenuList,   
+                "url": PackageBookingUrl.urlMenuList,    //==============>>>>>>  "@Url.Action("LoadListMenus", "Bookings")",  <<<<<<<<<<<<<<<<<<<<<
                 "data": { courseId: _courseId},
                  "type": "Get",
                  "datatype": "json"
@@ -360,6 +363,95 @@ function LoadDataTabletoModal(_courseId) {
 
 
    
+
+}
+
+
+function Load_SelectedMenusForPackage(_packageId) {
+
+    console.log(_packageId);
+
+     if ($.fn.dataTable.isDataTable('#tbl-maincourse')) {
+ 
+         // console.log('DataTable');
+         $('#tbl-maincourse').DataTable().destroy();
+         $('#tbl-maincourse tbody').empty();
+ 
+     }
+ 
+ 
+     $tblCourse = $('#tbl-maincourse').DataTable(
+         {
+ 
+             bLengthChange: false,
+             select: {
+                 style: 'os',
+                 //style: 'multi',
+                 selector: 'td:first-child'
+             }
+             ,
+             //"dom": "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
+             "dom": "<'row'<'col-sm-12'f>>" +
+                 "<'row'<'col-sm-12'tr>>" +
+                 "<'row'<'col-sm-6'i><'col-sm-6'p>>",
+ 
+ 
+             "ajax":
+             {
+                 "url": PackageBookingUrl.urlCheckMenusByPackage,    //==============>>>>>>  "@Url.Action("LoadListMenus", "Bookings")",  <<<<<<<<<<<<<<<<<<<<<
+                 "data": { packageId: _packageId },
+                 "type": "Get",
+                 "datatype": "json"
+             },
+ 
+             //  "aoColumns": [{   "sTitle": "<input type='checkbox' id='selectAll'></input>"}],
+ 
+             "columnDefs":
+                 [
+                     {
+                         'targets': 0,
+                         'searchable': false,
+                         'orderable': false,
+                         'width': '2%',
+                         'className': 'select-checkbox',
+                         'data': null,
+                         'defaultContent': ''
+ 
+ 
+                     },
+                     {
+                         'autowidth': true, 'targets': 1,
+                         "data": null,
+                         "render": function (data, type, full) {
+ 
+                             if (full.isMainMenu === true) {
+ 
+                                 return full.menu_name + " ( Main Menu )";
+                             } else {
+ 
+                                 return full.menu_name;
+                             }
+                         }
+ 
+                     },
+                     {
+                         'autowidth': true, 'targets': 2,
+                         "data": "course"
+                     }
+                     //,
+                     //{
+ 
+                     //    "data": "menuId",'visisble':false,'targert':3
+                     //}
+ 
+ 
+                 ],
+             createdRow: function (row, data, indice) {
+                 $(row).find("td:eq(0)").attr('data-id', data.menuId);
+             }
+ 
+ 
+         });
 
 }
 
@@ -491,7 +583,138 @@ $(document).on('click', '#addon_Information', function (e) {
     });
 });
 
+//-------------------------------------------------------------------------------------------------------------------------------
+//===============================================================================================================================
+//=======================================  For Snack and Drinks Operation =======================================================
+//==============================================================================================================================
 
+//start
+
+//---------------------- Add Snacks and Drinks ---------------------------------------------------------------------------
+
+$(document).on('click', '#add_snacks_and_drinks', function (e) {
+
+    e.preventDefault();
+
+    var packageId = $('#pId').val();
+    var _courseId = 0;
+
+    $.ajax({
+        type: 'Get',
+        url: PackageBookingUrl.urlSearchpackagebooking,   //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourse", "Bookings")",
+        contentType: 'application/html;charset=utf8',
+        data: { transactionId: $(this).attr('data-id'), courseId: _courseId },
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            var modal = $('#modal-searchPackageBooking');
+
+            modal.find('#modalPackagecontent').html(result);
+
+            //var insertopt = 0;
+            RegisterAjaxFormEvents();
+
+
+            Load_SelectedMenusForPackage(packageId);
+
+
+            modal.modal({
+                backdrop: 'static',
+                keyboard: false
+            }, 'show');
+
+        }, error: function (xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
+
+
+
+    });
+
+
+});
+
+
+//---------------------- Modify Snacks and Drinks ---------------------------------------------------------------------------
+
+$(document).on('click', '#menu_change_snacks_drinks', function(event) {
+
+
+
+});
+
+//---------------------- Remove Snacks and Drinks ---------------------------------------------------------------------------
+
+$(document).on('click', '#menu_remove_snacks_drinks', function (event) {
+    event.preventDefault();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Adding Payment..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed Transaction..'
+
+    }).then((result) => {
+
+        if (result.value) {
+            
+            $('#spinn-loader').show();
+
+            $.ajax({
+                type: 'POST',
+                url: PackageBookingUrl.urlBookingRemoveSnacksandDrinks,
+                ajaxasync: true,
+                data: { id: $(this).closest('td').attr('data-id') },
+                cache: false,
+                success: function (data) {
+
+                    if (data.success) {
+
+
+                        $('#booking_details').load(data.url);
+
+                        setTimeout(function () {
+
+                            Swal.fire({
+                                title: "Success",
+                                text: "Data succesfully Added!",
+                                type: "success"
+
+                            });
+
+
+                        }, 500);
+
+                      
+
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    Swal.fire('Error adding record!', 'Please try again', 'error');
+
+                    $('#spinn-loader').hide();
+                }
+            });
+
+
+
+        }
+
+
+
+    });
+
+
+});
+
+//end
+
+//========================================================================================================================
+//------------------------------------------------------------------------------------------------------------------------
 
 $(document).on('click', '#addon_upgrades', function (e) {
 
@@ -1345,6 +1568,333 @@ $(document).on('click', '#btn_modifyselctedaddons',
 
 
     });
+
+
+$(document).on('click', '#addon_otherCharges', function(e) {
+
+    e.preventDefault();
+
+        $.ajax({
+            type: 'Get',
+            url: PackageBookingUrl.urlAddBookingOtherCharge,
+            contentType: 'application/html;charset=utf8',
+            data: { transactionId:$(this).attr('data-id')},
+            datatype: 'html',
+            cache: false,
+            success: function (result) {
+
+                var modal = $('#modal-BookingOtherCharges');
+
+                modal.find('#modal-BookingOthercharge-content').html(result);
+
+                modal.modal({
+                    backdrop: 'static',
+                    keyboard: false
+                }, 'show');
+            }
+
+        });
+
+});
+
+
+$(document).on('click', '#btn_registerNewCharge', function(event) {
+
+    event.preventDefault();
+
+        Swal.fire({
+            title: "Are You Sure ?",
+            text: "Confirm Adding Miscellaneous Charge..",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Proceed Transaction..'
+
+        }).then((result) => {
+
+            if (result.value) {
+
+
+                var formUrl = $('#otherchargesForm').attr('action');
+                var form = $('[id*=otherchargesForm]');
+
+                $.validator.unobtrusive.parse(form);
+                form.validate();
+
+                if (form.valid()) {
+
+                    $('#spinn-loader').show();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: formUrl,
+                        data: form.serialize(),
+                        datatype: 'json',
+                        cache: false,
+                        success: function (data) {
+
+                            if (data.success) {
+
+                                $('#booking_details').load(data.url);
+
+
+                                setTimeout(function () {
+                                 
+                                    Swal.fire({
+                                        title: "Success",
+                                        text: "Data succesfully Added!",
+                                        type: "success"
+
+                                    });
+ 
+                                    $('#spinn-loader').hide();
+
+                                }, 500);
+
+
+                                $('#modal-BookingOtherCharges').modal('hide');
+                               
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            Swal.fire('Error adding record!', 'Please try again', 'error');
+
+                            $('#spinn-loader').hide();
+                        }
+                    });
+
+                }
+
+            }
+
+        });
+
+});
+
+
+
+
+$(document).on('click', '#modify_otherCharge', function(event) {
+
+    event.preventDefault();
+
+    $.ajax({
+        type: 'Get',
+        url: PackageBookingUrl.urlAddBookingModifyOtherCharge,
+        contentType: 'application/html;charset=utf8',
+        data: { id: $(this).closest('td').attr('data-id')},
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            var modal = $('#modal-BookingOtherCharges');
+
+            modal.find('#modal-BookingOthercharge-content').html(result);
+
+            modal.modal({
+                backdrop: 'static',
+                keyboard: false
+            }, 'show');
+        }
+
+    });
+
+
+});
+
+
+
+$(document).on('click', '#btn_RegisterUpdatedCharge', function (event) {
+
+    event.preventDefault();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Updating Miscellaneous Charge..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed Transaction..'
+
+    }).then((result) => {
+
+        if (result.value) {
+
+
+            var formUrl = $('#otherchargesForm').attr('action');
+            var form = $('[id*=otherchargesForm]');
+
+            $.validator.unobtrusive.parse(form);
+            form.validate();
+
+            if (form.valid()) {
+
+                $('#spinn-loader').show();
+
+                $.ajax({
+                    type: 'POST',
+                    url: formUrl,
+                    data: form.serialize(),
+                    datatype: 'json',
+                    cache: false,
+                    success: function (data) {
+
+                        if (data.success) {
+
+                            $('#booking_details').load(data.url);
+
+
+                            setTimeout(function () {
+
+                                Swal.fire({
+                                    title: "Success",
+                                    text: "Data succesfully Updated!",
+                                    type: "success"
+
+                                });
+
+                                $('#spinn-loader').hide();
+
+                            }, 500);
+
+
+                            $('#modal-BookingOtherCharges').modal('hide');
+
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire('Error adding record!', 'Please try again', 'error');
+
+                        $('#spinn-loader').hide();
+                    }
+                });
+
+            }
+
+        }
+
+    });
+
+});
+
+$(document).on('click', '#remove_otherCharge', function (event) {
+
+    event.preventDefault();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Removing Miscellaneous Charge..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed Transaction..'
+
+        }).then((result) => {
+
+            if (result.value) {
+
+            $('#spinn-loader').show();
+
+            $.ajax({
+                type: 'POST',
+                url: PackageBookingUrl.urlAddBookingRemoveOtherCharge,
+                ajaxasync: true,
+                data: {id:$(this).closest('td').attr('data-id')},
+                cache: false,
+                success: function (data) {
+
+                    if (data.success) {
+
+                        $('#booking_details').load(data.url);
+
+                        setTimeout(function () {
+
+                            Swal.fire({
+                                title: "Success",
+                                text: "Data succesfully Added!",
+                                type: "success"
+
+                            });
+
+                           
+
+                            $('#spinn-loader').hide();
+
+                        }, 500);
+
+                        $('#modal-BookingOtherCharges').modal('hide');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    Swal.fire('Error adding record!', 'Please try again', 'error');
+
+                    $('#spinn-loader').hide();
+                }
+            });
+
+        }
+    });
+
+});
+
+
+$(document).on('click', '#printContract', function(e) {
+    e.preventDefault();
+
+
+    $.ajax({
+        type: 'Get',
+        url: PackageBookingUrl.urlBookingPrintContractForm,
+        contentType: 'application/html;charset=utf8',
+        data: { transId: $(this).attr('data-id') },
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            console.log(result);
+
+            var modal = $('#modal-printForm');
+
+            modal.find('#modal-content_printForm').html(result);
+
+            modal.modal({
+                backdrop: 'static',
+                keyboard: false
+            }, 'show');
+        }
+
+    });
+
+
+
+
+});
+
+
+
+
+
+$(document).on('click', 'a.printcontractOption', function (e) {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    var transid = $('#hiddenid').val();
+
+    var selopt = $('input[type="radio"][name="printopt"]:checked').val();
+
+    var url = $(this).attr('href');
+
+    window.location.href = url + '?transId=' + transid + '&selprintopt=' + selopt;
+
+    //window.open(url + '?transId=' + transid + '&selprintopt=' + selopt);
+
+    // window.location.href = url;
+});
+
 
 
 

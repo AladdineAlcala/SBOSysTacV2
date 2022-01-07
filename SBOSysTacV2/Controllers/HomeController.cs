@@ -102,7 +102,7 @@ namespace SBOSysTacV2.Controllers
 
             var menusOrderCount = (from b in _dbcontext.Book_Menus
                 join m in _dbcontext.Menus on b.menuid equals m.menuid
-                join c in _dbcontext.CourseCategories on m.CourserId equals c.CourserId
+                join c in _dbcontext.CourseCategories on m.courseId equals c.courseId
                 group new {b, m, c} by new {b.menuid, m.menu_name, c.Course}
                 into g
                 select new

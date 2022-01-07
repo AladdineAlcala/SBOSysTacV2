@@ -13,18 +13,28 @@ namespace SBOSysTacV2.ViewModel
         public Customer Customer { get; set; }
         public BookingsViewModel Booking_Trans { get; set; }
         public Package Package_Trans { get; set; }
-        public Decimal TotaAddons { get; set; }
-        public Decimal book_discounts { get; set; }
+        public decimal book_discounts { get; set; } = 0;
         public string bookdiscountdetails { get; set; }
-        public Decimal TotaBelowMinPax { get; set; }
-        public Decimal TotaDp { get; set; }
-        public Decimal extLocAmount { get; set; }
-        public Decimal cateringdiscount { get; set; }
-        public Decimal fullpaymnt { get; set; }
+        public List<Book_OtherCharge> BookOtherCharges { get; set; }
+        public decimal PackageAmount { get; set; } = 0;
+        public decimal TotaAddons { get; set; } = 0;
+        public decimal TotaMiscCharge { get; set; } = 0;
+        public decimal TotaBelowMinPax { get; set; } = 0;
+        public decimal TotaDp { get; set; } = 0;
+        public decimal extLocAmount { get; set; } = 0;
+        public decimal cateringdiscount { get; set; } = 0;
+        public decimal fullpaymnt { get; set; } = 0;
 
 
-        private PegasusEntities _dbEntities = new PegasusEntities();
-        private BookingsViewModel bvm=new BookingsViewModel();
+        private PegasusEntities _dbEntities;
+        private BookingsViewModel bvm;
+
+        public TransactionDetailsViewModel()
+        {
+            _dbEntities = new PegasusEntities();
+            bvm = new BookingsViewModel();
+        }
+
 
         public IEnumerable<TransactionDetailsViewModel> GetTransactionDetails()
         {
@@ -44,8 +54,8 @@ namespace SBOSysTacV2.ViewModel
 
                 _list = (from b in _bookingsViewModel
                          join c in _dbEntities.Customers on b.c_Id equals c.c_Id
-                        join p in _dbEntities.Packages on b.pId equals p.p_id
-                        select new TransactionDetailsViewModel()
+                         join p in _dbEntities.Packages on b.pId equals p.p_id
+                         select new TransactionDetailsViewModel()
                         {
                             transactionId = b.trn_Id,
                             Booking_Trans = b,
@@ -72,24 +82,12 @@ namespace SBOSysTacV2.ViewModel
             try
             {
 
-                //bookingsList = (from b in bookings
-                //    join c in _dbEntities.Customers on b.c_Id equals c.c_Id
-                //    join p in _dbEntities.Packages on b.pId equals p.p_id
-                //    where b.trn_Id == transId
-                //    select new TransactionDetailsViewModel()
-                //    {
-                //        transactionId = b.trn_Id,
-                //        Booking_Trans = b,
-                //        Customer = c,
-                //        Package_Trans = p
-                //    }).Single();
-
-
                 bookingsList = new TransactionDetailsViewModel()
                 {
                     transactionId = transId,
                     Booking_Trans = bookings,
                     Customer =(from c in _dbEntities.Customers where c.c_Id==bookings.c_Id select c).Single(),
+                    BookOtherCharges = (from ot in _dbEntities.Book_OtherCharge where ot.trn_Id == transId select ot).ToList(),
                     Package_Trans = (from p in _dbEntities.Packages where  p.p_id==bookings.pId select p).Single()
                 };
 
@@ -427,7 +425,7 @@ namespace SBOSysTacV2.ViewModel
                                 
                                     //get course of selected menu
 
-                            var courseId = _dbEntities.Menus.FirstOrDefault(x => x.menuid == menuId).CourserId;
+                            var courseId = _dbEntities.Menus.FirstOrDefault(x => x.menuid == menuId).courseId;
 
                             has_coursemenuexist = this_bookingpackagebody.Any(m => m.courseId == courseId);
 
@@ -445,7 +443,7 @@ namespace SBOSysTacV2.ViewModel
         {
 
             var courseMenu = (from m in _dbEntities.Menus
-                join cc in _dbEntities.CourseCategories on m.CourserId equals cc.CourserId
+                join cc in _dbEntities.CourseCategories on m.courseId equals cc.courseId
                 where m.menuid == menuId
                 select new
                 {
@@ -479,7 +477,6 @@ namespace SBOSysTacV2.ViewModel
             return amount;
         }
 
-      
-
+ 
     }
 }

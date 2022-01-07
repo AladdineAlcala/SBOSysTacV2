@@ -18,14 +18,17 @@ namespace SBOSysTacV2.Models
         public CourseCategory()
         {
             this.Menus = new HashSet<Menu>();
+            this.PackageBodies = new HashSet<PackageBody>();
         }
     
-        public int CourserId { get; set; }
+        public int courseId { get; set; }
         public string Course { get; set; }
         public string Note { get; set; }
         public Nullable<bool> Main_Bol { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Menu> Menus { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PackageBody> PackageBodies { get; set; }
     }
 }

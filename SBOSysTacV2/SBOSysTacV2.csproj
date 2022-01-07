@@ -58,22 +58,10 @@
       <HintPath>..\packages\Audit.NET.14.2.0\lib\net45\Audit.NET.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\Crystal.Reports.13.0.15.1840\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\Crystal.Reports.13.0.15.1840\lib\CrystalDecisions.ReportSource.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\Crystal.Reports.13.0.15.1840\lib\CrystalDecisions.Shared.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\Crystal.Reports.13.0.15.1840\lib\CrystalDecisions.Web.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
       <Private>True</Private>
@@ -292,6 +280,9 @@
       <DependentUpon>PegasusEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Book_Menus.cs">
+      <DependentUpon>PegasusEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Book_OtherCharge.cs">
       <DependentUpon>PegasusEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CancelledBooking.cs">
@@ -517,10 +508,12 @@
     <Compile Include="ViewModel\BookingAddonDetailsViewModel.cs" />
     <Compile Include="ViewModel\BookingAddonsViewModel.cs" />
     <Compile Include="ViewModel\BookingHistoryLogViewModel.cs" />
+    <Compile Include="ViewModel\BookingOtherChargeViewModel.cs" />
     <Compile Include="ViewModel\BookingPaymentsViewModel.cs" />
     <Compile Include="ViewModel\BookingRefundViewModel.cs" />
     <Compile Include="ViewModel\BookingsViewModel.cs" />
     <Compile Include="ViewModel\BookMenusViewModel.cs" />
+    <Compile Include="ViewModel\BookOtherChargeDetailViewModel.cs" />
     <Compile Include="ViewModel\CancelBookingViewModel.cs" />
     <Compile Include="ViewModel\CateringReportViewModel.cs" />
     <Compile Include="ViewModel\CollectionReportViewModel.cs" />
@@ -6258,6 +6251,12 @@
     <Content Include="Content\plugins\jvectormap\jquery-jvectormap-1.2.2.min.js" />
     <Content Include="Content\plugins\jvectormap\jquery-jvectormap-usa-en.js" />
     <Content Include="Content\plugins\jvectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Content\plugins\overlayScrollbars\css\OverlayScrollbars.css" />
+    <Content Include="Content\plugins\overlayScrollbars\css\OverlayScrollbars.min.css" />
+    <Content Include="Content\plugins\overlayScrollbars\js\jquery.overlayScrollbars.js" />
+    <Content Include="Content\plugins\overlayScrollbars\js\jquery.overlayScrollbars.min.js" />
+    <Content Include="Content\plugins\overlayScrollbars\js\OverlayScrollbars.js" />
+    <Content Include="Content\plugins\overlayScrollbars\js\OverlayScrollbars.min.js" />
     <Content Include="Content\plugins\pace\pace.css" />
     <Content Include="Content\plugins\pace\pace.js" />
     <Content Include="Content\plugins\pace\pace.min.css" />
@@ -7694,7 +7693,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_sideBar_left.cshtml" />
+    <Content Include="Views\Shared\_sideBar_left_loggin.cshtml" />
     <Content Include="Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_header.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
@@ -7720,7 +7719,7 @@
     <Content Include="Views\Inquiry\CustomerBookingHistory.cshtml" />
     <Content Include="Views\Inquiry\CustomerBookingsPartialView.cshtml" />
     <Content Include="Views\Shared\ReportContainer.cshtml" />
-    <Content Include="Views\Bookings\PrintContractOption.cshtml" />
+    <Content Include="Views\Bookings\_PrintContractOptionPartial.cshtml" />
     <Content Include="Views\Recievables\Index.cshtml" />
     <Content Include="Views\Recievables\GetPaymentListView.cshtml" />
     <Content Include="Views\Inquiry\BookingScheduleIndex.cshtml" />
@@ -7805,6 +7804,12 @@
     <Content Include="Views\Bookings\_GetAddOnsDetails.cshtml" />
     <Content Include="Views\Bookings\_ModifyAddonDetail.cshtml" />
     <Content Include="Views\Bookings\_GetBookingOtherCharges.cshtml" />
+    <Content Include="Views\Bookings\_GetSnacksForm.cshtml" />
+    <Content Include="Views\Bookings\_GetPackageMenus.cshtml" />
+    <Content Include="Views\Bookings\_BookingDetailsPartial.cshtml" />
+    <Content Include="Views\Bookings\_BookingOtherCharge_Modify.cshtml" />
+    <Content Include="Views\Bookings\_BookingOtherCharge_New .cshtml" />
+    <Content Include="Views\Shared\_sideBar_left.cshtml" />
     <None Include="Web.developtment_testConfig.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -7926,6 +7931,9 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>PrintRefundVouch1.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,51 @@
+﻿@model SBOSysTacV2.ViewModel.BookOtherChargeDetailViewModel
+
+@using (Html.BeginForm("SaveBookingOtherCharge", "Bookings", FormMethod.Post, new {@class = "form-horizontal", @id = "otherchargesForm", role = "form"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(m=>m.transId)
+
+    @Html.HiddenFor(m=>m.chargeId)
+
+    <div class="box-body">
+            
+        <div class="form-group">
+            <label class="control-label col-sm-3">Charge Description: </label>
+
+            <div class="col-sm-8">
+                @Html.TextBoxFor(m => m.chargeDesc, new {@class = "form-control", placeholder = "Enter Description",@id="otherChargeDescription"})
+                @Html.ValidationMessageFor(m => m.chargeDesc, null, new { @class = "text-danger" })
+            </div>
+          
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">Note: </label>
+
+            <div class="col-sm-8">
+                @Html.TextAreaFor(m => m.chargeNote, new {@class = "form-control", placeholder = "Enter Note",@rows="4"})
+            </div>
+        </div>
+        
+        
+        <div class="form-group">
+            <label class="control-label col-sm-3">Amount: </label>
+
+            <div class="col-sm-8">
+                @Html.TextBoxFor(m => m.chargeAmount, new {@class = "form-control text-right", @placeholder = "0.00" , @id = "txtcharge_amt" })
+                @Html.ValidationMessageFor(m => m.chargeAmount, null, new { @class = "text-danger" })
+            </div>
+           
+        </div>
+
+    </div>
+
+
+    <div class="box-footer">
+        <div class="col-sm-6 col-sm-offset-4">
+            <button class="btn bg-olive btn-flat" type="submit" id="btn_registerNewCharge"> Save </button>
+        </div>
+    </div>
+}

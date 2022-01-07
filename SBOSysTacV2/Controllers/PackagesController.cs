@@ -167,7 +167,7 @@ namespace SBOSysTacV2.Controllers
                 p_min = newpackage.p_min,
                 isActive = true,
                 nopax_id = newpackage.packagenopax_id,
-                date_Created=DateTime.Now
+                date_Created=newpackage.dateCreated
 
             };
 
@@ -537,7 +537,7 @@ namespace SBOSysTacV2.Controllers
 
 
 
-        public JsonResult getResultSearchPackageBooking(string searchstr, string selectedId)
+        public JsonResult GetResultSearchPackageBooking(string searchStr, string selectedId)
         {
 
 
@@ -546,15 +546,15 @@ namespace SBOSysTacV2.Controllers
             if (selectedId == "packageTypeSelectList")
             {
                 packages = areaPackage.GetPackageByType()
-                    .Where(x => x.pType == searchstr.Trim())
+                    .Where(x => x.pType == searchStr.Trim())
                     .OrderByDescending(order => order.packageId).ToList();
             }
             else if (selectedId == "areaSelectList")
             {
-                if (!string.IsNullOrEmpty(searchstr))
+                if (!string.IsNullOrEmpty(searchStr))
                 {
                     packages = areaPackage.GetAreasByPackages()
-                        .Where(x => x.areaId.Equals(Convert.ToInt32(searchstr)))
+                        .Where(x => x.areaId.Equals(Convert.ToInt32(searchStr)))
                          .OrderByDescending(order => order.packageId).ToList();
 
 
@@ -566,7 +566,7 @@ namespace SBOSysTacV2.Controllers
             else
             {
                 packages = areaPackage.GetPackageByType()
-                    .Where(x => x.noPaxId == Convert.ToInt32(searchstr))
+                    .Where(x => x.noPaxId == Convert.ToInt32(searchStr))
                     .OrderByDescending(order => order.packageId).ToList();
             }
 

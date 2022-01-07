@@ -6,9 +6,9 @@ $(document).ready(function () {
 
         e.preventDefault();
         debugger;
-        var _cusId = $('#hiddencusId').val();
+        var cusId = $('#hiddencusId').val();
 
-         if (_cusId === "") {
+         if (cusId === "") {
 
              Swal.fire('Error on retrieving record!', 'Please try again', 'error');
 
@@ -16,7 +16,7 @@ $(document).ready(function () {
              
              $.ajax({
                  type: 'Get',
-                 url: inquiryUrl.inquiryUrl_customerbookings,
+                 url: inquiryUrl.inquiryUrl_customerbookings,  // "@Url.Action("GetCustomerBookings", "Inquiry")",
                  contentType: 'application/html;charset=utf8',
                  beforeSend: function () {
                      $('#spinn-loader').show();
@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 
 
-                 loadDataTableBookings(_cusId);
+                 loadDataTableBookings(cusId);
 
                  $('#spinn-loader').hide();
              });
@@ -73,7 +73,7 @@ $(document).ready(function () {
 
             "ajax":
             {
-                "url": inquiryUrl.inquiryUrl_loadbookingsbycustomer,
+                "url": inquiryUrl.inquiryUrl_loadbookingsbycustomer, // "@Url.Action("LoadBookingsByCustomer", "Inquiry")",
                 "type": "Get",
                 "data": { cusId: id },
                 "datatype": "json"
@@ -83,12 +83,14 @@ $(document).ready(function () {
                 {
                     'autowidth': true,
                     'targets': 0,
+                    "className": "text-left",
                     "data": "transId"
                 },
                 {
                     'autowidth': true,
                     'targets': 1,
                     "data": "bookdatetime",
+                    "className": "text-left",
                     "type": "date",
                     "render": function(d) {
                         return moment(d).format("MMM-DD-YYYY hh:mm: A");
@@ -98,16 +100,19 @@ $(document).ready(function () {
                 {
                     'autowidth': true,
                     'targets': 2,
+                    "className": "text-left",
                     "data": "occasion"
                 },
                 {
                     'autowidth': true,
                     'targets': 3,
+                    "className": "text-left",
                     "data": "venue"
                 },
                 {
                     'autowidth': true,
                     'targets': 4,
+                    "className": "text-left",
                     "data": "package"
                 },
                 {

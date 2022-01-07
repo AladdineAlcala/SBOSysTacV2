@@ -76,7 +76,7 @@ namespace SBOSysTacV2.Controllers
             //Filter Course
             if (!(string.IsNullOrEmpty(courseCategoryid.Trim())))
             {
-                menus = menus.Where(c => c.CourserId == Convert.ToInt32(courseCategoryid));
+                menus = menus.Where(c => c.courseId == Convert.ToInt32(courseCategoryid));
             }
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
             {
@@ -148,11 +148,12 @@ namespace SBOSysTacV2.Controllers
                     var newMenu = new Menu
                     {
                         menuid = courseMenu.menu_Id,
-                        CourserId = Convert.ToInt32(courseMenu.CourserId),
+                        courseId = Convert.ToInt32(courseMenu.courseId),
                         menu_name = courseMenu.menudesc,
                         deptId = Convert.ToInt32(courseMenu.deptId),
                         note = courseMenu.Note,
                         image = filename,
+                        price = courseMenu.price,
                         date_added = courseMenu.dateAdded
 
 
@@ -334,7 +335,7 @@ namespace SBOSysTacV2.Controllers
                     if (modifyMenu != null)
                     {
                         modifyMenu.menuid = editedCourseMenuModel.menu_Id;
-                        modifyMenu.CourserId = Convert.ToInt32(editedCourseMenuModel.CourserId);
+                        modifyMenu.courseId = Convert.ToInt32(editedCourseMenuModel.courseId);
                         modifyMenu.menu_name = editedCourseMenuModel.menudesc;
                         modifyMenu.deptId = Convert.ToInt32(editedCourseMenuModel.deptId);
                         modifyMenu.note = editedCourseMenuModel.Note;

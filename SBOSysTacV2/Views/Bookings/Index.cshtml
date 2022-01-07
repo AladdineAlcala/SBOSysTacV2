@@ -44,9 +44,10 @@
             bookUrl_loadBookings: "@Url.Action("LoadBookings", "Bookings")",
             bookUrl_createBooking: "@Url.Action("CreateBooking", "Bookings")",
             bookUrl_packageBooking: "@Url.Action("GetPackageonBooking","Bookings", new { transId = "trans_Id" })",
-            bookUrl_getPackageBookingDetailsId:"@Url.Action("GetPackageBookingDetails", "Bookings",new {transId = "trans_Id"})",
             bookUrl_getPackageId: "@Url.Action("GetPackageId","Bookings")",
             bookUrl_editBooking: "@Url.Action("EditBooking", "Bookings",new {transId="tId"})",
+            bookUrl_getPackageBookingDetails: "@Url.Action("GetPackageBookingDetails", "Bookings",new {transId = "trans_Id"})",
+            @*bookUrl_getPackageBookingDetailsId:"@Url.Action("GetBookingDetailsPartial", "Bookings",new {transId = "trans_Id"})",*@
             bookUrl_paymentBooking: "@Url.Action("GetBooking_Payments", "Payments",new {transactionId="tId"})",
             bookUrl_ServeBooking: "@Url.Action("ServeBookingStatus","Bookings")",
             bookUrl_removeBooking: "@Url.Action("RemoveBooking", "Bookings")",

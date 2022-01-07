@@ -37,9 +37,11 @@ namespace SBOSysTacV2.ViewModel
             try
             {
                 List<Booking> listbookings = new List<Booking>();
+
                 listbookings = (from b in _dbEntities.Bookings select b).ToList();
 
                 lst=(from l in listbookings
+
                     select new CustomerBookingsViewModel()
                     {
                         transId = l.trn_Id,
@@ -56,6 +58,54 @@ namespace SBOSysTacV2.ViewModel
                         bookingtype = l.booktype?.Trim() ?? "",
                         transType = "bk"
                     }).ToList();
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
+            return lst;
+
+        }
+
+
+        public IEnumerable<CustomerBookingsViewModel> GetCusBookingsById(int cusId)
+        {
+            var _dbEntities = new PegasusEntities();
+
+
+            List<CustomerBookingsViewModel> lst = new List<CustomerBookingsViewModel>();
+
+            try
+            {
+                List<Booking> listbookings = new List<Booking>();
+
+                listbookings = (from b in _dbEntities.Bookings where b.c_Id == cusId select b).ToList();
+
+                lst = listbookings.Select(l => new CustomerBookingsViewModel()
+                    {
+                        transId = l.trn_Id,
+                        cusId = l.c_Id,
+                        cusfullname = Utilities.Getfullname_nonreverse(l.Customer.lastname, l.Customer.firstname,
+                            l.Customer.middle),
+                        occasion = l.occasion,
+                        venue = l.venue,
+                        bookdatetime = l.startdate,
+                        package = l.Package.p_descripton,
+                        packageType = l.Package.p_type.Trim(),
+                        packageDue = bookingPayments.Get_TotalAmountBook(l.trn_Id),
+                        isServe = Convert.ToBoolean(l.serve_stat),
+                        isCancelled = Convert.ToBoolean(l.is_cancelled),
+                        bookingtype = l.booktype?.Trim() ?? "",
+                        transType = "bk"
+                    }).OrderByDescending(t => t.bookdatetime)
+                    .ToList();
+
+
 
 
             }

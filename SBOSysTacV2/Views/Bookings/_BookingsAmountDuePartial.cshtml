@@ -2,20 +2,22 @@
 @model TransactionDetailsViewModel
 
 @{
+
+    decimal t_AmountPackage=0;
+    decimal subtotal = 0;
+
+
     string catdescountdetails = String.Empty;
+
     var noofPax = Model.Booking_Trans.noofperson;
 
-    var tAmountPackage = Model.Package_Trans.p_amountPax * Model.Booking_Trans.noofperson;
+    var otherMiscCharge = Model.TotaMiscCharge;
+
     var totalAddons = Model.TotaAddons;
     var extLocAmount = Model.extLocAmount;
 
     decimal totaldiscount = 0;
 
-    //var totalbelowminPax = Model.TotaBelowMinPax;
-
-    //var subtotal = (tAmountPackage + totalAddons + extLocAmount + (totalbelowminPax * noofPax)) ;
-
-    var subtotal = (tAmountPackage + totalAddons + (extLocAmount * noofPax));
 
     var bookdiscount = Model.book_discounts;
 
@@ -25,7 +27,7 @@
 
     totaldiscount = Convert.ToDecimal(cateringdiscount * noofPax) + bookdiscount;
 
-    var grandTota = subtotal - totaldiscount;
+ 
 
 
 }
@@ -35,10 +37,27 @@
 
 
 
-        <tr style="margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px;">
-            <th style="width: 60%;margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;"> Package Amount: <span style="font-weight:normal;">@String.Format("( {0} pax @ {1}/head )", noofPax, Model.Package_Trans.p_amountPax)</span> </th>
-            <td class="text-right text-bold bookdetails" style="margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;"><h4 class="text-bold my-0">@String.Format("Php {0:N}", tAmountPackage) </h4>  </td>
-        </tr>
+    <tr style="margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px;">
+
+        @if (Model.Package_Trans.p_type.TrimEnd() != "sd")
+        {
+            t_AmountPackage = (decimal) (Model.PackageAmount * Model.Booking_Trans.noofperson);
+
+         
+
+            <th style="width: 60%; margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;"> Package Amount: <span style="font-weight: normal;">@String.Format("( {0} pax @ {1}/head )", noofPax,Model.PackageAmount)</span> </th>
+        }
+        else
+        {
+            t_AmountPackage = (decimal)Model.PackageAmount;
+
+
+
+            <th style="width: 60%; margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;"> Snacks/Drinks Amount:</th>
+        }
+
+        <td class="text-right text-bold bookdetails" style="margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;"><h4 class="text-bold my-0">@String.Format("Php {0:N}", t_AmountPackage) </h4> </td>
+    </tr>
 
 
 
@@ -51,13 +70,24 @@
             <th style="width: 60%;margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;font-weight: normal;"> Location ext. amount:<small class="text-muted">(@String.Format("{0:N}", extLocAmount))</small></th>
             <td class="text-right bookdetails" style="width: 60%;margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;"> <h4 class="my-1">@String.Format("{0:N}", extLocAmount * noofPax)</h4></td>
         </tr>
+    
 
-        @*<tr style="margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px;">
+        <tr style="margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px;">
+            <th style="width: 60%;margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;font-weight: normal;"> Miscellaneous/Other Charges: </th>
+            <td class="text-right bookdetails" style="width: 60%;margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;"> <h4 class="my-1">@String.Format("{0:N}", otherMiscCharge)</h4></td>
+        </tr>
+
+
+    @*<tr style="margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px;">
             <th style="width: 60%;margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;font-weight: normal;"> Below Min. Pax: <small class="text-muted">(@String.Format("{0:N}", totalbelowminPax))</small> </th>
             <td class="text-right bookdetails" style="width: 60%;margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;">@String.Format("{0:N}", totalbelowminPax * noofPax)</td>
         </tr>*@
+        
+        @{
+            subtotal=(decimal) (t_AmountPackage + totalAddons + (extLocAmount * noofPax));
+        }
 
-        <tr style="border-top: 1pt solid black;">
+    <tr style="border-top: 1pt solid black;">
 
             <th style="width: 60%;" class="text-bold"> SubTotal :</th>
             <td class="text-right text-bold bookdetails"><h4 class="my-1 text-bold"> @String.Format(" Php {0:N}", subtotal)</h4></td>
@@ -117,8 +147,14 @@
             <th style="width: 60%; margin-top: 0px; margin-bottom: 0px; padding-left: 40px; padding-top: 2px; padding-bottom: 2px; font-weight: normal;">Catering Discount </th>
             <td class="text-right bookdetails" style="width: 60%; margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;">@String.Format("{0:N}", 0.00)</td>
         </tr>*@
+        
+    
+    @{
+      
 
-        <tr style="border-top: 1pt solid  #000;border-bottom:4px double #000">
+        var grandTota = subtotal - totaldiscount;
+    }
+    <tr style="border-top: 1pt solid  #000;border-bottom:4px double #000">
 
             <th style="width: 60%;" class="text-bold text-center text-justify"><h4 class="my-1">Total :</h4> </th>
             <td class="text-right text-bold bookdetails"><h3 class="my-1 text-bold">@String.Format("Php {0:N}", grandTota)</h3></td>

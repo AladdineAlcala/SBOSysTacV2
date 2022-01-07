@@ -21,5 +21,6 @@ namespace SBOSysTacV2.Models
         public Nullable<int> addonId { get; set; }
     
         public virtual BookingAddon BookingAddon { get; set; }
+        public virtual AddonDetail AddonDetail { get; set; }
     }
 }

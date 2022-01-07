@@ -25,37 +25,35 @@ namespace SBOSysTacV2.ViewModel
         public string dept { get; set; }
         public string menuImageFilename { get; set; }
         public string oldMenuId { get; set; }
+        public decimal? price { get; set; }
 
-        public IEnumerable<BookMenusViewModel> ListofMenusBook(int transid)
+
+
+        public IEnumerable<BookMenusViewModel> ListofMenusBook(int trnId)
         {
-            IOrderedEnumerable<BookMenusViewModel> bookMenusList;
+            IEnumerable<BookMenusViewModel> bookMenusList;
 
-            var packageBookMenus = new Package_MenusBookViewModel();
 
 
             try
             {
 
-                var bookmenus = Get_Menu_on_PackageByTransId(transid).ToList();
+                var bookmenus = Get_Menu_on_PackageByTransId(trnId).ToList();
 
-
-
-                bookMenusList = (from bm in bookmenus
-
-                    select new BookMenusViewModel()
-                    {
-                        transId = (int)bm.transId,
-                        menu_No = bm.menu_No,
-                        menuId = bm.menuId,
-                        menu_name = bm.menu_name,
-                        courseid = (int)bm.courseid,
-                        coursename = bm.coursename,
-                        dept = bm.dept,
-                        menuImageFilename = bm.menuImageFilename,
-                        serving=bm.serving,
-                        servingpax = bm.servingpax
-
-                    }).ToList().OrderBy(x => x.courseid);
+                bookMenusList = bookmenus.Select(bm => new BookMenusViewModel()
+                {
+                    transId = (int) bm.transId,
+                    menu_No = bm.menu_No,
+                    menuId = bm.menuId,
+                    menu_name = bm.menu_name,
+                    courseid = (int) bm.courseid,
+                    coursename = bm.coursename,
+                    dept = bm.dept,
+                    menuImageFilename = bm.menuImageFilename,
+                    serving = bm.serving,
+                    servingpax = bm.servingpax,
+                    price = bm.price??0
+                }).ToList();
 
             }
             catch (Exception e)
@@ -63,8 +61,6 @@ namespace SBOSysTacV2.ViewModel
                 Console.WriteLine(e);
                 throw;
             }
-
-            //_dbentities.Dispose();
 
             return bookMenusList;
         }
@@ -94,7 +90,7 @@ namespace SBOSysTacV2.ViewModel
             return servingperpax;
         }
 
-        public int get_totalselectedMainMenus(int transactionId)
+        public int get_totalselectedMainMenus(int trnId)
         {
             int i = 0;
 
@@ -103,8 +99,8 @@ namespace SBOSysTacV2.ViewModel
             {
                 var bookmenus = (from bm in dbEntities.Book_Menus
                     join m in dbEntities.Menus on bm.menuid equals m.menuid
-                    join cc in dbEntities.CourseCategories on m.CourserId equals cc.CourserId 
-                    where bm.trn_Id == transactionId && cc.Main_Bol==true
+                    join cc in dbEntities.CourseCategories on m.courseId equals cc.courseId 
+                    where bm.trn_Id == trnId && cc.Main_Bol==true
                     select new { sel_mainmenus=cc.Course }).ToList();
 
                 i = bookmenus.Select(x => x.sel_mainmenus).Count();
@@ -126,7 +122,7 @@ namespace SBOSysTacV2.ViewModel
             var dbentities=new PegasusEntities();
 
             var list = (from p in dbentities.PackageBodies
-                join cc in dbentities.CourseCategories on p.courseId equals cc.CourserId
+                join cc in dbentities.CourseCategories on p.courseId equals cc.courseId
                 where p.p_id == packageId && cc.Main_Bol==true
                 select new {mainmenus=cc.Course}).ToList();
 
@@ -147,7 +143,7 @@ namespace SBOSysTacV2.ViewModel
         //}
 
 
-        public static int GetTotalLackingMenus(int pid,int transid, PegasusEntities dbcontext)
+        public static int GetTotalLackingMenus(int pid,int trnId, PegasusEntities dbcontext)
         {
             //var dbcontext=new PegasusEntities();
 
@@ -160,7 +156,7 @@ namespace SBOSysTacV2.ViewModel
 
 
             var intmenusselected = (from bm in dbcontext.Book_Menus
-                                    where bm.trn_Id == transid
+                                    where bm.trn_Id == trnId
                                     join m in dbcontext.Menus on bm.menuid equals m.menuid
                                     select new
                                     {
@@ -175,13 +171,13 @@ namespace SBOSysTacV2.ViewModel
         }
 
 
-        public List<BookMenusViewModel> Get_Menu_on_PackageByTransId(int transId)
+        public List<BookMenusViewModel> Get_Menu_on_PackageByTransId(int trnId)
         {
             List<BookMenusViewModel> listmenus = new List<BookMenusViewModel>();
 
             var dbEntities = new PegasusEntities();
 
-            listmenus = dbEntities.Database.SqlQuery<BookMenusViewModel>("exec GetPackageBookMenus @trId ", new SqlParameter("@trId", transId)).ToList();
+            listmenus = dbEntities.Database.SqlQuery<BookMenusViewModel>("exec GetPackageBookMenus @trId ", new SqlParameter("@trId", trnId)).ToList();
 
             dbEntities.Dispose();
 
@@ -189,5 +185,28 @@ namespace SBOSysTacV2.ViewModel
             return listmenus;
         }
 
+        public List<BookMenusViewModel> Get_Menu_on_SnackPackageByTransId(int trnId)
+        {
+            List<BookMenusViewModel> listmenus = new List<BookMenusViewModel>();
+
+            using (var dbEntities=new PegasusEntities())
+            {
+                var bookmenus = dbEntities.Book_Menus.Where(t => t.trn_Id == trnId).ToList();
+
+                if (bookmenus.Count > 0) listmenus = dbEntities.Database.SqlQuery<BookMenusViewModel>("exec [dbo].[GetPackageSnacksBookMenus] @trId ", new SqlParameter("@trId", trnId)).ToList();
+
+
+
+            }
+
+            return listmenus;
+        }
+
+        public decimal ComputeAmountForSnacksByTransId(int trnId)
+        {
+            var menulist = this.Get_Menu_on_SnackPackageByTransId(trnId);
+
+            return (decimal)menulist.Select(m => m.price * m.servingpax).Sum();
+        }
     }
 }

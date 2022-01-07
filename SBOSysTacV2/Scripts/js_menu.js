@@ -38,6 +38,11 @@ $(document).ready(function () {
                 { "data": "coursecategory", "name": "coursecategory" },
                 { "data": "departmentincharge", "name": "departmentincharge" },
                 {
+                    "data": "price", "name": "price",
+                    "className": "text-right",
+                    render: $.fn.dataTable.render.number(",", ".", 2)
+                },
+                {
                    "data": "menu_Id", "orderable": false, "searchable": false, "className": "text-center",
                     "mRender": function (data) {
 
@@ -57,10 +62,11 @@ $(document).ready(function () {
                     'defaultContent': ''
                 },
                 { 'width': '10%', 'targets': 1 },
-                { 'width': '35%', 'targets': 2 },
-                { 'width': '20%', 'targets': 3 },
+                { 'width': '30%', 'targets': 2 },
+                { 'width': '15%', 'targets': 3 },
                 { 'width': '15%', 'targets': 4 },
-                { 'width': '5%', 'targets': 5 }
+                { 'width': '10%', 'targets': 5 },
+                { 'width': '5%', 'targets': 6 }
             ],
             "order": [1, 'asc'],
 
@@ -234,7 +240,7 @@ $(document).ready(function () {
     });//end button save
 
 
-    $('select[name=CourserId]').on('change', function () {
+    $('select[name=courseId]').on('change', function () {
 
 
         if ($(this).val() != '') {

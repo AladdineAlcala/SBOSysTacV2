@@ -86,7 +86,7 @@ namespace SBOSysTacV2.ViewModel
                 //    .Where(t1 => splitCourse.Any(t2 => t1.Course.ToLower() == t2.ToLower().Trim())).ToList();
                 _ = _course.RemoveAll(item => removeList.Contains(item));
 
-                 _courselist = (from item in splitCourse select _course.FirstOrDefault(t => t.Course.ToLower().Contains(item.ToLower().Trim())) into c where c != null select new KeyValuePair<int, string>(c.CourserId, c.Course)).ToList();
+                 _courselist = (from item in splitCourse select _course.FirstOrDefault(t => t.Course.ToLower().Contains(item.ToLower().Trim())) into c where c != null select new KeyValuePair<int, string>(c.courseId, c.Course)).ToList();
 
                 var bookmenucourse = mainmenu_viewmodel.GetBookMenuCourseByTransId(trnId);
 
@@ -110,6 +110,15 @@ namespace SBOSysTacV2.ViewModel
             return string.Empty;
 
         }
+
+
+        public Package GetPackageByTransaction_Id(int transactionId)
+        {
+     
+            return (from p in _dbEntities.Bookings where p.trn_Id == transactionId select p.Package).Single();
+        }
+
+
     }
 
 

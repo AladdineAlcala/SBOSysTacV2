@@ -23,6 +23,7 @@ namespace SBOSysTacV2.Models
             this.CancelledBookings = new HashSet<CancelledBooking>();
             this.Payments = new HashSet<Payment>();
             this.BookingAddons = new HashSet<BookingAddon>();
+            this.Book_OtherCharge = new HashSet<Book_OtherCharge>();
         }
     
         public int trn_Id { get; set; }
@@ -61,5 +62,7 @@ namespace SBOSysTacV2.Models
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookingAddon> BookingAddons { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Book_OtherCharge> Book_OtherCharge { get; set; }
     }
 }

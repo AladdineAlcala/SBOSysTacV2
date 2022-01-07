@@ -31,7 +31,7 @@ namespace SBOSysTacV2.ViewModel
                                _pId = p.p_id,
                                _package = p,
                                _pbody = (from x in p.PackageBodies
-                                         join cc in _dbcontext.CourseCategories on x.courseId equals cc.CourserId
+                                         join cc in _dbcontext.CourseCategories on x.courseId equals cc.courseId
                                          select new PackageBodyViewModel()
                                          {
                                              pbodyKey = x.No,
@@ -69,7 +69,7 @@ namespace SBOSysTacV2.ViewModel
             var dbcontext = new PegasusEntities();
 
             var packagebody = (from pb in dbcontext.PackageBodies
-                               join cc in dbcontext.CourseCategories on pb.courseId equals cc.CourserId
+                               join cc in dbcontext.CourseCategories on pb.courseId equals cc.courseId
                                select new PackageBodyViewModel()
                                {
                                    pbodyKey = pb.No,

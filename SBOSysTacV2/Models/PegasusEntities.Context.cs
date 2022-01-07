@@ -35,11 +35,9 @@ namespace SBOSysTacV2.Models
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<CancelledBooking> CancelledBookings { get; set; }
         public virtual DbSet<CateringDiscount> CateringDiscounts { get; set; }
-        public virtual DbSet<CourseCategory> CourseCategories { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Discount> Discounts { get; set; }
-        public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<PackageAreaCoverage> PackageAreaCoverages { get; set; }
         public virtual DbSet<PackageBody> PackageBodies { get; set; }
         public virtual DbSet<Package> Packages { get; set; }
@@ -53,5 +51,8 @@ namespace SBOSysTacV2.Models
         public virtual DbSet<PackagesRangeBelowMin> PackagesRangeBelowMins { get; set; }
         public virtual DbSet<BookAddonsDetail> BookAddonsDetails { get; set; }
         public virtual DbSet<BookingAddon> BookingAddons { get; set; }
+        public virtual DbSet<CourseCategory> CourseCategories { get; set; }
+        public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<Book_OtherCharge> Book_OtherCharge { get; set; }
     }
 }

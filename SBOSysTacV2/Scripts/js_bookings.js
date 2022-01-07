@@ -5,9 +5,6 @@ var $areasel;
 
 $(document).ready(function () {
 
-
-
-
     $('#packageselect').select2({
 
         dropdownParent: $('#modal-searchPackage')
@@ -36,6 +33,9 @@ $(document).ready(function () {
     $tablebookings.button(4).disable();
 
 
+    //==================================================================================
+
+
     $('#btn_regbooking').on('click', function (e) {
 
         e.preventDefault();
@@ -51,14 +51,17 @@ $(document).ready(function () {
             confirmButtonText: 'Yes, Save it!',
             //closeOnConfirm: true, closeOnCancel: true
         }).then((result) => {
-
+           
             if (result.value) {
 
-                var formUrl = $('#savebooking').attr('action');
+                $('#spinn-loader').show();
+
+                var formUrl = $('#savebooking').attr('action');   
 
                 var form = $('[id*=savebooking]');
 
                 $.validator.unobtrusive.parse(form);
+
                 form.validate();
 
                 if (form.valid()) {
@@ -72,26 +75,32 @@ $(document).ready(function () {
                         success: function (data) {
                             if (data.success) {
 
+
                                 Swal.fire({
-                                        title: "Success",
-                                        text: "It was succesfully added!",
-                                        type: "success"
-                                
+                                    title: "Success",
+                                    text: "It was succesfully added!",
+                                    type: "success",
+                                    showConfirmButton: false
 
-                                    });
+                                });
 
-                                //window.location.href = bookingsUrl.bookUrl_IndexLoad;
+
                                 setTimeout(function () {
 
-                                    window.location.href = bookingsUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", data.trnsId);
+                                    window.location.href = bookingsUrl.bookUrl_getPackageBookingDetails.replace("trans_Id", data.trnsId);  //@Url.Action("GetPackageBookingDetails", "Bookings",new {transId = "trans_Id"})"
 
-                                    // $('#spinn-loader').hide();
-                                }, 600);
+                                    $('#spinn-loader').hide();
 
+                                }, 5000);
+
+
+                              
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             Swal.fire('Error adding record!', 'Please try again', 'error');
+
+                            $('#spinn-loader').hide();
                         }
                     });
 
@@ -101,6 +110,12 @@ $(document).ready(function () {
                         $errorSpan.html("<span style='color:#a94442'>" + value.message + "</span>");
                         $errorSpan.show();
                     });
+
+                    setTimeout(function () {
+
+                        $('#spinn-loader').hide();
+
+                    }, 1000);
                 }
 
 
@@ -132,7 +147,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'Get',
-            url: bookingsUrl.bookUrl_searchPackage,
+            url: bookingsUrl.bookUrl_searchPackage,   // "@Url.Action("SearchPackage_Transaction","Packages")",
             contentType: 'application/html;charset=utf8',
             //data: { packageId: $(this).data('id') },
             datatype: 'html',
@@ -276,7 +291,9 @@ $(document).ready(function () {
     });
 
 
-    $('#tbl_eventsBooking tbody').on('click', 'tr .getdetails',
+
+
+    $('#tbl_eventsBooking tbody').on('click', 'tr .get-details',
         function (e) {
 
             e.preventDefault();
@@ -294,7 +311,7 @@ $(document).ready(function () {
 
                         setTimeout(function () {
 
-                            window.location.href = bookingsUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", trnsId);  //"@Url.Action("GetPackageBookingDetails", "Bookings",new {transId = "trans_Id"})",
+                            window.location.href = bookingsUrl.bookUrl_getPackageBookingDetails.replace("trans_Id", trnsId);  //"@Url.Action("GetPackageBookingDetails", "Bookings",new {transId = "trans_Id"})",
 
                             // $('#spinn-loader').hide();
                         }, 600);
@@ -454,7 +471,7 @@ $(document).ready(function () {
 
                                 setTimeout(function () {
 
-                                    window.location.href = bookingsUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", data.trnsId);
+                                   /* window.location.href = bookingsUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", data.trnsId)*/;
 
                                     // $('#spinn-loader').hide();
                                 }, 600);
@@ -872,8 +889,9 @@ $(document).ready(function () {
                         'autowidth': true, 'targets': 6, "data": "trn_Id", "orderable": false, "searchable": false, "className": "text-center",
                         "mRender": function (data) {
 
-                            return ' <button class="btn btn-flat getdetails" id=' + data + '><i class="fa fa-chevron-right fa-md"></i></button>';
-                              
+                            return ' <button class="btn btn-flat get-details" id=' + data + '><i class="fa fa-chevron-right fa-md"></i></button>';
+
+                           /* return '<i class="fa fa-lg fa-chevron-right my-auto"></i>'*/
                                
                         }
                     }
@@ -1073,6 +1091,26 @@ var is_ActivePackage = function (data, type, full, meta) {
     return '<input type="checkbox" class="chkbox_isActive" ' + isActive + " disabled/>";
 }
 
+
+
+
+$(document).on('change', '#' +
+    'noofPaxSelectList' +
+    '', function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        var selId = "";
+        selId = $(this).attr('id');
+
+        //alert(selId);
+        LoadDataTableSearch($(this).val(), selId);
+
+    });
+
+
+
 //select packages location firing
 
 $(document).on('change', '#' +
@@ -1100,7 +1138,7 @@ $(document).on('change', '#' +
         e.preventDefault();
         e.stopPropagation();
 
-/*        debugger;*/
+        debugger;
 
     var selId = "";
         selId = $(this).attr('id');
@@ -1119,9 +1157,10 @@ $(document).on('change', '#' +
             }
 
             $('#tbl-packages').DataTable({
-                 bLengthChange: false,
-                 bFilter: false
-             });
+                bLengthChange: false,
+                bFilter: false
+            });
+
 
             document.getElementById('areaSelectList').style.display = 'inline-block';
 
@@ -1131,27 +1170,11 @@ $(document).on('change', '#' +
 
             LoadDataTableSearch($(this).val(), selId);
         }
-    
-
-});
 
 
+    });
 
 
-$(document).on('change', '#' +
-    'noofPaxSelectList' +
-    '', function (e) {
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        var selId = "";
-        selId = $(this).attr('id');
-
-        //alert(selId);
-        LoadDataTableSearch($(this).val(), selId);
-
-});
 
 
 
@@ -1162,9 +1185,6 @@ var LoadDataTableSearch = function(data,selectedId) {
     var seleId = selectedId;
 
     if ($.fn.dataTable.isDataTable('#tbl-packages')) {
-
-        // console.log('DataTable');
-
 
         $('#tbl-packages').DataTable().destroy();
         $('#tbl-packages tbody').empty();
@@ -1178,7 +1198,7 @@ var LoadDataTableSearch = function(data,selectedId) {
         order: [],
 
         ajax: {
-            url: bookingsUrl.bookUrl_getResultSearchPackages,
+            url: bookingsUrl.bookUrl_getResultSearchPackages,  // "@Url.Action("getResultSearchPackageBooking", "Packages")"
             data: { searchstr: searchstring, selectedId: seleId},
             type: "Get",
             datatype: "json"
@@ -1259,7 +1279,7 @@ var LoadDataTableSearch = function(data,selectedId) {
 
 $(document).on('click', '.btn-selectPackage', function () {
 
-    debugger;
+   // debugger;
 
    // console.log($('#areaSelectList option:selected').text());
 
@@ -1339,10 +1359,10 @@ $(document).on('click', '.btn-selectPackage', function () {
          $('#loc_isextended').addClass('disabled');
      }
 
-     $('#packagename').val(package_Name);
+         $('#packagename').val(package_Name);
 
 
-    $('#modal-searchPackage').modal('hide');
+         $('#modal-searchPackage').modal('hide');
 
     // alert(package_Name);
 
@@ -1676,3 +1696,9 @@ function currencyFormat(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 
+$(document).on('keypress', '#txtcharge_amt', function (event) {
+
+    if ((event.which !== 46 || $(this).val().indexOf('.') !== -1) && (event.which < 48 || event.which > 57) && (event.which !== 48)) {
+        event.preventDefault();
+    }
+});

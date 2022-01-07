@@ -33,12 +33,12 @@ namespace SBOSysTacV2.Controllers
                 course = (from c in _dbcontext.CourseCategories as IEnumerable<CourseCategory>
                     select new CourseCategory()
                     {
-                        CourserId = c.CourserId,
+                        courseId = c.courseId,
                         Course = c.Course,
                         Note = c.Note,
                         Main_Bol = c.Main_Bol
 
-                    }).OrderBy(x=>x.CourserId).ToList();
+                    }).OrderBy(x=>x.courseId).ToList();
             }
             catch (Exception)
             {
@@ -75,33 +75,33 @@ namespace SBOSysTacV2.Controllers
                     var isRecordAlreadyExist = _dbcontext.CourseCategories.Any(x => x.Course.ToLower().Contains(newcourseCatViewModel.Coursename.ToLower()));
 
                     if (isRecordAlreadyExist)
-                        {
+                    {
                         // ModelState.AddModelError("Course", newcourseCatViewModel.Coursename + " already exist!.");
-                            return Json(
-                                new { success = isSuccess, message = "Unable to save record ;\n Possible for duplicate entry." }, JsonRequestBehavior.AllowGet);
+                        return Json(
+                            new { success = isSuccess, message = "Unable to save record ;\n Possible for duplicate entry." }, JsonRequestBehavior.AllowGet);
 
-                        }
+                    }
 
-                        else
+                    else
+                    {
+
+                        var coursecat = new CourseCategory()
                         {
+                            courseId = Convert.ToInt32(newcourseCatViewModel.courseId),
+                            Course = newcourseCatViewModel.Coursename,
+                            Note = newcourseCatViewModel.Note,
+                            Main_Bol = newcourseCatViewModel.Main_Bol
 
-                            var coursecat = new CourseCategory()
-                            {
-                                CourserId = Convert.ToInt32(newcourseCatViewModel.CourserId),
-                                Course = newcourseCatViewModel.Coursename,
-                                Note = newcourseCatViewModel.Note,
-                                Main_Bol = newcourseCatViewModel.Main_Bol
+                        };
 
-                            };
+                        _dbcontext.CourseCategories.Add(coursecat);
+                        _dbcontext.SaveChanges();
 
-                            _dbcontext.CourseCategories.Add(coursecat);
-                            _dbcontext.SaveChanges();
+                        isSuccess = true;
+                        //return RedirectToAction("Index", "Course");
 
-                            isSuccess = true;
-                            //return RedirectToAction("Index", "Course");
-
-                            return Json(new {success=isSuccess}, JsonRequestBehavior.AllowGet);
-                        }
+                        return Json(new {success=isSuccess}, JsonRequestBehavior.AllowGet);
+                    }
                     
 
                 }
@@ -189,10 +189,10 @@ namespace SBOSysTacV2.Controllers
         public ActionResult ModifyCourse(int courseId)
         {
             var courseviewModel = (from c in _dbcontext.CourseCategories
-                where c.CourserId == courseId
+                where c.courseId == courseId
                 select new CourseCategoryViewModel()
                 {
-                    CourserId = c.CourserId,
+                    courseId = c.courseId,
                     Coursename = c.Course,
                     Main_Bol = (bool) c.Main_Bol,
                     Note = c.Note
@@ -211,11 +211,11 @@ namespace SBOSysTacV2.Controllers
                 try
                 {
 
-                    var modifycourse =_dbcontext.CourseCategories.FirstOrDefault(cc => cc.CourserId == courseviewModel.CourserId);
+                    var modifycourse =_dbcontext.CourseCategories.FirstOrDefault(cc => cc.courseId == courseviewModel.courseId);
 
                     if (modifycourse != null)
                     {
-                        modifycourse.CourserId = Convert.ToInt32(courseviewModel.CourserId);
+                        modifycourse.courseId = Convert.ToInt32(courseviewModel.courseId);
                         modifycourse.Course = courseviewModel.Coursename;
                         modifycourse.Note = courseviewModel.Note;
                         modifycourse.Main_Bol = courseviewModel.Main_Bol;

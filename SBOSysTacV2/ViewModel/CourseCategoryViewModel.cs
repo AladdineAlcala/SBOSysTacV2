@@ -10,7 +10,7 @@ namespace SBOSysTacV2.ViewModel
     public class CourseCategoryViewModel
     {
         [Display(Name = "COURSE ID:")]
-        public int? CourserId { get; set; }
+        public int? courseId { get; set; }
 
         [Display(Name = "COURSE:")]
         [Required(ErrorMessage = "Course name Required")]
@@ -29,11 +29,11 @@ namespace SBOSysTacV2.ViewModel
                 var list = (from b in dbentities.Bookings
                     join bm in dbentities.Book_Menus on b.trn_Id equals bm.trn_Id
                     join m in dbentities.Menus on bm.menuid equals m.menuid
-                    join c in dbentities.CourseCategories on m.CourserId equals c.CourserId
-                    where c.CourserId == courseId
+                    join c in dbentities.CourseCategories on m.courseId equals c.courseId
+                    where c.courseId == courseId
                     select new
                     {
-                        courseId=c.CourserId
+                        courseId=c.courseId
                     }).ToList();
 
 
@@ -59,17 +59,34 @@ namespace SBOSysTacV2.ViewModel
             {
 
                  list = (from m in dbentities.Menus
-                    join c in dbentities.CourseCategories on m.CourserId equals c.CourserId where c.CourserId== courseId
+                    join c in dbentities.CourseCategories on m.courseId equals c.courseId where c.courseId== courseId
                     select new CourseMenuViewModel()
                     {
                         menu_Id = m.menuid,
-                        CourserId = c.CourserId
+                        courseId= c.courseId
 
                     }).ToList();
             }
 
             return list;
 
+        }
+
+
+        public IEnumerable<CourseCategory> GetCourseByPackageId(int packageId)
+        {
+            List<CourseCategory> list = new List<CourseCategory>();
+
+            using (var _dbcontext = new PegasusEntities())
+            {
+                list = (from pb in _dbcontext.PackageBodies
+                        join c in _dbcontext.CourseCategories on pb.courseId equals c.courseId
+                    where pb.p_id == packageId
+                    select c).ToList();
+
+            }
+
+            return list;
         }
     }
 }

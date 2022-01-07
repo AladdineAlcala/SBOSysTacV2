@@ -38,14 +38,14 @@
 
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.CourserId, new { @class = "col-lg-2 control-label text-left required " })
+                    @Html.LabelFor(model => model.courseId, new { @class = "col-lg-2 control-label text-left required " })
                     <div class="col-lg-6">
 
-                        @Html.DropDownListFor(m => m.CourserId, Model.coursecategory_list, "------- Select Course -------", new { @class = "form-control", @id = "courseList" })
+                        @Html.DropDownListFor(m => m.courseId, Model.coursecategory_list, "------- Select Course -------", new { @class = "form-control", @id = "courseList" })
 
                     </div>
                     <div class="col-lg-3">
-                        <div id="validationcourse"> @Html.ValidationMessageFor(model => model.CourserId, null, new { @class = "text-danger" })</div>
+                        <div id="validationcourse"> @Html.ValidationMessageFor(model => model.courseId, null, new { @class = "text-danger" })</div>
                     </div>
                 </div>
 

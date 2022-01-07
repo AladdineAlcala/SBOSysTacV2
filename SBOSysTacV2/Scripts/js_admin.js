@@ -1,5 +1,6 @@
 ﻿$(document).ready(function() {
 
+
     //$('#btn-searchAll').on('click',function(e) {
 
     //        e.preventDefault();
@@ -63,6 +64,6 @@
 $(document).on('click','#updateSecurity',function(e) {
     e.preventDefault();
 
-    alert('asdasd');
+  /*  alert('asdasd');*/
 
 });

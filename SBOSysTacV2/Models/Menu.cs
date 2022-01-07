@@ -21,10 +21,11 @@ namespace SBOSysTacV2.Models
         }
     
         public string menuid { get; set; }
-        public Nullable<int> CourserId { get; set; }
+        public Nullable<int> courseId { get; set; }
         public string menu_name { get; set; }
         public Nullable<int> deptId { get; set; }
         public string note { get; set; }
+        public Nullable<decimal> price { get; set; }
         public string image { get; set; }
         public Nullable<System.DateTime> date_added { get; set; }
     

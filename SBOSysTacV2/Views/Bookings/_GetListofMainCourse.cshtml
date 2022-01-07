@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box box-success box-solid">
-                @using (Ajax.BeginForm("AddMenusToPackage", "Bookings", new AjaxOptions() { HttpMethod = "Post", OnSuccess = "OnSuccess", UpdateTargetId = "modalcontent" }, new {@id= "frmaddmenus" }))
+                @using (Ajax.BeginForm("AddMenusToPackage", "Bookings", new AjaxOptions() { HttpMethod = "Post", OnSuccess = "BookmenuAddSuccess", UpdateTargetId = "modalcontent" }, new {@id= "frmaddmenus" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-md-3 text-center" style="margin-top: 25px;">
                     
-                            <button class="btn bg-olive btn-flat btn-sm" type="submit" id="btn_regbooking"><i class="fa fa-credit-card"></i> Add to List</button>
+                            <button class="btn bg-olive btn-flat btn-sm" type="submit" id="btn_regMenustoPackage"><i class="fa fa-credit-card"></i> Add to List</button>
                         </div>
                     </div>
                 }

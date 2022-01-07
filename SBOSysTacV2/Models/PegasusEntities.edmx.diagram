@@ -15,11 +15,9 @@
         <EntityTypeShape EntityType="PegasusEntitiesModel.Booking" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.CancelledBooking" Width="1.5" PointX="7.875" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.CateringDiscount" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PegasusEntitiesModel.CourseCategory" Width="1.5" PointX="3.75" PointY="23.375" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.Customer" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.Department" Width="1.5" PointX="3.75" PointY="26" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.Discount" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PegasusEntitiesModel.Menu" Width="1.5" PointX="7" PointY="22.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.PackageAreaCoverage" Width="1.5" PointX="6" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.PackageBody" Width="1.5" PointX="3" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.Package" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
@@ -30,7 +28,7 @@
         <EntityTypeShape EntityType="PegasusEntitiesModel.Reservation" Width="1.5" PointX="3" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.Role" Width="1.5" PointX="10.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.ServiceType" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PegasusEntitiesModel.PackagesRangeBelowMin" Width="1.5" PointX="10.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PegasusEntitiesModel.PackagesRangeBelowMin" Width="1.5" PointX="11.375" PointY="9.75" IsExpanded="true" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_AddonDetails_AddonCategory" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_AddonDetails_Department" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_PackageAreaCoverage_Areas" ManuallyRouted="false" />
@@ -38,14 +36,11 @@
         <AssociationConnector Association="PegasusEntitiesModel.FK_Book_Discount_Bookings" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_Book_Discount_Discount" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_Book_Menus_Bookings" ManuallyRouted="false" />
-        <AssociationConnector Association="PegasusEntitiesModel.FK_Book_Menus_Menu" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_Bookings_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_Bookings_Packages" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_Bookings_ServiceType" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_Refunds_Bookings" ManuallyRouted="false" />
-        <AssociationConnector Association="PegasusEntitiesModel.FK_Menu_CourseCategory" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_Reservations_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="PegasusEntitiesModel.FK_Menu_Department" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_PackageAreaCoverage_Packages" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_PackageBody_Packages" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_RefundEntry_Refunds" ManuallyRouted="false" />
@@ -55,6 +50,15 @@
         <EntityTypeShape EntityType="PegasusEntitiesModel.BookingAddon" Width="1.5" PointX="5.25" PointY="12.75" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_BookAddonsDetail_BookingAddons" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_BookingAddons_Bookings" />
+        <AssociationConnector Association="PegasusEntitiesModel.FK_BookAddonsDetail_AddonDetails" />
+        <EntityTypeShape EntityType="PegasusEntitiesModel.CourseCategory" Width="1.5" PointX="12.375" PointY="13.5" />
+        <EntityTypeShape EntityType="PegasusEntitiesModel.Menu" Width="1.5" PointX="14.625" PointY="19" />
+        <AssociationConnector Association="PegasusEntitiesModel.FK_Book_Menus_Menu" />
+        <AssociationConnector Association="PegasusEntitiesModel.FK_Menu_CourseCategory" />
+        <AssociationConnector Association="PegasusEntitiesModel.FK_PackageBody_CourseCategory" />
+        <AssociationConnector Association="PegasusEntitiesModel.FK_Menu_Department" />
+        <EntityTypeShape EntityType="PegasusEntitiesModel.Book_OtherCharge" Width="2.75" PointX="9.5" PointY="14.875" />
+        <AssociationConnector Association="PegasusEntitiesModel.FK_Book_OtherCharge_Bookings" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

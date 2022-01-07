@@ -1,15 +1,16 @@
 ﻿@using SBOSysTacV2.HtmlHelperClass
-@using SBOSysTacV2.ViewModel
-@model TransactionDetailsViewModel
+@using SBOSysTacV2.Models
+@model Booking
 
 
 
 
 @{
     var fullname = Utilities.Getfullname(Model.Customer.lastname, Model.Customer.firstname, Model.Customer.middle);
+
     var status = "";
 
-    status = Model.Booking_Trans.iscancelled == true ? "Cancelled" : Model.Booking_Trans.serve_status == true ? "Served" : "UnServed";
+    status = Model.is_cancelled == true ? "Cancelled" : Model.serve_stat == true ? "Served" : "UnServed";
 }
 
 
@@ -18,7 +19,7 @@
         <div class="col-xs-12">
             <div class="callout callout-info bg-light-blue my-1 py-1">
                 <h4 class="my-1 text-black bold">Booking No : </h4>
-                <h2 class="my-1">@Model.transactionId</h2>
+                <h2 class="my-1">@Model.trn_Id</h2>
                 @*<div class="transNo">Book No.</div> <span>@Model.transactionId</span>*@
             </div>
         </div>
@@ -38,7 +39,10 @@
                             <h2 class="mb-3 mt-1 text-bold">@fullname </h2>
                             <ul class=" ml-4 mb-0 fa-ul text-muted">
                                 <li class="text"><span class="fa-li"><i class="fa fa-lg fa-home"></i> </span> <b class="text-info mr-1">Address:</b> @Model.Customer.address</li>
-                                <li class="text"><span class="fa-li"><i class="fa fa-lg fa-phone"></i></span> <b class="text-info mr-1">Phone #:</b> @String.Format("{0} / {1}", Model.Customer.contact1, Model.Customer.contact2)</li>
+                                <li class="text">
+                                    <span class="fa-li"><i class="fa fa-lg fa-phone"></i></span> <b class="text-info mr-1">Phone #:</b>
+                                    @(String.IsNullOrEmpty(Model.Customer.contact1) && String.IsNullOrEmpty(Model.Customer.contact2)?"No Contact Details":!String.IsNullOrEmpty(Model.Customer.contact1)&& String.IsNullOrEmpty(Model.Customer.contact2)?String.Format("{0}",Model.Customer.contact1) : String.IsNullOrEmpty(Model.Customer.contact1) && !String.IsNullOrEmpty(Model.Customer.contact2) ? String.Format("{0}", Model.Customer.contact2) : String.Format("{0} / {1}", Model.Customer.contact1, Model.Customer.contact2))
+                                </li>
                             </ul>
                         </div>
 
@@ -48,10 +52,14 @@
                 </div>
 
                 <div class="col-xs-6">
-                    <h5 class="pull-right bookdetails mr-3" style="padding-top: 12px;">
+
+                    <div class="col-sm-6 mt-4">
+                        <button class="bt btn-success btn-flat btn-sm" id="printContract" data-id="@Model.trn_Id"><i class="fa fa-lg fa-print"></i> Print Contact Form</button>
+                    </div>
+                    <h5 class="pull-right bookdetails pt-4 mr-3">
                         <b>Trn Date:</b>
 
-                        @Model.Booking_Trans.transdate.Value.ToString("MMM d, yyyy h:mm tt")
+                        @Model.transdate.Value.ToString("MMM d, yyyy h:mm tt")
                     </h5>
 
                 </div>
@@ -61,96 +69,11 @@
     </div>
     <!-- end of row -->
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class=" card card-primary card-outline card-outline-tabs" style="margin-left:5px;width:90%;">
 
-                <div class="card-header">
+    <div class="row" id="booking_details">
 
-                    <ul class="nav nav-tabs" id="bookingTab" role="tablist">
-                        <li class="nav-item active">
-                            <a class="nav-link" id="booking_info-tab" data-toggle="pill" href="#tabpane_bookinginfo" role="tab" aria-controls="tabpane_bookinginfo" aria-selected="true">Booking Information</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="menu_info-tab" data-toggle="pill" href="#tabpane_menuinfo" role="tab" aria-controls="tabpane_menuinfo" aria-selected="false">Menus / Add-ons and Upgrades</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="otherCharges_info-tab" data-toggle="pill" href="#tabpane_otherchargesinfo" role="tab" aria-controls="tabpane_otherchargesinfo" aria-selected="false">Other Charges</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="statement_info-tab" data-toggle="pill" href="#tabpane_statementinfo" role="tab" aria-controls="tabpane_statementinfo" aria-selected="false">Statement of Account</a>
-                        </li>
+        @{ Html.RenderAction("GetBookingDetailsPartial", Model.trn_Id);}
 
-                    </ul>
-
-                </div>
-                <!-- card header-->
-                <div class="card-body">
-
-                    <div class="tab-content" id="bookingTabContent">
-
-                        <div class="tab-pane fade active in" id="tabpane_bookinginfo" role="tabpanel" aria-labelledby="booking_info-tab">
-
-                            <div class="row">
-                                <div class="col-md-10">
-                                    @{
-                                        Html.RenderPartial("_BookingInfo", Model);
-                                    }
-                                </div>
-                            </div>
-
-
-
-                        </div>
-
-                        <div class="tab-pane fade" id="tabpane_menuinfo" role="tabpanel" aria-labelledby="menu_info-tab">
-
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    @{
-                                        Html.RenderPartial("GetPackageonBooking", Model);
-                                    }
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="tabpane_otherchargesinfo" role="tabpanel" aria-labelledby="otherCharges_info-tab">
-
-                            <div class="row">
-                                <div class="col-md-8">
-
-                                    @{
-                                        Html.RenderAction("GetBookingOtherCharges",new{transId=Model.transactionId});
-                                    }
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="tab-pane fade" id="tabpane_statementinfo" role="tabpanel" aria-labelledby="statement_info-tab">
-                            <p class="lead" style="margin: 10px;">AMOUNT DUE</p>
-
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="table-responsive" id="amountDue">
-                                        @{
-
-                                            Html.RenderAction("GetPartialView_AmountDue", new { transDetails=Model});
-                                        }
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- /.card body -->
-
-
-            </div>
-        </div>
     </div>
 </section>
 
@@ -176,6 +99,27 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+
+<div class="modal fade" id="modal-BookingOtherCharges">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Booking Charges</h4>
+            </div>
+            <div class="modal-body" id="modal-BookingOthercharge-content">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <!-- /.modal -->
 <!---------------------------------------------------------------------------------------------------------------------------- -->
 <!--===========================================================================================================================-->
@@ -252,7 +196,6 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
 <!--<div class="modal fade" id="modal-change_menu">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -289,6 +232,31 @@
 </div>
 <!-- /.modal -->
 
+
+
+
+<div class="modal fade" id="modal-printForm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body" id="modal-content_printForm">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
 <div id="modalLightbox" class="menuimgmodal">
     <span class="menuimg-close">&times;</span>
     <div class="menuimgmodal-content" id="imgcontent">
@@ -310,7 +278,8 @@
             bookUrl_AddDiscount: "@Url.Action("AddBookingDiscount", "Bookings")",
             bookUrl_RemoveDiscount: "@Url.Action("RemoveBookingDiscount", "Bookings")",
             bookUrl_SelectDiscount: "@Url.Action("GetDiscountDetails", "Bookings")",
-            bookurl_bookingdue:"@Url.Action("GetDiscountDetails", "Bookings",new {transId="tId"})"
+            bookurl_bookingdue: "@Url.Action("GetDiscountDetails", "Bookings",new {transId="tId"})"
+
         }
 
         var PackageBookingUrl = {
@@ -329,7 +298,13 @@
             urlModifyBookingAddOnDetail: "@Url.Action("ModifyAddonDetail", "Bookings")",
             urlGetListAddonsbyCat: "@Url.Action("Get_AddonsandUpgradesByCat", "Bookings")",
             urlGetSelectedAddons: "@Url.Action("GetSelectedAddons", "Bookings")",
-            urlGetAddOnDetailsListByAddonId: "@Url.Action("GetAddOnsDetails","Bookings",new { addon_No = "addonNo" })"
+            urlGetAddOnDetailsListByAddonId: "@Url.Action("GetAddOnsDetails","Bookings",new { addon_No = "addonNo" })",
+            urlCheckMenusByPackage: "@Url.Action("GetPackageMenusperTransaction", "Bookings")",
+            urlAddBookingOtherCharge: "@Url.Action("BookingOtherCharge_New", "Bookings")",
+            urlAddBookingRemoveOtherCharge: "@Url.Action("RemoveBookingOtherCharge", "Bookings")",
+            urlAddBookingModifyOtherCharge: "@Url.Action("ModifyBookOtherCharges", "Bookings")",
+            urlBookingRemoveSnacksandDrinks: "@Url.Action("RemoveSnackandDrinks", "Bookings")",
+            urlBookingPrintContractForm: "@Url.Action("PrintContractOption", "Bookings")"
 
         }
 
@@ -348,8 +323,8 @@
 
         });
 
-        
-       
+
+
 
 
     </script>
