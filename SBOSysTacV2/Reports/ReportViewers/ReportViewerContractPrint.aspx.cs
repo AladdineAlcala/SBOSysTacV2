@@ -1,28 +1,24 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Neodynamic.SDK.Web;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using CrystalDecisions.Web;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.ViewModel;
 
 namespace SBOSysTacV2.Reports.ReportViewers
 {
-    public partial class ReportViewerContractPrint : System.Web.UI.Page
+    public partial class ReportViewerContractPrint : Page
     {
         private PrintContractDetails condetails = new PrintContractDetails();
-        private BookMenusViewModel bm = new BookMenusViewModel();
-        private AddonsViewModel add = new AddonsViewModel();
+        private BookMenusViewModel bmv = new BookMenusViewModel();
 
 
-       
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -36,13 +32,14 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                     List<PrintContractDetails> conDetails = new List<PrintContractDetails>();
                     List<BookMenusViewModel> conBookMenus = new List<BookMenusViewModel>();
-                    List<AddonsViewModel> addons = new List<AddonsViewModel>();
+                    TransactionDetailsViewModel tdvm = new TransactionDetailsViewModel();
+
 
                     //var paramPrint_Option = Request["reportOption"].Trim();
 
                     var cryRep = new ReportDocument();
-                    TableLogOnInfos tbloginfos = new TableLogOnInfos();
-                    ConnectionInfo crConinfo = new ConnectionInfo();
+                    //TableLogOnInfos tbloginfos = new TableLogOnInfos();
+                    
 
                     string reportName = "ReportContract2Details";
 
@@ -52,14 +49,15 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                     SqlConnectionStringBuilder cnstrbuilding = new SqlConnectionStringBuilder(Utilities.DBGateway());
 
+                    ConnectionInfo crConinfo = new ConnectionInfo();
 
                     crConinfo.ServerName = cnstrbuilding.DataSource;
                     crConinfo.DatabaseName = cnstrbuilding.InitialCatalog;
                     crConinfo.UserID = cnstrbuilding.UserID;
                     crConinfo.Password = cnstrbuilding.Password;
 
-                    var reportSections = cryRep.ReportDefinition.Sections;
 
+                    var reportSections = cryRep.ReportDefinition.Sections;
 
                     foreach (Section section in reportSections)
                     {
@@ -73,13 +71,14 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                             var crSubreportObject = (SubreportObject)crreportObject;
                             var crsubReportDocument = crSubreportObject.OpenSubreport(crSubreportObject.SubreportName);
+
                             var crDatabase = crsubReportDocument.Database;
                             var crTables = crDatabase.Tables;
 
                             //var tbloginfos = new TableLogOnInfos();
 
 
-                            foreach (CrystalDecisions.CrystalReports.Engine.Table crTable in crTables)
+                            foreach (Table crTable in crTables)
                             {
 
                                 var crTableLogOnInfo = crTable.LogOnInfo;
@@ -96,7 +95,7 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                     var cryTables = cryRep.Database.Tables;
 
-                    foreach (CrystalDecisions.CrystalReports.Engine.Table cryTable in cryTables)
+                    foreach (Table cryTable in cryTables)
                     {
                         var tbloginfo = cryTable.LogOnInfo;
                         tbloginfo.ConnectionInfo = crConinfo;
@@ -105,31 +104,34 @@ namespace SBOSysTacV2.Reports.ReportViewers
                     }
 
 
-                 
-                    CRViewerContract.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
+
+                    CRViewerContract.ToolPanelView = ToolPanelViewType.None;
 
                    // ReportContract repcontract = new ReportContract();
 
-                    conDetails = (from c in condetails.GetContractDetails() select c).ToList();
+                   conDetails = condetails.GetContractDetailsById(Convert.ToInt32(paramTransId)).ToList();
 
-                    conDetails = conDetails.Where(x => x.transId == Convert.ToInt32(paramTransId)).ToList();
-                    //where c.transId == Convert.ToInt32(paramTransId)
-                    //select c).ToList();
-
-
-                    conBookMenus = bm.ListofMenusBook(Convert.ToInt32(paramTransId)).ToList();
-
-                    addons = add.ListofAddons().Where(x => x.TransId == Convert.ToInt32(paramTransId)).ToList();
+                   //Convert ViewModel List to DataTable
+                   DataTable dtBookingDetailsTable = conDetails.ToDataTableList();
 
 
+                    conBookMenus = bmv.ListofMenusBook(Convert.ToInt32(paramTransId)).Where(t=>t.menu_No!=null).ToList();
+                    DataTable dtBookMenus = conBookMenus.ToDataTableList();
+
+                    var transdetails = tdvm.GetTransactionStatementAccountById(Convert.ToInt32(paramTransId));
+
+                    DataTable dtTransDetails = transdetails.ToDataTable();
 
                     //repcontract.SetDataSource(conDetails);
 
 
 
-                    cryRep.Database.Tables[0].SetDataSource(conDetails);
-                    cryRep.Database.Tables[1].SetDataSource(conBookMenus);
-                    cryRep.Database.Tables[2].SetDataSource(addons);
+                    cryRep.Database.Tables[0].SetDataSource(dtBookingDetailsTable);
+                    cryRep.Database.Tables[1].SetDataSource(dtBookMenus);
+                    cryRep.Database.Tables[2].SetDataSource(dtTransDetails);
+
+
+                    //cryRep.Subreports[1].Database.Tables[0].SetDataSource();
 
 
                     Response.Buffer = false;
@@ -138,7 +140,7 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                     try
                     {
-                        cryRep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response,true,"ContractReciept");
+                        cryRep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, true, "ReportContract2Details");
                     }
                     catch (Exception exception)
                     {

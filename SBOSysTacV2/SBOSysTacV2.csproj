@@ -314,11 +314,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CollectionReportDataset.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DataSet\ContractDataset.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContractDataset.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelperClass\AllowExtensionAttribute.cs" />
     <Compile Include="HtmlHelperClass\CustomerCustomValidate.cs" />
+    <Compile Include="HtmlHelperClass\DataTableConverter.cs" />
     <Compile Include="HtmlHelperClass\JsonExtractorHelper.cs" />
     <Compile Include="HtmlHelperClass\UserPermissionAuthorized.cs" />
     <Compile Include="HtmlHelperClass\Utilities.cs" />
@@ -7686,6 +7692,17 @@
     </None>
     <Content Include="DataSet\CollectionReportDataset.xss">
       <DependentUpon>CollectionReportDataset.xsd</DependentUpon>
+    </Content>
+    <Content Include="DataSet\ContractDataset.xsc">
+      <DependentUpon>ContractDataset.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSet\ContractDataset.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ContractDataset.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DataSet\ContractDataset.xss">
+      <DependentUpon>ContractDataset.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\DevTesting.pubxml" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />

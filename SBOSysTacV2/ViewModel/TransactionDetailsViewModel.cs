@@ -137,6 +137,27 @@ namespace SBOSysTacV2.ViewModel
 
 
 
+        public decimal GetAccountTotalByTransId(int transId)
+        {
+            decimal packageTota = 0;
+
+            var booktrans = _dbEntities.Bookings.FirstOrDefault(t => t.trn_Id == transId);
+
+            if (booktrans.Package.p_type != "sd")
+            {
+                if (booktrans != null)
+                {
+                    var pax = booktrans.noofperson;
+                    var heads = booktrans.Package.p_amountPax;
+                    packageTota = Convert.ToDecimal(heads) * Convert.ToDecimal(pax);
+
+                }
+            }
+           
+
+            return packageTota;
+        }
+
         public decimal GetBelowMinPaxAmount(int no_of_Pax)
         {
 
@@ -477,6 +498,16 @@ namespace SBOSysTacV2.ViewModel
             return amount;
         }
 
- 
+
+        public TransactionDetailsViewModel GetTransactionStatementAccountById(int transid)
+        {
+            return new TransactionDetailsViewModel
+            {
+                transactionId = transid,
+                PackageAmount = this.GetAccountTotalByTransId(transid)
+
+            };
+        }
+
     }
 }

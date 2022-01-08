@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ContractDataset" targetNamespace="http://tempuri.org/ContractDataset.xsd" xmlns:mstns="http://tempuri.org/ContractDataset.xsd" xmlns="http://tempuri.org/ContractDataset.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ContractDataset" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ContractDataset" msprop:Generator_UserDSName="ContractDataset">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BookingDetails" msprop:Generator_TableClassName="BookingDetailsDataTable" msprop:Generator_TableVarName="tableBookingDetails" msprop:Generator_RowChangedName="BookingDetailsRowChanged" msprop:Generator_TablePropName="BookingDetails" msprop:Generator_RowDeletingName="BookingDetailsRowDeleting" msprop:Generator_RowChangingName="BookingDetailsRowChanging" msprop:Generator_RowEvHandlerName="BookingDetailsRowChangeEventHandler" msprop:Generator_RowDeletedName="BookingDetailsRowDeleted" msprop:Generator_RowClassName="BookingDetailsRow" msprop:Generator_UserTableName="BookingDetails" msprop:Generator_RowEvArgName="BookingDetailsRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="transId" msprop:Generator_ColumnVarNameInTable="columntransId" msprop:Generator_ColumnPropNameInRow="transId" msprop:Generator_ColumnPropNameInTable="transIdColumn" msprop:Generator_UserColumnName="transId" type="xs:string" minOccurs="0" />
+              <xs:element name="customerfullname" msprop:Generator_ColumnVarNameInTable="columncustomerfullname" msprop:Generator_ColumnPropNameInRow="customerfullname" msprop:Generator_ColumnPropNameInTable="customerfullnameColumn" msprop:Generator_UserColumnName="customerfullname" type="xs:string" minOccurs="0" />
+              <xs:element name="customeraddress" msprop:Generator_ColumnVarNameInTable="columncustomeraddress" msprop:Generator_ColumnPropNameInRow="customeraddress" msprop:Generator_ColumnPropNameInTable="customeraddressColumn" msprop:Generator_UserColumnName="customeraddress" type="xs:string" minOccurs="0" />
+              <xs:element name="contactno" msprop:Generator_ColumnVarNameInTable="columncontactno" msprop:Generator_ColumnPropNameInRow="contactno" msprop:Generator_ColumnPropNameInTable="contactnoColumn" msprop:Generator_UserColumnName="contactno" type="xs:string" minOccurs="0" />
+              <xs:element name="datetimesched" msprop:Generator_ColumnVarNameInTable="columndatetimesched" msprop:Generator_ColumnPropNameInRow="datetimesched" msprop:Generator_ColumnPropNameInTable="datetimeschedColumn" msprop:Generator_UserColumnName="datetimesched" type="xs:string" minOccurs="0" />
+              <xs:element name="event_name" msprop:Generator_ColumnVarNameInTable="columnevent_name" msprop:Generator_ColumnPropNameInRow="event_name" msprop:Generator_ColumnPropNameInTable="event_nameColumn" msprop:Generator_UserColumnName="event_name" type="xs:string" minOccurs="0" />
+              <xs:element name="noofPax" msprop:Generator_ColumnVarNameInTable="columnnoofPax" msprop:Generator_ColumnPropNameInRow="noofPax" msprop:Generator_ColumnPropNameInTable="noofPaxColumn" msprop:Generator_UserColumnName="noofPax" type="xs:string" minOccurs="0" />
+              <xs:element name="event_venue" msprop:Generator_ColumnVarNameInTable="columnevent_venue" msprop:Generator_ColumnPropNameInRow="event_venue" msprop:Generator_ColumnPropNameInTable="event_venueColumn" msprop:Generator_UserColumnName="event_venue" type="xs:string" minOccurs="0" />
+              <xs:element name="eventcolScheme" msprop:Generator_ColumnVarNameInTable="columneventcolScheme" msprop:Generator_ColumnPropNameInRow="eventcolScheme" msprop:Generator_ColumnPropNameInTable="eventcolSchemeColumn" msprop:Generator_UserColumnName="eventcolScheme" type="xs:string" minOccurs="0" />
+              <xs:element name="typeofService" msprop:Generator_ColumnVarNameInTable="columntypeofService" msprop:Generator_ColumnPropNameInRow="typeofService" msprop:Generator_ColumnPropNameInTable="typeofServiceColumn" msprop:Generator_UserColumnName="typeofService" type="xs:string" minOccurs="0" />
+              <xs:element name="packagedesc" msprop:Generator_ColumnVarNameInTable="columnpackagedesc" msprop:Generator_ColumnPropNameInRow="packagedesc" msprop:Generator_ColumnPropNameInTable="packagedescColumn" msprop:Generator_UserColumnName="packagedesc" type="xs:string" minOccurs="0" />
+              <xs:element name="packageamount" msprop:Generator_ColumnVarNameInTable="columnpackageamount" msprop:Generator_ColumnPropNameInRow="packageamount" msprop:Generator_ColumnPropNameInTable="packageamountColumn" msprop:Generator_UserColumnName="packageamount" type="xs:string" minOccurs="0" />
+              <xs:element name="dpA" msprop:Generator_ColumnVarNameInTable="columndpA" msprop:Generator_ColumnPropNameInRow="dpA" msprop:Generator_ColumnPropNameInTable="dpAColumn" msprop:Generator_UserColumnName="dpA" type="xs:string" minOccurs="0" />
+              <xs:element name="fpA" msprop:Generator_ColumnVarNameInTable="columnfpA" msprop:Generator_ColumnPropNameInRow="fpA" msprop:Generator_ColumnPropNameInTable="fpAColumn" msprop:Generator_UserColumnName="fpA" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="BookingDetailsKey1">
+      <xs:selector xpath=".//mstns:BookingDetails" />
+      <xs:field xpath="mstns:transId" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
