@@ -23,7 +23,7 @@ namespace SBOSysTacV2.Controllers
         private BookingsViewModel booking;
         private MainMenuListViewModel mainmenulistviewmodel;
         private AddonsViewModel addonsviewmodel;
-        private TransactionDetailsViewModel transactionDetails;
+        private TransactionDetailsViewModel transDetailsvm;
         private ContractReceiptViewModel cr;
         private AddonsUpgrade_BookRegisterViewModel addupgradereg;
         private SelectedAddonsViewModel seladdons;
@@ -40,7 +40,7 @@ namespace SBOSysTacV2.Controllers
             booking = new BookingsViewModel();
             mainmenulistviewmodel = new MainMenuListViewModel();
             addonsviewmodel = new AddonsViewModel();
-            transactionDetails = new TransactionDetailsViewModel();
+            transDetailsvm = new TransactionDetailsViewModel();
             cr = new ContractReceiptViewModel();
             addupgradereg = new AddonsUpgrade_BookRegisterViewModel();
             seladdons = new SelectedAddonsViewModel();
@@ -248,7 +248,7 @@ namespace SBOSysTacV2.Controllers
 
         [HttpGet]
         [ActionName("GetBookingDetailsPartial")]
-        public ActionResult BookingDetails(int transId) => PartialView("_BookingDetailsPartial", transactionDetails.GetTransactionDetailsById(transId));
+        public ActionResult BookingDetails(int transId) => PartialView("_BookingDetailsPartial", transDetailsvm.GetTransactionDetailsById(transId));
 
 
 
@@ -275,7 +275,7 @@ namespace SBOSysTacV2.Controllers
             string discountCode = null;
             decimal packageAmount;
 
-
+            var addonsvm = new AddonsViewModel();
 
             try
             {
@@ -293,32 +293,21 @@ namespace SBOSysTacV2.Controllers
 
                 //var addonslist = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId).ToList();
 
-                var querybookaddon = _dbcontext.BookingAddons.Join(_dbcontext.BookAddonsDetails,
-                    bookaddon => bookaddon.bookaddonNo, bookaddondetails => bookaddondetails.bookaddonNo,
-                    (bookaddon, bookaddondetails) => new { BookingAddon = bookaddon, BookAddonsDetail = bookaddondetails }).Where(t => t.BookingAddon.trn_Id == transId);
+                 addonsTotal = addonsvm.AddonsTotal(transId);
 
-
-                var addonsList = querybookaddon.Select(t => t.BookAddonsDetail.amount * t.BookAddonsDetail.qty);
-
-
-                if (addonsList.Count()!=0)
-                {
-                    addonsTotal = (decimal)addonsList.Sum();
-                }
-                
 
                 if (transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value
                 {
-                    extendedLocationAmount = transactionDetails.Get_extendedAmountLoc(transId);
+                    extendedLocationAmount = transDetailsvm.Get_extendedAmountLoc(transId);
                 }
 
              
                 
-                dpAmount = transactionDetails.GetTotalDownPayment(transId);
+                dpAmount = transDetailsvm.GetTotalDownPayment(transId);
 
-                fpAmount = transactionDetails.GetFullPayment(transId);
+                fpAmount = transDetailsvm.GetFullPayment(transId);
 
-                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : transactionDetails.GetCateringdiscountByPax(noOfPax);
+                cateringdiscountAmount = transDetailsvm.GetCateringdiscountByPax(packageType.Trim(), noOfPax);
 
 
                 packageTotal = Convert.ToDecimal(packageAmount) * noOfPax;
@@ -328,12 +317,13 @@ namespace SBOSysTacV2.Controllers
 
 
                 //get discount information
-                bookdiscountAmount = transactionDetails.Get_bookingDiscountbyTrans(transId, subtotal);
-                discountCode = transactionDetails.Get_bookingDiscounDetailstbyTrans(transId);
+                bookdiscountAmount = transDetailsvm.Get_bookingDiscountbyTrans(transId, subtotal);
+
+                discountCode = transDetailsvm.Get_bookingDiscounDetailstbyTrans(transId);
 
                 transDetails.PackageAmount = packageAmount;
 
-                transDetails.TotaMiscCharge = bookOtherCharge.GetTotalOtherCharges(transId);
+                transDetails.TotaMiscCharge = bookOtherCharge.GetTotalOtherCharges(transDetails.BookOtherCharges);
 
                 transDetails.TotaAddons = addonsTotal;
                 transDetails.extLocAmount = extendedLocationAmount;
@@ -361,9 +351,13 @@ namespace SBOSysTacV2.Controllers
         [ActionName("GetBookMenusPartial")]
         public ActionResult GetListofBookMenus(int transactionId)
         {
+
+
+
             return PartialView("_ListofBookMenus", new PackageBookingViewModel()
             {
                 transactionId = transactionId,
+
                 BookMenuses = book_menus_vm.ListofMenusBook(transactionId).ToList()
 
             });

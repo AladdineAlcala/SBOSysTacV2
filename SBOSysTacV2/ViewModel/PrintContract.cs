@@ -20,6 +20,7 @@ namespace SBOSysTacV2.ViewModel
         public string eventcolScheme  { get; set; }
         public string typeofService{ get; set; }
         public string packagedesc { get; set; }
+        public string packageType { get; set; }
         public decimal packageamount { get; set; }
         public decimal dpA { get; set; }
         public decimal fpA { get; set; }
@@ -55,8 +56,9 @@ namespace SBOSysTacV2.ViewModel
                         eventcolScheme = booking.eventcolor,
                         typeofService = sv.servicetypedetails,
                         packagedesc = booking.Package.p_descripton,
-                        packageamount = Convert.ToDecimal(booking.Package.p_amountPax)
-
+                        packageType = booking.Package.p_type,
+                        packageamount = Convert.ToDecimal(booking.Package.p_amountPax),
+                        booktype = this.GetBookingType(booking.booktype.TrimEnd())
                     }).ToList();
 
 
@@ -72,7 +74,7 @@ namespace SBOSysTacV2.ViewModel
             return prn_Contract.ToList();
         }
 
-        public IEnumerable<PrintContractDetails> GetContractDetailsById(int transId)
+        public PrintContractDetails GetContractDetailsById(int transId)
         {
             //  dbEntities.Configuration.ProxyCreationEnabled = false;
 
@@ -80,7 +82,7 @@ namespace SBOSysTacV2.ViewModel
 
 
             IEnumerable<Booking> bookings = (from c in dbEntities.Bookings where c.trn_Id==transId select c).ToList();
-            List<PrintContractDetails> prn_Contract = new List<PrintContractDetails>();
+            PrintContractDetails prn_Contract = new PrintContractDetails();
 
             try
             {
@@ -89,7 +91,8 @@ namespace SBOSysTacV2.ViewModel
                     select new PrintContractDetails()
                     {
                         transId = booking.trn_Id,
-                        customerfullname = Utilities.Getfullname(booking.Customer.lastname, booking.Customer.firstname, booking.Customer.middle),
+                        customerfullname = Utilities.Getfullname(booking.Customer.lastname, booking.Customer.firstname,
+                            booking.Customer.middle),
                         customeraddress = booking.Customer.address,
                         contactno = booking.Customer.contact1,
                         datetimesched = Convert.ToDateTime(booking.startdate),
@@ -99,10 +102,11 @@ namespace SBOSysTacV2.ViewModel
                         eventcolScheme = booking.eventcolor,
                         typeofService = sv.servicetypedetails,
                         packagedesc = booking.Package.p_descripton,
+                        packageType = booking.Package.p_type,
                         packageamount = Convert.ToDecimal(booking.Package.p_amountPax),
-                        booktype =this.GetBookingType(booking.booktype.TrimEnd())
+                        booktype = this.GetBookingType(booking.booktype.TrimEnd())
 
-                    }).ToList();
+                    }).FirstOrDefault();
 
 
 
@@ -114,7 +118,7 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
-            return prn_Contract.ToList();
+            return prn_Contract;
         }
 
         public string GetBookingType(string value)

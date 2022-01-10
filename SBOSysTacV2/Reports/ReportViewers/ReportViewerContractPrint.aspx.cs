@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web.Hosting;
 using System.Web.UI;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
@@ -30,7 +31,7 @@ namespace SBOSysTacV2.Reports.ReportViewers
                     var paramTransId = Request["transactionId"].Trim();
 
 
-                    List<PrintContractDetails> conDetails = new List<PrintContractDetails>();
+                    PrintContractDetails conDetails =new PrintContractDetails();
                     List<BookMenusViewModel> conBookMenus = new List<BookMenusViewModel>();
                     TransactionDetailsViewModel tdvm = new TransactionDetailsViewModel();
 
@@ -109,16 +110,16 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                    // ReportContract repcontract = new ReportContract();
 
-                   conDetails = condetails.GetContractDetailsById(Convert.ToInt32(paramTransId)).ToList();
+                   conDetails = condetails.GetContractDetailsById(Convert.ToInt32(paramTransId));
 
                    //Convert ViewModel List to DataTable
-                   DataTable dtBookingDetailsTable = conDetails.ToDataTableList();
+                   DataTable dtBookingDetailsTable = conDetails.ToDataTable();
 
 
                     conBookMenus = bmv.ListofMenusBook(Convert.ToInt32(paramTransId)).Where(t=>t.menu_No!=null).ToList();
                     DataTable dtBookMenus = conBookMenus.ToDataTableList();
 
-                    var transdetails = tdvm.GetTransactionStatementAccountById(Convert.ToInt32(paramTransId));
+                    var transdetails = tdvm.GetTransactionStatementAccountById(conDetails);
 
                     DataTable dtTransDetails = transdetails.ToDataTable();
 
@@ -138,9 +139,16 @@ namespace SBOSysTacV2.Reports.ReportViewers
                     Response.ClearContent();
                     Response.ClearHeaders();
 
+
+                    // uncomment to display as pdf
                     try
                     {
-                        cryRep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, true, "ReportContract2Details");
+                        cryRep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "ContractDetails");
+
+                        //cryRep.ExportToDisk(ExportFormatType.PortableDocFormat, HostingEnvironment.MapPath(string.Format("~/Reports/{0}.pdf", reportName)));
+
+                        //ClientScript.RegisterStartupScript(this.Page.GetType(),Guid.NewGuid().ToString(), "var popup=window.open('/Reports/"+ reportName +".pdf');popup.focus();",true);
+
                     }
                     catch (Exception exception)
                     {
@@ -148,10 +156,17 @@ namespace SBOSysTacV2.Reports.ReportViewers
                         throw;
                     }
 
+
+
+                    // uncomment to display in report viewer
                     //CRViewerContract.ReportSource = cryRep;
                     //CRViewerContract.RefreshReport();
 
+
+                    //uncomment to directly print to printer
                     //cryRep.PrintToPrinter(1,false,0,0);
+                    Response.End();
+                    cryRep.Dispose();
 
                 }
                 catch (Exception exception)

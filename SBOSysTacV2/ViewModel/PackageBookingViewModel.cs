@@ -17,12 +17,11 @@ namespace SBOSysTacV2.ViewModel
         public IEnumerable<BookMenusViewModel> BookMenuses { get; set; }
         public IEnumerable<AddonsViewModel> BookAddOns { get; set; }
 
-        private PegasusEntities _dbEntities=new PegasusEntities();
       
-       
 
         public IEnumerable<PackageBookingViewModel> GetBookingDetails()
         {
+            var _dbEntities = new PegasusEntities();
             List<PackageBookingViewModel> bookingList = new List<PackageBookingViewModel>();
 
             _dbEntities.Configuration.ProxyCreationEnabled = false;
@@ -38,6 +37,8 @@ namespace SBOSysTacV2.ViewModel
                })
                 .ToList();
 
+            _dbEntities.Dispose();
+
             return bookingList;
         }
 
@@ -45,6 +46,7 @@ namespace SBOSysTacV2.ViewModel
         public bool VerifyPackagehasBookings(int packageId)
         {
             //bool has_existingBookings = false;
+            var _dbEntities = new PegasusEntities();
 
             var listofpackage = (from b in _dbEntities.Bookings
                 join p in _dbEntities.Packages on b.p_id equals p.p_id
@@ -59,6 +61,8 @@ namespace SBOSysTacV2.ViewModel
             //    has_existingBookings = true;
             //}
 
+            _dbEntities.Dispose();
+
             return (listofpackage.Any()?true:false);
         }
 
@@ -71,8 +75,10 @@ namespace SBOSysTacV2.ViewModel
 
         public string GetMenusForCourseHasBar(int trnId, string course,ref int? _menuNo)
         {
+            var _dbEntities = new PegasusEntities();
 
             var mainmenu_viewmodel = new MainMenuListViewModel();
+
             var _courselist=new List<KeyValuePair<int, string>>();
             _menuNo =0;
 
@@ -106,6 +112,7 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
+            _dbEntities.Dispose();
 
             return string.Empty;
 
@@ -114,8 +121,16 @@ namespace SBOSysTacV2.ViewModel
 
         public Package GetPackageByTransaction_Id(int transactionId)
         {
-     
-            return (from p in _dbEntities.Bookings where p.trn_Id == transactionId select p.Package).Single();
+            var package = new Package();
+
+            using (var _dbEntities = new PegasusEntities())
+            {
+                package = (from p in _dbEntities.Bookings where p.trn_Id == transactionId select p.Package).Single() as Package;
+            }
+
+            return package;
+
+
         }
 
 

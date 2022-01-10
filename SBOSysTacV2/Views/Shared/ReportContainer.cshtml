@@ -27,7 +27,6 @@
 @Html.Hidden("clientId",@Model.Id)
 
 <div id="spinn-loader">
-    Loading data Pls. wait....
 </div>
 
 @section scripts
@@ -101,9 +100,16 @@
             }
 
 
+            setTimeout(function () {
 
+                $('#spinn-loader').hide();
+                
+                /*window.history.back();*/
 
-    });
+                },
+                5000);
+
+        });
 
         </script>
 

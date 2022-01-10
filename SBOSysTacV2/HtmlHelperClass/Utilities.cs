@@ -224,6 +224,7 @@ namespace SBOSysTacV2.HtmlHelperClass
 
         }
 
+
         public static string Capfirstletter(string wordstring)
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(wordstring.ToLower());

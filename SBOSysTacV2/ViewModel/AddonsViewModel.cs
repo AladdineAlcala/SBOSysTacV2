@@ -34,13 +34,14 @@ namespace SBOSysTacV2.ViewModel
         public IEnumerable<SelectListItem> deptincharge_list { get; set; }
 
 
+
         public IEnumerable<AddonsViewModel> ListofAddons()
         {
             List<AddonsViewModel> list=new List<AddonsViewModel>();
-            var _dbentities = new PegasusEntities();
+            var dbcontext = new PegasusEntities();
             try
             {
-                list = (from bal in _dbentities.BookingAddons
+                list = (from bal in dbcontext.BookingAddons
                         select new
                             {
                                 _bookaddonNo = bal.bookaddonNo,
@@ -68,15 +69,15 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
-
+            dbcontext.Dispose();
             return list;
         }
 
 
         public AddonsViewModel GetAddonsViewModelbyitemNo(int itemNo)
         {
-            var dbentites=new PegasusEntities();
-            var modifiedaddons =dbentites.BookingAddons.Find(itemNo);
+            var dbcontext = new PegasusEntities();
+            var modifiedaddons = dbcontext.BookingAddons.Find(itemNo);
 
             var addons = new AddonsViewModel
             {
@@ -88,6 +89,7 @@ namespace SBOSysTacV2.ViewModel
                 AddonNote = modifiedaddons.Note
             };
 
+            dbcontext.Dispose();
             return addons;
         }
 
@@ -102,6 +104,7 @@ namespace SBOSysTacV2.ViewModel
                 Text = x.addoncatdesc
                 
             });
+            dbcontext.Dispose();
             return new SelectList(addoncatselectlist, "Value", "Text");
         }
 
@@ -129,6 +132,38 @@ namespace SBOSysTacV2.ViewModel
             return list;
         }
 
-       
+
+        public decimal AddonsTotal(int transId)
+        {
+            decimal addonsTotal = 0;
+            var dbcontext = new PegasusEntities();
+            try
+            {
+                
+
+                var querybookaddon = dbcontext.BookingAddons.Join(dbcontext.BookAddonsDetails,
+                        bookaddon => bookaddon.bookaddonNo, bookaddondetails => bookaddondetails.bookaddonNo,
+                        (bookaddon, bookaddondetails) => new { BookingAddon = bookaddon, BookAddonsDetail = bookaddondetails })
+                    .Where(t => t.BookingAddon.trn_Id == transId);
+
+
+                var addonsList = querybookaddon.Select(t => t.BookAddonsDetail.amount * t.BookAddonsDetail.qty);
+
+
+                if (addonsList.Count() != 0)
+                {
+                    addonsTotal = (decimal)addonsList.Sum();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            dbcontext.Dispose();
+
+            return addonsTotal;
+        }
     }
 }

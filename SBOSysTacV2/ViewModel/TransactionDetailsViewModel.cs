@@ -26,18 +26,14 @@ namespace SBOSysTacV2.ViewModel
         public decimal fullpaymnt { get; set; } = 0;
 
 
-        private PegasusEntities _dbEntities;
-        private BookingsViewModel bvm;
-
-        public TransactionDetailsViewModel()
-        {
-            _dbEntities = new PegasusEntities();
-            bvm = new BookingsViewModel();
-        }
+        private BookingsViewModel bvm = new BookingsViewModel();
+        private AddonsViewModel advm = new AddonsViewModel();
+        private BookingOtherChargeViewModel bocvm = new BookingOtherChargeViewModel();
 
 
         public IEnumerable<TransactionDetailsViewModel> GetTransactionDetails()
         {
+            var _dbEntities = new PegasusEntities();
 
             List<TransactionDetailsViewModel> _list = new List<TransactionDetailsViewModel>();
 
@@ -45,7 +41,7 @@ namespace SBOSysTacV2.ViewModel
 
             // _dbEntities.Configuration.ProxyCreationEnabled = false;
 
-            _bookingsViewModel = bvm.GetListofBookings().ToList();  // 1.  from 
+            _bookingsViewModel = bvm.GetListofBookings().ToList();  
 
 
             try
@@ -70,12 +66,16 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
+            _dbEntities.Dispose();
+
             return _list;
 
         }
 
         public TransactionDetailsViewModel GetTransactionDetailsById(int transId)
         {
+            var _dbEntities = new PegasusEntities();
+
             var bookings = bvm.GetListofBookings(transId);
 
             var bookingsList = new TransactionDetailsViewModel();
@@ -98,6 +98,8 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
+            _dbEntities.Dispose();
+
             return bookingsList;
 
         }
@@ -105,7 +107,10 @@ namespace SBOSysTacV2.ViewModel
 
         public decimal GetTotalBookingAmount(int transId)
         {
-            decimal totalpackage = 0;
+            var _dbEntities = new PegasusEntities();
+
+            decimal totalpackage;
+
             decimal totalAddons = 0;
             decimal package = 0;
 
@@ -124,7 +129,7 @@ namespace SBOSysTacV2.ViewModel
 
                 //totalAddons = addonslist.Sum(y => Convert.ToDecimal(y.AddonAmount));
 
-                totalpackage = package + totalAddons;
+                totalpackage = (decimal) (package + totalAddons);
 
             }
             catch (Exception e)
@@ -132,6 +137,9 @@ namespace SBOSysTacV2.ViewModel
                 Console.WriteLine(e);
                 throw;
             }
+
+            _dbEntities.Dispose();
+
             return totalpackage;
         }
 
@@ -139,47 +147,68 @@ namespace SBOSysTacV2.ViewModel
 
         public decimal GetAccountTotalByTransId(int transId)
         {
-            decimal packageTota = 0;
+            var _dbEntities = new PegasusEntities();
+            decimal packageTota=0;
 
-            var booktrans = _dbEntities.Bookings.FirstOrDefault(t => t.trn_Id == transId);
-
-            if (booktrans.Package.p_type != "sd")
+            try
             {
-                if (booktrans != null)
-                {
-                    var pax = booktrans.noofperson;
-                    var heads = booktrans.Package.p_amountPax;
-                    packageTota = Convert.ToDecimal(heads) * Convert.ToDecimal(pax);
+                var booktrans = _dbEntities.Bookings.FirstOrDefault(t => t.trn_Id == transId);
 
+                if (booktrans.Package.p_type != "sd")
+                {
+                    if (booktrans != null)
+                    {
+                        var pax = booktrans.noofperson;
+                        var heads = booktrans.Package.p_amountPax;
+                        packageTota = Convert.ToDecimal(heads) * Convert.ToDecimal(pax);
+
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
            
+            _dbEntities.Dispose();
 
             return packageTota;
         }
 
         public decimal GetBelowMinPaxAmount(int no_of_Pax)
         {
-
+            var _dbEntities = new PegasusEntities();
             decimal amt_added = 0;
-            _dbEntities.Configuration.ProxyCreationEnabled = false;
-            //List<PackagesRangeBelowMin> packagerangebelowmin=new List<PackagesRangeBelowMin>();
-            PackagesRangeBelowMin packagerangebelowmin = new PackagesRangeBelowMin();
-
-            packagerangebelowmin =
-                _dbEntities.PackagesRangeBelowMins.First(x => x.pMax >= no_of_Pax && x.pMin <= no_of_Pax);
-
-
-            if (packagerangebelowmin != null)
+            try
             {
-                amt_added = Convert.ToDecimal(packagerangebelowmin.Amt_added);
-            }
+                _dbEntities.Configuration.ProxyCreationEnabled = false;
+                //List<PackagesRangeBelowMin> packagerangebelowmin=new List<PackagesRangeBelowMin>();
+                PackagesRangeBelowMin packagerangebelowmin = new PackagesRangeBelowMin();
 
+                packagerangebelowmin =
+                    _dbEntities.PackagesRangeBelowMins.First(x => x.pMax >= no_of_Pax && x.pMin <= no_of_Pax);
+
+
+                if (packagerangebelowmin != null)
+                {
+                    amt_added = Convert.ToDecimal(packagerangebelowmin.Amt_added);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            _dbEntities.Dispose();
             return amt_added;
         }
 
         public decimal GetTotalDownPayment(int transId)
         {
+
+            var _dbEntities = new PegasusEntities();
+
             decimal dpAmount = 0;
 
             try
@@ -194,6 +223,7 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
+            _dbEntities.Dispose();
             return dpAmount;
 
         }
@@ -201,6 +231,8 @@ namespace SBOSysTacV2.ViewModel
 
         public decimal Get_extendedAmountLoc(String packageType,Booking booking)
         {
+            var _dbEntities = new PegasusEntities();
+
             decimal extAmt = 0;
 
             // var booking = _dbEntities.Bookings.FirstOrDefault(x => x.trn_Id == transId);
@@ -235,12 +267,14 @@ namespace SBOSysTacV2.ViewModel
                 }
             }
            
-
+            _dbEntities.Dispose();
             return extAmt;
         }
 
         public decimal Get_extendedAmountLoc(int transId)
         {
+            var _dbEntities = new PegasusEntities();
+
             decimal extAmt = 0;
 
             var booking = _dbEntities.Bookings.FirstOrDefault(x => x.trn_Id == transId);
@@ -275,13 +309,15 @@ namespace SBOSysTacV2.ViewModel
                 }
             }
 
-
+            _dbEntities.Dispose();
             return extAmt;
         }
 
 
         public decimal GetFullPayment(int transId)
         {
+            var _dbEntities = new PegasusEntities();
+
             decimal fp = 0;
 
             try
@@ -290,18 +326,21 @@ namespace SBOSysTacV2.ViewModel
                     .Sum(x => x.amtPay));
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
                 throw;
             }
 
+            _dbEntities.Dispose();
             return fp;
         }
 
 
         public decimal GetTotalPaymentByTrans(int transId)
         {
+
+            var _dbEntities = new PegasusEntities();
             decimal totaPayment = 0;
             try
             {
@@ -315,13 +354,16 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
-
+            _dbEntities.Dispose();
             return totaPayment;
         }
 
 
         public decimal Get_bookingDiscountbyTrans(int transId, decimal subtotal)
         {
+
+            var _dbEntities = new PegasusEntities();
+
             decimal totaldisc = 0;
 
             try
@@ -357,12 +399,17 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
+            _dbEntities.Dispose();
+
             return totaldisc;
         }
 
 
         public string Get_bookingDiscounDetailstbyTrans(int transId)
         {
+
+            var _dbEntities = new PegasusEntities();
+
            string discount_details=String.Empty;
 
             try
@@ -396,6 +443,7 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
+            _dbEntities.Dispose();
             return discount_details;
         }
 
@@ -430,31 +478,42 @@ namespace SBOSysTacV2.ViewModel
 
         public bool CheckpackagehasCourse(int transId,string menuId)
         {
+            var _dbEntities = new PegasusEntities();
             bool has_coursemenuexist = false;
 
-            var booking = _dbEntities.Bookings.Find(transId);
-
-            if (booking != null)
+            try
             {
+                var booking = _dbEntities.Bookings.Find(transId);
 
-                //get all courses in packagebody by trans
-                var this_bookingpackagebody =
-                    (from pb in _dbEntities.PackageBodies select pb).Where(x => x.p_id == booking.p_id).ToList();
+                if (booking != null)
+                {
 
-                        if (this_bookingpackagebody != null)
-                        {
+                    //get all courses in packagebody by trans
+                    var this_bookingpackagebody =
+                        (from pb in _dbEntities.PackageBodies select pb).Where(x => x.p_id == booking.p_id).ToList();
+
+                    if (this_bookingpackagebody != null)
+                    {
                                 
-                                    //get course of selected menu
+                        //get course of selected menu
 
-                            var courseId = _dbEntities.Menus.FirstOrDefault(x => x.menuid == menuId).courseId;
+                        var courseId = _dbEntities.Menus.FirstOrDefault(x => x.menuid == menuId).courseId;
 
-                            has_coursemenuexist = this_bookingpackagebody.Any(m => m.courseId == courseId);
+                        has_coursemenuexist = this_bookingpackagebody.Any(m => m.courseId == courseId);
 
                             
 
-                        }
+                    }
 
+                }
             }
+            catch (Exception a)
+            {
+                Console.WriteLine(a);
+                throw;
+            }
+
+            _dbEntities.Dispose();
 
             return has_coursemenuexist;
 
@@ -462,7 +521,8 @@ namespace SBOSysTacV2.ViewModel
 
         public bool isSelectedMenuMainCourse(string menuId)
         {
-
+            var _dbEntities = new PegasusEntities();
+       
             var courseMenu = (from m in _dbEntities.Menus
                 join cc in _dbEntities.CourseCategories on m.courseId equals cc.courseId
                 where m.menuid == menuId
@@ -471,22 +531,28 @@ namespace SBOSysTacV2.ViewModel
                     ismainMenu = cc.Main_Bol
                 }).FirstOrDefault();
 
-
+            _dbEntities.Dispose();
 
             return Convert.ToBoolean(courseMenu.ismainMenu);
         }
 
         public bool hasDiscountEnable(int transId)
         {
+            var _dbEntities = new PegasusEntities();
+
             var discountAplied = (from bookdiscount in _dbEntities.Book_Discount
                 where bookdiscount.trn_Id == transId
                 select bookdiscount).Any();
+
+            _dbEntities.Dispose();
 
             return discountAplied;
         }
 
         public decimal GetCateringdiscountByPax(int paxcount)
         {
+            var _dbEntities = new PegasusEntities();
+
             decimal amount = 0;
             var cateringdiscount = _dbEntities.CateringDiscounts.FirstOrDefault(x => x.DiscPaxMin <= paxcount && x.DiscPaxMax >= paxcount);
 
@@ -494,19 +560,43 @@ namespace SBOSysTacV2.ViewModel
             {
                 amount = (decimal) cateringdiscount.Amount;
             }
+            _dbEntities.Dispose();
+
 
             return amount;
         }
 
-
-        public TransactionDetailsViewModel GetTransactionStatementAccountById(int transid)
+        public decimal GetCateringdiscountByPax(string packageType, int noOfPax)
         {
+            return packageType.Trim() == "vip" ? 0 : this.GetCateringdiscountByPax(noOfPax);
+        }
+
+
+
+        public TransactionDetailsViewModel GetTransactionStatementAccountById(PrintContractDetails contractDetail)
+        {
+            var transid = contractDetail.transId;
+
+            List<Book_OtherCharge> otherCharges = new List<Book_OtherCharge>();
+
+            using (var dbcontext=new PegasusEntities())
+            {
+
+                otherCharges = dbcontext.Book_OtherCharge.Where(t => t.trn_Id == transid).ToList();
+            }
+
             return new TransactionDetailsViewModel
             {
                 transactionId = transid,
-                PackageAmount = this.GetAccountTotalByTransId(transid)
+                PackageAmount = this.GetAccountTotalByTransId(transid),
+                TotaAddons = advm.AddonsTotal(transid),
+                TotaMiscCharge = bocvm.GetTotalOtherCharges(otherCharges),
+                extLocAmount = this.Get_extendedAmountLoc(transid),
+                cateringdiscount = this.GetCateringdiscountByPax(contractDetail.packageType,contractDetail.noofPax)
 
             };
+
+
         }
 
     }

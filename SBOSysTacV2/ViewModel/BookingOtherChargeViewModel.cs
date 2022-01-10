@@ -12,28 +12,26 @@ namespace SBOSysTacV2.ViewModel
 
         public List<BookOtherChargeDetailViewModel> BookOtherChargeList{ get; set; }
 
-        private PegasusEntities _dbEntities;
-        public BookingOtherChargeViewModel()
+
+
+        public decimal GetTotalOtherCharges(List<Book_OtherCharge> bookOtherCharges)
         {
-            _dbEntities = new PegasusEntities();
-        }
+            decimal otherCharge=0;
 
-        public decimal GetTotalOtherCharges(int transactionId)
-        {
+            try
+            {
 
-         var bookCharge= _dbEntities.Book_OtherCharge.Find(transactionId);
+                    otherCharge = bookOtherCharges.Count > 0 ?(decimal)bookOtherCharges.Select(t => t.amount).Sum():0;
 
-              if (bookCharge!=null)
-              {
-                  return (decimal)_dbEntities.Book_OtherCharge
-                      .Where(t => t.trn_Id == transactionId)
-                      .Select(s => s.amount).Sum();
-              }
-              else
-              {
-                  return 0;
-              }
-           
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return otherCharge;
+
         }
 
 
