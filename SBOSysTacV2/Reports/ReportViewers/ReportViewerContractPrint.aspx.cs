@@ -15,16 +15,22 @@ namespace SBOSysTacV2.Reports.ReportViewers
 {
     public partial class ReportViewerContractPrint : Page
     {
-        private PrintContractDetails condetails = new PrintContractDetails();
-        private BookMenusViewModel bmv = new BookMenusViewModel();
-
-
+        private PrintContractDetails condetails;
+        private BookMenusViewModel bmv;
+        private PackageBookingViewModel package_book_vm;
+        private BookMenusViewModel book_menus_vm;
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                condetails = new PrintContractDetails();
+                bmv = new BookMenusViewModel();
+                package_book_vm = new PackageBookingViewModel();
+                book_menus_vm = new BookMenusViewModel();
+
+
 
                 try
                 {
@@ -115,8 +121,13 @@ namespace SBOSysTacV2.Reports.ReportViewers
                    //Convert ViewModel List to DataTable
                    DataTable dtBookingDetailsTable = conDetails.ToDataTable();
 
+                   var packageBooking = package_book_vm.GetBookingDetailById(Convert.ToInt32(paramTransId));
 
-                    conBookMenus = bmv.ListofMenusBook(Convert.ToInt32(paramTransId)).Where(t=>t.menu_No!=null).ToList();
+                   conBookMenus = book_menus_vm.ListOfMenusBook(packageBooking).ToList();
+
+
+                    //conBookMenus = bmv.ListOfMenusBook(Convert.ToInt32(paramTransId)).Where(t=>t.menu_No!=null).ToList();
+
                     DataTable dtBookMenus = conBookMenus.ToDataTableList();
 
                     var transdetails = tdvm.GetTransactionStatementAccountById(conDetails);

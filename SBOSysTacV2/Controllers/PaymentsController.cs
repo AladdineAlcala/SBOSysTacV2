@@ -14,22 +14,27 @@ namespace SBOSysTacV2.Controllers
 
 
     [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin,UserPermessionLevelEnum.cashier)]
-
     public class PaymentsController : Controller
     {
 
 
-        private BookingsViewModel bookingsViewModel=new BookingsViewModel();
-        private PaymentsViewModel paymentsViewModel=new PaymentsViewModel();
-        private BookingPaymentsViewModel bookingPayments=new BookingPaymentsViewModel();
-        private TransRecievablesViewModel tr = new TransRecievablesViewModel();
-        private PaymentsViewModel pv = new PaymentsViewModel();
-        private TransactionDetailsViewModel transdetails=new TransactionDetailsViewModel();
+        private BookingsViewModel bookingsViewModel;
+        private PaymentsViewModel paymentsViewModel;
+        private BookingPaymentsViewModel bookingPayments;
+        private TransRecievablesViewModel tr;
+        private PaymentsViewModel pv;
+        private TransactionDetailsViewModel transdetails;
         private PegasusEntities _dbcontext;
 
         public PaymentsController()
         {
             _dbcontext = new PegasusEntities();
+            bookingsViewModel = new BookingsViewModel();
+            paymentsViewModel = new PaymentsViewModel();
+            bookingPayments = new BookingPaymentsViewModel();
+            tr = new TransRecievablesViewModel();
+            pv = new PaymentsViewModel();
+            transdetails = new TransactionDetailsViewModel();
         }
 
         [HttpGet]
@@ -93,14 +98,18 @@ namespace SBOSysTacV2.Controllers
         [HttpGet]
         public ActionResult Add_PaymentPartialView(int transactionId)
         {
-            PaymentsViewModel pay=new PaymentsViewModel();
+
+            PaymentsViewModel payment=new PaymentsViewModel();
 
             //pay.particular = Utilities.EventSlip_Generator();
-            pay.transId = transactionId;
-            pay.dateofPayment=DateTime.Now;
-            pay.payType = 1;
+            payment.transId = transactionId;
+            payment.dateofPayment=DateTime.Now;
+            payment.payType = 1;
 
-            return PartialView(pay);
+            payment.createdByUserId = User.Identity.GetUserId();
+            payment.createdByUserName = User.Identity.GetUserName();
+
+            return PartialView(payment);
         }
 
 
@@ -113,9 +122,13 @@ namespace SBOSysTacV2.Controllers
           //  bool success = false;
 
             var url = "";
+            var success = false;
+
+            int persist = 0;
+
             try
             {
-                Payment newPayment=new Payment()
+                var newPayment=new Payment
                 {
                     payNo = Utilities.Generate_PaymentId(),
                     trn_Id = paymentviewmodel.transId,
@@ -126,12 +139,15 @@ namespace SBOSysTacV2.Controllers
                     pay_means = paymentviewmodel.pay_means,
                     checkNo = paymentviewmodel.checkNo,
                     notes = paymentviewmodel.notes,
-                    p_createdbyUser = User.Identity.GetUserId()
+                    p_createdbyUser =paymentviewmodel.createdByUserId,
+                    p_createdDate = paymentviewmodel.p_createdDate,
+                    p_updatedDate = paymentviewmodel.p_updateDate
 
                 };
 
-                _dbcontext.Payments.Add(newPayment);
-                _dbcontext.SaveChanges();
+               _dbcontext.Payments.Add(newPayment);
+
+                persist = _dbcontext.SaveChanges();
 
                 url = Url.Action("GetPaymentList", "Payments", new {transId = paymentviewmodel.transId });
 
@@ -142,7 +158,13 @@ namespace SBOSysTacV2.Controllers
                 throw;
             }
 
-            return Json(new {success = true,url=url}, JsonRequestBehavior.AllowGet);
+
+            if (persist == 1)
+            {
+                success = true;
+            }
+
+            return Json(new {success,url}, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -162,6 +184,7 @@ namespace SBOSysTacV2.Controllers
 
              
                     _dbcontext.Payments.Remove(paymt);
+
                     _dbcontext.SaveChanges();
 
 

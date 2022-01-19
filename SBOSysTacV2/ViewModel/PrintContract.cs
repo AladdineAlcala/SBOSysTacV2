@@ -56,7 +56,7 @@ namespace SBOSysTacV2.ViewModel
                         eventcolScheme = booking.eventcolor,
                         typeofService = sv.servicetypedetails,
                         packagedesc = booking.Package.p_descripton,
-                        packageType = booking.Package.p_type,
+                        packageType = booking.Package.p_type.TrimEnd(),
                         packageamount = Convert.ToDecimal(booking.Package.p_amountPax),
                         booktype = this.GetBookingType(booking.booktype.TrimEnd())
                     }).ToList();
@@ -102,7 +102,7 @@ namespace SBOSysTacV2.ViewModel
                         eventcolScheme = booking.eventcolor,
                         typeofService = sv.servicetypedetails,
                         packagedesc = booking.Package.p_descripton,
-                        packageType = booking.Package.p_type,
+                        packageType = booking.Package.p_type.TrimEnd(),
                         packageamount = Convert.ToDecimal(booking.Package.p_amountPax),
                         booktype = this.GetBookingType(booking.booktype.TrimEnd())
 

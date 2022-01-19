@@ -24,6 +24,8 @@ namespace SBOSysTacV2.Models
         public string checkNo { get; set; }
         public string notes { get; set; }
         public string p_createdbyUser { get; set; }
+        public Nullable<System.DateTime> p_updatedDate { get; set; }
+        public Nullable<System.DateTime> p_createdDate { get; set; }
     
         public virtual Booking Booking { get; set; }
     }

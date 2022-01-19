@@ -200,7 +200,7 @@ $(document).on('click', '#btn_regPayment', function (e) {
                     $('#spinn-loader').show();
                     $.ajax({
                         type: 'POST',
-                        url: formUrl,
+                        url: formUrl,               //Payments/SavePayment
                         data: form.serialize(),
                         datatype: 'json',
                         cache: false,
@@ -221,8 +221,9 @@ $(document).on('click', '#btn_regPayment', function (e) {
                                 setTimeout(function () {
 
                                     $("#modal-PaymentBooking").modal('hide');
+
                                     $('#spinn-loader').hide();
-                                }, 500);
+                                }, 1000);
 
                             }
                         },
@@ -474,38 +475,50 @@ $(document).on('click', '#btn_updatePayment', function (e) {
 
 });
 
+
+
+ getBalance=()=> $('#endbalance').html();
+
+
+
+
 //function onAddNewPayment(id) {
 
 $(document).on('click','#add_payment',function(e) {
         e.preventDefault();
-     
-        $.ajax({
-            type: 'Get',
-            url: paymentsUrl.payUrl_addPayment,
-            // url:'http://localhost:Sals/Payments/Add_PaymentPartialView',
-            contentType: 'application/html;charset=utf8',
-            data: { transactionId:  $(this).data('id')  },
-            datatype: 'html',
-            cache: false,
-            success: function(result) {
-                var modal = $('#modal-PaymentBooking');
-                modal.find('#modalcontent').html(result);
-
-                $('#paymentdatepicker').datepicker("setDate", new Date());
-                $('#paymentdatepicker').datepicker({ autoclose: true, format: 'mm/dd/yyyy' });
-
-                modal.modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    },
-                    'show');
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                Swal.fire('Error adding record!', 'Please try again', 'error');
-            }
 
 
-        });
+    console.log(getBalance());
+
+
+        /* $.ajax({
+             type: 'Get',
+             url: paymentsUrl.payUrl_addPayment,
+             // url:'http://localhost:Sals/Payments/Add_PaymentPartialView',
+             contentType: 'application/html;charset=utf8',
+             data: { transactionId:  $(this).data('id')  },
+             datatype: 'html',
+             cache: false,
+             success: function (result) {
+ 
+                 var modal = $('#modal-PaymentBooking');
+                 modal.find('#modalcontent').html(result);
+ 
+                 $('#paymentdatepicker').datepicker("setDate", new Date());
+                 $('#paymentdatepicker').datepicker({ autoclose: true, format: 'mm/dd/yyyy' });
+ 
+                 modal.modal({
+                         backdrop: 'static',
+                         keyboard: false
+                     },
+                     'show');
+             },
+             error: function(xhr, ajaxOptions, thrownError) {
+                 Swal.fire('Error adding record!', 'Please try again', 'error');
+             }
+ 
+ 
+         });*/
 });
 
 $(document).on('keypress', '#amtPay', function (event) {
@@ -533,3 +546,5 @@ $(document).on('keypress', '#txtpayamt', function (event) {
         event.preventDefault();
     }
 });
+
+

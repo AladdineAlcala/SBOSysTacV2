@@ -15,6 +15,11 @@
         <!--box-header-->
         <div class="box-body">
             <ul class="products-list product-list-in-box">
+                
+                
+                @Html.HiddenFor(m=>m.Booking.noofperson,new{id="booking_no_of_pax"})
+                
+
 
                 @{ var counter = 0; }
 
@@ -25,9 +30,9 @@
 
                     int? _menuNo = 0;
 
-                    
 
-                    var menuName = (!String.IsNullOrEmpty(menu.menu_name) ? menu.menu_name : Model.CheckCourseHasBar(menu.coursename) ? Model.GetMenusForCourseHasBar(Model.transactionId, menu.coursename, ref _menuNo) : menu.menu_name);
+
+                   
 
                     <li class="item my-1 py-1">
 
@@ -47,7 +52,7 @@
                         
 
 
-                        <div id="course" class="product product-info" data-id="@menu.courseid">
+                        <div id="course" class="product product-info" data-id="@menu.course_id">
                             @*<i class="fa fa-clipboard" aria-hidden="true"></i>*@
                             <span class="menu-counter">@counter</span>
                             <span class="product-title">
@@ -56,7 +61,7 @@
                             </span>
                             <div class="ml-5 my-2 py-1">
                                 <span class="product-description">
-                                    @(string.IsNullOrEmpty(menuName)?"":menuName.ToUpper())
+                                    @(string.IsNullOrEmpty(menu.menu_name)?"":menu.menu_name.ToUpper())
                                 </span>
                                 
                                
@@ -66,7 +71,7 @@
 
                         <div class="tools" data-transid="@Model.transactionId">
 
-                            @if (string.IsNullOrEmpty(menuName))
+                            @if (string.IsNullOrEmpty(menu.menu_name))
                             {
                                 <i class="fa fa-plus-circle fa-lg" id="menu_add"></i>
 

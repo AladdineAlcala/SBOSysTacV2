@@ -29,7 +29,7 @@ namespace SBOSysTacV2.ViewModel
         private BookingsViewModel bvm = new BookingsViewModel();
         private AddonsViewModel advm = new AddonsViewModel();
         private BookingOtherChargeViewModel bocvm = new BookingOtherChargeViewModel();
-
+        private BookMenusViewModel book_menus_vm=new BookMenusViewModel();
 
         public IEnumerable<TransactionDetailsViewModel> GetTransactionDetails()
         {
@@ -588,7 +588,8 @@ namespace SBOSysTacV2.ViewModel
             return new TransactionDetailsViewModel
             {
                 transactionId = transid,
-                PackageAmount = this.GetAccountTotalByTransId(transid),
+                PackageAmount =(decimal) (!string.Equals(contractDetail.packageType.TrimEnd(), "sd", StringComparison.Ordinal)? 
+                                this.GetAccountTotalByTransId(transid) : book_menus_vm.ComputeAmountForSnacksByTransId(transid)),
                 TotaAddons = advm.AddonsTotal(transid),
                 TotaMiscCharge = bocvm.GetTotalOtherCharges(otherCharges),
                 extLocAmount = this.Get_extendedAmountLoc(transid),

@@ -219,7 +219,7 @@ namespace SBOSysTacV2.Controllers
 
            
 
-                return Json(new {data=salessummarylist}, JsonRequestBehavior.AllowGet);
+            return Json(new {data=salessummarylist}, JsonRequestBehavior.AllowGet);
         }
 
 

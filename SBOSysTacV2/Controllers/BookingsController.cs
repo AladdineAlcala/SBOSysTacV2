@@ -351,14 +351,14 @@ namespace SBOSysTacV2.Controllers
         [ActionName("GetBookMenusPartial")]
         public ActionResult GetListofBookMenus(int transactionId)
         {
-
+            var packageBooking = package_book_vm.GetBookingDetailById(transactionId);
 
 
             return PartialView("_ListofBookMenus", new PackageBookingViewModel()
             {
                 transactionId = transactionId,
-
-                BookMenuses = book_menus_vm.ListofMenusBook(transactionId).ToList()
+                Booking = packageBooking.Booking,
+                BookMenuses = book_menus_vm.ListOfMenusBook(packageBooking).ToList()
 
             });
         }
@@ -368,10 +368,12 @@ namespace SBOSysTacV2.Controllers
         [ActionName("GetSnacksPartial")]
         public ActionResult GetListofSnacks(int transactionId)
         {
+            var packageBooking = package_book_vm.GetBookingDetailById(transactionId);
 
             return PartialView("_GetSnacksForm",new PackageBookingViewModel()
             {
                 transactionId = transactionId,
+                Booking = packageBooking.Booking,
                 Package = package_book_vm.GetPackageByTransaction_Id(transactionId),
                 BookMenuses = book_menus_vm.Get_Menu_on_SnackPackageByTransId(transactionId).ToList()
 
@@ -395,16 +397,18 @@ namespace SBOSysTacV2.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetListofCourse(int transactionId, int courseId)
+        public ActionResult GetListofCourse(int transactionId, int courseId,int no_of_pax)
         {
             return PartialView("_GetListofMainCourse", new BookMenusViewModel()
             {
                 transId = transactionId,
-                courseid = courseId
+                servingpax = (int)no_of_pax,
+                course_id = courseId
 
             });
 
         }
+
 
         [HttpGet]
         [ActionName("GetPackageMenusperTransaction")]
@@ -433,7 +437,7 @@ namespace SBOSysTacV2.Controllers
                                  dept = m.Department.deptName,
                                  menu_name = m.menu_name,
                                  menu_No = bm.No,
-                                 courseid = (int)m.courseId,
+                                 course_id = (int)m.courseId,
                                  serving = (decimal)bm.serving
 
                              }).FirstOrDefault(x => x.menu_No == bookmenuNo);
@@ -462,11 +466,11 @@ namespace SBOSysTacV2.Controllers
                 {
                     var listWithBar = mainmenulistviewmodel.MainMenuList_with_Bar(courseid);
 
-                    listmenudata = listWithBar.Count <= 0 ? listofmenu.Where(t => t.courseid == courseid).ToList() : listofmenu.Where(l1 => listWithBar.Any(l2 => l1.courseid == l2.Key)).ToList();
+                    listmenudata = listWithBar.Count <= 0 ? listofmenu.Where(t => t.course_id == courseid).ToList() : listofmenu.Where(l1 => listWithBar.Any(l2 => l1.course_id == l2.Key)).ToList();
                 }
                 else
                 {
-                    listmenudata = listofmenu.Where(t => t.courseid == courseid).ToList();
+                    listmenudata = listofmenu.Where(t => t.course_id == courseid).ToList();
                 }
 
             }
@@ -526,7 +530,9 @@ namespace SBOSysTacV2.Controllers
                         if (td.isSelectedMenuMainCourse(bookmenus.menuId) == true)
                         {
                             var bookings = _dbcontext.Bookings.Find(bookmenus.transId);
+
                             if (bookmenus.get_totalselectedMainMenus(bookmenus.transId) <
+
                                 book_menus_vm.Get_PackageMainMenusInt(Convert.ToInt32(bookings.p_id)))
                             {
 
@@ -534,11 +540,14 @@ namespace SBOSysTacV2.Controllers
                                 {
                                     trn_Id = bookmenus.transId,
                                     menuid = bookmenus.menuId,
-                                    serving = bookmenus.serving
+                                    courseId = bookmenus.course_id == 0 ? menu.courseId : bookmenus.course_id,
+                                    createdDate = bookmenus.createdDate,
+                                    updatedDate = bookmenus.updatedDate,
+                                    serving = bookmenus.serving??bookmenus.servingpax
                                 };
 
                                 _dbcontext.Book_Menus.Add(bookMenu);
-                                _dbcontext.SaveChanges();
+                       
 
 
                                 //url = Url.Action("GetBookMenusPartial", "Bookings",
@@ -560,21 +569,27 @@ namespace SBOSysTacV2.Controllers
                         }
                         else
                         {
+
+
+
                             var bookMenu = new Book_Menus()
                             {
                                 trn_Id = bookmenus.transId,
                                 menuid = bookmenus.menuId,
-                                serving = bookmenus.serving
+                                courseId = bookmenus.course_id==0? menu.courseId: bookmenus.course_id,
+                                createdDate = bookmenus.createdDate,
+                                updatedDate = bookmenus.updatedDate,
+                                serving = bookmenus.serving ?? bookmenus.servingpax
                             };
 
                             _dbcontext.Book_Menus.Add(bookMenu);
-                            _dbcontext.SaveChanges();
+                           
 
 
                           
                         }
 
-
+                        _dbcontext.SaveChanges();
                     }
                     else
                     {
@@ -607,6 +622,7 @@ namespace SBOSysTacV2.Controllers
                      url = Url.Action("GetBookingDetailsPartial", "Bookings", new { transId = bookmenus.transId });
                 }
 
+                _dbcontext.Dispose();
                 //url = Url.Action("GetBookingDetailsPartial", "Bookings", new { transId = bookmenus.transId });
 
                 return Json(new { isRecordExist = isRecordExist, ShowErrMessageString = showErrMessageString, url = url,packageType=package.p_type.TrimEnd() }, JsonRequestBehavior.AllowGet);
@@ -654,10 +670,11 @@ namespace SBOSysTacV2.Controllers
 
                 if (bookMenus != null)
                 {
-                    //bookMenus.No = modifiedBookMenu.menu_No;
+            
                     bookMenus.trn_Id = modifiedBookMenu.transId;
                     bookMenus.menuid = modifiedBookMenu.menuId;
                     bookMenus.serving = modifiedBookMenu.serving;
+                    bookMenus.updatedDate = DateTime.UtcNow;
                 }
 
 
@@ -728,6 +745,7 @@ namespace SBOSysTacV2.Controllers
 
                     // _dbcontext.Book_Menus.Attach(modifiedbookMenu);
                     //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
+
                     _dbcontext.SaveChanges();
 
                     url = Url.Action("GetBookMenusPartial", "Bookings", new { transactionId = modifiedBookMenu.transId });

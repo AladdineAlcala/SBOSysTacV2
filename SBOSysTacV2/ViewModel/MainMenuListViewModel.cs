@@ -16,7 +16,7 @@ namespace SBOSysTacV2.ViewModel
         public int menuNo { get; set; }
         public string menuId { get; set; }
         public string menu_name { get; set; }
-        public int courseid { get; set; }
+        public int course_id { get; set; }
         public string course { get; set; }
         public decimal price { get; set; }
         public bool? isMainMenu { get; set; }
@@ -39,7 +39,7 @@ namespace SBOSysTacV2.ViewModel
                     {
                         menuId = m.menuid,
                         menu_name = m.menu_name,
-                        courseid=c.courseId,
+                        course_id = c.courseId,
                         course = c.Course,
                         isMainMenu = c.Main_Bol
 
@@ -123,7 +123,7 @@ namespace SBOSysTacV2.ViewModel
                             menuNo = bm.No,
                             menuId = m.menuid,
                             menu_name = m.menu_name,
-                            courseid = c.courseId,
+                            course_id = c.courseId,
                             course = c.Course,
                             isMainMenu = c.Main_Bol
 
@@ -159,7 +159,7 @@ namespace SBOSysTacV2.ViewModel
                         {
                             menuId = m.menuid,
                             menu_name = m.menu_name,
-                            courseid = c.courseId,
+                            course_id = c.courseId,
                             course = c.Course,
                             isMainMenu = c.Main_Bol
 

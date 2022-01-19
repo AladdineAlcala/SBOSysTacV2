@@ -139,8 +139,10 @@ $(document).on('click', '#tbl-maincourse tbody tr', function () {
 
    
 
-        if ($selectedObj.hasClass('selected')) {
-            var tr = $(this).closest('tr');
+    if ($selectedObj.hasClass('selected')) {
+
+        var tr = $(this).closest('tr');
+
             var id = tr.children('td:eq(0)').attr('data-id');
 
             $('#hiddenmenuId').val(id);
@@ -151,13 +153,13 @@ $(document).on('click', '#tbl-maincourse tbody tr', function () {
 
             //alert(tr.children('td:eq(1)').html());
 
-            $('#txtserving').val('1');
+ /*           $('#txtserving').val();*/
 
         } else {
             $('#hiddenmenuId').val(" ");
             $('#txtselectedmenu').val(" ");
             $selectedId = "";
-            $('#txtserving').val(' ');
+            /*$('#txtserving').val(' ');*/
         }
 
     //  console.log($selectedId);
@@ -178,6 +180,7 @@ $(document).on('click', '#menu_add', function (e) {
     debugger;
 
     var elem = $(this).closest('li').find('div[id=course]');
+
     var courseId = elem.attr('data-id');
 
    
@@ -185,8 +188,8 @@ $(document).on('click', '#menu_add', function (e) {
     $.ajax({
         type: 'Get',
         url: PackageBookingUrl.urlSearchpackagebooking,   //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourse", "Bookings")",
+        data: { transactionId: $(this).closest('div.tools').data('transid'), courseId: courseId, no_of_pax: $('#booking_no_of_pax').val() },
         contentType: 'application/html;charset=utf8',
-        data: { transactionId: $(this).closest('div.tools').data('transid'), courseId: courseId },
         datatype: 'html',
         cache: false,
         success: function (result) {
@@ -231,10 +234,10 @@ $(document).on('click', '#menu_change', function (e) {
 
 
     //----------------      PACKAGE MENU > MENU CHANGE OPTION   -------------------------------------------------- 
-    //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourseforChange", "Bookings")",
+    //  <<<<<=========    
     $.ajax({
         type: 'Get',
-        url: PackageBookingUrl.urlSearchpackagebookingbybookNo,   
+        url: PackageBookingUrl.urlSearchpackagebookingbybookNo,     //  urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourseforChange", "Bookings")",
         contentType: 'application/html;charset=utf8',
         data: { bookmenuNo: $(this).attr("data-menuid") },
         datatype: 'html',
@@ -354,7 +357,9 @@ function LoadDataTabletoModal(_courseId) {
 
 
             ],
-            createdRow: function (row, data, indice) {
+            createdRow: function (row, data) {
+
+                $(row).attr('data-id', data.course_id);
                 $(row).find("td:eq(0)").attr('data-id', data.menuId);
             }
            
@@ -447,6 +452,7 @@ function Load_SelectedMenusForPackage(_packageId) {
  
                  ],
              createdRow: function (row, data, indice) {
+                 $(row).attr('data-id', data.course_id);
                  $(row).find("td:eq(0)").attr('data-id', data.menuId);
              }
  
@@ -596,15 +602,17 @@ $(document).on('click', '#add_snacks_and_drinks', function (e) {
 
     e.preventDefault();
 
+ /*   alert($('#booking_no_of_pax').val());*/
+
     var packageId = $('#pId').val();
     var _courseId = 0;
 
     $.ajax({
         type: 'Get',
-        url: PackageBookingUrl.urlSearchpackagebooking,   //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourse", "Bookings")",
-        contentType: 'application/html;charset=utf8',
-        data: { transactionId: $(this).attr('data-id'), courseId: _courseId },
+        url: PackageBookingUrl.urlSearchpackagebooking,   //  <<<<<=========      urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourse", "Bookings")",\
+        data: { transactionId: $(this).attr('data-id'), courseId: _courseId, no_of_pax: $('#booking_no_of_pax').val()},
         datatype: 'html',
+        contentType: 'application/html;charset=utf8',
         cache: false,
         success: function (result) {
 
@@ -1979,47 +1987,47 @@ function currentSlide(n) {
 }
 
 
-InsertImages(imglightcontent, $tblBookMenu);
+/*InsertImages(imglightcontent, $tblBookMenu);*/
 
-function InsertImages(element, object) {
+//function InsertImages(element, object) {
 
-   /* debugger;*/
-    var imagesdemo = "";
-    let i = 0;
+//   /* debugger;*/
+//    var imagesdemo = "";
+//    let i = 0;
 
-    object.forEach(function (obj) {
-        //console.log(obj);
-        i += 1;
-        var nophoto = 'no-Image.jpeg';
+//    object.forEach(function (obj) {
+//        //console.log(obj);
+//        i += 1;
+//        var nophoto = 'no-Image.jpeg';
 
-        var imagefilename = obj.menuImageFilename !== null ? obj.menuImageFilename : nophoto;
+//        var imagefilename = obj.menuImageFilename !== null ? obj.menuImageFilename : nophoto;
 
-        var imagescontainer = '<div class="slides">' +
-            '<img src=/Content/UploadedImages/' + imagefilename + ' style="width:100%;">' +
-            '</div>';
+//        var imagescontainer = '<div class="slides">' +
+//            '<img src=/Content/UploadedImages/' + imagefilename + ' style="width:100%;">' +
+//            '</div>';
 
-        imagesdemo += '<div class="column"><img class="demo" src=/Content/UploadedImages/' + imagefilename + ' alt="' + obj.menu_name + '" onclick="currentSlide(' + i + ')"></div>';
-
-
+//        imagesdemo += '<div class="column"><img class="demo" src=/Content/UploadedImages/' + imagefilename + ' alt="' + obj.menu_name + '" onclick="currentSlide(' + i + ')"></div>';
 
 
-        element.insertAdjacentHTML('beforeend', imagescontainer);
-
-    });
 
 
-    var positioner = '<a class="menuimg-prev" onclick="plusSlides(-1)">&#10094;</a>' +
-        '<a class="menuimg-next" onclick="plusSlides(1)">&#10095;</a>';
+//        element.insertAdjacentHTML('beforeend', imagescontainer);
 
-    var caption = '<div class="caption-container"><p id="caption"></p> </div>';
-
-    element.insertAdjacentHTML('beforeend', positioner);
-    element.insertAdjacentHTML('beforeend', caption);
-
-    element.insertAdjacentHTML('beforeend', imagesdemo);
+//    });
 
 
-}
+//    var positioner = '<a class="menuimg-prev" onclick="plusSlides(-1)">&#10094;</a>' +
+//        '<a class="menuimg-next" onclick="plusSlides(1)">&#10095;</a>';
+
+//    var caption = '<div class="caption-container"><p id="caption"></p> </div>';
+
+//    element.insertAdjacentHTML('beforeend', positioner);
+//    element.insertAdjacentHTML('beforeend', caption);
+
+//    element.insertAdjacentHTML('beforeend', imagesdemo);
+
+
+//}
 
 
 

@@ -31,6 +31,10 @@ namespace SBOSysTacV2.ViewModel
         [Display(Name = "Notes:")]
         public string notes { get; set; }
 
+        public string createdByUserId { get; set; }
+        public string createdByUserName { get; set; }
+        public DateTime p_createdDate { get; set; }=DateTime.UtcNow;
+        public DateTime p_updateDate { get; set; } = DateTime.UtcNow;
        
 
        
@@ -55,8 +59,9 @@ namespace SBOSysTacV2.ViewModel
                         amtPay = p.amtPay,
                         pay_means = p.pay_means,
                         checkNo = p.checkNo,
-                        notes = p.notes 
-
+                        notes = p.notes,
+                        p_createdDate = (DateTime)p.p_createdDate,
+                        p_updateDate = (DateTime)p.p_updatedDate
 
                     }).OrderBy(x=>x.dateofPayment).ToList();
 

@@ -67,7 +67,10 @@
           <Property Name="No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="trn_Id" Type="int" />
           <Property Name="menuid" Type="nvarchar" MaxLength="20" />
+          <Property Name="courseId" Type="int" />
           <Property Name="serving" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="updatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Book_OtherCharge">
           <Key>
@@ -122,8 +125,9 @@
           <Property Name="p_amount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="serve_stat" Type="bit" />
           <Property Name="is_cancelled" Type="bit" />
-          <Property Name="b_createdbyUser" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="b_updatedDate" Type="datetime" Nullable="false" />
+          <Property Name="b_createdbyUser" Type="nvarchar" MaxLength="128" />
+          <Property Name="b_createdDate" Type="datetime" />
+          <Property Name="b_updatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="CancelledBookings">
           <Key>
@@ -262,6 +266,8 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <Property Name="checkNo" Type="nvarchar" MaxLength="50" />
           <Property Name="notes" Type="nvarchar" MaxLength="50" />
           <Property Name="p_createdbyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_updatedDate" Type="datetime" />
+          <Property Name="p_createdDate" Type="datetime" />
         </EntityType>
         <EntityType Name="RefundEntry">
           <Key>
@@ -841,6 +847,9 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <Property Name="serving" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Booking" Relationship="Self.FK_Book_Menus_Bookings" FromRole="Book_Menus" ToRole="Bookings" />
           <NavigationProperty Name="Menu" Relationship="PegasusEntitiesModel.FK_Book_Menus_Menu" FromRole="Book_Menus" ToRole="Menu" />
+          <Property Name="courseId" Type="Int32" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="updatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Booking">
           <Key>
@@ -864,8 +873,8 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <Property Name="p_amount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="serve_stat" Type="Boolean" />
           <Property Name="is_cancelled" Type="Boolean" />
-          <Property Name="b_createdbyUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="b_updatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="b_createdbyUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="b_updatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Book_Discount" Relationship="Self.FK_Book_Discount_Bookings" FromRole="Bookings" ToRole="Book_Discount" />
           <NavigationProperty Name="Book_Menus" Relationship="Self.FK_Book_Menus_Bookings" FromRole="Bookings" ToRole="Book_Menus" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Bookings_Customer" FromRole="Bookings" ToRole="Customer" />
@@ -876,6 +885,7 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <NavigationProperty Name="Payments" Relationship="PegasusEntitiesModel.FK_Payments_Bookings" FromRole="Booking" ToRole="Payment" />
           <NavigationProperty Name="BookingAddons" Relationship="PegasusEntitiesModel.FK_BookingAddons_Bookings" FromRole="Booking" ToRole="BookingAddon" />
           <NavigationProperty Name="Book_OtherCharge" Relationship="PegasusEntitiesModel.FK_Book_OtherCharge_Bookings" FromRole="Booking" ToRole="Book_OtherCharge" />
+          <Property Name="b_createdDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="CancelledBooking">
           <Key>
@@ -995,6 +1005,8 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <Property Name="notes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Booking" Relationship="PegasusEntitiesModel.FK_Payments_Bookings" FromRole="Payment" ToRole="Booking" />
           <Property Name="p_createdbyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_updatedDate" Type="DateTime" Precision="3" />
+          <Property Name="p_createdDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="RefundEntry">
           <Key>
@@ -1642,6 +1654,9 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <EntitySetMapping Name="Book_Menus">
             <EntityTypeMapping TypeName="PegasusEntitiesModel.Book_Menus">
               <MappingFragment StoreEntitySet="Book_Menus">
+                <ScalarProperty Name="updatedDate" ColumnName="updatedDate" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="courseId" ColumnName="courseId" />
                 <ScalarProperty Name="No" ColumnName="No" />
                 <ScalarProperty Name="trn_Id" ColumnName="trn_Id" />
                 <ScalarProperty Name="menuid" ColumnName="menuid" />
@@ -1652,6 +1667,7 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="PegasusEntitiesModel.Booking">
               <MappingFragment StoreEntitySet="Bookings">
+                <ScalarProperty Name="b_createdDate" ColumnName="b_createdDate" />
                 <ScalarProperty Name="trn_Id" ColumnName="trn_Id" />
                 <ScalarProperty Name="transdate" ColumnName="transdate" />
                 <ScalarProperty Name="booktype" ColumnName="booktype" />
@@ -1777,6 +1793,8 @@ warning 6002: The table/view 'PegasusTacV2.dbo.PackagesRangeBelowMin' does not h
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="PegasusEntitiesModel.Payment">
               <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="p_createdDate" ColumnName="p_createdDate" />
+                <ScalarProperty Name="p_updatedDate" ColumnName="p_updatedDate" />
                 <ScalarProperty Name="p_createdbyUser" ColumnName="p_createdbyUser" />
                 <ScalarProperty Name="payNo" ColumnName="payNo" />
                 <ScalarProperty Name="trn_Id" ColumnName="trn_Id" />

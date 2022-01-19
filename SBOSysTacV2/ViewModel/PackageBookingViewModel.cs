@@ -13,7 +13,7 @@ namespace SBOSysTacV2.ViewModel
         public int transactionId { get; set; }
         public Booking Booking { get; set; }
         public Package Package { get; set; }
-        public PackageBody PackageBody { get; set; }
+        public IEnumerable<PackageBody> PackageBody { get; set; }
         public IEnumerable<BookMenusViewModel> BookMenuses { get; set; }
         public IEnumerable<AddonsViewModel> BookAddOns { get; set; }
 
@@ -32,7 +32,7 @@ namespace SBOSysTacV2.ViewModel
                    transactionId = b.trn_Id,
                    Booking = b,
                    Package = p,
-                   PackageBody = pb
+                   PackageBody = new List<PackageBody> {pb}
                   
                })
                 .ToList();
@@ -40,6 +40,39 @@ namespace SBOSysTacV2.ViewModel
             _dbEntities.Dispose();
 
             return bookingList;
+        }
+
+
+        public PackageBookingViewModel GetBookingDetailById(int transid)
+        {
+            var _dbEntities = new PegasusEntities();
+            //_dbEntities.Configuration.ProxyCreationEnabled = false;
+            var bookDetails = new PackageBookingViewModel();
+
+            try
+            {
+                bookDetails = (from b in _dbEntities.Bookings
+                    where b.trn_Id.Equals(transid)
+                    select new PackageBookingViewModel
+                    {
+                        transactionId = b.trn_Id,
+                        Booking = b,
+                        Package =b.Package,
+                        PackageBody =b.Package.PackageBodies.ToList()
+                    }).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _dbEntities.Dispose();
+            }
+           
+
+            return bookDetails;
         }
 
 
@@ -56,10 +89,6 @@ namespace SBOSysTacV2.ViewModel
                     packageId=p.p_id
                 }).ToList();
 
-            //if (listofpackage.Any())
-            //{
-            //    has_existingBookings = true;
-            //}
 
             _dbEntities.Dispose();
 
@@ -96,7 +125,7 @@ namespace SBOSysTacV2.ViewModel
 
                 var bookmenucourse = mainmenu_viewmodel.GetBookMenuCourseByTransId(trnId);
 
-                var bookmenu= bookmenucourse.FirstOrDefault(li => _courselist.Any(l2 => li.courseid == l2.Key));
+                var bookmenu= bookmenucourse.FirstOrDefault(li => _courselist.Any(l2 => li.course_id == l2.Key));
 
                 if (bookmenu != null)
                 {

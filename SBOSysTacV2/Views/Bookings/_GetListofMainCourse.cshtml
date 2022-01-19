@@ -16,8 +16,15 @@
                     @Html.HiddenFor(x =>x.menuId,new { @id= "hiddenmenuId"})
                     @Html.HiddenFor(x =>x.transId,new { @id= "hdntransId" })
 
+                    @Html.HiddenFor(x=>x.course_id, new{@id="hidncourseid"})
+
                     @*<input type="hidden" value="@ViewBag.transId" id="hdntransId" />*@
+
                     <input type="hidden" value="@ViewBag.bookmenuNo" id="hdnchbookmenuNo" />
+
+                    @*<input type="hidden" value="@Model.servingpax" id="hdnNo_of_Pax"/>*@
+
+
 
                     <div class="box-body">
                         <div class="col-md-6">
@@ -32,7 +39,7 @@
                             <div class="form-group">
                                 <label>Serving:</label>
                                 @*<input type="text" class="form-control input-sm" id="txtserving" value="" />*@
-                                @Html.TextBoxFor(m =>m.serving,new {@class= "form-control input-sm",@id= "txtserving" })
+                                @Html.TextBoxFor(m =>m.servingpax,new {@class= "form-control input-sm",@id= "txtserving" })
                             </div>
                         </div>
                         <div class="col-md-3 text-center" style="margin-top: 25px;">
