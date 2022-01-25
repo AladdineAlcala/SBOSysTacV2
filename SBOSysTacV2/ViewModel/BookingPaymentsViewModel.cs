@@ -80,7 +80,7 @@ namespace SBOSysTacV2.ViewModel
                     }
 
 
-                    var hasCateringdiscounted = transdetails.GetCateringdiscountByPax(noofpax);
+                    var hasCateringdiscounted = TransactionDetailsViewModel.GetCateringdiscountByPax(noofpax);
 
                     if (hasCateringdiscounted > 0)
                     {
@@ -133,7 +133,7 @@ namespace SBOSysTacV2.ViewModel
             {
                 var noofpax = bookings.noofperson;
 
-                var amount = transdetails.GetCateringdiscountByPax(Convert.ToInt32(noofpax));
+                var amount = TransactionDetailsViewModel.GetCateringdiscountByPax(Convert.ToInt32(noofpax));
                 discountedAmount = Convert.ToDecimal(amount * noofpax);
             }
 

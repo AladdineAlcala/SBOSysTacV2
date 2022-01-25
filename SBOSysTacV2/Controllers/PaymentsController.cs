@@ -95,21 +95,25 @@ namespace SBOSysTacV2.Controllers
 
             return Json(new {data=listpayment }, JsonRequestBehavior.AllowGet);
         }
+
+
         [HttpGet]
-        public ActionResult Add_PaymentPartialView(int transactionId)
+        public ActionResult Add_PaymentPartialView(int transactionId,decimal balance)
         {
 
-            PaymentsViewModel payment=new PaymentsViewModel();
+            var paymentVM = new PaymentsViewModel()
+            {
+                transId = transactionId,
+                dateofPayment = DateTime.Now,
+                payType = 1,
+                amtPay = balance,
+                createdByUserId = User.Identity.GetUserId(),
+                createdByUserName = User.Identity.GetUserName()
 
-            //pay.particular = Utilities.EventSlip_Generator();
-            payment.transId = transactionId;
-            payment.dateofPayment=DateTime.Now;
-            payment.payType = 1;
+        };
 
-            payment.createdByUserId = User.Identity.GetUserId();
-            payment.createdByUserName = User.Identity.GetUserName();
 
-            return PartialView(payment);
+            return PartialView(paymentVM);
         }
 
 

@@ -32,7 +32,7 @@ namespace SBOSysTacV2.Controllers
         private CourseCategoryViewModel courseCategory;
         private PackageBookingViewModel package_book_vm;
         private BookingOtherChargeViewModel bookOtherCharge;
-
+       
 
         public BookingsController()
         {
@@ -264,6 +264,9 @@ namespace SBOSysTacV2.Controllers
 
             var transId = transDetails.transactionId;
 
+           Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails=null;
+
+
             decimal packageTotal = 0;
             decimal addonsTotal = 0;
             decimal belowminPax = 0;
@@ -275,7 +278,7 @@ namespace SBOSysTacV2.Controllers
             string discountCode = null;
             decimal packageAmount;
 
-            var addonsvm = new AddonsViewModel();
+            getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
 
             try
             {
@@ -284,19 +287,22 @@ namespace SBOSysTacV2.Controllers
 
                 int noOfPax = Convert.ToInt32(transDetails.Booking_Trans.noofperson);
 
-
+                var bookings = _dbcontext.Bookings.Find(transDetails.Booking_Trans.trn_Id);
 
                 packageAmount = (decimal) (!string.Equals(packageType, "sd", StringComparison.Ordinal)
                     ? transDetails.Package_Trans.p_amountPax
                     : book_menus_vm.ComputeAmountForSnacksByTransId(transId));
 
 
+
+
                 //var addonslist = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId).ToList();
 
-                 addonsTotal = addonsvm.AddonsTotal(transId);
+                // Compute Addons
+                addonsTotal = AddonsViewModel.AddonsTotal(getAddonDetails(bookings));
 
 
-                if (transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value
+                if ((bool)transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value
                 {
                     extendedLocationAmount = transDetailsvm.Get_extendedAmountLoc(transId);
                 }
@@ -345,6 +351,7 @@ namespace SBOSysTacV2.Controllers
             return PartialView("_BookingsAmountDuePartial", transDetails);
         }
 
+        public IEnumerable<ICollection<BookAddonsDetail>> Func { get; set; }
 
 
         [HttpGet]
@@ -1626,7 +1633,7 @@ namespace SBOSysTacV2.Controllers
 
             var seladdonsviewmodel = new SelectedAddonsViewModel();
             var addonDetail = _dbcontext.AddonDetails.Find(selectedaddonId);
-            
+            var bookingAddon = _dbcontext.BookingAddons.FirstOrDefault(t => t.bookaddonNo == addonNo);
 
             if (addonDetail != null)
             {
@@ -1641,11 +1648,11 @@ namespace SBOSysTacV2.Controllers
                             (int) _dbcontext.BookingAddons.FirstOrDefault(t => t.bookaddonNo == addonNo).trn_Id,
                         addon_details = a.addondescription,
                         unit = a.unit,
-                        amount = (decimal)a.amount
-                        //orderQty =Convert.ToDecimal(from ba in _dbcontext.BookingAddons
-                        //    join bk in _dbcontext.Bookings on ba.trn_Id equals bk.trn_Id
-                        //    where ba.bookaddonNo == addonNo
-                        //          select new { bk.noofperson })
+                        amount = (decimal)a.amount,
+
+                        orderQty =_dbcontext.Bookings.FirstOrDefault(t=>t.trn_Id==bookingAddon.trn_Id).noofperson??0
+                                   
+
                     }).Single();
 
 

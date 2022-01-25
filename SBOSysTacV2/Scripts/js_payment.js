@@ -1,5 +1,17 @@
 ﻿var $tablePayments = null;
 
+
+
+function cleanDecimal(val) {
+
+    return parseFloat(val.replace(/,/g, '')).toFixed(2);
+}
+
+function currencyFormat(num) {
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
+
+
 $(document).ready(function() {
 
 
@@ -98,19 +110,10 @@ $(document).ready(function() {
     }
 
 
-
-    function cleanDecimal(val) {
-
-        return parseFloat(val.replace(/,/g, '')).toFixed(2);
-    }
-
-    function currencyFormat(num) {
-        return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-    }
-
   
 
 }); //======= end of code document.ready====================
+
 
 
 //--------- load table payments--------------------------
@@ -208,21 +211,22 @@ $(document).on('click', '#btn_regPayment', function (e) {
 
                             if (data.success) {
 
+                                $('#paymentsTable').load(data.url);
+
+                                $("#modal-PaymentBooking").modal('hide');
+
                                 //console.log(data.url);
-                                Swal.fire({
+                                setTimeout(function () {
+
+                                    Swal.fire({
                                         title: "Success",
                                         text: "Payment was succesfully Added!",
                                         type: "success"
-                               
+
                                     });
 
-                                $('#paymentsTable').load(data.url);
-
-                                setTimeout(function () {
-
-                                    $("#modal-PaymentBooking").modal('hide');
-
                                     $('#spinn-loader').hide();
+
                                 }, 1000);
 
                             }
@@ -488,37 +492,38 @@ $(document).on('click','#add_payment',function(e) {
         e.preventDefault();
 
 
-    console.log(getBalance());
+   /* console.log(getBalance());*/
+    var _balance = cleanDecimal(getBalance());
+
+/*    console.log(_balance);*/
+
+    $.ajax({
+        type: 'Get',
+        url: paymentsUrl.payUrl_addPayment,    // url:'http://localhost:Sals/Payments/Add_PaymentPartialView',
+        contentType: 'application/html;charset=utf8',
+        data: { transactionId: $(this).data('id'), balance: _balance},
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            var modal = $('#modal-PaymentBooking');
+            modal.find('#modalcontent').html(result);
+
+            $('#paymentdatepicker').datepicker("setDate", new Date());
+            $('#paymentdatepicker').datepicker({ autoclose: true, format: 'mm/dd/yyyy' });
+
+            modal.modal({
+                    backdrop: 'static',
+                    keyboard: false
+                },
+                'show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
 
 
-        /* $.ajax({
-             type: 'Get',
-             url: paymentsUrl.payUrl_addPayment,
-             // url:'http://localhost:Sals/Payments/Add_PaymentPartialView',
-             contentType: 'application/html;charset=utf8',
-             data: { transactionId:  $(this).data('id')  },
-             datatype: 'html',
-             cache: false,
-             success: function (result) {
- 
-                 var modal = $('#modal-PaymentBooking');
-                 modal.find('#modalcontent').html(result);
- 
-                 $('#paymentdatepicker').datepicker("setDate", new Date());
-                 $('#paymentdatepicker').datepicker({ autoclose: true, format: 'mm/dd/yyyy' });
- 
-                 modal.modal({
-                         backdrop: 'static',
-                         keyboard: false
-                     },
-                     'show');
-             },
-             error: function(xhr, ajaxOptions, thrownError) {
-                 Swal.fire('Error adding record!', 'Please try again', 'error');
-             }
- 
- 
-         });*/
+    });
 });
 
 $(document).on('keypress', '#amtPay', function (event) {

@@ -2,10 +2,36 @@
     
     <section class="sidebar">
         
-        <div>
-            <h4 class="text-blue">Not Login</h4>
+        <div class="sidebar-images">
+            <div class="images-container">
+                <img class="disp1" src="https://media.istockphoto.com/photos/taiwanese-food-minced-pork-rice-picture-id1096910240?b=1&k=20&m=1096910240&s=170667a&w=0&h=qW7BixxtHmOKnnopt3SnNIVJfWzRdQWKfC0_mXyfG7A=" alt="">
+                <img class="disp2" src="https://images.unsplash.com/photo-1506354666786-959d6d497f1a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Zm9vZCUyMC5wbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="">
+                <img class="disp3" src="https://images.unsplash.com/photo-1530554764233-e79e16c91d08?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8Zm9vZCUyMC5wbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="">
+                <img class="disp4" src="https://images.unsplash.com/photo-1457460866886-40ef8d4b42a0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fGZvb2QlMjAucG5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="">
+            </div>
         </div>
 
     </section>
 
 </aside>
+
+
+<style type="text/css">
+    .images-container {
+        margin-right: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        column-gap: 0.875rem;
+        align-items: center;
+    }
+        .images-container > img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            vertical-align: bottom;
+            margin: 10px 10px;
+        }
+
+</style>

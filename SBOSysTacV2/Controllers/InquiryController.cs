@@ -297,7 +297,7 @@ namespace SBOSysTacV2.Controllers
                 //addonsTotal = addonslist.Sum(y => Convert.ToDecimal(y.AddonAmount));
 
 
-                if (_transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value
+                if ((bool) _transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value
                 {
                     extendedLocationAmount = transactionDetails.Get_extendedAmountLoc(transId);
                 }
@@ -307,7 +307,7 @@ namespace SBOSysTacV2.Controllers
 
                 dpAmount = transactionDetails.GetTotalDownPayment(transId);
                 fpAmount = transactionDetails.GetFullPayment(transId);
-                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : transactionDetails.GetCateringdiscountByPax(no_of_pax);
+                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : TransactionDetailsViewModel.GetCateringdiscountByPax(no_of_pax);
 
                 //var cateringTotalAmount=cateringdiscountAmount * no_of_pax;
                 packageTotal = Convert.ToDecimal(packageAmount) * no_of_pax;
@@ -472,8 +472,8 @@ namespace SBOSysTacV2.Controllers
                 ex_unsetevent = w_unsettle
 
             };
-            CateringReportViewModel ct=new CateringReportViewModel();
-            var list = ct.GetCateringReport(_dbEntities.Bookings.Where(t => DbFunctions.TruncateTime(t.startdate) >= DbFunctions.TruncateTime(pOption.dateFrom) &&
+
+            var list = CateringReportViewModel.GetCateringReport(_dbEntities.Bookings.Where(t => DbFunctions.TruncateTime(t.startdate) >= DbFunctions.TruncateTime(pOption.dateFrom) &&
                                                                             DbFunctions.TruncateTime(t.startdate) <= DbFunctions.TruncateTime(pOption.dateTo))).ToList();
 
 

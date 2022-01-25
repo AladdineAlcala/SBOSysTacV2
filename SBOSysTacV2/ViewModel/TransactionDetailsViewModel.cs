@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using SBOSysTacV2.HtmlHelperClass;
@@ -11,11 +12,12 @@ namespace SBOSysTacV2.ViewModel
     {
         public int transactionId { get; set; }
         public Customer Customer { get; set; }
-        public BookingsViewModel Booking_Trans { get; set; }
+        public Booking Booking_Trans { get; set; }
         public Package Package_Trans { get; set; }
         public decimal book_discounts { get; set; } = 0;
         public string bookdiscountdetails { get; set; }
         public List<Book_OtherCharge> BookOtherCharges { get; set; }
+        public ServiceType ServiceType { get; set; }
         public decimal PackageAmount { get; set; } = 0;
         public decimal TotaAddons { get; set; } = 0;
         public decimal TotaMiscCharge { get; set; } = 0;
@@ -37,27 +39,27 @@ namespace SBOSysTacV2.ViewModel
 
             List<TransactionDetailsViewModel> _list = new List<TransactionDetailsViewModel>();
 
-            List<BookingsViewModel> _bookingsViewModel = new List<BookingsViewModel>();
+            //List<BookingsViewModel> _bookingsViewModel = new List<BookingsViewModel>();
 
             // _dbEntities.Configuration.ProxyCreationEnabled = false;
 
-            _bookingsViewModel = bvm.GetListofBookings().ToList();  
+            //_bookingsViewModel = bvm.GetListofBookings().ToList();  
 
 
             try
             {
 
 
-                _list = (from b in _bookingsViewModel
+                _list = (from b in _dbEntities.Bookings
                          join c in _dbEntities.Customers on b.c_Id equals c.c_Id
-                         join p in _dbEntities.Packages on b.pId equals p.p_id
+                         join p in _dbEntities.Packages on b.p_id equals p.p_id
                          select new TransactionDetailsViewModel()
-                        {
-                            transactionId = b.trn_Id,
-                            Booking_Trans = b,
-                            Customer = c,
-                            Package_Trans = p
-                        }).ToList();
+                         {
+                             transactionId = b.trn_Id,
+                             Booking_Trans = b,
+                             Customer = c,
+                             Package_Trans = p
+                         }).ToList();
 
             }
             catch (Exception e)
@@ -74,22 +76,43 @@ namespace SBOSysTacV2.ViewModel
 
         public TransactionDetailsViewModel GetTransactionDetailsById(int transId)
         {
-            var _dbEntities = new PegasusEntities();
-
-            var bookings = bvm.GetListofBookings(transId);
 
             var bookingsList = new TransactionDetailsViewModel();
+
             try
             {
 
-                bookingsList = new TransactionDetailsViewModel()
+                using (var _dbEntities = new PegasusEntities())
                 {
-                    transactionId = transId,
-                    Booking_Trans = bookings,
-                    Customer =(from c in _dbEntities.Customers where c.c_Id==bookings.c_Id select c).Single(),
-                    BookOtherCharges = (from ot in _dbEntities.Book_OtherCharge where ot.trn_Id == transId select ot).ToList(),
-                    Package_Trans = (from p in _dbEntities.Packages where  p.p_id==bookings.pId select p).Single()
-                };
+
+                    _dbEntities.Configuration.LazyLoadingEnabled = false;
+
+                    bookingsList = (from b in _dbEntities.Bookings
+                        where b.trn_Id == transId
+                        select new TransactionDetailsViewModel()
+                        {
+                            transactionId = transId,
+                            Booking_Trans = b,
+                            ServiceType = b.ServiceType,
+                            Customer = b.Customer,
+                            BookOtherCharges = (List<Book_OtherCharge>)b.Book_OtherCharge,
+                            Package_Trans = b.Package
+
+                        }).FirstOrDefault();
+                }
+
+                  
+
+
+                //(from ot in b.Book_OtherCharge where ot.trn_Id == transId select ot).ToList()
+                //bookingsList = new TransactionDetailsViewModel()
+                //{
+                //    transactionId = transId,
+                //    Booking_Trans = bookings,
+                //    Customer =(from c in _dbEntities.Customers where c.c_Id==bookings.c_Id select c).Single(),
+                //    BookOtherCharges = (from ot in _dbEntities.Book_OtherCharge where ot.trn_Id == transId select ot).ToList(),
+                //    Package_Trans = (from p in _dbEntities.Packages where  p.p_id==bookings.p_id p).Single()
+                //};
 
             }
             catch (Exception e)
@@ -97,8 +120,6 @@ namespace SBOSysTacV2.ViewModel
                 Console.WriteLine(e);
                 throw;
             }
-
-            _dbEntities.Dispose();
 
             return bookingsList;
 
@@ -549,7 +570,7 @@ namespace SBOSysTacV2.ViewModel
             return discountAplied;
         }
 
-        public decimal GetCateringdiscountByPax(int paxcount)
+        public static decimal GetCateringdiscountByPax(int paxcount)
         {
             var _dbEntities = new PegasusEntities();
 
@@ -568,7 +589,7 @@ namespace SBOSysTacV2.ViewModel
 
         public decimal GetCateringdiscountByPax(string packageType, int noOfPax)
         {
-            return packageType.Trim() == "vip" ? 0 : this.GetCateringdiscountByPax(noOfPax);
+            return packageType.Trim() == "vip" ? 0 : GetCateringdiscountByPax(noOfPax);
         }
 
 
@@ -590,7 +611,7 @@ namespace SBOSysTacV2.ViewModel
                 transactionId = transid,
                 PackageAmount =(decimal) (!string.Equals(contractDetail.packageType.TrimEnd(), "sd", StringComparison.Ordinal)? 
                                 this.GetAccountTotalByTransId(transid) : book_menus_vm.ComputeAmountForSnacksByTransId(transid)),
-                TotaAddons = advm.AddonsTotal(transid),
+                //TotaAddons = advm.AddonsTotal(transid),
                 TotaMiscCharge = bocvm.GetTotalOtherCharges(otherCharges),
                 extLocAmount = this.Get_extendedAmountLoc(transid),
                 cateringdiscount = this.GetCateringdiscountByPax(contractDetail.packageType,contractDetail.noofPax)

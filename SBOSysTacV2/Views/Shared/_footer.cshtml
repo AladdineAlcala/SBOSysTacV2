@@ -7,38 +7,3 @@
 </footer>   
 
 
-@*<script type="text/javascript">
-
-
-
-
-
-    //console.log(url);
-    //treeview-menu
-    /* var links = document.querySelectorAll('ul.treeview-menu a');*/
-
-    //sidebar-menu
-    var links = document.querySelectorAll('ul.sidebar-menu a');
-
-    //var currLink = [...links].filter(e => {
-    //    return e.href == url;
-    //})
-      
-    function compareUrl(value) {
-        var url = window.location;
-        /*   console.log(value.href.split('#')[0]);*/
-        return value.href==url|| url.href.indexOf(value.href)==0;
-    }
-
-    function getLink(a) {
-        return [...a].filter(compareUrl);         
-    }
-
-    var currLink = getLink(links);
-
-    var targetElem = currLink[1].closest('li');
-    targetElem.classList.add('active');
-    targetElem.classList.add('active');
-  /*  console.log(targetElem);*/
-
-</script>*@

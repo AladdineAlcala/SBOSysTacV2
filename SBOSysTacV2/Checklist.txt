@@ -15,3 +15,11 @@
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  Blue Error >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 1. Bookings Refresh Button - When click not refreshing or showing all data when previous operation search and search box not empty or deleted searched text.
+2. Bookings Addons and Upgrades Order Qty set to no of pax  
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  Backlogs >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+1. BookingsController  -> GetPartialView_AmountDue     ok
+2. InquiryController   -> getPartialView_AmountDue		ok
+3. EventsController  ->  getPartialView_AmountDue		ok

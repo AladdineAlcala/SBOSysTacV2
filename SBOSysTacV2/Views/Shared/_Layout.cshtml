@@ -119,7 +119,35 @@
         url_userProfile: "@Url.Action("GetProfileInformation", "Account",new {userId= "userid" })"
         }
 
-      
+        $(document).on('expanded.pushMenu', function () {
+             //show
+            $('.sidebar-images').fadeIn("slow",
+                 function() {
+                     $(this).css({ display: "block" });
+                 });
+            
+        }).on('collapsed.pushMenu', function () {
+            //hide
+            $('.sidebar-images').fadeOut("slow",
+                function() {
+                    $(this).css({ display: "none" });
+                });
+            
+        });
+
+
+     
+        $('.main-sidebar').hover(function () {
+
+            if ($('body').hasClass('sidebar-mini') && $("body").hasClass('sidebar-collapse')) {
+
+                $('.sidebar-images').fadeIn("slow",
+                    function() {
+                        $(this).css({ display: "block" });
+                    });
+            
+            }
+        });
     </script>
     
 

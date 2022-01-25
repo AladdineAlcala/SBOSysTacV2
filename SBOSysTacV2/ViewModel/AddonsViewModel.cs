@@ -34,6 +34,8 @@ namespace SBOSysTacV2.ViewModel
         public IEnumerable<SelectListItem> deptincharge_list { get; set; }
 
 
+        public static Func<decimal, decimal, decimal> calcAddons=(qty,amt) => qty * amt;
+
 
         public IEnumerable<AddonsViewModel> ListofAddons()
         {
@@ -58,7 +60,7 @@ namespace SBOSysTacV2.ViewModel
                                 AddonsDescription = p._AddonsDescription,
                                 AddonNote = p._AddonNote,
                                 AddonAmount = p._Addons.Sum(t=>t.tota)!=null ? (decimal)p._Addons.Sum(t => t.tota):0
-                                //AddonAmount = p._Addons!= null? Convert.ToDecimal(p._Addons.Select(t => t.tota).Sum()) :0
+          
 
                             }).ToList();
 
@@ -133,27 +135,25 @@ namespace SBOSysTacV2.ViewModel
         }
 
 
-        public decimal AddonsTotal(int transId)
+        public static decimal AddonsTotal(IEnumerable<ICollection<BookAddonsDetail>> bookAddonsDetails)
         {
+        
             decimal addonsTotal = 0;
-            var dbcontext = new PegasusEntities();
+
+            
             try
             {
-                
+                var addonsList = bookAddonsDetails.ToList();
 
-                var querybookaddon = dbcontext.BookingAddons.Join(dbcontext.BookAddonsDetails,
-                        bookaddon => bookaddon.bookaddonNo, bookaddondetails => bookaddondetails.bookaddonNo,
-                        (bookaddon, bookaddondetails) => new { BookingAddon = bookaddon, BookAddonsDetail = bookaddondetails })
-                    .Where(t => t.BookingAddon.trn_Id == transId);
-
-
-                var addonsList = querybookaddon.Select(t => t.BookAddonsDetail.amount * t.BookAddonsDetail.qty);
-
-
-                if (addonsList.Count() != 0)
+                if (addonsList.Count != 0)
                 {
-                    addonsTotal = (decimal)addonsList.Sum();
+                    foreach (var addons in addonsList.Select(addon => addon.Select(t => calcAddons((decimal)t.qty, (decimal)t.amount))))
+                    {
+                        addonsTotal = addons.Sum();
+                    }
                 }
+
+
             }
             catch (Exception e)
             {
@@ -161,7 +161,6 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
-            dbcontext.Dispose();
 
             return addonsTotal;
         }

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SBOSysTacV2.Models;
 
 namespace SBOSysTacV2.ViewModel
 {
+   
     public class BookingAddonDetailsViewModel
     {
         public int addondetail_Id { get; set; }
@@ -14,5 +16,11 @@ namespace SBOSysTacV2.ViewModel
         public decimal addon_qty { get; set; }
         public decimal addon_amount { get; set; }
 
+       
+
+        public static List<ICollection<BookAddonsDetail>> GetAddonDetails(Booking booking)
+        {
+            return booking.BookingAddons.Select(t => t.BookAddonsDetails).ToList();
+        }
     }
 }

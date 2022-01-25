@@ -157,7 +157,7 @@ namespace SBOSysTacV2.Controllers
 
                 dpAmount = transactionDetails.GetTotalDownPayment(transId);
                 fpAmount = transactionDetails.GetFullPayment(transId);
-                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : transactionDetails.GetCateringdiscountByPax(no_of_pax);
+                cateringdiscountAmount = packageType.Trim() == "vip" ? 0 : TransactionDetailsViewModel.GetCateringdiscountByPax(no_of_pax);
 
                 //var cateringTotalAmount=cateringdiscountAmount * no_of_pax;
                 packageTotal = Convert.ToDecimal(packageAmount) * no_of_pax;

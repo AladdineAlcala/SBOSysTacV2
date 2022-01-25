@@ -15,6 +15,7 @@ namespace SBOSysTacV2.ViewModel
         public int cId { get; set; }
         public string Client { get; set; }
         public string Occasion { get; set; }
+        public string p_type { get; set; }
         public string Venue { get; set; }
         public int noofPax { get; set; }
         public decimal PackageRate { get; set; }
@@ -25,51 +26,48 @@ namespace SBOSysTacV2.ViewModel
         public string Status { get; set; }
         public bool iscancelled { get; set; }
 
-        private readonly PegasusEntities dbEntities=new PegasusEntities();
-        private readonly TransactionDetailsViewModel transactionDetails = new TransactionDetailsViewModel();
+        private readonly TransactionDetailsViewModel transactionDetails;
 
-        //public IQueryable<CateringReportViewModel> GetCateringReport(IQueryable<Booking> bookings)
-        //{
-        //    return bookings.Select(x => new CateringReportViewModel()
-        //    {
-        //        EventDate = (DateTime) x.startdate,
-        //        cId = x.Customer.c_Id,
-        //        Client =x.Customer.lastname + " ," + x.Customer.firstname + " " + x.Customer.middle,
-        //        Occasion = x.occasion,
-        //        Venue = x.venue,
-        //        noofPax = (int) x.noofperson,
-        //        PackageRate = (decimal) x.Package.p_amountPax,
-        //        Addons = x.BookingAddons.Count>1 ?"Various Add-ons" : x.BookingAddons.Select(t => t.Addondesc).FirstOrDefault(),
-        //        TotalAddons = x.BookingAddons.Any() ? x.BookingAddons.Select(t=>(decimal)t.AddonAmount).Sum() : 0,
-        //        AmountPaid = x.Payments.Any()?x.Payments.Select(t=>(decimal)t.amtPay).Sum():0,
-        //        PaymentMode = x.Payments.Any()?x.Payments.Select(t => t.pay_means).FirstOrDefault():"Credit"
-        //    });
+        static Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = null;
 
-        //}
-
-
-
-
-        public IEnumerable<CateringReportViewModel> GetCateringReport(IEnumerable<Booking> bookings)
+        public enum packageType
         {
+            regular,
+            vip,
+            pm,
+            sd
+
+            
+        }
+        public CateringReportViewModel()
+        {
+            transactionDetails = new TransactionDetailsViewModel();
+        }
+        public static IEnumerable<CateringReportViewModel> GetCateringReport(IEnumerable<Booking> bookings)
+        {
+            getAddonDetails= BookingAddonDetailsViewModel.GetAddonDetails;
+
             return bookings.Select(x => new CateringReportViewModel()
             {
+
                 EventDate = (DateTime) x.startdate,
                 cId = x.Customer.c_Id,
                 Client = Utilities.Getfullname(x.Customer.lastname,x.Customer.firstname,x.Customer.middle),
                 Occasion = x.occasion,
+                p_type = x.Package.p_type.TrimEnd()==packageType.vip.ToString() || x.Package.p_type.TrimEnd() == packageType.regular.ToString() ?"cat" : x.Package.p_type.TrimEnd(),
                 Venue = x.venue,
                 noofPax = (int)x.noofperson,
-                PackageRate=x.Package.p_type.Trim()!="vip"? (decimal)x.Package.p_amountPax - transactionDetails.GetCateringdiscountByPax((int)x.noofperson): (decimal)x.Package.p_amountPax,
+                PackageRate=x.Package.p_type.Trim()!="vip"? (decimal)x.Package.p_amountPax - TransactionDetailsViewModel.GetCateringdiscountByPax((int)x.noofperson): (decimal)x.Package.p_amountPax,
                 Addons = x.BookingAddons.Any() ? string.Join(", ",x.BookingAddons.Select(t=>t.Addondesc)):String.Empty,
-                //AddonsTotal = x.BookingAddons.Any() ? x.BookingAddons.Select(t =>Convert.ToDecimal(t.AddonAmount)).Sum() : 0,
+                AddonsTotal = x.BookingAddons.Any() ? AddonsViewModel.AddonsTotal(getAddonDetails(x)) :0,
                 AmountPaid = x.Payments.Any() ? x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum() : 0,
-                PaymentMode = x.Payments.Any()? x.Payments.Select(t => t.pay_means).FirstOrDefault():"---",
+                PaymentMode = x.Payments.Any()? x.Payments.Select(t => t.pay_means).ToList().Aggregate((i,j)=> i + "," + j!=i?j:""):"---",
                 Status = x.Payments.Any()?"pd":"unpd",
                 iscancelled = (bool) x.is_cancelled
+
             }).Where(t=>t.iscancelled==false);
         }
 
-        //public decimal getPackageRate()
+
     }
 }

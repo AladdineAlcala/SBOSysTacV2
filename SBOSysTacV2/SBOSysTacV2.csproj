@@ -7705,6 +7705,7 @@
       <DependentUpon>ContractDataset.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\DevTesting.pubxml" />
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Properties\PublishProfiles\SALS.pubxml" />
     <None Include="Properties\PublishProfiles\SalsServerRelease.pubxml" />
