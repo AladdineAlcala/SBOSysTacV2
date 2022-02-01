@@ -22,14 +22,16 @@
                 
                 @foreach (var item in Model.BookMenuses)
                 {
-                    <tr>
+                    var pax = Convert.ToInt32(item.serving) != item.servingpax ? item.serving : item.servingpax;
+
+                    <tr data-id="@item.course_id">
                         <td class="text-center" data-id="@item.menu_No">
                             <button class="btn btn-primary btn-xs" id="menu_change_snacks_drinks"><i class="fa fa-edit"></i></button>
                             <button class="btn btn-danger btn-xs" id="menu_remove_snacks_drinks"><i class="fa fa-trash-o"></i></button>
                         </td>
                         <td>@item.menu_name</td>
-                        <td class="text-left">@string.Format("{0} @ {1:N}", item.servingpax, item.price)</td>
-                        <td class="text-right text-bold">@string.Format("{0:N}", item.price * item.servingpax)</td>
+                        <td class="text-left">@string.Format("{0} @ {1:N}", pax, item.price)</td>
+                        <td class="text-right text-bold">@string.Format("{0:N}", item.price * pax)</td>
                     </tr>
                 }
             

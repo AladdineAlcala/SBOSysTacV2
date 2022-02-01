@@ -14,28 +14,42 @@ namespace SBOSysTacV2.Controllers
     public class PackagesController : Controller
     {
 
-        private PegasusEntities _dbcontext;
-        private PackageDetailsLocationViewModel packagesIndex = new PackageDetailsLocationViewModel();
-        private PackageAreaLocationViewModel packageArea = new PackageAreaLocationViewModel();
-        private AreaPackageViewModel areaPackage = new AreaPackageViewModel();
-        private PackageBookingViewModel pb = new PackageBookingViewModel();
-        private PackageViewModel pviewmodel = new PackageViewModel();
-        private PackageBodyViewModel pbody = new PackageBodyViewModel();
+        public PegasusEntities _dbcontext;
+        public PackageDetailsLocationViewModel packagesIndex;
+        public PackageAreaLocationViewModel packageArea;
+        public AreaPackageViewModel areaPackage;
+        public PackageBookingViewModel pb;
+        public PackageViewModel pviewmodel;
+        public PackageBodyViewModel pbody;
 
 
         public PackagesController()
         {
             ViewBag.ActiveForm = Utilities.ActiveForm;
             _dbcontext = new PegasusEntities();
+
+            packagesIndex = new PackageDetailsLocationViewModel();
+            packageArea = new PackageAreaLocationViewModel();
+            areaPackage = new AreaPackageViewModel();
+            pb = new PackageBookingViewModel();
+            pviewmodel = new PackageViewModel();
+            pbody = new PackageBodyViewModel();
         }
 
         // GET: Packages
-        public ActionResult Index(string currentFilter, string searchString, string packagetype, int? page)
+        public ActionResult Index()
         {
+            ViewBag.FormTitle = "Package Buffet Details";
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetPackageView(string currentFilter, string searchString, string packagetype, string _viewType, int? page)
+        {
+           
 
             var packageIndexDetails = new List<PackageDetailsLocationViewModel>();
-
-            ViewBag.FormTitle = "Package Buffet Details";
 
             if (searchString != null)
             {
@@ -48,27 +62,19 @@ namespace SBOSysTacV2.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-
+            ViewBag.viewType = _viewType;
 
 
             if (!String.IsNullOrEmpty(searchString))
             {
 
-                //packageIndexDetails =
-                //    packagesIndex.GetPackageDetailsView()
-                //        .Where(loc =>loc.PackageAreaDetails.Any(area => area.pAreaDetail.ToLower()
-                //            .Contains(searchString.ToLower()))
-
-                //            ).ToList();
-
-
                 packageIndexDetails = packagesIndex.GetPackageDetailsView()
-                                        .Where(loc =>
-                                        {
-                                            return loc.Packages.p_amountPax != null
-                                                        && ((loc.PackageAreaDetails.Any(area => area.pAreaDetail.ToLower()
-                                                      .Contains(searchString.ToLower()))) || (loc.Packages.p_amountPax.Value.ToString(CultureInfo.InvariantCulture).Contains(searchString)));
-                                        }).ToList();
+                    .Where(loc =>
+                    {
+                        return loc.Packages.p_amountPax != null
+                               && ((loc.PackageAreaDetails.Any(area => area.pAreaDetail.ToLower()
+                                   .Contains(searchString.ToLower()))) || (loc.Packages.p_amountPax.Value.ToString(CultureInfo.InvariantCulture).Contains(searchString)));
+                    }).ToList();
 
             }
             else
@@ -88,17 +94,12 @@ namespace SBOSysTacV2.Controllers
 
             }
 
-            int pageSize = 4;
+            int pageSize = ViewBag.viewType == null || ViewBag.viewType == "package_cardview" ? 4 : 10;
             int pageNumber = (page ?? 1);
 
-
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("_packageListPartialView", packageIndexDetails.ToList().ToPagedList(pageNumber, pageSize) as PagedList<PackageDetailsLocationViewModel>);
-            }
-
-            return View(packageIndexDetails.ToPagedList(pageNumber, pageSize) as PagedList<PackageDetailsLocationViewModel>);
+            return PartialView(packageIndexDetails.ToPagedList(pageNumber, pageSize) as PagedList<PackageDetailsLocationViewModel>);
         }
+
 
 
         public ActionResult CreatePackage()
@@ -284,7 +285,7 @@ namespace SBOSysTacV2.Controllers
 
         }
 
-
+        [HttpGet]
         public ActionResult PackageDetails(int packageId)
         {
             ViewBag.FormTitle = "Package Buffet Details";

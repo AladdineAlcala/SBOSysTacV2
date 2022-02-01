@@ -26,27 +26,31 @@
 
 
 
-                    <div class="box-body">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Selected menu:</label>
-                                @*<input type="text" class="form-control input-sm disabled" id="txtselectedmenu" readonly/>*@
-                                @Html.TextBoxFor(m =>m.menu_name,new {@class= "form-control input-sm",@id= "txtselectedmenu",@readonly= "readonly" })
-                                @Html.ValidationMessageFor(model => model.menu_name, null, new {@class = "text-danger"})
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Serving:</label>
-                                @*<input type="text" class="form-control input-sm" id="txtserving" value="" />*@
-                                @Html.TextBoxFor(m =>m.servingpax,new {@class= "form-control input-sm",@id= "txtserving" })
-                            </div>
-                        </div>
-                        <div class="col-md-3 text-center" style="margin-top: 25px;">
-                    
-                            <button class="btn bg-olive btn-flat btn-sm" type="submit" id="btn_regMenustoPackage"><i class="fa fa-credit-card"></i> Add to List</button>
-                        </div>
+            <div class="box-body">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Selected menu:</label>
+                        @Html.TextBoxFor(m => m.menu_name, new { @class = "form-control input-sm", id = "txtselectedmenu", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.menu_name, null, new { @class = "text-danger" })
                     </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Serving:</label>
+                        @Html.TextBoxFor(m => m.servingpax, new { @class = "form-control input-sm", id = "txtserving" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Selling Price:</label>
+                        @Html.TextBoxFor(m => m.price, new { @class = "form-control input-sm text-right", placeholder = "0.00", id = "txtSprice", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="col-md-2 text-center" style="margin-top: 25px;">
+
+                    <button class="btn bg-olive btn-flat btn-sm" type="submit" id="btn_regMenustoPackage"><i class="fa fa-credit-card"></i> Add to List</button>
+                </div>
+            </div>
                 }
             </div>
         </div>
@@ -55,16 +59,17 @@
   
 
     <div class="table-responsive" style="margin-top: 20px;">
+
         <table class="table table-condensed table-hover" id="tbl-maincourse" style="width: 100%;">
             <thead>
-                <tr>
+            <tr>
 
-                    <th></th>
+                <th></th>
+                <th>Menu</th>
+                <th>Course</th>
+                <th></th>
 
-                    <th>Menu</th>
-                    <th>Course</th>
-                  
-                </tr>
+            </tr>
             </thead>
         </table>
     </div>

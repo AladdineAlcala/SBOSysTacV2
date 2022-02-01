@@ -3,9 +3,6 @@ $(document).ready(function() {
 
     $('#accncustomer :input').focus();
 
-  
-
-
 
 
 });  //end doc ready

@@ -25,7 +25,7 @@ namespace SBOSysTacV2.ViewModel
 
             var _dbcontext = new PegasusEntities();
 
-            var package = (from p in _dbcontext.Packages
+           return (from p in _dbcontext.Packages
                            select new
                            {
                                _pId = p.p_id,
@@ -51,16 +51,16 @@ namespace SBOSysTacV2.ViewModel
                                                    extendeAmt = pa.ext_amount
                                                }).ToList()
 
-                           }).ToList().Select(p => new PackageDetailsLocationViewModel()
-                           {
-                               PackageId = p._pId,
-                               Packages = p._package,
-                               //packageApplicablepax = p._packageAppPax.ToString(),
-                               PBody = p._pbody,
-                               PackageAreaDetails = p._packagearea
-                           }).OrderByDescending(order => order.PackageId);
+                                    }).ToList().Select(p => new PackageDetailsLocationViewModel()
+                                    {
+                                        PackageId = p._pId,
+                                        Packages = p._package,
+                                        //packageApplicablepax = p._packageAppPax.ToString(),
+                                        PBody = p._pbody,
+                                        PackageAreaDetails = p._packagearea
+                                    }).OrderByDescending(order => order.PackageId);
 
-            return package;
+           
         }
 
 

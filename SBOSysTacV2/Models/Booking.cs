@@ -47,6 +47,7 @@ namespace SBOSysTacV2.Models
         public string b_createdbyUser { get; set; }
         public Nullable<System.DateTime> b_updatedDate { get; set; }
         public Nullable<System.DateTime> b_createdDate { get; set; }
+        public Nullable<bool> is_deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book_Discount> Book_Discount { get; set; }

@@ -26,6 +26,7 @@ namespace SBOSysTacV2.ViewModel
         public string dept { get; set; }
         public string menuImageFilename { get; set; }
         public string oldMenuId { get; set; }
+
         public decimal price { get; set; }=0;
         public DateTime createdDate { get; set; }=DateTime.UtcNow;
         public DateTime updatedDate { get; set; }=DateTime.UtcNow;
@@ -279,7 +280,7 @@ namespace SBOSysTacV2.ViewModel
 
             if (count < 0) count = 0;
 
-            return count=count<0?0:count;
+            return count <=0 ? 0:count;
         }
 
 

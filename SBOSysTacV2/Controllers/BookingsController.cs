@@ -12,6 +12,7 @@ using System.Threading;
 using System.Web.Mvc;
 using System.Web.Services.Protocols;
 using System.Web.SessionState;
+using SBOSysTacV2.ServiceLayer;
 
 namespace SBOSysTacV2.Controllers
 {
@@ -61,7 +62,6 @@ namespace SBOSysTacV2.Controllers
 
 
         [HttpGet]
-        [OutputCache(Duration = 60)]
         public ActionResult LoadBookings()
         {
             var bookings = booking.GetListofBookings().OrderBy(d => d.startdate).ToList();
@@ -351,15 +351,18 @@ namespace SBOSysTacV2.Controllers
             return PartialView("_BookingsAmountDuePartial", transDetails);
         }
 
-        public IEnumerable<ICollection<BookAddonsDetail>> Func { get; set; }
+        //public IEnumerable<ICollection<BookAddonsDetail>> Func { get; set; }
 
 
         [HttpGet]
         [ActionName("GetBookMenusPartial")]
         public ActionResult GetListofBookMenus(int transactionId)
         {
-            var packageBooking = package_book_vm.GetBookingDetailById(transactionId);
+            string actionname = RouteData.Values["action"].ToString();
 
+            PackageActionType.Getpackagecontroller(actionname);
+
+            var packageBooking = package_book_vm.GetBookingDetailById(transactionId);
 
             return PartialView("_ListofBookMenus", new PackageBookingViewModel()
             {
@@ -375,6 +378,10 @@ namespace SBOSysTacV2.Controllers
         [ActionName("GetSnacksPartial")]
         public ActionResult GetListofSnacks(int transactionId)
         {
+            string actionname = RouteData.Values["action"].ToString();
+
+            PackageActionType.Getpackagecontroller(actionname);
+
             var packageBooking = package_book_vm.GetBookingDetailById(transactionId);
 
             return PartialView("_GetSnacksForm",new PackageBookingViewModel()
@@ -548,6 +555,7 @@ namespace SBOSysTacV2.Controllers
                                     trn_Id = bookmenus.transId,
                                     menuid = bookmenus.menuId,
                                     courseId = bookmenus.course_id == 0 ? menu.courseId : bookmenus.course_id,
+                                    s_price = bookmenus.price,
                                     createdDate = bookmenus.createdDate,
                                     updatedDate = bookmenus.updatedDate,
                                     serving = bookmenus.serving??bookmenus.servingpax
@@ -584,6 +592,7 @@ namespace SBOSysTacV2.Controllers
                                 trn_Id = bookmenus.transId,
                                 menuid = bookmenus.menuId,
                                 courseId = bookmenus.course_id==0? menu.courseId: bookmenus.course_id,
+                                s_price = bookmenus.price,
                                 createdDate = bookmenus.createdDate,
                                 updatedDate = bookmenus.updatedDate,
                                 serving = bookmenus.serving ?? bookmenus.servingpax
@@ -642,6 +651,7 @@ namespace SBOSysTacV2.Controllers
         public ActionResult Change_Menu_on_Booking(BookMenusViewModel modifiedBookMenu)
         {
 
+            
 
             if (!ModelState.IsValid)
             {
@@ -658,11 +668,10 @@ namespace SBOSysTacV2.Controllers
             try
             {
 
-
-
-                //var url = "";
-
                 TransactionDetailsViewModel td = new TransactionDetailsViewModel();
+
+                /* no changes of menu from previous data posible change of number of serving or price */
+
                 Book_Menus isExistMenu = _dbcontext.Book_Menus.AsNoTracking().FirstOrDefault(x => x.trn_Id == modifiedBookMenu.transId && x.menuid == modifiedBookMenu.menuId);
 
                 var menu = _dbcontext.Menus.FirstOrDefault(x => x.menuid == modifiedBookMenu.menuId);
@@ -695,14 +704,11 @@ namespace SBOSysTacV2.Controllers
                     if (isExistMenu.serving != 0)
                     {
 
-                        if (isExistMenu.serving < noofPax)
+                        if (isExistMenu.serving <= noofPax)
                         {
-                            //_dbcontext.Book_Menus.Attach(modifiedbookMenu);
-                            //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
-                            //_dbcontext.SaveChanges();
-
-
-                            url = Url.Action("GetBookMenusPartial", "Bookings", new { transactionId = modifiedBookMenu.transId });
+                            _dbcontext.Book_Menus.Attach(bookMenus);
+                            _dbcontext.Entry(bookMenus).State = EntityState.Modified;
+                            _dbcontext.SaveChanges();
 
                             modifysuccess = true;
                             _message = menu_details + " succesfully updated";
@@ -729,12 +735,9 @@ namespace SBOSysTacV2.Controllers
                     else
                     {
 
-                        //_dbcontext.Book_Menus.Attach(modifiedbookMenu);
-                        //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
+                        _dbcontext.Book_Menus.Attach(bookMenus);
+                        _dbcontext.Entry(bookMenus).State = EntityState.Modified;
                         _dbcontext.SaveChanges();
-
-
-                        url = Url.Action("GetBookMenusPartial", "Bookings", new { transactionId = modifiedBookMenu.transId });
 
                         modifysuccess = true;
                         _message = menu_details + " succesfully updated";
@@ -750,12 +753,10 @@ namespace SBOSysTacV2.Controllers
                 else //new menu selected
                 {
 
-                    // _dbcontext.Book_Menus.Attach(modifiedbookMenu);
-                    //_dbcontext.Entry(modifiedbookMenu).State = EntityState.Modified;
+                    _dbcontext.Book_Menus.Attach(bookMenus);
+                    _dbcontext.Entry(bookMenus).State = EntityState.Modified;
 
                     _dbcontext.SaveChanges();
-
-                    url = Url.Action("GetBookMenusPartial", "Bookings", new { transactionId = modifiedBookMenu.transId });
 
                     modifysuccess = true;
                     _message = menu_details + " succesfully updated";
@@ -778,8 +779,12 @@ namespace SBOSysTacV2.Controllers
                 throw;
             }// end try
 
+            var package = package_book_vm.GetPackageByTransaction_Id(modifiedBookMenu.transId);
 
-            return Json(new { success = modifysuccess, StatMessageString, url = url }, JsonRequestBehavior.AllowGet);
+            url = PackageActionType.pactype == bookAction.GetSnacksPartial.ToString() ? Url.Action("GetBookingDetailsPartial", "Bookings", new { transId = modifiedBookMenu.transId }) : Url.Action("GetBookMenusPartial", "Bookings", new { transactionId = modifiedBookMenu.transId });
+
+
+            return Json(new { success = modifysuccess, StatMessageString, url = url, packageType = package.p_type.TrimEnd() }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -1106,6 +1111,7 @@ namespace SBOSysTacV2.Controllers
                 updatedBooking.reference = bookingViewModel.refernce;
                 updatedBooking.b_updatedDate = createdDate;
                 updatedBooking.b_createdbyUser = User.Identity.GetUserId();
+               
             }
 
 
@@ -1114,7 +1120,8 @@ namespace SBOSysTacV2.Controllers
 
             try
             {
-
+                _dbcontext.Bookings.Attach(updatedBooking);
+                _dbcontext.Entry(updatedBooking).State = EntityState.Modified;
                 _dbcontext.SaveChanges();
 
 
@@ -1149,31 +1156,40 @@ namespace SBOSysTacV2.Controllers
             bool success = false;
 
             Booking booking = new Booking();
-            Book_Discount bk = new Book_Discount();
+            //Book_Discount bk = new Book_Discount();
 
-            BookingAddon bookaddons = new BookingAddon();
+            //BookingAddon bookaddons = new BookingAddon();
 
             booking = _dbcontext.Bookings.Find(transId);
-            IEnumerable<Book_Menus> bookmenustransList = _dbcontext.Book_Menus.Where(x => x.trn_Id == transId);
-            IEnumerable<BookingAddon> bookingAddons = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId);
-            IEnumerable<Payment> paymentlist = _dbcontext.Payments.Where(x => x.trn_Id == transId);
-            bk = _dbcontext.Book_Discount.Find(transId);
+            //IEnumerable<Book_Menus> bookmenustransList = _dbcontext.Book_Menus.Where(x => x.trn_Id == transId);
+            //IEnumerable<BookingAddon> bookingAddons = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId);
+            //IEnumerable<Payment> paymentlist = _dbcontext.Payments.Where(x => x.trn_Id == transId);
+            //bk = _dbcontext.Book_Discount.Find(transId);
 
 
             try
             {
                 if (booking != null)
                 {
+
                     _dbcontext.Bookings.Remove(booking);
 
-                    _dbcontext.Book_Menus.RemoveRange(bookmenustransList);
-                    _dbcontext.BookingAddons.RemoveRange(bookingAddons);
-                    _dbcontext.Payments.RemoveRange(paymentlist);
+                    //_dbcontext.Book_Menus.RemoveRange(bookmenustransList);
+                    //_dbcontext.BookingAddons.RemoveRange(bookingAddons);
+                    //_dbcontext.Payments.RemoveRange(paymentlist);
 
-                    if (bk != null)
-                    {
-                        _dbcontext.Book_Discount.Remove(bk);
-                    }
+                    //if (bk != null)
+                    //{
+                    //    _dbcontext.Book_Discount.Remove(bk);
+                    //}
+
+                    booking.is_deleted = true;
+                    booking.b_updatedDate=DateTime.UtcNow;
+
+
+                    _dbcontext.Bookings.Attach(booking);
+                    _dbcontext.Entry(booking).Property(x => x.b_updatedDate).IsModified = true;
+                    _dbcontext.Entry(booking).Property(x => x.is_deleted).IsModified = true;
 
 
                     _dbcontext.SaveChanges();
@@ -1209,8 +1225,10 @@ namespace SBOSysTacV2.Controllers
                     if (booking.startdate <= datenow)
                     {
                         booking.serve_stat = true;
+                        booking.b_updatedDate=DateTime.UtcNow;
 
                         _dbcontext.Bookings.Attach(booking);
+                        _dbcontext.Entry(booking).Property(x => x.b_updatedDate).IsModified = true;
                         _dbcontext.Entry(booking).Property(x => x.serve_stat).IsModified = true;
                         _dbcontext.SaveChanges();
 
@@ -1433,6 +1451,7 @@ namespace SBOSysTacV2.Controllers
             return Json(new { discountdetails }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
         public ActionResult BookReservation(int reservationId)
         {
             var reservationinfo = _dbcontext.Reservations.Find(reservationId);
@@ -2062,7 +2081,7 @@ namespace SBOSysTacV2.Controllers
 
             var url = Url.Action("GetBookingDetailsPartial", "Bookings", new { transId = otherChargeDetail.transId });
 
-            return Json(new { success, url }, JsonRequestBehavior.AllowGet);
+            return Json(new { success,url=url }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -2095,7 +2114,7 @@ namespace SBOSysTacV2.Controllers
             }
             var url = Url.Action("GetBookingDetailsPartial", "Bookings", new { transId = bookmenus.trn_Id });
 
-            return Json(new {success,url}, JsonRequestBehavior.AllowGet);
+            return Json(new {success,url=url}, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

@@ -35,8 +35,8 @@ namespace SBOSysTacV2.ViewModel
         [Required(ErrorMessage = "Package Required")]
         public string packagename { get; set; }
         public string packageType { get; set; }
-        public bool? serve_status { get; set; }
-        public bool? iscancelled { get; set; }
+        public bool? serve_status { get; set; } = false;
+        public bool? iscancelled { get; set; } = false;
         [Display(Name = "Event Motf:")]
         public string eventcolor { get; set; }
         [Display(Name = "Customer:")]
@@ -66,7 +66,7 @@ namespace SBOSysTacV2.ViewModel
         public string selectedbooktype { get; set; }
         public Dictionary<string,string> DictBooktype { get; set; }
         public int no_of_lackingMenus { get; set; }
-
+        public bool isDeleted { get; set; } = false;
 
 
         public List<BookingsViewModel> GetListofBookings()
@@ -86,7 +86,7 @@ namespace SBOSysTacV2.ViewModel
                 var user = app_user_context.Users.ToList();
 
 
-                bookingdetails = (from b in bookings
+                bookingdetails = (from b in bookings where b.is_deleted==false
                                 let _user = user.Find(x => x.Id==b.b_createdbyUser)
                                 where _user!= null
                                 join s in _dbcontext.ServiceTypes on b.typeofservice equals s.serviceId 
@@ -176,7 +176,7 @@ namespace SBOSysTacV2.ViewModel
 
                 var user = app_user_context.Users.ToList();
 
-                bookingdetails = (from b in booking
+                bookingdetails = (from b in booking where b.is_deleted == false
                                   let _user = user.Find(x => x.Id == b.b_createdbyUser)
                                   where _user != null
                                   join s in _dbcontext.ServiceTypes on b.typeofservice equals s.serviceId

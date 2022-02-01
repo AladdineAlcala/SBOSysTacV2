@@ -34,26 +34,10 @@
 
                    
 
-                    <li class="item my-1 py-1">
-
-                        @*<div class="product product-img" data-id="@counter">
-
-
-                            @if (string.IsNullOrEmpty(menu.menuImageFilename))
-                            {
-                                @:<img src="@Url.Content("~/Content/dist/img/default-50x50.gif")" alt="@menu.coursename" class="imglightbox img-size-50">
-                            }
-                            else
-                            {
-                                @:<img src="@Url.Content(String.Format("~/Content/UploadedImages/{0}", menu.menuImageFilename))" alt="@menu.coursename" class="imglightbox">
-                            }
-
-                        </div>*@
-                        
-
+                    <li class="item position-relative my-1 py-1">
 
                         <div id="course" class="product product-info" data-id="@menu.course_id">
-                            @*<i class="fa fa-clipboard" aria-hidden="true"></i>*@
+                      
                             <span class="menu-counter">@counter</span>
                             <span class="product-title">
                                 @menu.coursename
@@ -69,22 +53,21 @@
 
                         </div>
 
-                        <div class="tools" data-transid="@Model.transactionId">
+                        <div class="tools position-absolute" data-transid="@Model.transactionId">
 
                             @if (string.IsNullOrEmpty(menu.menu_name))
                             {
-                                <i class="fa fa-plus-circle fa-lg" id="menu_add"></i>
+                                <i class="fa fa-plus-circle text-success fa-lg" id="menu_add"></i>
 
                             }
                             else
                             {
-                                <i class="fa fa-edit fa-lg" id="menu_change" data-menuid="@(!String.IsNullOrEmpty(Convert.ToString(menu.menu_No)) ? menu.menu_No : _menuNo)"></i>
-                                <i class="fa fa-trash-o fa-lg" id="menu_remove" data-menuid="@(!String.IsNullOrEmpty(Convert.ToString(menu.menu_No)) ? menu.menu_No : _menuNo)"></i>
+                                <i class="fa fa-edit text-blue fa-lg" id="menu_change" data-menuid="@(!String.IsNullOrEmpty(Convert.ToString(menu.menu_No)) ? menu.menu_No : _menuNo)"></i>
+                                <i class="fa fa-trash-o text-red fa-lg" id="menu_remove" data-menuid="@(!String.IsNullOrEmpty(Convert.ToString(menu.menu_No)) ? menu.menu_No : _menuNo)"></i>
                             }
 
-
-
                         </div>
+
                     </li>
 
                  }

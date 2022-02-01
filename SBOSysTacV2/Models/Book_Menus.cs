@@ -21,6 +21,7 @@ namespace SBOSysTacV2.Models
         public Nullable<int> courseId { get; set; }
         public Nullable<System.DateTime> createdDate { get; set; }
         public Nullable<System.DateTime> updatedDate { get; set; }
+        public Nullable<decimal> s_price { get; set; }
     
         public virtual Booking Booking { get; set; }
         public virtual Menu Menu { get; set; }

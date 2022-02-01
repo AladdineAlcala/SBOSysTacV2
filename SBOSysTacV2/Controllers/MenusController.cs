@@ -338,6 +338,7 @@ namespace SBOSysTacV2.Controllers
                         modifyMenu.courseId = Convert.ToInt32(editedCourseMenuModel.courseId);
                         modifyMenu.menu_name = editedCourseMenuModel.menudesc;
                         modifyMenu.deptId = Convert.ToInt32(editedCourseMenuModel.deptId);
+                        modifyMenu.price = editedCourseMenuModel.price;
                         modifyMenu.note = editedCourseMenuModel.Note;
                         modifyMenu.image = filename;
                         modifyMenu.date_added = editedCourseMenuModel.dateAdded;

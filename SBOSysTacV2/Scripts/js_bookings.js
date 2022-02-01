@@ -408,19 +408,14 @@ $(document).ready(function () {
 
 
 
-    var onEditBooking = function () {
+    /*     window.location.href = bookingsUrl.bookUrl_editBooking.replace("tId", transId);
+ 
+         //if ($selectedObject.hasClass('selected')) {
+         //    window.location.href = bookingsUrl.bookUrl_editBooking.replace("tId", transId);
+         //}
+     };*/
 
-        if ($selectedObject.hasClass('selected')) {
-
-            var $this = $selectedObject;
-
-            var booktransactionId = $this.attr('data-transid');
-
-            window.location.href = bookingsUrl.bookUrl_editBooking.replace("tId", booktransactionId);
-
-
-        }
-    };
+   
 
     //=============  update booking command  ===================
 
@@ -471,9 +466,9 @@ $(document).ready(function () {
 
                                 setTimeout(function () {
 
-                                   /* window.location.href = bookingsUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", data.trnsId)*/;
+                                    window.location.href = bookingsUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", data.trnsId);
 
-                                    // $('#spinn-loader').hide();
+                                     $('#spinn-loader').hide();
                                 }, 600);
 
                             }
@@ -549,196 +544,7 @@ $(document).ready(function () {
 
 
 
-    //============= on Booking Served Schedule ==========================
-
-    var onBookingServed = function () {
-
-        if ($selectedObject.hasClass('selected')) {
-
-            var $this = $selectedObject;
-
-            var booktransactionId = $this.attr('data-transid');
-
-            Swal.fire({
-                title: "Are You Sure ?",
-                text: "Confirm update booking status as served..",
-                type: "question",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Save it!'
-                //closeOnConfirm: true, closeOnCancel: true
-            }).then((result) => {
-
-                if (result.value) {
-
-                    $.ajax({
-                        type: "post",
-                        url: bookingsUrl.bookUrl_ServeBooking,
-                        ajaxasync: true,
-                        data: { transactionNo: booktransactionId },
-                        cache: false,
-                        success: function (data) {
-
-                            if (data.success) {
-
-                                Swal.fire({
-                                        title: "Success",
-                                        text: "It was succesfully change status as served!",
-                                        type: "success"
-                            
-                                    });
-
-                                $('#tbl_eventsBooking').DataTable().ajax.reload();
-
-                                $tablebookings.button(0).enable();
-                                $tablebookings.button(1).disable();
-                                $tablebookings.button(2).disable();
-                                $tablebookings.button(3).disable();
-                                $tablebookings.button(4).disable();
-                                //$tablebookings.button(5).disable();
-
-                            } else {
-
-                                Swal.fire({
-                                        title: "Action Failed",
-                                        text: "Unable to update status.. pls check date",
-                                        type: "error"
-                               
-                                    });
-
-                                $('#tbl_eventsBooking').DataTable().ajax.reload();
-
-                                $tablebookings.button(0).enable();
-                                $tablebookings.button(1).disable();
-                                $tablebookings.button(2).disable();
-                                $tablebookings.button(3).disable();
-                                $tablebookings.button(4).disable();
-                                //$tablebookings.button(5).disable();
-
-                            }
-
-                        }
-                        ,
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            Swal.fire('Error removing record!', 'Please try again', 'error');
-                        }
-
-
-
-                    });
-
-                
-                }
-            });
-
-
-        }
-
-
-
-    };
-
-    //=============== end of code =========================================
-
-
-    // ====================== remove booking by superuser only
-
-    var onTrashBooking = function () {
-
-        if ($selectedObject.hasClass('selected')) {
-
-            var $this = $selectedObject;
-
-            var booktransactionId = $this.attr('data-transid');
-
-            Swal.fire({
-                title: "Are You Sure ?",
-                text: "Confirm Remove Permanently This Booking .",
-                type: "question",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Proceed for removing.!'
-                //closeOnConfirm: true, closeOnCancel: true
-            }).then((result) => {
-
-                if (result.value) {
-
-                    $.ajax({
-                        type: "post",
-                        url: bookingsUrl.bookUrl_removeBooking,
-                        ajaxasync: true,
-                        dataType: 'json',
-                        data: { transId: booktransactionId },
-                        cache: false,
-                        success: function (data) {
-
-                            if (data.success) {
-
-                                Swal.fire({
-                                    title: "Success",
-                                    text: "It was succesfully removed!",
-                                    type: "success"
-
-                                });
-
-
-                                $('#tbl_eventsBooking').DataTable().ajax.reload();
-
-                                $tablebookings.button(0).enable();
-                                $tablebookings.button(1).disable();
-                                $tablebookings.button(2).disable();
-                                $tablebookings.button(3).disable();
-                                $tablebookings.button(4).disable();
-                                //$tablebookings.button(5).disable();
-                            }
-                        }
-
-                        //error 
-                        ,
-                        error: function (xhr, status, errorThrown) {
-
-                            //alert(xhr.status);
-
-                            if (xhr.status === 403) {
-
-                                var response = $.parseJSON(xhr.responseText);
-
-                                //  console.log(response);
-                                // window.location = response.LogOnUrl;
-                                Swal.fire({
-                                    title: "UnAuthorized Access",
-                                    text: response.Error,
-                                    type: "error"
-
-                                });
-
-                            }
-                            else
-                            {
-                                Swal.fire('Error removing record!', 'Please try again', 'error');
-                            }
-
-                        }
-
-                    });
-
-
-                }
-
-            });//end then
-
-
-
-
-
-
-        }
-
-
-    };
-    //=============== end of code =========================================
+  
 
 
     function loaddatatableBookings() {
@@ -921,8 +727,8 @@ $(document).ready(function () {
                         className: 'btn btn-primary btn-sm btnEditBooking',
                         titleAttr: 'Modify Booking',
                         action: function () {
-
-                            onEditBooking();
+                            var $this = $selectedObject;
+                            onEditBooking($this.attr('data-transid'));
 
                         }, enabled: false
                     },
@@ -942,8 +748,8 @@ $(document).ready(function () {
                         className: 'btn btn-primary btn-sm btnServeBooking',
                         titleAttr: 'Served Booking Status',
                         action: function () {
-
-                            onBookingServed();
+                            var $this = $selectedObject;
+                            onBookingServed($this.attr('data-transid'));
 
                         }, enabled: false
                     },
@@ -953,8 +759,8 @@ $(document).ready(function () {
                         className: 'btn btn-primary btn-sm btnTrashBooking',
                         titleAttr: 'Remove Booking Permanently',
                         action: function () {
-                          
-                            onTrashBooking();
+                            var $this = $selectedObject;
+                            onTrashBooking($this.attr('data-transid'));
 
                         }, enabled: false
                     }
@@ -1077,6 +883,191 @@ $(document).ready(function () {
 
 
 
+var onEditBooking = function (transId) {
+
+
+    if (transId != " ") {
+        window.location.href = bookingsUrl.bookUrl_editBooking.replace("tId", transId);
+    }
+    return;
+}
+
+//============= on Booking Served Schedule ==========================
+
+var onBookingServed = function (transId) {
+
+    if (transId != " ") {
+        debugger
+
+        Swal.fire({
+            title: "Are You Sure ?",
+            text: "Confirm update booking status as served..",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Save it!'
+            //closeOnConfirm: true, closeOnCancel: true
+        }).then((result) => {
+
+            if (result.value) {
+
+                $.ajax({
+                    type: "post",
+                    url: bookingsUrl.bookUrl_ServeBooking,  //"@Url.Action("ServeBookingStatus","Bookings")",
+                    ajaxasync: true,
+                    data: { transactionNo: transId },
+                    cache: false,
+                    success: function (data) {
+
+                        if (data.success) {
+
+                            Swal.fire({
+                                title: "Success",
+                                text: "It was succesfully change status as served!",
+                                type: "success"
+
+                            });
+
+                            $('#tbl_eventsBooking').DataTable().ajax.reload();
+
+                            $tablebookings.button(0).enable();
+                            $tablebookings.button(1).disable();
+                            $tablebookings.button(2).disable();
+                            $tablebookings.button(3).disable();
+                            $tablebookings.button(4).disable();
+                            //$tablebookings.button(5).disable();
+
+                        } else {
+
+                            Swal.fire({
+                                title: "Action Failed",
+                                text: "Unable to update status.. pls check date",
+                                type: "error"
+
+                            });
+
+                            $('#tbl_eventsBooking').DataTable().ajax.reload();
+
+                            $tablebookings.button(0).enable();
+                            $tablebookings.button(1).disable();
+                            $tablebookings.button(2).disable();
+                            $tablebookings.button(3).disable();
+                            $tablebookings.button(4).disable();
+                            //$tablebookings.button(5).disable();
+
+                        }
+
+                    }
+                    ,
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire('Error removing record!', 'Please try again', 'error');
+                    }
+
+
+
+                });
+
+
+            }
+        });
+
+    }
+
+
+
+};
+
+//=============== end of code =========================================
+
+
+// ====================== remove booking by superuser only
+
+var onTrashBooking = function (trans_Id) {
+
+    if (trans_Id != " ") {
+
+        Swal.fire({
+            title: "Are You Sure ?",
+            text: "Confirm Remove Permanently This Booking .",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Proceed for removing.!'
+            //closeOnConfirm: true, closeOnCancel: true
+        }).then((result) => {
+
+            if (result.value) {
+
+                $.ajax({
+                    type: "post",
+                    url: bookingsUrl.bookUrl_removeBooking,
+                    ajaxasync: true,
+                    dataType: 'json',
+                    data: { transId: trans_Id },
+                    cache: false,
+                    success: function (data) {
+
+                        if (data.success) {
+
+                            Swal.fire({
+                                title: "Success",
+                                text: "It was succesfully removed!",
+                                type: "success"
+
+                            });
+
+
+                            $('#tbl_eventsBooking').DataTable().ajax.reload();
+
+                            $tablebookings.button(0).enable();
+                            $tablebookings.button(1).disable();
+                            $tablebookings.button(2).disable();
+                            $tablebookings.button(3).disable();
+                            $tablebookings.button(4).disable();
+                            //$tablebookings.button(5).disable();
+                        }
+                    }
+
+                    //error 
+                    ,
+                    error: function (xhr, status, errorThrown) {
+
+                        //alert(xhr.status);
+
+                        if (xhr.status === 403) {
+
+                            var response = $.parseJSON(xhr.responseText);
+
+                            //  console.log(response);
+                            // window.location = response.LogOnUrl;
+                            Swal.fire({
+                                title: "UnAuthorized Access",
+                                text: response.Error,
+                                type: "error"
+
+                            });
+
+                        }
+                        else {
+                            Swal.fire('Error removing record!', 'Please try again', 'error');
+                        }
+
+                    }
+
+                });
+
+
+            }
+
+        });//end then
+
+    }
+
+
+};
+    //=============== end of code =========================================
 
 
 var is_extendedLoc=function(data, type, full, meta) {
@@ -1690,7 +1681,159 @@ $(document).on('click', '#addDiscount', function (e) {
  });
 
 
+$(document).on('click', '#bookingServe', function(e) {
 
+    e.preventDefault();
+
+    /* onBookingServed($(this).attr('data-id'));*/
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm update booking status as served..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Save it!'
+        //closeOnConfirm: true, closeOnCancel: true
+    }).then((result) => {
+
+        if (result.value) {
+
+            $.ajax({
+                type: "post",
+                url: bookingsUrl.bookUrl_ServeBooking,  //"@Url.Action("ServeBookingStatus","Bookings")",
+                ajaxasync: true,
+                data: { transactionNo: $(this).attr('data-id') },
+                cache: false,
+                success: function (data) {
+
+                    if (data.success) {
+
+                        Swal.fire({
+                            title: "Success",
+                            text: "It was succesfully change status as served!",
+                            type: "success"
+
+                        });
+
+                        setTimeout(function () {
+
+                                window.location.href = bookingsUrl.bookUrl_IndexLoad;
+                            },
+                            1000);
+
+                    } else {
+
+                        Swal.fire({
+                            title: "Action Failed",
+                            text: "Unable to update status.. pls check date",
+                            type: "error"
+
+                        });
+
+                      
+
+                    }
+
+                }
+                ,
+                error: function (xhr, ajaxOptions, thrownError) {
+                    Swal.fire('Error removing record!', 'Please try again', 'error');
+                }
+
+
+
+            });
+
+
+        }
+    });
+
+
+   
+
+});
+
+
+$(document).on('click', '#bookingTrash', function(e) {
+    e.preventDefault();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Remove Permanently This Booking .",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed for removing.!'
+        //closeOnConfirm: true, closeOnCancel: true
+    }).then((result) => {
+
+        if (result.value) {
+
+            $.ajax({
+                type: "post",
+                url: bookingsUrl.bookUrl_removeBooking,
+                ajaxasync: true,
+                dataType: 'json',
+                data: { transId: $(this).attr('data-id') },
+                cache: false,
+                success: function (data) {
+
+                    if (data.success) {
+
+                        Swal.fire({
+                            title: "Success",
+                            text: "It was succesfully removed!",
+                            type: "success"
+
+                        });
+
+                        setTimeout(function () {
+
+                                window.location.href = bookingsUrl.bookUrl_IndexLoad;
+                            },
+                            1000);
+
+                   
+                    }
+                }
+
+                //error 
+                ,
+                error: function (xhr, status, errorThrown) {
+
+                    //alert(xhr.status);
+
+                    if (xhr.status === 403) {
+
+                        var response = $.parseJSON(xhr.responseText);
+
+                        //  console.log(response);
+                        // window.location = response.LogOnUrl;
+                        Swal.fire({
+                            title: "UnAuthorized Access",
+                            text: response.Error,
+                            type: "error"
+
+                        });
+
+                    }
+                    else {
+                        Swal.fire('Error removing record!', 'Please try again', 'error');
+                    }
+
+                }
+
+            });
+
+
+        }
+
+    });//end then
+
+});
 
 function currencyFormat(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");

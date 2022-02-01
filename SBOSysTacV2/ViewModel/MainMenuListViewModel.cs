@@ -40,6 +40,7 @@ namespace SBOSysTacV2.ViewModel
                         menuId = m.menuid,
                         menu_name = m.menu_name,
                         course_id = c.courseId,
+                        price = (decimal) m.price,
                         course = c.Course,
                         isMainMenu = c.Main_Bol
 
@@ -161,6 +162,7 @@ namespace SBOSysTacV2.ViewModel
                             menu_name = m.menu_name,
                             course_id = c.courseId,
                             course = c.Course,
+                            price = (decimal) m.price,
                             isMainMenu = c.Main_Bol
 
                         }).OrderBy(order => order.menu_name).ToList();

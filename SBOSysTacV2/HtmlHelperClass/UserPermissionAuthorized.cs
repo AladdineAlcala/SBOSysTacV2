@@ -70,7 +70,7 @@ namespace SBOSysTacV2.HtmlHelperClass
 
         private IList<UserPermessionLevelEnum> GetLoggedUserPermissionLevel()
         {
-            IList<UserPermessionLevelEnum> theLoggedUserRoles = new List<UserPermessionLevelEnum>();
+            var _LoggedUserRoles = new List<UserPermessionLevelEnum>();
 
             //theApprovedRoles.Add(UserPermessionLevelEnum.superadmin);
             //theApprovedRoles.Add(UserPermessionLevelEnum.admin);
@@ -85,10 +85,10 @@ namespace SBOSysTacV2.HtmlHelperClass
                 .Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
 
 
-            theLoggedUserRoles = roles.Select(x => Enum.Parse(typeof(UserPermessionLevelEnum), x))
+            _LoggedUserRoles = roles.Select(x => Enum.Parse(typeof(UserPermessionLevelEnum), x))
                 .Cast<UserPermessionLevelEnum>().ToList();
 
-            return theLoggedUserRoles;
+            return _LoggedUserRoles;
         }
 
     }

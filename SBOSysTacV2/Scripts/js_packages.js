@@ -1,4 +1,12 @@
-﻿$(document).ready(function () {
+﻿var _g_viewType = "package_cardview";
+
+$(document).ready(function () {
+
+
+
+    $('span.packageview >i').removeClass('text-blue');
+    $('.icon-cardview').addClass('text-blue');
+   
 
     $('input[name="radfilter"]').on('change', function (e) {
 
@@ -11,34 +19,32 @@
 
 
         var selected = $(this).attr('id');
-        var filter="";
+        var _filter="";
 
         switch (selected) {
 
             case 'rad_vip':
-                filter = 'vip';
+                _filter = 'vip';
                 break;
             case 'radregular':
-                filter = 'regular';
+                _filter = 'regular';
                 break;
 
             case 'rad_packmeal':
-                filter = 'pm';
+                _filter = 'pm';
                 break;
 
             default:
-                filter = 'all';
+                _filter = 'all';
         }
 
-        
-
-       
+      /*  console.log(_g_viewType);*/
 
         $.ajax({
             type: 'Get',
-            url: PackageUrl.url_index,
+            url: PackageUrl.url_loadPackageCard,
             contentType: 'application/html;charset=utf8',
-            data:{packagetype:filter},
+            data: { packagetype: _filter, _viewType: _g_viewType},
             datatype: 'html',
             cache: false,
             success: function (result) {
@@ -1353,5 +1359,49 @@ $(document).on('click', 'i#selectedcourse', function (e) {
                 });// end then
 
     }
+});
+
+$(document).on('click', 'span.packageview', function(e) {
+
+    e.preventDefault();
+
+    $('#spinn-loader').show();
+
+    var action = $(this).attr('id');
+
+    $('.packageview >i').removeClass('text-blue');
+
+    $(this).children('i').addClass('text-blue');
+    _g_viewType = action;
+
+    $.ajax({
+            url: PackageUrl.url_loadPackageCard,
+            type: "GET",
+            dataType: "html",
+            data: { _viewType:action },
+            cache: false,
+            success: function (data) {
+                //Fill div with results
+                $("#packageDetails").html(data);
+            },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+
+                    setTimeout(function () {
+
+                        $('#spinn-loader').hide();
+
+                    }, 1000);
+                }
+    }).done(function () {
+
+                setTimeout(function () {
+
+                    $('#spinn-loader').hide();
+
+                }, 1000);
+
+                });
+
 });
 

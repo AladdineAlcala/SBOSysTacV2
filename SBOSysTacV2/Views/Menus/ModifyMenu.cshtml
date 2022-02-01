@@ -60,6 +60,19 @@
                         @Html.ValidationMessageFor(model => model.menudesc, null, new { @class = "text-danger" })
                     </div>
                 </div>
+                
+                <div class="form-group">
+                    @Html.LabelFor(model => model.price, new {@class = "col-lg-2 control-label text-left required"})
+
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.price, new { @class = "form-control text-right", @placeholder = "0.00", @id = "menuPrice", @Value = "" })
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div id="validationdept">@Html.ValidationMessageFor(model => model.deptId, null, new {@class = "text-danger"})</div>
+                    </div>
+
+                </div>
 
 
                 <div class="form-group">

@@ -32,19 +32,7 @@ function BookmenuAddSuccess(data) {
 
                         });
 
-                        setTimeout(function() {
-
-                                if (data.packageType != "sd") {
-
-                                    $('#bookmenus').load(data.url);
-
-                                } else {
-
-                                    $('#booking_details').load(data.url);
-                                }
-                               
-
-                            }, 1000);
+                loadUrl(data.packageType, data.url);
 
      
             }
@@ -91,23 +79,33 @@ function ModifySuccess(data) {
 
         });
 
-        setTimeout(function () {
 
-                //LoadDataTabletoModal();
-
-                $('#bookmenus').load(data.url);
-
-                // $('#spinn-loader').hide();
-
-            },
-            1000);
-
+        loadUrl(data.packageType,data.url);
 
         $('#txtselectedmenu').val(" ");
         $('#modal-searchPackageBooking').modal('hide');
         $selectedObj = null;
         $selectedId = null;
     }
+}
+
+function loadUrl(ptype,url) {
+
+    setTimeout(function () {
+
+        console.log(ptype);
+
+        if (ptype != "sd") {
+
+            $('#bookmenus').load(url);
+
+        } else {
+
+            $('#booking_details').load(url);
+        }
+
+
+    }, 1000);
 }
 
 
@@ -141,21 +139,28 @@ $(document).on('click', '#tbl-maincourse tbody tr', function () {
 
     if ($selectedObj.hasClass('selected')) {
 
-        var tr = $(this).closest('tr');
+        var trow = $(this).closest('tr');
 
-            var id = tr.children('td:eq(0)').attr('data-id');
+        var id = trow.children('td:eq(0)').attr('data-id');
 
             $('#hiddenmenuId').val(id);
 
             $selectedId = id;
 
-            $('#txtselectedmenu').val(tr.children('td:eq(1)').html());
+            $('#txtselectedmenu').val(trow.children('td:eq(1)').html());
 
-            //alert(tr.children('td:eq(1)').html());
+        var data = $('#tbl-maincourse').DataTable().row(trow).data();
+        var price = data['price'];
 
- /*           $('#txtserving').val();*/
+        if (!isNaN(parseFloat(price))) {
 
+            $('#txtSprice').val(currencyFormat(price));
         } else {
+            $('#txtSprice').val(currencyFormat(0));
+        }
+            
+
+    } else {
             $('#hiddenmenuId').val(" ");
             $('#txtselectedmenu').val(" ");
             $selectedId = "";
@@ -177,7 +182,7 @@ $(document).on('click', '#tbl-maincourse tbody tr', function () {
 $(document).on('click', '#menu_add', function (e) {
     e.preventDefault();
 
-    debugger;
+/*    debugger;*/
 
     var elem = $(this).closest('li').find('div[id=course]');
 
@@ -221,25 +226,30 @@ $(document).on('click', '#menu_add', function (e) {
 });
 
 
-
+/* This function update menus on packmeals / catering packages transaction */
 $(document).on('click', '#menu_change', function (e) {
     e.preventDefault();
 
-    // var menu_No = $(this).attr("data-menuid");
-    // data: { transactionId: $(this).closest('td').attr('data-id'), bookmenuNo: $(this).attr("data-menuid") },
-    debugger;
 
     var elem = $(this).closest('li').find('div[id=course]');
     var selectedcourseId = elem.attr('data-id');
+    var selectedmenuId = $(this).attr("data-menuid");
+
+    modifySelectedBookingMenu(selectedcourseId, selectedmenuId)
+
+});
+
+//  <<<<<=========    =====================================================================>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+//----------------      PACKAGE MENU > MENU CHANGE OPTION  FUNCTION  -------------------------------------------------- 
+var modifySelectedBookingMenu = function(selcourseId,selmenuId) {
 
 
-    //----------------      PACKAGE MENU > MENU CHANGE OPTION   -------------------------------------------------- 
-    //  <<<<<=========    
     $.ajax({
         type: 'Get',
         url: PackageBookingUrl.urlSearchpackagebookingbybookNo,     //  urlSearchpackagebookingbybookNo: "@Url.Action("GetListofCourseforChange", "Bookings")",
         contentType: 'application/html;charset=utf8',
-        data: { bookmenuNo: $(this).attr("data-menuid") },
+        data: { bookmenuNo: selmenuId},
         datatype: 'html',
         cache: false,
         success: function (result) {
@@ -255,7 +265,7 @@ $(document).on('click', '#menu_change', function (e) {
 
             RegisterAjaxFormEventsModify();
 
-            LoadDataTabletoModal(selectedcourseId);
+            LoadDataTabletoModal(selcourseId);
 
 
             modal.modal({
@@ -272,10 +282,7 @@ $(document).on('click', '#menu_change', function (e) {
 
     });
 
-
-
-});
-
+}
 
 function LoadDataTabletoModal(_courseId) {
    
@@ -287,35 +294,35 @@ function LoadDataTabletoModal(_courseId) {
 
     }
 
-   // debugger;
+    debugger;
 
     //var courseid = _courseId;
 
     $tblMainCourse = $('#tbl-maincourse').DataTable(
         {
-
             bLengthChange: false,
             select: {
                 style: 'os',
                 //style: 'multi',
                 selector: 'td:first-child'
-            }
-            ,
+            },
             //"dom": "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
             "dom": "<'row'<'col-sm-12'f>>" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-6'i><'col-sm-6'p>>",
 
-           
+
             "ajax":
             {
-                "url": PackageBookingUrl.urlMenuList,    //==============>>>>>>  "@Url.Action("LoadListMenus", "Bookings")",  <<<<<<<<<<<<<<<<<<<<<
-                "data": { courseId: _courseId},
-                 "type": "Get",
-                 "datatype": "json"
+                "url":PackageBookingUrl.urlMenuList, //==============>>>>>>  "@Url.Action("LoadListMenus", "Bookings")",  <<<<<<<<<<<<<<<<<<<<<
+                "data": { courseId: _courseId },
+                "type": "Get",
+                "datatype": "json"
+               
             },
 
             //  "aoColumns": [{   "sTitle": "<input type='checkbox' id='selectAll'></input>"}],
+
 
             "columnDefs":
             [
@@ -352,7 +359,7 @@ function LoadDataTabletoModal(_courseId) {
                 //,
                 //{
 
-                //    "data": "menuId",'visisble':false,'targert':3
+                //    "data": "price", 'targets': 3
                 //}
 
 
@@ -366,15 +373,15 @@ function LoadDataTabletoModal(_courseId) {
 
         });
 
-
-   
-
 }
 
 
+
+/* This function will load when snacks and drinks transaction is selected */
+
 function Load_SelectedMenusForPackage(_packageId) {
 
-    console.log(_packageId);
+  /*  console.log(_packageId);*/
 
      if ($.fn.dataTable.isDataTable('#tbl-maincourse')) {
  
@@ -383,8 +390,7 @@ function Load_SelectedMenusForPackage(_packageId) {
          $('#tbl-maincourse tbody').empty();
  
      }
- 
- 
+
      $tblCourse = $('#tbl-maincourse').DataTable(
          {
  
@@ -403,10 +409,14 @@ function Load_SelectedMenusForPackage(_packageId) {
  
              "ajax":
              {
-                 "url": PackageBookingUrl.urlCheckMenusByPackage,    //==============>>>>>>  "@Url.Action("LoadListMenus", "Bookings")",  <<<<<<<<<<<<<<<<<<<<<
+                 "url": PackageBookingUrl.urlCheckMenusByPackage,    //==============>>>>>>  "@Url.Action("GetPackageMenusperTransaction", "Bookings")"",  <<<<<<<<<<<<<<<<<<<<<
                  "data": { packageId: _packageId },
                  "type": "Get",
                  "datatype": "json"
+                 //"dataSrc": function (response) {
+
+                 //    console.log(response);
+                 //}
              },
  
              //  "aoColumns": [{   "sTitle": "<input type='checkbox' id='selectAll'></input>"}],
@@ -425,7 +435,8 @@ function Load_SelectedMenusForPackage(_packageId) {
  
                      },
                      {
-                         'autowidth': true, 'targets': 1,
+                         'targets':[1],
+                         'autowidth': true, 
                          "data": null,
                          "render": function (data, type, full) {
  
@@ -440,15 +451,16 @@ function Load_SelectedMenusForPackage(_packageId) {
  
                      },
                      {
-                         'autowidth': true, 'targets': 2,
+                         'targets': [2],
+                         'autowidth': true,
                          "data": "course"
+                     },
+                     {
+                         'targets': [3],
+                         "data": "price",
+                         "visible": false
+
                      }
-                     //,
-                     //{
- 
-                     //    "data": "menuId",'visisble':false,'targert':3
-                     //}
- 
  
                  ],
              createdRow: function (row, data, indice) {
@@ -648,7 +660,14 @@ $(document).on('click', '#add_snacks_and_drinks', function (e) {
 
 $(document).on('click', '#menu_change_snacks_drinks', function(event) {
 
+    event.preventDefault();
 
+    var parenttr = $(this).closest('tr');
+    var elem = $(this).closest('td');
+    var selectedMenuId = elem.attr('data-id');
+    var selectedcourseid = parenttr.attr('data-id');
+
+    modifySelectedBookingMenu(selectedcourseid, selectedMenuId);
 
 });
 
@@ -674,7 +693,7 @@ $(document).on('click', '#menu_remove_snacks_drinks', function (event) {
 
             $.ajax({
                 type: 'POST',
-                url: PackageBookingUrl.urlBookingRemoveSnacksandDrinks,
+                url: PackageBookingUrl.urlBookingRemoveSnacksandDrinks,  // "@Url.Action("RemoveSnackandDrinks", "Bookings")",
                 ajaxasync: true,
                 data: { id: $(this).closest('td').attr('data-id') },
                 cache: false,
@@ -1986,7 +2005,13 @@ function currentSlide(n) {
     showSlides(slideIndex = n);
 }
 
-
+function currencyFormat(num) {
+    return (num
+        .toFixed(2)
+       /* .replace('.', ',')*/
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    );
+}
 /*InsertImages(imglightcontent, $tblBookMenu);*/
 
 //function InsertImages(element, object) {

@@ -39,380 +39,6 @@ div.bottom {
     margin-top: 25px;
 }
 
-textarea:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="date"]:focus,
-input[type="month"]:focus,
-input[type="time"]:focus,
-input[type="week"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="color"]:focus,
-select:focus,
-.uneditable-input:focus {
-    border-color: rgba(126, 239, 104, 0.8);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
-    outline: 0 none;
-}
-
-.top-buffer {
-    margin-top:10px;
-    margin-bottom: 10px;
-}
-
-
-#table_customers,#table_course tbody tr {cursor:pointer;}
-
-.selected, .selected > td {background-color:#54CFDD !important;}
-.ex_highlight #dataTables1 tbody tr.even:hover, #dataTables1 tbody tr.even td.highlighted { background-color: #ECFFB3;}
-
-.ex_highlight #dataTables1 tbody tr.odd:hover, #dataTables1 tbody tr.odd td.highlighted { background-color: #E6FF99; }
-
-.select2-container--default .select2-selection--multiple .select2-selection__choice{ background-color:#6f6fc8}
-.select2-container {
-    width:100%;
-}
-
-.select2-container a.select2-choice {
-    font-size: 14px;
-    height: 38px;
-    padding: 8px 12px;
-    line-height: 1.42857;
-}
-
-.select2-container .select2-choice .select2-arrow {
-    padding-top:6px;
-}
-
-/*.select2-dropdown{
-    z-index: 3051;
-}*/
-
-.add-on.input-group-btn > .btn{
-    border-left-width: 0;
-    left: -2px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-}
-.add-on .form-control:focus {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border-color: #cccccc;
-}
-
-table.dataTable thead {
-    background-color: #7dc89d;
-}
-table.dataTable tbody tr.even:hover,table.dataTable tbody tr.even td.highlighted {
-    background-color: #ECFFB3;
-}
-table.dataTable tbody tr.odd:hover,table.dataTable tbody tr.odd td.highlighted {
-    background-color: #E6FF99;
-}
-table.dataTable tr.even:hover {
-    background-color: #ECFFB3;
-}
-
-
-
-span.modal-package {
-
-    cursor: pointer;
-} 
-.input-validation-error {
-    border-color: rgba(126, 239, 104, 0.8);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
-    outline: 0 none;
-
-}
-/*#tbl_eventsBooking_filter.dataTables_filter input{
-    width: 100%;
-}*/
-#tbl-maincourse_filter input{
-   
-    width: 750px;
-   
-}
-#tbl_eventsBooking_filter input {
-    width: 350px;
-}
-
-#table_logs_filter input {
-    width: 350px;
-}
-
-#table_customers_filter input {
-    width: 280px;
-}
-
-label.myErrorClass {
-    color: red;
-    font-size: 11px;
-    display: block;
-}
-ul.myErrorClass input {
-    color: #666 !important;
-}
-ul.myErrorClass, input.myErrorClass, select.myErrorClass {
-    border-width: 1px !important;
-    border-style: solid !important;
-    border-color: #cc0000 !important;
-    background-color: #f3d8d8 !important;
-    background-position: 50% 50% !important;
-    background-repeat: repeat !important;
-}
-
-#event_calendar .fc-event{
-    box-shadow: 2px 2px 2px #989898;
-}
-
-#event_calendar .fc-agenda-axis, #event_calendar .fc-widget-header{
-    background-color: #C2E6FF;
-    border-color: #AED0EA;
-    font-weight: bold;
-    padding: 1.8px;
-    /*border-radius: 3px;*/
-}
-#event_calendar .fc-today{
-    background-color: #b3ff66;
-}
-/*#event_calendar .fc-content{
-    background-color: #green;
-    font-size: 80%;
-}*/
-
-/*.spinner {
-    position: fixed;
-    top: 60%;
-    left: 50%;
-    margin-left: -50px;
-    margin-top: -50px;
-    text-align: center;
-    z-index: 1234;
-    overflow: auto;
-    width: 100px;
-    height: 102px;
-}*/
-
-
-
-
-    .aeue {
-        font: 11pt Segoe UI !important;
-        background-color: #0473C2;
-        height: 45px;
-        border-bottom: 2px solid white
-    }
-
-    .aeue_in {
-        font: 11pt Segoe UI !important;
-        background-color: #0473C2;
-        height: 45px;
-        border-bottom: 2px solid white
-    }
-
-    .aeue_out {
-        font: 11pt Segoe UI !important;
-        background-color: #1d8348;
-        height: 45px;
-        border-bottom: 2px solid white
-    }
-
-    .booking_form1 {
-        width: 600px;
-    }
-
-    .fc-day-grid-container.fc-scroller {
-        height: auto !important;
-        overflow-y: auto;
-    }
-
-    .div_wrapper {
-        text-align: left;
-        padding-top: 0px;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        padding-bottom: 0px;
-    }
-
-    .fc-event {
-        cursor: pointer;
-    }
-
-    span.bookdetails,td.bookdetails,tr.bookdetails {
-        font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
-    }
-
-    span.dash {
-        font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
-    }
-
-    .total {
-        border-top: 4px solid #999;
-        border-bottom: 1px double #999;
-        padding: 5px 0;
-    }
-
-    .transNo {
-        font-size: 16px;
-    }
-
-    #txtcheckNo {
-        width: 484px;
-        margin-top: 12px;
-    }
-
-    p.menus {
-        font: 10.5pt Segoe UI !important;
-        background-color: rgba(61,61,190,0.73);
-        height: 22px;
-        font-weight: bold;
-        color: blanchedalmond;
-        border-radius: 2.5px;
-        border-color: #e6ff99;
-    }
-
-    .unsigned {
-      /*  height: 90%;*/
-       /* min-height: 650px;*/
-        min-height: 80vh;
-        background-image: url('../Images/salslogo_PNG.png');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 40%;
-     /*   background-color: white;*/
-    }
-
-    html {
-/*        margin: 0;
-        padding: 0;*/
-        height: 100% !important;
-    }
-
-    table#tbl_dashBooking.dataTable thead {
-        background-color: #29B6F6;
-        font-size: 12px;
-    }
-
-    div.titlehead {
-        background-color: lightblue;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        border-style: solid;
-        border-width: .2px;
-        border-color: #b3adad;
-        border-radius: 2px;
-        margin-top:10px;
-    /*    margin-left:5px;*/
-        margin-bottom: 5px;
-        width: 400px;
-        font-family: times, times new roman, serif;
-    }
-
-    h3.gsearch {
-        border-bottom: 1px solid #666;
-        margin-bottom: 5px;
-        padding-bottom: 5px;
-    }
-
-    input:-moz-read-only { /* For Firefox */
-        background-color: #ecff82;
-    }
-
-    input:read-only {
-        background-color: #ecff82;
-    }
-
-    input#selectedcourse {
-        line-height: 1.5em;
-        display: inline-block;
-        width: 18px;
-        height: 18px;
-        margin-top: 0px;
-        margin-right: -18px;
-        border: 1px solid rgb(192,192,192);
-        border-radius: 0.25em;
-        background: rgb(224,224,224);
-        box-sizing: border-box;
-    }
-
-    input#selectedcourse:checked {
-        width: 18px;
-        height: 18px;
-        border: 3px solid #00ff00;
-        background: green;
-        box-sizing: border-box;
-    }
-
-    .selectedcourse {
-        font-size: 16px;
-        color: #1B4F72;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        font-family: courier, courier new, serif;
-    }
-
-.product-list-in-box > .item {
-    border-bottom: none;
-}
-
-    .products-list .product-title {
-    font-size: 18px;
-    color: #75C5FA;
-    margin-left:10px;
-}
-
-.products-list .product-description {
-    margin-top: 3px;
-    color: #0A0201;
-    font-size: 1.5rem;
-    margin-bottom: 2px;
-/*    margin-left:25px;*/
-}
-
-div#course {
-    width: 78%;
-}
-
-div#course > div {
-    border-bottom: 1px solid;
-    height: 30px;
-}
-
-div#course > .menu-counter {
-    font-weight: bold;
-    font-size: 1.6rem;
-
-}
-div#course >.menu-counter::after {
-    content: ".";
-}
-#menuslist{
-    height:100%;
-}
-
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
-    font-weight:bold;
-}
-
-td.hidden-row {
-    padding: 0 !important;
-}
-span#btn-collapse {
-    cursor: pointer;
-}
-
-table#table-discount {
-     background-color: #f4f4f4;
- 
-}
-
 
 .m-0 {
     margin: 0 !important;
@@ -800,6 +426,392 @@ table#table-discount {
     padding-bottom: 3rem !important;
 }
 
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+select:focus,
+.uneditable-input:focus {
+    border-color: rgba(126, 239, 104, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
+    outline: 0 none;
+}
+
+.top-buffer {
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
+
+.position-absolute {
+    position: absolute;
+}
+.position-relative {
+    position: relative;
+}
+#table_customers, #table_course tbody tr {
+    cursor: pointer;
+}
+
+.selected, .selected > td {background-color:#54CFDD !important;}
+.ex_highlight #dataTables1 tbody tr.even:hover, #dataTables1 tbody tr.even td.highlighted { background-color: #ECFFB3;}
+
+.ex_highlight #dataTables1 tbody tr.odd:hover, #dataTables1 tbody tr.odd td.highlighted { background-color: #E6FF99; }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice{ background-color:#6f6fc8}
+.select2-container {
+    width:100%;
+}
+
+.select2-container a.select2-choice {
+    font-size: 14px;
+    height: 38px;
+    padding: 8px 12px;
+    line-height: 1.42857;
+}
+
+.select2-container .select2-choice .select2-arrow {
+    padding-top:6px;
+}
+
+
+
+.add-on {
+    width: 80%;
+}
+
+.add-on.input-group-btn > .btn{
+    border-left-width: 0;
+    left: -2px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.add-on .form-control:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: #cccccc;
+}
+
+table.dataTable thead {
+    background-color: #7dc89d;
+}
+table.dataTable tbody tr.even:hover,table.dataTable tbody tr.even td.highlighted {
+    background-color: #ECFFB3;
+}
+table.dataTable tbody tr.odd:hover,table.dataTable tbody tr.odd td.highlighted {
+    background-color: #E6FF99;
+}
+table.dataTable tr.even:hover {
+    background-color: #ECFFB3;
+}
+
+
+
+span.modal-package {
+
+    cursor: pointer;
+} 
+.input-validation-error {
+    border-color: rgba(126, 239, 104, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
+    outline: 0 none;
+
+}
+/*#tbl_eventsBooking_filter.dataTables_filter input{
+    width: 100%;
+}*/
+#tbl-maincourse_filter input{
+   
+    width: 750px;
+   
+}
+#tbl_eventsBooking_filter input {
+    width: 350px;
+}
+
+#table_logs_filter input {
+    width: 350px;
+}
+
+#table_customers_filter input {
+    width: 280px;
+}
+
+label.myErrorClass {
+    color: red;
+    font-size: 11px;
+    display: block;
+}
+ul.myErrorClass input {
+    color: #666 !important;
+}
+ul.myErrorClass, input.myErrorClass, select.myErrorClass {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: #cc0000 !important;
+    background-color: #f3d8d8 !important;
+    background-position: 50% 50% !important;
+    background-repeat: repeat !important;
+}
+
+#event_calendar .fc-event{
+    box-shadow: 2px 2px 2px #989898;
+}
+
+#event_calendar .fc-agenda-axis, #event_calendar .fc-widget-header{
+    background-color: #C2E6FF;
+    border-color: #AED0EA;
+    font-weight: bold;
+    padding: 1.8px;
+    /*border-radius: 3px;*/
+}
+#event_calendar .fc-today{
+    background-color: #b3ff66;
+}
+/*#event_calendar .fc-content{
+    background-color: #green;
+    font-size: 80%;
+}*/
+
+/*.spinner {
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    text-align: center;
+    z-index: 1234;
+    overflow: auto;
+    width: 100px;
+    height: 102px;
+}*/
+
+
+
+
+    .aeue {
+        font: 11pt Segoe UI !important;
+        background-color: #0473C2;
+        height: 45px;
+        border-bottom: 2px solid white
+    }
+
+    .aeue_in {
+        font: 11pt Segoe UI !important;
+        background-color: #0473C2;
+        height: 45px;
+        border-bottom: 2px solid white
+    }
+
+    .aeue_out {
+        font: 11pt Segoe UI !important;
+        background-color: #1d8348;
+        height: 45px;
+        border-bottom: 2px solid white
+    }
+
+    .booking_form1 {
+        width: 600px;
+    }
+
+    .fc-day-grid-container.fc-scroller {
+        height: auto !important;
+        overflow-y: auto;
+    }
+
+    .div_wrapper {
+        text-align: left;
+        padding-top: 0px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+
+    .fc-event {
+        cursor: pointer;
+    }
+
+    span.bookdetails,td.bookdetails,tr.bookdetails {
+        font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
+    }
+
+    span.dash {
+        font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
+    }
+
+    .total {
+        border-top: 4px solid #999;
+        border-bottom: 1px double #999;
+        padding: 5px 0;
+    }
+
+    .transNo {
+        font-size: 16px;
+    }
+
+    #txtcheckNo {
+        width: 484px;
+        margin-top: 12px;
+    }
+
+    p.menus {
+        font: 10.5pt Segoe UI !important;
+        background-color: rgba(61,61,190,0.73);
+        height: 22px;
+        font-weight: bold;
+        color: blanchedalmond;
+        border-radius: 2.5px;
+        border-color: #e6ff99;
+    }
+
+    .unsigned {
+      /*  height: 90%;*/
+       /* min-height: 650px;*/
+        min-height: 80vh;
+        background-image: url('../Images/salslogo_PNG.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 40%;
+     /*   background-color: white;*/
+    }
+
+    html {
+/*        margin: 0;
+        padding: 0;*/
+        height: 100% !important;
+    }
+
+    table#tbl_dashBooking.dataTable thead {
+        background-color: #29B6F6;
+        font-size: 12px;
+    }
+
+    div.titlehead {
+        background-color: lightblue;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        border-style: solid;
+        border-width: .2px;
+        border-color: #b3adad;
+        border-radius: 2px;
+        margin-top:10px;
+    /*    margin-left:5px;*/
+        margin-bottom: 5px;
+        width: 400px;
+        font-family: times, times new roman, serif;
+    }
+
+    h3.gsearch {
+        border-bottom: 1px solid #666;
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+    }
+
+    input:-moz-read-only { /* For Firefox */
+        background-color: #ecff82;
+    }
+
+    input:read-only {
+        background-color: #ecff82;
+    }
+
+    input#selectedcourse {
+        line-height: 1.5em;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-top: 0px;
+        margin-right: -18px;
+        border: 1px solid rgb(192,192,192);
+        border-radius: 0.25em;
+        background: rgb(224,224,224);
+        box-sizing: border-box;
+    }
+
+    input#selectedcourse:checked {
+        width: 18px;
+        height: 18px;
+        border: 3px solid #00ff00;
+        background: green;
+        box-sizing: border-box;
+    }
+
+    .selectedcourse {
+        font-size: 16px;
+        color: #1B4F72;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        font-family: courier, courier new, serif;
+    }
+
+.product-list-in-box > .item {
+    border-bottom: none;
+}
+
+    .products-list .product-title {
+    font-size: 18px;
+    color: #75C5FA;
+    margin-left:10px;
+}
+
+.products-list .product-description {
+    margin-top: 3px;
+    color: #0A0201;
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+/*    margin-left:25px;*/
+}
+
+div#course {
+    width: 96%;
+}
+
+div#course > div {
+    border-bottom: 1px solid;
+    height: 30px;
+}
+
+div#course > .menu-counter {
+    font-weight: bold;
+    font-size: 1.6rem;
+
+}
+div#course >.menu-counter::after {
+    content: ".";
+}
+#menuslist{
+    height:100%;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    font-weight:bold;
+}
+
+td.hidden-row {
+    padding: 0 !important;
+}
+span#btn-collapse {
+    cursor: pointer;
+}
+
+table#table-discount {
+     background-color: #f4f4f4;
+ 
+}
+
+
+
 
 .nav-link {
     display: block;
@@ -959,8 +971,12 @@ tfoot {
 
 .products-list > li .tools {
     display: none;
-    float: right;
-    color: #dd4b39;
+    /*float: right;*/
+    right: 5px;
+    top: 10px;
+    width: 50px;
+    text-align: center;
+   /* color: #dd4b39;*/
 }
 
 .products-list > li .product-info {
@@ -988,7 +1004,32 @@ tfoot {
     height: 50px;
     cursor: pointer;
 }
-
+div#optrbtn {
+    width: 650px;
+    border-bottom: 1.5px Solid #525960;
+}
+div.bookingNo {
+    display: flex;
+    justify-content:flex-end;
+    align-items: center;
+}
+div.bookingNo > h4,
+div.bookingNo > p {
+    padding: 0;
+    margin: 0;
+    font-size: 2.2rem;
+}
+    div.bookingNo > h4 {
+        color: #5E1703;
+    }
+    div.bookingNo > p {
+        color: #034a5e;
+        font-weight: 300;
+    }
+/*div#optrbtn::after {
+    border-bottom: 1px solid #0277bd;
+ 
+}*/
 /* Create four equal columns that floats next to eachother */
 .column {
     float: left;
@@ -1129,6 +1170,14 @@ img.hover-shadow {
 
 /*===============================================================================================   */
 
-td.align-middle {
+/*td.align-middle {
     vertical-align:middle;
+}*/
+
+#tablePackage > tbody > tr > td {
+    vertical-align: middle;
+}
+
+#tbl_eventsBooking > tbody > tr > td {
+    vertical-align: middle;
 }

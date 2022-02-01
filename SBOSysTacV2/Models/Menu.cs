@@ -28,6 +28,7 @@ namespace SBOSysTacV2.Models
         public Nullable<decimal> price { get; set; }
         public string image { get; set; }
         public Nullable<System.DateTime> date_added { get; set; }
+        public Nullable<System.DateTime> date_update { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book_Menus> Book_Menus { get; set; }

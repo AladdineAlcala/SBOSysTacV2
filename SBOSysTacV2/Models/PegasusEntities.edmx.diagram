@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="PegasusEntitiesModel.AuditLogDetail" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.AuditLog" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.Book_Discount" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PegasusEntitiesModel.Book_Menus" Width="1.5" PointX="8.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PegasusEntitiesModel.Book_Menus" Width="1.5" PointX="8.375" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.Booking" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.CancelledBooking" Width="1.5" PointX="7.875" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.CateringDiscount" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
@@ -46,7 +46,7 @@
         <AssociationConnector Association="PegasusEntitiesModel.FK_RefundEntry_Refunds" ManuallyRouted="false" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_CancelledBookings_Bookings" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_Payments_Bookings" />
-        <EntityTypeShape EntityType="PegasusEntitiesModel.BookAddonsDetail" Width="3.25" PointX="8" PointY="12" />
+        <EntityTypeShape EntityType="PegasusEntitiesModel.BookAddonsDetail" Width="3.25" PointX="7.875" PointY="12.375" />
         <EntityTypeShape EntityType="PegasusEntitiesModel.BookingAddon" Width="1.5" PointX="5.25" PointY="12.75" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_BookAddonsDetail_BookingAddons" />
         <AssociationConnector Association="PegasusEntitiesModel.FK_BookingAddons_Bookings" />
