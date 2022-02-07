@@ -482,7 +482,7 @@ namespace SBOSysTacV2.Controllers
                 list = list.Where(t => t.Status == "pd").ToList();
             }
 
-            ContainerClass.CateringReport = list;
+            ContainerClass.CateringList = list;
 
             return View("~/Views/Shared/ReportContainer.cshtml", pOption);
         }

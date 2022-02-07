@@ -9,8 +9,8 @@ namespace SBOSysTacV2
         {
             bundles.Add(new ScriptBundle("~/bundles/javascripts").Include(
                         "~/Content/bower_components/jquery/dist/jquery.min.js",
-                        "~/Content/bower_components/bootstrap/dist/js/bootstrap.min.js",
                         //"~/Content/bower_components/jquery-ui/jquery-ui.min.js",
+                        "~/Content/bower_components/bootstrap/dist/js/bootstrap.min.js",
                         "~/Scripts/moment.min.js",
                         "~/Content/bower_components/jquery-slimscroll/jquery.slimscroll.min.js",
                         "~/Content/bower_components/fastclick/lib/fastclick.js",

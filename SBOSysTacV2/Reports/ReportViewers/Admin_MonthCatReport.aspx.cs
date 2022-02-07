@@ -58,7 +58,7 @@ namespace SBOSysTacV2.Reports.ReportViewers
                     //var accountreceivablesClient = Utilities.TransRecievablesAccn;
                     //DateTime monthreport = Convert.ToDateTime(paramfilterdatefrom);
 
-                    cryRep.Database.Tables[0].SetDataSource(ContainerClass.CateringReport.ToDataTableList());
+                    cryRep.Database.Tables[0].SetDataSource(ContainerClass.CateringList.ToDataTableList());
 
                     cryRep.SetParameterValue("MonthSched", Convert.ToDateTime(paramfilterdatefrom).ToString("MMMM yyyy"));
 

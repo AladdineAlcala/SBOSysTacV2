@@ -30,7 +30,7 @@ $(document).ready(function () {
     loaddatatableBookings();
 
   
-    $tablebookings.button(4).disable();
+ /*   $tablebookings.button(4).disable();*/
 
 
     //==================================================================================
@@ -259,31 +259,35 @@ $(document).ready(function () {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
 
-            $tablebookings.button(0).enable();
-            $tablebookings.button(1).disable();
-            $tablebookings.button(2).disable();
-            $tablebookings.button(3).disable();
-            $tablebookings.button(4).disable();
+           /* $tablebookings.button(0).enable();*/
+            //$tablebookings.button(1).disable();
+            //$tablebookings.button(2).disable();
+            //$tablebookings.button(3).disable();
+            //$tablebookings.button(4).disable();
          
-            $tablebookings.button(5).enable();
+          /*  $tablebookings.button(5).enable();*/
+
+            $(this).closest('.get-details').css({ "opacity": "0" });
 
         } else {
 
             $tablebookings.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
 
-            $tablebookings.button(0).disable();
-            $tablebookings.button(1).enable();
-            $tablebookings.button(2).enable();
-            $tablebookings.button(3).enable();
+            /*$tablebookings.button(0).disable();*/
+            //$tablebookings.button(1).enable();
+            //$tablebookings.button(2).enable();
+            //$tablebookings.button(3).enable();
 
-            if (hassuperadminrights === 'true') {
+            $(this).closest('.get-details').css({ "opacity": "1" });
 
-                $tablebookings.button(4).enable();
+            //if (hassuperadminrights === 'true') {
 
-            }
+            //    $tablebookings.button(4).enable();
+
+            //}
            ;
-            $tablebookings.button(5).disable();
+            /*$tablebookings.button(5).disable();*/
 
             $selectedObject = $(this);
 
@@ -604,7 +608,10 @@ $(document).ready(function () {
                 "dom": "<'#bookingtop.row'<'col-sm-6'B><'col-sm-6'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'#bookingbottom.row'<'col-sm-5'l><'col-sm-7'p>>",
+                "fnInitComplete": function () {
 
+                    $('#bookingtop').addClass('my-2');
+                },
                 "pagingType": "full_numbers",
 
                 "ajax":
@@ -695,7 +702,7 @@ $(document).ready(function () {
                         'autowidth': true, 'targets': 6, "data": "trn_Id", "orderable": false, "searchable": false, "className": "text-center",
                         "mRender": function (data) {
 
-                            return ' <button class="btn btn-flat get-details" id=' + data + '><i class="fa fa-chevron-right fa-md"></i></button>';
+                            return ' <button class="round-button align-middle mr-1 get-details" id=' + data + '><i class="fa fa-chevron-right fa-md"></i></button>';
 
                            /* return '<i class="fa fa-lg fa-chevron-right my-auto"></i>'*/
                                
@@ -712,8 +719,8 @@ $(document).ready(function () {
                 [
                   
                     {
-                        text: '<i class="fa fa-plus-square fa-sm fa-fw"></i>',
-                        className: 'btn btn-primary btn-sm btnAddBookings',
+                        text:'<i class="fa fa-plus"></i>',
+                        className: 'btnAddBookings',
                         titleAttr: 'Create new bookings',
                         action: function () {
 
@@ -721,61 +728,61 @@ $(document).ready(function () {
 
                         }
                     }
-                    ,
-                    {
-                        text: '<i class="fa fa-edit fa-sm fa-fw"></i>',
-                        className: 'btn btn-primary btn-sm btnEditBooking',
-                        titleAttr: 'Modify Booking',
-                        action: function () {
-                            var $this = $selectedObject;
-                            onEditBooking($this.attr('data-transid'));
+                    //,
+                    //{
+                    //    text: '<i class="fa fa-edit fa-sm fa-fw"></i>',
+                    //    className: 'btn btn-primary btn-sm btnEditBooking',
+                    //    titleAttr: 'Modify Booking',
+                    //    action: function () {
+                    //        var $this = $selectedObject;
+                    //        onEditBooking($this.attr('data-transid'));
 
-                        }, enabled: false
-                    },
-                    {
-                        text: '<i class="fa fa-times-circle-o fa-sm fa-fw"></i>',
-                        className: 'btn btn-primary btn-sm btnRemoveBooking',
-                        titleAttr: 'Cancel Booking',
-                        action: function () {
+                    //    }, enabled: false
+                    //},
+                    //{
+                    //    text: '<i class="fa fa-times-circle-o fa-sm fa-fw"></i>',
+                    //    className: 'btn btn-primary btn-sm btnRemoveBooking',
+                    //    titleAttr: 'Cancel Booking',
+                    //    action: function () {
 
-                            onCancelBooking();
+                    //        onCancelBooking();
 
-                        }, enabled: false
-                    },
+                    //    }, enabled: false
+                    //},
 
-                    {
-                        text: '<i class="fa fa-archive fa-sm fa-fw"></i>',
-                        className: 'btn btn-primary btn-sm btnServeBooking',
-                        titleAttr: 'Served Booking Status',
-                        action: function () {
-                            var $this = $selectedObject;
-                            onBookingServed($this.attr('data-transid'));
+                    //{
+                    //    text: '<i class="fa fa-archive fa-sm fa-fw"></i>',
+                    //    className: 'btn btn-primary btn-sm btnServeBooking',
+                    //    titleAttr: 'Served Booking Status',
+                    //    action: function () {
+                    //        var $this = $selectedObject;
+                    //        onBookingServed($this.attr('data-transid'));
 
-                        }, enabled: false
-                    },
+                    //    }, enabled: false
+                    //},
 
-                    {
-                        text: '<i class="fa fa-trash fa-sm fa-fw"></i>',
-                        className: 'btn btn-primary btn-sm btnTrashBooking',
-                        titleAttr: 'Remove Booking Permanently',
-                        action: function () {
-                            var $this = $selectedObject;
-                            onTrashBooking($this.attr('data-transid'));
+                    //{
+                    //    text: '<i class="fa fa-trash fa-sm fa-fw"></i>',
+                    //    className: 'btn btn-primary btn-sm btnTrashBooking',
+                    //    titleAttr: 'Remove Booking Permanently',
+                    //    action: function () {
+                    //        var $this = $selectedObject;
+                    //        onTrashBooking($this.attr('data-transid'));
 
-                        }, enabled: false
-                    }
-                    ,
+                    //    }, enabled: false
+                    //}
+                    //,
 
-                    {
-                        text: '<i class="fa fa-refresh fa-sm fa-fw"></i>',
-                        className: 'btn btn-primary btn-sm btnRefreshBooking',
-                        titleAttr: 'Refresh',
-                        action: function () {
+                    //{
+                    //    text: '<i class="fa fa-refresh fa-sm fa-fw"></i>',
+                    //    className: 'btn btn-primary btn-sm btnRefreshBooking',
+                    //    titleAttr: 'Refresh',
+                    //    action: function () {
                            
-                            onrefreshBooking();
+                    //        onrefreshBooking();
 
-                        }, enabled: true
-                    }
+                    //    }, enabled: true
+                    //}
 
                 ]
 
@@ -792,11 +799,11 @@ $(document).ready(function () {
         
         $('#tbl_eventsBooking').DataTable().ajax.reload();
 
-        $tablebookings.button(0).enable();
-        $tablebookings.button(1).disable();
-        $tablebookings.button(2).disable();
-        $tablebookings.button(3).disable();
-        $tablebookings.button(4).disable();
+        /*$tablebookings.button(0).enable();*/
+        //$tablebookings.button(1).disable();
+        //$tablebookings.button(2).disable();
+        //$tablebookings.button(3).disable();
+        //$tablebookings.button(4).disable();
         //$tablebookings.button(5).disable();
     };
 
@@ -931,11 +938,11 @@ var onBookingServed = function (transId) {
 
                             $('#tbl_eventsBooking').DataTable().ajax.reload();
 
-                            $tablebookings.button(0).enable();
-                            $tablebookings.button(1).disable();
-                            $tablebookings.button(2).disable();
-                            $tablebookings.button(3).disable();
-                            $tablebookings.button(4).disable();
+                           /* $tablebookings.button(0).enable();*/
+                            //$tablebookings.button(1).disable();
+                            //$tablebookings.button(2).disable();
+                            //$tablebookings.button(3).disable();
+                            //$tablebookings.button(4).disable();
                             //$tablebookings.button(5).disable();
 
                         } else {
@@ -949,11 +956,11 @@ var onBookingServed = function (transId) {
 
                             $('#tbl_eventsBooking').DataTable().ajax.reload();
 
-                            $tablebookings.button(0).enable();
-                            $tablebookings.button(1).disable();
-                            $tablebookings.button(2).disable();
-                            $tablebookings.button(3).disable();
-                            $tablebookings.button(4).disable();
+                           /* $tablebookings.button(0).enable();*/
+                            //$tablebookings.button(1).disable();
+                            //$tablebookings.button(2).disable();
+                            //$tablebookings.button(3).disable();
+                            //$tablebookings.button(4).disable();
                             //$tablebookings.button(5).disable();
 
                         }
@@ -1021,11 +1028,11 @@ var onTrashBooking = function (trans_Id) {
 
                             $('#tbl_eventsBooking').DataTable().ajax.reload();
 
-                            $tablebookings.button(0).enable();
-                            $tablebookings.button(1).disable();
-                            $tablebookings.button(2).disable();
-                            $tablebookings.button(3).disable();
-                            $tablebookings.button(4).disable();
+                           /* $tablebookings.button(0).enable();*/
+                            //$tablebookings.button(1).disable();
+                            //$tablebookings.button(2).disable();
+                            //$tablebookings.button(3).disable();
+                            //$tablebookings.button(4).disable();
                             //$tablebookings.button(5).disable();
                         }
                     }

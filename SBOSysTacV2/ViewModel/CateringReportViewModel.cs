@@ -25,6 +25,7 @@ namespace SBOSysTacV2.ViewModel
         public decimal AmountPaid { get; set; }
         public string Status { get; set; }
         public bool iscancelled { get; set; }
+        public bool isDeletedTran { get; set; }
 
         private readonly TransactionDetailsViewModel transactionDetails;
 
@@ -35,7 +36,8 @@ namespace SBOSysTacV2.ViewModel
             regular,
             vip,
             pm,
-            sd
+            sd,
+            cat
 
             
         }
@@ -45,7 +47,7 @@ namespace SBOSysTacV2.ViewModel
         }
         public static IEnumerable<CateringReportViewModel> GetCateringReport(IEnumerable<Booking> bookings)
         {
-            getAddonDetails= BookingAddonDetailsViewModel.GetAddonDetails;
+            init_addons();
 
             return bookings.Select(x => new CateringReportViewModel()
             {
@@ -63,11 +65,16 @@ namespace SBOSysTacV2.ViewModel
                 AmountPaid = x.Payments.Any() ? x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum() : 0,
                 PaymentMode = x.Payments.Any()? x.Payments.Select(t => t.pay_means).ToList().Aggregate((i,j)=> i + "," + j!=i?j:""):"---",
                 Status = x.Payments.Any()?"pd":"unpd",
-                iscancelled = (bool) x.is_cancelled
+                iscancelled = (bool) x.is_cancelled,
+                isDeletedTran = (bool) x.is_deleted
 
-            }).Where(t=>t.iscancelled==false);
+
+            }).Where(t=>t.iscancelled==false && t.isDeletedTran==false && t.p_type==packageType.cat.ToString() || t.p_type==packageType.pm.ToString()).OrderBy(o=>o.p_type);
         }
 
-
+        public static void init_addons()
+        {
+            getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
+        }
     }
 }

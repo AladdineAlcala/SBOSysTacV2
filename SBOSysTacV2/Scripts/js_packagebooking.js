@@ -93,7 +93,7 @@ function loadUrl(ptype,url) {
 
     setTimeout(function () {
 
-        console.log(ptype);
+/*        console.log(ptype);*/
 
         if (ptype != "sd") {
 
@@ -294,7 +294,7 @@ function LoadDataTabletoModal(_courseId) {
 
     }
 
-    debugger;
+    
 
     //var courseid = _courseId;
 
@@ -671,6 +671,8 @@ $(document).on('click', '#menu_change_snacks_drinks', function(event) {
 
 });
 
+
+
 //---------------------- Remove Snacks and Drinks ---------------------------------------------------------------------------
 
 $(document).on('click', '#menu_remove_snacks_drinks', function (event) {
@@ -701,20 +703,21 @@ $(document).on('click', '#menu_remove_snacks_drinks', function (event) {
 
                     if (data.success) {
 
+                        Swal.fire({
+                            title: "Success",
+                            text: "Data succesfully Added!",
+                            type: "success"
 
-                        $('#booking_details').load(data.url);
+                        });
+
+                        console.log(data.url);
 
                         setTimeout(function () {
 
-                            Swal.fire({
-                                title: "Success",
-                                text: "Data succesfully Added!",
-                                type: "success"
+                            $('#booking_details').load(data.url);
 
-                            });
-
-
-                        }, 500);
+                            $('#spinn-loader').hide();
+                        }, 1000);
 
                       
 

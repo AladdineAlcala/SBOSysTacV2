@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBOSysTacV2", "SBOSysTacV2\SBOSysTacV2.csproj", "{27ABF436-12A9-4068-88AA-8B75FB6F9CDC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F71D291E-7B06-45F4-B8ED-3070D693A1D6}"
+	ProjectSection(SolutionItems) = preProject
+		G:\SBOSysTacV2\.gitignore = G:\SBOSysTacV2\.gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

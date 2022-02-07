@@ -2092,11 +2092,14 @@ namespace SBOSysTacV2.Controllers
             bool success = false;
             int persist = 0;
 
+            int? _transId = null;
 
             try
             {
                 if (bookmenus != null)
                 {
+                    _transId = bookmenus.trn_Id;
+
                     _dbcontext.Book_Menus.Remove(bookmenus);
                   persist=_dbcontext.SaveChanges();
 
@@ -2112,9 +2115,10 @@ namespace SBOSysTacV2.Controllers
                 Console.WriteLine(e);
                 throw;
             }
-            var url = Url.Action("GetBookingDetailsPartial", "Bookings", new { transId = bookmenus.trn_Id });
 
-            return Json(new {success,url=url}, JsonRequestBehavior.AllowGet);
+            var url = Url.Action("GetBookingDetailsPartial", "Bookings", new { transId = _transId });
+
+            return Json(new {success =success,url=url}, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

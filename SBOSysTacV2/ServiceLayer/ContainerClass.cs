@@ -8,8 +8,16 @@ namespace SBOSysTacV2.ServiceLayer
 {
     public static class ContainerClass
     {
-        public static List<CateringReportViewModel> CateringReport=new List<CateringReportViewModel>();
+        //public static List<CateringReportViewModel> CateringReport=new List<CateringReportViewModel>();
+
+        public static List<CateringReportViewModel> CateringList { get; set; }
 
         public static List<TransRecievablesViewModel> TransRecievablesAccn = new List<TransRecievablesViewModel>();
+
+
+        public static void CateringReport(List<CateringReportViewModel> _list)
+        { 
+            CateringList = _list;
+        }
     }
 }

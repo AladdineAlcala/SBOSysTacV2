@@ -947,7 +947,7 @@ tr:hover .addontools {
     cursor: pointer;
 }
 
-span:hover .fa {
+/*span:hover .fa {
     transform: scale(1.4);
     cursor: pointer;
 }
@@ -955,7 +955,7 @@ span:hover .fa {
 span > i {
     margin-right: 3px;
     margin-left: 3px;
-}
+}*/
 
 tfoot {
     background-color: #666666;
