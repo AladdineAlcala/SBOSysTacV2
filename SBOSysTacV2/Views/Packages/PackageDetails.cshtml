@@ -1,0 +1,103 @@
+﻿<style type="text/css">
+    #lstPackage>li > span {
+        font-size: 1.2em;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+   
+</style>
+
+
+
+@using SBOSysTacV2.ViewModel
+@using PagedList
+@using PagedList.Mvc
+@model PackageDetailsLocationViewModel
+
+<section class="content">
+    @Html.HiddenFor(m => m.PackageId, new { @id = "hidden_packageId" })
+    <div class="row">
+        <div class="col-md-5">
+
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <i class="fa fa-cube"></i>
+                    <h2 class="box-title text-bold text-aqua">@Model.Packages.p_descripton</h2>
+                    @*<p style="display: block; margin-top: 0px; margin-bottom: 0px; margin-left: 20px; padding: 0px;">@("( Minimum of " + Model.Packages.p_min + " pax )")</p>*@
+                    <p style="display: block; margin-top: 0px; margin-bottom: 0px; margin-left: 26px; padding: 0px;"><b>No. of Pax applicable: </b> @("" + Model.packageApplicablepax + "")</p>
+                    <p class="lead" style="margin-bottom: 0px; margin-left:26px; margin-top: 5px;">Php  <b style="font-style:italic;"> @("" + Model.Packages.p_amountPax + "")</b> per Pax</p>
+                </div>
+                <div class="box-body" style="margin-left: 20px; padding-top: 2px;">
+                    @{
+                        Html.RenderAction("get_ListofPackageCourse", "Packages", new { packageId = Model.PackageId });
+                    }
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-7" id="packagelocationTable">
+            @*refactor this module*@
+
+            @{
+                Html.RenderAction("get_ListofPackagesbyLocation", "Packages", new { packageId = Model.PackageId });
+            }
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5">
+            <p class="text"> <b>Created Date: </b>@(Model.Packages.date_Created!=null ? Model.Packages.date_Created.Value.ToString("MMMM,dd,yyyy h:mm tt") :string.Empty)</p>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-5">
+
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(m => m.Packages.isActive, new { @class = "options", @id = "isActivePackage" })
+
+                    isActive Package
+                </label>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-8 col-sm-offset-5">
+            @Html.ActionLink("Back to Packages", "Index", "Packages", null, new { @class = "btn bg-olive btn-flat margin" })
+        </div>
+    </div>
+</section>
+
+
+
+
+
+@section scripts
+{
+
+    <script type="text/javascript">
+
+        var PackageUrl = {
+            url_add: "@Url.Action("PackageForm", "Packages")",
+            url_details: "@Url.Action("PackageDetails", "Packages", new {packageId = "pId"})",
+            url_addPackageAreaCoverage: "@Url.Action("AddPackageCoverage", "Packages")",
+            url_modifyPackageAreaCoverage: "@Url.Action("ModifyPackageLocation", "Packages")",
+            url_removePackageAreaCoverage: "@Url.Action("Remove_PackageLocaton", "Packages")",
+            url_packageStatus: "@Url.Action("PackageStatus", "Packages")",
+            url_searchPackageLocation: "@Url.Action("GetAreas", "Packages")"
+
+        }
+
+
+
+    </script>
+
+    @Scripts.Render("~/Scripts/js_packages.js")
+}

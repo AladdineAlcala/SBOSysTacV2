@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SBOSysTacV2.ViewModel.Course_PackageSelectionViewModel>
+
+<table class="table table-hover">
+    
+    @foreach (var courses in Model)
+    {
+        <tr>
+            <td>@courses.coursename</td>
+
+            <td class="text-center">
+
+                <div class="tools">
+                    @{
+                        if (courses.isSelected == true)
+                        {
+                            <i class="fa fa-check-square-o hasselected" id="selectedcourse" data-id="@courses.courseId"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-square-o" id="selectedcourse" data-id="@courses.courseId"></i>
+                        }
+                    }
+
+                </div>
+
+
+             
+
+
+            </td>
+
+            @*<td class="tools" data-id="@Model.transactionId">
+                <i class="fa fa-edit" id="menu_change" data-menuid="@menu.menu_No" ></i>
+                <i class="fa fa-times" id="menu_remove" data-menuid="@menu.menu_No"></i>
+            </td>*@
+
+        </tr>
+    }
+
+
+</table>

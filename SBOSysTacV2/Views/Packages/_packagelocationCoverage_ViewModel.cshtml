@@ -1,0 +1,69 @@
+﻿@using SBOSysTacV2.ViewModel
+@using PagedList
+@using PagedList.Mvc
+@model PackageDetailsLocationViewModel
+    
+<input type="hidden" value="@Model.PackageId" id="hiddenpackageId" />
+
+<div class="box box-success">
+    <div class="box-header">
+        <h3 class="box-title">List of Package Applicable Locations</h3>
+        <div class="box-tools">
+            @{
+                if (Model.Packages.isActive == true)
+                {
+                    <button type="button" class="btn btn-sm bg-olive btn-flat" data-toggle="modal" data-target="modal-addpackagecoverage" id="addpackageLocation" data-id="@Model.PackageId"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-sm bg-olive btn-flat disabled"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                }
+            }
+         
+        </div>
+        </div>
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <th>Area</th>
+                    <th>With-Extended AddOn</th>
+                    <th>Add-on Amount/Pax</th>
+                    <th></th>
+
+                </tr>
+                @foreach (var item in Model.PackageAreaCoverages)
+                {
+                    <tr style="margin-bottom: 0px; margin-top: 0px; padding-top: 0px; padding-bottom: 0px;">
+                        <td>@item.Area.AreaDetails</td>
+                        <td>@((bool) item.is_extended ? "Yes" : "No")</td>
+                        <td>@item.ext_amount</td>
+                        <td>
+                            
+
+                            @{
+                                if (Model.Packages.isActive == true)
+                                {
+                                    <button type="button" class="btn btn-primary btn-xs" id="btn_modifyPackageloc" data-id="@item.p_areaNo"><i class="fa  fa-pencil-square-o fa-fw"></i></button>
+
+                                    <button type="button" class="btn btn-danger btn-xs" id="btn_removelocPackage" data-id="@item.p_areaNo"><i class="fa fa-trash fa-fw"></i></button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-danger btn-xs disabled"><i class="fa fa-trash fa-fw"></i></button>
+                                }
+                            }
+
+
+                        </td>
+                    </tr>
+                }
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            @Html.PagedListPager(Model.PackageAreaCoverages, page => Url.Action("PackageDetails", "Packages", new { page = page, packageId = Model.PackageId }))
+        </div>
+    </div>

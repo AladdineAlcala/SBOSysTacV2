@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Audit.EntityFramework.Identity</name>
+    </assembly>
+    <members>
+        <member name="T:Audit.EntityFramework.AuditIdentityDbContext`6">
+            <summary>
+            Base IdentityDbContext class for Audit. Inherit your IdentityDbContext from this class to enable audit.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.#ctor">
+            <summary>
+            Initializes a new instance of the AuditIdentityDbContext
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="nameOrConnectionString">Either the database name or a connection string.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.#ctor(System.Data.Entity.Infrastructure.DbCompiledModel)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="model">The model that will back this context.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.#ctor(System.Data.Common.DbConnection,System.Boolean)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="contextOwnsConnection">If set to true the connection is disposed when the context is disposed, otherwise the caller must dispose the connection.</param>
+            <param name="existingConnection">An existing connection to use for the new context.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.#ctor(System.String,System.Data.Entity.Infrastructure.DbCompiledModel)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="nameOrConnectionString">Either the database name or a connection string.</param>
+            <param name="model">The model that will back this context.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.#ctor(System.Data.Common.DbConnection,System.Data.Entity.Infrastructure.DbCompiledModel,System.Boolean)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="existingConnection">An existing connection to use for the new context.</param>
+            <param name="model">The model that will back this context.</param>
+            <param name="contextOwnsConnection">If set to true the connection is disposed when the context is disposed, otherwise the caller must dispose the connection.</param>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`6.AuditDataProvider">
+            <summary>
+            To indicate the Audit Data Provider to use. (Default is NULL to use the configured default data provider). 
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`6.AuditDisabled">
+            <summary>
+            Indicates if the Audit is disabled.
+            Default is false.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`6.AuditEventType">
+            <summary>
+            To indicate the event type to use on the audit event. (Default is the context name). 
+            Can contain the following placeholders: 
+             - {context}: replaced with the Db Context type name.
+             - {database}: replaced with the database name.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`6.DbContext">
+            <summary>
+            The Db Context for this instance
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`6.ExtraFields">
+            <summary>
+            Optional custom fields added to the audit event
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`6.IncludeEntityObjects">
+            <summary>
+            To indicate if the output should contain the modified entities objects. (Default is false)
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`6.Mode">
+            <summary>
+            To indicate the audit operation mode. (Default is OptOut). 
+             - OptOut: All the entities are tracked by default, except those decorated with the AuditIgnore attribute. 
+             - OptIn: No entity is tracked by default, except those decorated with the AuditInclude attribute.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`6.IncludeIndependantAssociations">
+            <summary>
+            Value to indicate if the Independant Associations should be included. Independant associations are logged on EntityFrameworkEvent.Associations.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`6.EntitySettings">
+            <summary>
+            A collection of settings per entity type.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.OnScopeCreated(Audit.Core.AuditScope)">
+            <summary>
+            Called after the audit scope is created.
+            Override to specify custom logic.
+            </summary>
+            <param name="auditScope">The audit scope.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.OnScopeSaving(Audit.Core.AuditScope)">
+            <summary>
+            Called after the EF operation execution and before the AuditScope saving.
+            Override to specify custom logic.
+            </summary>
+            <param name="auditScope">The audit scope.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.AddAuditCustomField(System.String,System.Object)">
+            <summary>
+            Adds a custom field to the audit scope.
+            The value will be serialized when SaveChanges takes place.
+            </summary>
+            <param name="fieldName">The field name.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.SaveChanges">
+            <summary>
+            Saves the changes synchronously.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`6.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Saves the changes asynchronously.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
+        <member name="T:Audit.EntityFramework.AuditIdentityDbContext">
+            <summary>
+            Base IdentityDbContext class for Audit. Inherit your IdentityDbContext from this class to enable audit.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext.#ctor">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="nameOrConnectionString">Either the database name or a connection string.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext.#ctor(System.Data.Entity.Infrastructure.DbCompiledModel)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="model">The model that will back this context.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext.#ctor(System.Data.Common.DbConnection,System.Boolean)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="contextOwnsConnection">If set to true the connection is disposed when the context is disposed, otherwise the caller must dispose the connection.</param>
+            <param name="existingConnection">An existing connection to use for the new context.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext.#ctor(System.String,System.Data.Entity.Infrastructure.DbCompiledModel)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="nameOrConnectionString">Either the database name or a connection string.</param>
+            <param name="model">The model that will back this context.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext.#ctor(System.Data.Common.DbConnection,System.Data.Entity.Infrastructure.DbCompiledModel,System.Boolean)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="existingConnection">An existing connection to use for the new context.</param>
+            <param name="model">The model that will back this context.</param>
+            <param name="contextOwnsConnection">If set to true the connection is disposed when the context is disposed, otherwise the caller must dispose the connection.</param>
+        </member>
+        <member name="T:Audit.EntityFramework.AuditIdentityDbContext`1">
+            <summary>
+            Base IdentityDbContext class for Audit. Inherit your IdentityDbContext from this class to enable audit.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.#ctor(System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.#ctor">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="nameOrConnectionString">Either the database name or a connection string.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.#ctor(System.Data.Entity.Infrastructure.DbCompiledModel)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="model">The model that will back this context.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.#ctor(System.Data.Common.DbConnection,System.Boolean)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="contextOwnsConnection">If set to true the connection is disposed when the context is disposed, otherwise the caller must dispose the connection.</param>
+            <param name="existingConnection">An existing connection to use for the new context.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.#ctor(System.String,System.Data.Entity.Infrastructure.DbCompiledModel)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="nameOrConnectionString">Either the database name or a connection string.</param>
+            <param name="model">The model that will back this context.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.#ctor(System.Data.Common.DbConnection,System.Data.Entity.Infrastructure.DbCompiledModel,System.Boolean)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="existingConnection">An existing connection to use for the new context.</param>
+            <param name="model">The model that will back this context.</param>
+            <param name="contextOwnsConnection">If set to true the connection is disposed when the context is disposed, otherwise the caller must dispose the connection.</param>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`1.AuditDataProvider">
+            <summary>
+            To indicate the Audit Data Provider to use. (Default is NULL to use the configured default data provider). 
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`1.AuditDisabled">
+            <summary>
+            Indicates if the Audit is disabled.
+            Default is false.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`1.AuditEventType">
+            <summary>
+            To indicate the event type to use on the audit event. (Default is the context name). 
+            Can contain the following placeholders: 
+             - {context}: replaced with the Db Context type name.
+             - {database}: replaced with the database name.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`1.DbContext">
+            <summary>
+            The Db Context for this instance
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`1.ExtraFields">
+            <summary>
+            Optional custom fields added to the audit event
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`1.IncludeEntityObjects">
+            <summary>
+            To indicate if the output should contain the modified entities objects. (Default is false)
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`1.Mode">
+            <summary>
+            To indicate the audit operation mode. (Default is OptOut). 
+             - OptOut: All the entities are tracked by default, except those decorated with the AuditIgnore attribute. 
+             - OptIn: No entity is tracked by default, except those decorated with the AuditInclude attribute.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`1.IncludeIndependantAssociations">
+            <summary>
+            Value to indicate if the Independant Associations should be included. Independant associations are logged on EntityFrameworkEvent.Associations.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`1.EntitySettings">
+            <summary>
+            A collection of settings per entity type.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.OnScopeCreated(Audit.Core.AuditScope)">
+            <summary>
+            Called after the audit scope is created.
+            Override to specify custom logic.
+            </summary>
+            <param name="auditScope">The audit scope.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.OnScopeSaving(Audit.Core.AuditScope)">
+            <summary>
+            Called after the EF operation execution and before the AuditScope saving.
+            Override to specify custom logic.
+            </summary>
+            <param name="auditScope">The audit scope.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.AddAuditCustomField(System.String,System.Object)">
+            <summary>
+            Adds a custom field to the audit scope.
+            The value will be serialized when SaveChanges takes place.
+            </summary>
+            <param name="fieldName">The field name.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.SaveChanges">
+            <summary>
+            Saves the changes synchronously.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Saves the changes asynchronously.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
+    </members>
+</doc>

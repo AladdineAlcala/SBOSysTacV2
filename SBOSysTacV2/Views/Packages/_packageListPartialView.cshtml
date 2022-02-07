@@ -1,0 +1,68 @@
+﻿@using SBOSysTacV2.ViewModel
+@using PagedList.Mvc
+@using PagedList
+@model PagedList<PackageDetailsLocationViewModel>
+
+
+<style type="text/css">
+
+    #tablePackage>td {
+        vertical-align: middle;
+    }
+
+    </style>
+
+
+<div class="col-md-12 mt-3">
+    <div class="card">
+
+        <!--card body-->
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap" id="tablePackage">
+                    <thead>
+                    <tr>
+                        
+                        <th>Package No</th>
+                        <th>Description</th>
+                        <th>Price per Pax</th>
+                        <th>Is Active</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    
+                    <tbody>
+                            
+                          @{
+                              foreach (var item in Model)
+                              {
+                                <tr>
+
+                                    <td>@item.Packages.p_id</td>
+                                    <td>@item.Packages.p_descripton</td>
+                                    <td>@item.Packages.p_amountPax</td>
+                                    <td>
+                                        <div class="tools addons">
+                                            <i class="fa @(item.Packages.isActive==true?"fa-check-square-o":"fa-square-o") fa-lg"></i>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("PackageDetails","Packages",new{ packageId = item.Packages.p_id})" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                                        <a href="#" id="package_edit" class="btn btn-success btn-sm" data-id="@item.Packages.p_id"><i class="fa fa-edit"></i></a>
+                                        <a href="#" id="package_remove" class="btn btn-danger btn-sm" data-id="@item.Packages.p_id"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                              }
+                          }
+                    </tbody>
+                </table>
+            </div>
+        <!-- end card body-->
+        
+        <div class="card-footer clearfix">
+            @Html.PagedListPager(Model, page => Url.Action("GetPackageView", new {page=page,_viewType=ViewBag.viewType}),PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() {HttpMethod ="GET",UpdateTargetId = "page_container" }))
+
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,118 @@
+﻿
+
+
+<section class="content">
+    <!-- Default box -->
+    <div class="box">
+
+        <div class="box-header with-border">
+            <i class="fa fa-cubes fa-fw"></i>
+            <h3 class="box-title"> Buffet Packages View</h3>
+
+        </div>
+
+        <div class="box-body">
+
+
+            <div class="row">
+
+                <div class="col-md-2 col-sm-2">
+                    <a class="btn bg-olive margin" id="btnAddPackage" href="@Url.Action("CreatePackage", "Packages")"><i class="fa fa-plus"></i> New Package</a>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group mt-2 mb-0">
+                        <label class="control-label col-sm-2 "> Select Type: </label>
+                        <div class="radio m-0 mb-0 mt-3" style="width: 500px;">
+                            <label class="mx-2"><input type="radio" name="radfilter" checked="checked" id="rad_all" />View All </label>
+                            <label class="mx-2"><input type="radio" name="radfilter" id="rad_vip" />Vip </label>
+                            <label class="mx-2"><input type="radio" name="radfilter" id="radregular" />Regular </label>
+                            <label class="mx-2"><input type="radio" name="radfilter" id="rad_packmeal" />Pack Meals </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group mt-1">
+                        <div class="icon-container">
+                            <span class="fa-stack packageview" id="package_listview">
+                                <i class="fa fa-list fa-lg icon-listview" aria-hidden="true"></i>
+                            </span>
+
+                            <span class="fa-stack packageview" id="package_cardview">
+                                <i class="fa fa-th fa-lg icon-cardview" aria-hidden="true"></i>
+                            </span>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-md-3">
+
+                    @using (Ajax.BeginForm("Index", "Packages", new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "page_container"
+                    }
+                        ))
+                    {
+                        <div class="input-group mt-1 ml-2 add-on">
+                            <input type="text" name="searchString"  value="@ViewBag.CurrentFilter" class="form-control" placeholder="Search Package" autofocus>
+                            <div class="input-group-btn">
+                                <button type="submit" name="search" id="search_package" class="btn btn-flat bg-olive-active">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+
+
+
+            </div>
+              
+            <div id="packageDetails" class="my-3">
+                @{Html.RenderAction("GetPackageView", "Packages",null);}
+            </div>
+
+        </div>
+     
+    </div>
+    <!-- /.box -->
+</section>
+<!-- /.content -->
+
+
+<div id="spinn-loader"></div>
+
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var PackageUrl = {
+                url_loadPackageCard:"@Url.Action("GetPackageView","Packages")",
+                url_add: "@Url.Action("PackageForm", "Packages")",
+                url_remove: "@Url.Action("RemovePackage","Packages")",
+                url_index: "@Url.Action("Index", "Packages")",
+                url_details: "@Url.Action("PackageDetails", "Packages", new {packageId = "pId"})",
+                url_modifypackage: "@Url.Action("ModifyPackage", "Packages", new {packageId = "pId"})"
+            }
+
+
+
+    </script>
+
+    @*@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")*@
+    @Scripts.Render("~/Scripts/js_packages.js")
+
+
+
+}

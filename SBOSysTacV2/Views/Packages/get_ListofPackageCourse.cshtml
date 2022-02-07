@@ -1,0 +1,20 @@
+﻿@using SBOSysTacV2.ViewModel
+@model IEnumerable<PackageBodyViewModel>
+    
+
+<ul class="list-unstyled" id="lstPackage">
+
+@{
+    if (Model.Any())
+    {
+        foreach (var pbody in Model)
+        {
+            <li><span class="text-bold text-black">@(pbody.pbodycoursename)</span></li>
+        }
+
+
+    }
+}
+    
+
+</ul>

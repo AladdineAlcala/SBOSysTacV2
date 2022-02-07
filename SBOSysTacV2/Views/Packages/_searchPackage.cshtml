@@ -1,0 +1,61 @@
+﻿@using SBOSysTacV2.ViewModel
+@model PackageAreaLocationViewModel
+
+
+
+@*<div class="row">
+    
+    
+ 
+</div>*@
+
+<div class="panel-body" style="margin-bottom: 0; padding-bottom: 0; margin-top: 0; padding-top: 0;">
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="form-group">
+                <label>Filter Package By: </label>
+                
+                <div class="radio">
+                    <label style="margin-left: 5px; margin-right: 5px;" class="text-blue text-center"><input type="radio" checked="checked" name="radiosearchpackageoption" id="radType"/>Type</label>
+                    @*<label style="margin-left: 5px; margin-right: 5px;" class="text-blue text-center"><input type="radio" name="radiosearchpackageoption" id="radlocation"/>Location </label>*@
+                    <label style="margin-left: 5px; margin-right: 5px;" class="text-blue text-center"><input type="radio" name="radiosearchpackageoption" id="radpax"/> Applicable Pax</label>
+                </div>
+              
+
+             
+                @Html.DropDownListFor(m => m.nopaxId, Model.ApplicablePaxSelectList, "------- Select No. of Pax applicable Package -------", new {@class = "form-control", @id = "noofPaxSelectList", @display = "none"})
+
+                @Html.DropDownList("PackageType",new List<SelectListItem>
+                {
+                    new SelectListItem{Text ="Vip Package",Value ="vip"},
+                    new SelectListItem{Text ="Regular Package",Value ="regular"},
+                    new SelectListItem{Text ="Pack Meals",Value ="pm"},
+                    new SelectListItem{Text ="Snacks/Drinks",Value ="sd"},
+                }, "--- Select Package Type ---",new {@class = "form-control", @id = "packageTypeSelectList", @display = "none"})
+                
+
+            </div>
+        </div>
+        <div class="col-sm-5" style="margin-top: 65px;">
+            @Html.DropDownListFor(m => m.aID, Model.AreaByPackageDistinct, "------- Select Package By Area -------", new {@class = "form-control", @id = "areaSelectList"})
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-condensed table-hover" id="tbl-packages" style="width: 100%;">
+            <thead>
+            <tr>
+               
+                <th>Package</th>
+                <th>Amount per PAX</th>
+                <th>Is Active</th>
+                <th>w/ Extended Amt.</th>
+                <th></th>
+               
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+</div>
+

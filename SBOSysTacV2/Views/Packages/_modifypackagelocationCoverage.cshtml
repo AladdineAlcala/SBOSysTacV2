@@ -1,0 +1,120 @@
+﻿@using SBOSysTacV2.ViewModel
+@using PagedList
+@using PagedList.Mvc
+@model PackageAreaLocationViewModel
+
+
+<div id="modal-addpackagecoverage" class="modal fade" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Location for Applicable Package</h4>
+            </div>
+        @using (Html.BeginForm("ModifyPackageLocation", "Packages", FormMethod.Post, new {@id = "modifypackagelocationform", role = "form"}))
+        {
+            <div class="modal-body">
+                <div class="row">
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    @Html.HiddenFor(m => m.p_id)
+                    
+                    @Html.HiddenFor(m => m.aID)
+                    @Html.HiddenFor(m => m.p_areaNo)
+
+                    <div class="col-sm-10">
+
+                                @*<div class="form-group">
+                                    @Html.LabelFor(m => m.aID, new { @class = "control-label required" })
+                                    @Html.DropDownListFor(m => m.aID, Model.AreasSelectList, "------- Select Area Location By Minicipality -------", new {@class = "form-control", @id = "areaSelectList"})
+                                    @Html.ValidationMessageFor(m=>m.aID)
+                                </div>*@
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.aID, new {@class = "control-label required"})
+                            @*@Html.DropDownListFor(m => m.areadeatails, new {@class= "form-control", @id = "select2Area", style = "width:100%", @placeholder = "Select Area by Municipality"})*@
+                            @*<select class="form-control required" id="select2Area" style="width: 100%;" disabled="disabled"></select>*@
+                            @Html.TextBoxFor(m => m.areadeatails, new {@class = "form-control",disabled = "disabled" })
+                            @*@Html.ValidationMessageFor(m=>m.aID, null, new { @class = "text-danger" })*@
+                          
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(m => m.is_extended, new {@class = "options", @id = "chkExtended", @onclick = "PrivateCheck();"})
+                                    With Extended Add-on
+                                </label>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ext_amount, new {@class = "control-label"})
+                            @Html.TextBoxFor(m => m.ext_amount, new {@class = "form-control text-right ", @id = "extAmount"})
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+            <!--end of modal-body-->
+
+            @Html.HiddenFor(m=>m.aID,new {@id="hidden_AreaLocationId"})
+
+            <div class="modal-footer">
+               
+                <button type="button" class="btn bg-olive btn-flat" id="btnmodifylocation">Update changes</button>
+                <button type="button" class="btn bg-olive btn-flat" data-dismiss="modal">Close</button>
+               
+            </div>
+        }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+@*@section scripts
+{
+
+    <script type="text/javascript">
+
+     
+        $(document).ready(function () {
+
+           
+            $('#select2Area').Select2({
+                dropdownParent: $('#modal-addpackagecoverage'),
+                minimumInputLength: 2,
+                ajax: {
+                    url: "/PackageArea/GetAreas",
+                    type: "POST",
+                    datatype: 'json',
+                    data: function (searchTerm) {
+                        return {
+                            searchTerm: searchTerm
+                        };
+                    },
+                    results: function (data, page) {
+
+                        return { results: data.areaList };
+                    }
+                }
+            });
+
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+
+    </script>
+
+}*@

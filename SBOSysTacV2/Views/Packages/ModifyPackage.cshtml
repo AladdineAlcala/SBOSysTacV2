@@ -1,0 +1,54 @@
+﻿<style type="text/css">
+    .tools {
+        /*display: none;*/
+        /*visibility: hidden;*/
+        float: right;
+        color: #dd4b39;
+        margin-right: 10px;
+    }
+
+    .tools i {
+        font-size: 1.0em;
+    }
+
+    tr:hover .tools {
+        /*visibility: visible;*/
+        display: inline-block;
+        cursor: pointer;
+        transform: scale(1.3);
+    }
+
+</style>
+
+<section class="content" id="packageform">
+    @*Html.RenderAction(ViewBag.ActiveForm == "newPackagebody" ? "PackageBody" : "PackageForm");*@
+
+    @{
+        Html.RenderAction(ViewBag.ActiveForm == "modifyPackagebody" ? "PackageBody_Modify" : "PackageMain_Modify",new {packageId=ViewBag.packageId});
+    }
+</section><!--end section-->
+
+
+
+@section scripts{
+
+
+    <script type="text/javascript">
+
+        var PackageUrl= {
+            url_modifyPackageMain: "@Url.Action("PackageMain_Modify", "Packages")",
+            url_modifyPackageBody: "@Url.Action("PackageBody_Modify", "Packages",new {packageId="pId"})",
+            url_details: "@Url.Action("PackageDetails", "Packages", new {packageId = "pId"})",
+            url_addcoursetoPackagebody: "@Url.Action("AddCoursetoPackageBody", "Packages")",
+            url_removeCoursefromPackagebody:"@Url.Action("RemoveSelectedPackageCourse", "Packages")",
+            url_index: "@Url.Action("Index", "Packages")"
+
+        }
+
+    </script>
+
+
+    @Scripts.Render("~/Scripts/js_packages.js")
+
+
+}

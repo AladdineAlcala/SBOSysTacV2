@@ -1,0 +1,14 @@
+﻿@model IEnumerable<SBOSysTacV2.ViewModel.PackageBodyViewModel>
+
+
+<ul class="list-group list-group-flush">
+    @foreach (var pbody in Model)
+    {
+        <li class="list-group-item ">
+            
+            <p class="selectedcourse">@pbody.pbodycoursename</p>
+        </li>
+       
+    }
+                 
+</ul>

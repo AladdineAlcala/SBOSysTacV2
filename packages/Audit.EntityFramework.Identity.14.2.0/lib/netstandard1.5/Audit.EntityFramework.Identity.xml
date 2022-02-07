@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Audit.EntityFramework.Identity</name>
+    </assembly>
+    <members>
+        <member name="T:Audit.EntityFramework.AuditIdentityDbContext">
+            <summary>
+            Base IdentityDbContext class for Audit. Inherit your IdentityDbContext from this class to enable audit.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="options">The options to be used by a Microsoft.EntityFrameworkCore.DbContext</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext.#ctor">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+        </member>
+        <member name="T:Audit.EntityFramework.AuditIdentityDbContext`1">
+            <summary>
+            Base IdentityDbContext class for Audit. Inherit your IdentityDbContext from this class to enable audit.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="options">The options to be used by a Microsoft.EntityFrameworkCore.DbContext</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`1.#ctor">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+        </member>
+        <member name="T:Audit.EntityFramework.AuditIdentityDbContext`3">
+            <summary>
+            Base IdentityDbContext class for Audit. Inherit your IdentityDbContext from this class to enable audit.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`3.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="options">The options to be used by a Microsoft.EntityFrameworkCore.DbContext</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`3.#ctor">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+        </member>
+        <member name="T:Audit.EntityFramework.AuditIdentityDbContext`8">
+            <summary>
+            Base IdentityDbContext class for Audit. Inherit your IdentityDbContext from this class to enable audit.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`8.#ctor">
+            <summary>
+            Initializes a new instance of the AuditIdentityDbContext
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`8.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            Initializes a new instance of AuditIdentityDbContext
+            </summary>
+            <param name="options">The options to be used by a Microsoft.EntityFrameworkCore.DbContext</param>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`8.AuditDataProvider">
+            <summary>
+            To indicate the Audit Data Provider to use. (Default is NULL to use the configured default data provider). 
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`8.AuditDisabled">
+            <summary>
+            Indicates if the Audit is disabled.
+            Default is false.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`8.AuditEventType">
+            <summary>
+            To indicate the event type to use on the audit event. (Default is the context name). 
+            Can contain the following placeholders: 
+             - {context}: replaced with the Db Context type name.
+             - {database}: replaced with the database name.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`8.DbContext">
+            <summary>
+            The Db Context for this instance
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`8.ExtraFields">
+            <summary>
+            Optional custom fields added to the audit event
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`8.IncludeEntityObjects">
+            <summary>
+            To indicate if the output should contain the modified entities objects. (Default is false)
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`8.Mode">
+            <summary>
+            To indicate the audit operation mode. (Default is OptOut). 
+             - OptOut: All the entities are tracked by default, except those decorated with the AuditIgnore attribute. 
+             - OptIn: No entity is tracked by default, except those decorated with the AuditInclude attribute.
+            </summary>
+        </member>
+        <member name="P:Audit.EntityFramework.AuditIdentityDbContext`8.EntitySettings">
+            <summary>
+            A collection of settings per entity type.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`8.OnScopeCreated(Audit.Core.AuditScope)">
+            <summary>
+            Called after the audit scope is created.
+            Override to specify custom logic.
+            </summary>
+            <param name="auditScope">The audit scope.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`8.OnScopeSaving(Audit.Core.AuditScope)">
+            <summary>
+            Called after the EF operation execution and before the AuditScope saving.
+            Override to specify custom logic.
+            </summary>
+            <param name="auditScope">The audit scope.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`8.AddAuditCustomField(System.String,System.Object)">
+            <summary>
+            Adds a custom field to the audit scope.
+            The value will be serialized when SaveChanges takes place.
+            </summary>
+            <param name="fieldName">The field name.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`8.SaveChanges">
+            <summary>
+            Saves the changes synchronously.
+            </summary>
+        </member>
+        <member name="M:Audit.EntityFramework.AuditIdentityDbContext`8.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Saves the changes asynchronously.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
+    </members>
+</doc>

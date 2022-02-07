@@ -1,0 +1,51 @@
+﻿
+<style type="text/css">
+    .tools {
+        /*display: none;*/
+        /*visibility: hidden;*/
+        float: right;
+        color: #dd4b39;
+        margin-right: 10px;
+    }
+    .tools i {
+        font-size: 1.2em;
+    }
+
+    tr:hover .tools {
+        /*visibility: visible;*/
+        display: inline-block;
+        cursor: pointer;
+        transform: scale(1.3);
+    }
+</style>
+
+
+<section class="content" id="newpackageform">
+
+
+    @{
+        Html.RenderAction(ViewBag.ActiveForm == "newPackagebody" ? "PackageBody" : "PackageForm");
+    }
+</section><!--end section-->
+
+@section scripts{
+    
+
+    <script type="text/javascript">
+
+        var PackageUrl= {
+            url_add: "@Url.Action("PackageForm", "Packages")",
+            url_details:"@Url.Action("PackageDetails", "Packages", new { packageId = "pId" })",
+            url_addcoursetoPackagebody: "@Url.Action("AddCoursetoPackageBody", "Packages")",
+            url_removeCoursefromPackagebody:"@Url.Action("RemoveSelectedPackageCourse", "Packages")"
+        }
+
+    </script>
+
+  
+    @Scripts.Render("~/Scripts/js_packages.js")
+    
+
+}
+
+

@@ -1,0 +1,223 @@
+﻿@using SBOSysTacV2.ViewModel
+@using PagedList.Mvc
+@using PagedList
+@model PagedList<PackageDetailsLocationViewModel>
+
+
+@Scripts.Render("~/Content/customStyle/card.css")
+
+<style type="text/css">
+    .card {
+        box-shadow: 0 4px 8px 0 #000000;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+        border: 1px solid #000000;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        transition: 0.3s;
+        margin: 5%;
+
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 #000000;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+    }
+
+    .card-body {
+        padding: 5px;
+    }
+    .card-footer {
+        width:50%;
+        bottom: 30px;
+    }
+
+    .tools>i {
+        font-size: 16px;
+    }
+
+    .card-img-top {
+        height: auto;
+    }
+
+    .viewdetail {
+        width: auto;
+    }
+
+    a.viewdetailbtn {
+        color: #23327b;
+        text-decoration: none;
+        font-family: helvetica;
+    }
+
+    a.viewdetailbtn:hover {
+        text-decoration: underline;
+        text-transform: uppercase;
+        font-size-adjust: 0.58;
+        -webkit-transition-duration: 1.1s;
+        transition-duration: 1.1s;
+    }
+
+    div.card-body > div.tools > .fa,
+    div.card-body > div.tools > .glyphicon,
+    div.card-body > div.tools > .icon {
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    html > body div.card-body > div.tools {
+        display: none;
+        float: right;
+        color: #dd4b39;
+    }
+
+    html > body div.card-body:hover .tools {
+        display: inline-block;
+    }
+
+    .icon-container {
+        margin-top: 10px;
+        margin-left: 15px;
+        cursor: pointer;
+        /*        width:100px;
+            display:inline-block;*/
+    }
+    .center-block {
+        margin-left:auto;
+        margin-right:auto;
+        display:block;
+    }
+    /*.viewicon {*/
+        /*  margin-left: 3px;
+            margin-right: 3px;*/
+    /*}*/
+
+    .icon-cardview {
+        margin: 7px;
+        /* border-style:solid;*/
+        /* color: #128EED;*/
+    }
+    .card-title {
+        width: 80%;
+        font-size: 1.6rem;
+        color: #0080ff;
+    }
+    .card-subtitle {
+        margin-left: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-bottom: 2px solid black;
+        width: 75%;
+        padding-bottom: 3.6px;
+    }
+    .card-package {
+        width: 23rem;
+        justify-content: center;
+        height:350px;
+    }
+    .card-checkbox {
+        font-size: 0.9em;
+        font-style: italic;
+    }
+    .card-tools {
+        right: 5px;
+        top: 10px;
+    }
+  
+</style>
+
+
+
+@foreach (var package in Model)
+{
+    <div class="col-md-3 col-sm-6">
+        <div class="card card-package center-block">
+            @*<img class="card-img-top img-responsive" src="@Url.Content("~/Content/dist/img/500x300.png")" alt="Sans &amp; Sans-Serif">*@
+            <div class="card-body position-relative mb-1">
+
+                <div class="tools card-tools position-absolute my-2">
+                    <i class="fa fa-edit text-blue" id="package_edit" data-id="@package.PackageId"></i>
+                    <i class="fa fa-trash text-red" id="package_remove" data-id="@package.PackageId"></i>
+                </div>
+
+                <div class="m-2 mt-3">
+                    <h4 class="card-title text-uppercase text-bold text-green m-1">@package.Packages.p_descripton</h4>
+                    <h5 class="card-subtitle">@("Php  " + package.Packages.p_amountPax) /pax</h5>
+                </div>
+                <p class="text-center menus my-3">Menus</p>
+
+                @{
+                    if (package.PBody.Any())
+                    {
+                        <ul class="list-group list-group-flush mb-2">
+
+                            @{
+
+                                foreach (var pbody in package.PBody)
+                                {
+                                    <li class="list-group-item">@pbody.pbodycoursename</li>
+                                }
+
+
+
+                                if (package.PBody.Count() < 4)
+                                {
+
+
+                                    <li class="list-group-item" style="height: 40px;"> </li>
+
+
+                                }
+
+
+                            }
+
+                        </ul>
+
+
+
+                    }
+                    else
+                    {
+                        <div style="height: 178px;">
+                            <p style="font-size: 18px; color: blue" class="text-center">No Menus Found </p></div>
+                    }
+                }
+
+
+
+               
+            </div>
+
+            <div class="card-footer position-absolute">
+
+                <div class="checkbox ml-3 my-2">
+                    <label>
+                        @{
+                            if (package.Packages.isActive == true)
+                            {
+                                <input type="checkbox" checked="checked" disabled="disabled"/>
+                            }
+                            else
+                            {
+                                <input type="checkbox" disabled="disabled"/>
+                            }
+                        }
+
+                        Is Active Package
+                    </label>
+
+                </div>
+  
+                <div class="viewdetail text-center">
+                    @Html.ActionLink("View Details", "PackageDetails", "Packages", new {packageId = package.Packages.p_id}, new {@class = "viewdetailbtn" })
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+				
+<div class="col-md-12">
+    @Html.PagedListPager(Model, page => Url.Action("GetPackageView", new {page=page, _viewType = ViewBag.viewType}),PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() {HttpMethod ="GET",UpdateTargetId = "page_container" }))
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+</div>

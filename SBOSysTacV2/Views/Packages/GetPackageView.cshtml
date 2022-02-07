@@ -1,0 +1,13 @@
+﻿@using SBOSysTacV2.ViewModel
+@using PagedList.Mvc
+@using PagedList
+@model PagedList<PackageDetailsLocationViewModel>
+
+<div class="row">
+
+    <div class="container-fluid" id="page_container">
+        @{ Html.RenderPartial(ViewBag.viewType == null || ViewBag.viewType == "package_cardview" ? "_packageCardPartialView" : "_packageListPartialView", Model as PagedList<PackageDetailsLocationViewModel>); }
+    </div>
+
+</div>
+<!--end row-->
