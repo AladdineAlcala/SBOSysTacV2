@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.ViewModel;
 using SBOSysTacV2.Models;
+using SBOSysTacV2.ServiceLayer;
 
 namespace SBOSysTacV2.Controllers
 {
@@ -14,7 +15,7 @@ namespace SBOSysTacV2.Controllers
     {
         private PegasusEntities _dbcontext;
         private BookingPaymentsViewModel bookingPayments = new BookingPaymentsViewModel();
-
+        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
         public HomeController()
         {
             _dbcontext = new PegasusEntities();
@@ -161,7 +162,7 @@ namespace SBOSysTacV2.Controllers
                         venue = l.venue,
                         bookdatetime = l.startdate,
                         package = l.Package.p_descripton,
-                        packageDue = bookingPayments.Get_TotalAmountBook(l.trn_Id),
+                        packageDue = _getBookingAmount(l.trn_Id),
                         isServe = Convert.ToBoolean(l.serve_stat)
 
                     }).ToList();

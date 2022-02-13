@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.Models;
+using SBOSysTacV2.ServiceLayer;
 
 namespace SBOSysTacV2.ViewModel
 {
@@ -29,7 +30,7 @@ namespace SBOSysTacV2.ViewModel
         private readonly PegasusEntities db_entities = new PegasusEntities();
         private BookingPaymentsViewModel bookingPayments = new BookingPaymentsViewModel();
         private TransactionDetailsViewModel transdetails = new TransactionDetailsViewModel();
-
+        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
 
         public IEnumerable<TransRecievablesViewModel> GetAllRecievables(IEnumerable<Booking> tBookings)
         {
@@ -56,7 +57,7 @@ namespace SBOSysTacV2.ViewModel
                         _iscancelledbooking = b.is_cancelled,
                         _packagedetails = b.Package.p_descripton,
                         _pAmountperPax = b.Package.p_amountPax,
-                        _tpackageAmt = bookingPayments.Get_TotalAmountBook(b.trn_Id),
+                        _tpackageAmt = _getBookingAmount(b.trn_Id),
                         _totapayment = (from p in db_entities.Payments select p).Where(s => s.trn_Id == b.trn_Id)
                         .Sum(x => x.amtPay),
                         _refunds = (from re in db_entities.Refunds select re).FirstOrDefault(t => t.trn_Id == b.trn_Id)
@@ -120,7 +121,7 @@ namespace SBOSysTacV2.ViewModel
                         //venue = b.venue,
                         //packagedetails = b.Package.p_descripton,
                         //p_amountperPax = b.Package.p_amountPax,
-                        totalPackageAmount = bookingPayments.Get_TotalAmountBook(b.trn_Id)
+                        totalPackageAmount = _getBookingAmount(b.trn_Id)
 
                     }).ToList();
 
@@ -147,7 +148,7 @@ namespace SBOSysTacV2.ViewModel
                 recievable.transDate = Convert.ToDateTime(booking.transdate);
                 recievable.bookdatetime = Convert.ToDateTime(booking.startdate);
                 recievable.cusId = Convert.ToInt32(booking.Customer.c_Id);
-                recievable.totalPackageAmount = bookingPayments.Get_TotalAmountBook(booking.trn_Id);
+                recievable.totalPackageAmount = _getBookingAmount(booking.trn_Id);
                 
 
             }

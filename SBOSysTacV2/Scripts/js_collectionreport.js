@@ -73,6 +73,9 @@
         e.preventDefault();
         e.stopPropagation();
 
+        $('#spinn-loader').show();
+
+        $('.register-box').hide();
 
         var filterdatefrom =$('#dateFrom').val();
         var filterdateTo = $('#dateTo').val();
@@ -83,16 +86,39 @@
          if (unset.checked) {
              unsetchk = true;
          }
-         
+         var url = $(this).attr('href');
+        setTimeout(function () {
+               
+                window.location.href = url + '?datefrom=' + filterdatefrom + '&dateto=' + filterdateTo + '&w_unsettle=' + unsetchk;
+            },
+            500);
 
     
-
-        var url = $(this).attr('href');
-
-        window.location.href = url + '?datefrom=' + filterdatefrom + '&dateto=' + filterdateTo + '&w_unsettle=' + unsetchk;
 
         // window.location.href = url;
     });
 
+
+    $('a.print_incentivesReport').on('click',
+        function (event) {
+            
+            event.preventDefault();
+
+            $('#spinn-loader').show();
+
+            $('.register-box').hide();
+
+            var filterdatefrom = $('#dateFrom').val();
+            var filterdateTo = $('#dateTo').val();
+            var url = $(this).attr('href');
+
+            setTimeout(function () {
+
+                   
+                    window.location.href = url + '?datefrom=' + filterdatefrom + '&dateto=' + filterdateTo;
+
+                },
+                500);
+        });
 
 });

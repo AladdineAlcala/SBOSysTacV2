@@ -33,7 +33,7 @@ namespace SBOSysTacV2.Controllers
         private CourseCategoryViewModel courseCategory;
         private PackageBookingViewModel package_book_vm;
         private BookingOtherChargeViewModel bookOtherCharge;
-       
+        Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
 
         public BookingsController()
         {
@@ -149,7 +149,9 @@ namespace SBOSysTacV2.Controllers
                             b_createdbyUser = bookingViewModel.b_createdbyUser,
                             reference = bookingViewModel.refernce,
                             b_updatedDate = createdDate,
-                            is_cancelled = false
+                            is_cancelled = false,
+                            is_deleted = false
+                            
                         };
 
 
@@ -242,7 +244,6 @@ namespace SBOSysTacV2.Controllers
 
 
         [HttpGet]
-        //[OutputCache(Duration = int.MaxValue, VaryByParam = "transactionId")]
         public ActionResult GetPackageBookingDetails(int transId) => View(booking.GetBookingByTransaction(transId));
 
 
@@ -263,10 +264,6 @@ namespace SBOSysTacV2.Controllers
         {
 
             var transId = transDetails.transactionId;
-
-           Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails=null;
-
-
             decimal packageTotal = 0;
             decimal addonsTotal = 0;
             decimal belowminPax = 0;
@@ -278,7 +275,6 @@ namespace SBOSysTacV2.Controllers
             string discountCode = null;
             decimal packageAmount;
 
-            getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
 
             try
             {
@@ -289,11 +285,9 @@ namespace SBOSysTacV2.Controllers
 
                 var bookings = _dbcontext.Bookings.Find(transDetails.Booking_Trans.trn_Id);
 
-                packageAmount = (decimal) (!string.Equals(packageType, "sd", StringComparison.Ordinal)
+                packageAmount = (decimal) (!string.Equals(packageType, PackageEnum.packageType.sd.ToString(), StringComparison.Ordinal)
                     ? transDetails.Package_Trans.p_amountPax
                     : book_menus_vm.ComputeAmountForSnacksByTransId(transId));
-
-
 
 
                 //var addonslist = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId).ToList();
@@ -307,7 +301,6 @@ namespace SBOSysTacV2.Controllers
                     extendedLocationAmount = transDetailsvm.Get_extendedAmountLoc(transId);
                 }
 
-             
                 
                 dpAmount = transDetailsvm.GetTotalDownPayment(transId);
 
@@ -315,11 +308,9 @@ namespace SBOSysTacV2.Controllers
 
                 cateringdiscountAmount = transDetailsvm.GetCateringdiscountByPax(packageType.Trim(), noOfPax);
 
-
                 packageTotal = Convert.ToDecimal(packageAmount) * noOfPax;
 
                 var subtotal = (packageTotal + addonsTotal + extendedLocationAmount + belowminPax);
-
 
 
                 //get discount information
@@ -1104,14 +1095,15 @@ namespace SBOSysTacV2.Controllers
                 updatedBooking.apply_extendedAmount = bookingViewModel.apply_extendedAmount;
                 updatedBooking.extendedAreaId = bookingViewModel.areaId;
                 updatedBooking.p_id = bookingViewModel.pId;
-                updatedBooking.serve_stat = bookingViewModel.serve_status;
-                updatedBooking.is_cancelled = bookingViewModel.iscancelled;
                 updatedBooking.booktype = bookingViewModel.booktypecode;
                 updatedBooking.p_amount = amountPax;
                 updatedBooking.reference = bookingViewModel.refernce;
                 updatedBooking.b_updatedDate = createdDate;
                 updatedBooking.b_createdbyUser = User.Identity.GetUserId();
-               
+                updatedBooking.serve_stat = bookingViewModel.serve_status;
+                updatedBooking.is_cancelled = bookingViewModel.iscancelled;
+                updatedBooking.is_deleted = bookingViewModel.isDeleted;
+
             }
 
 
@@ -1341,8 +1333,9 @@ namespace SBOSysTacV2.Controllers
         }
 
 
-        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin)]
+       
         [HttpGet]
+        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin)]
         public ActionResult AddBookingDiscount(int transactionId)
         {
             DiscountCodeViewModel dc = new DiscountCodeViewModel();
@@ -1363,7 +1356,6 @@ namespace SBOSysTacV2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveBookingDiscount(DiscountCodeViewModel newdiscount)
         {
-
 
             if (!ModelState.IsValid) return PartialView("_AddBookingDiscount", newdiscount);
 

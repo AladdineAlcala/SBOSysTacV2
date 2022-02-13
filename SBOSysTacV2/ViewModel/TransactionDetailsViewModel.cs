@@ -138,6 +138,7 @@ namespace SBOSysTacV2.ViewModel
             try
             {
                 var booktrans = _dbEntities.Bookings.FirstOrDefault(t => t.trn_Id == transId);
+
                 if (booktrans != null)
                 {
                     var pax = booktrans.noofperson;
@@ -294,43 +295,46 @@ namespace SBOSysTacV2.ViewModel
 
         public decimal Get_extendedAmountLoc(int transId)
         {
-            var _dbEntities = new PegasusEntities();
 
             decimal extAmt = 0;
 
-            var booking = _dbEntities.Bookings.FirstOrDefault(x => x.trn_Id == transId);
-
-
-            if (booking.Package.p_type.Trim() != "vip" && booking.extendedAreaId != null)
+            using (var _dbEntities = new PegasusEntities())
             {
-                try
+                var booking = _dbEntities.Bookings.FirstOrDefault(x => x.trn_Id == transId);
+
+
+                if (booking.Package.p_type.Trim() != PackageEnum.packageType.vip.ToString() && booking.extendedAreaId != null)
                 {
-                    var list = (from b in _dbEntities.Bookings
-                                join p in _dbEntities.Packages on b.p_id equals p.p_id
-                                join pa in _dbEntities.PackageAreaCoverages on p.p_id equals pa.p_id
-                                where pa.p_id == booking.p_id && pa.aID == booking.extendedAreaId
-                                select new
-                                {
-                                    extLocAmount = pa.ext_amount
-
-                                }).FirstOrDefault();
-
-
-                    if (list != null)
+                    try
                     {
+                        var list = (from b in _dbEntities.Bookings
+                            join p in _dbEntities.Packages on b.p_id equals p.p_id
+                            join pa in _dbEntities.PackageAreaCoverages on p.p_id equals pa.p_id
+                            where pa.p_id == booking.p_id && pa.aID == booking.extendedAreaId
+                            select new
+                            {
+                                extLocAmount = pa.ext_amount
 
-                        extAmt = Convert.ToDecimal(list.extLocAmount);
+                            }).FirstOrDefault();
+
+
+                        if (list != null)
+                        {
+
+                            extAmt =  Convert.ToDecimal(list.extLocAmount * booking.noofperson);
+                        }
+
                     }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }
 
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
+               
             }
 
-            _dbEntities.Dispose();
             return extAmt;
         }
 
@@ -572,24 +576,26 @@ namespace SBOSysTacV2.ViewModel
 
         public static decimal GetCateringdiscountByPax(int paxcount)
         {
-            var _dbEntities = new PegasusEntities();
-
             decimal amount = 0;
-            var cateringdiscount = _dbEntities.CateringDiscounts.FirstOrDefault(x => x.DiscPaxMin <= paxcount && x.DiscPaxMax >= paxcount);
 
-            if (cateringdiscount != null)
+            using (var _dbEntities = new PegasusEntities())
             {
-                amount = (decimal) cateringdiscount.Amount;
-            }
-            _dbEntities.Dispose();
+               
+                var cateringdiscount = _dbEntities.CateringDiscounts.FirstOrDefault(x => x.DiscPaxMin <= paxcount && x.DiscPaxMax >= paxcount);
 
+                if (cateringdiscount != null)
+                {
+                    amount = (decimal)cateringdiscount.Amount;
+                }
+
+            }
 
             return amount;
         }
 
         public decimal GetCateringdiscountByPax(string packageType, int noOfPax)
         {
-            return packageType.Trim() == "vip" ? 0 : GetCateringdiscountByPax(noOfPax);
+            return packageType.Trim() ==PackageEnum.packageType.vip.ToString() ? 0 : GetCateringdiscountByPax(noOfPax);
         }
 
 
@@ -609,12 +615,12 @@ namespace SBOSysTacV2.ViewModel
             return new TransactionDetailsViewModel
             {
                 transactionId = transid,
-                PackageAmount =(decimal) (!string.Equals(contractDetail.packageType.TrimEnd(), "sd", StringComparison.Ordinal)? 
+                PackageAmount =(decimal) (!string.Equals(contractDetail.packageType.TrimEnd(), PackageEnum.packageType.sd.ToString(), StringComparison.Ordinal)? 
                                 this.GetAccountTotalByTransId(transid) : book_menus_vm.ComputeAmountForSnacksByTransId(transid)),
                 //TotaAddons = advm.AddonsTotal(transid),
                 TotaMiscCharge = bocvm.GetTotalOtherCharges(otherCharges),
                 extLocAmount = this.Get_extendedAmountLoc(transid),
-                cateringdiscount = this.GetCateringdiscountByPax(contractDetail.packageType,contractDetail.noofPax)
+                cateringdiscount = this.GetCateringdiscountByPax(contractDetail.packageType,contractDetail.noofPax)  * contractDetail.noofPax
 
             };
 

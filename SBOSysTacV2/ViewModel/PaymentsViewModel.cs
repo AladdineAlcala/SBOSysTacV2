@@ -66,7 +66,6 @@ namespace SBOSysTacV2.ViewModel
                     }).OrderBy(x=>x.dateofPayment).ToList();
 
 
-
             }
             catch (Exception e)
             {

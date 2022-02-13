@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.Models;
+using SBOSysTacV2.ServiceLayer;
 
 namespace SBOSysTacV2.ViewModel
 {
@@ -24,7 +25,7 @@ namespace SBOSysTacV2.ViewModel
        
         private PegasusEntities dbentities = new PegasusEntities();
         private BookingPaymentsViewModel bookingPayments = new BookingPaymentsViewModel();
-    
+        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
 
         public IEnumerable<RefundsViewModel> GetAllRefundsList()
         {
@@ -47,13 +48,11 @@ namespace SBOSysTacV2.ViewModel
                         _evtVenue=b.venue,
                         _iscancelledbooking = b.is_cancelled,
                         _serveStat=b.serve_stat,
-                        _tpackageAmt = bookingPayments.Get_TotalAmountBook(b.trn_Id),
+                        _tpackageAmt = _getBookingAmount(b.trn_Id),
                         _totapayment = (from p in dbentities.Payments select p).Where(s => s.trn_Id == b.trn_Id).Sum(x => x.amtPay),
                         _hasrefundEntry=(from rp in dbentities.Refunds select rp).Any(x => x.trn_Id==b.trn_Id),
                         _stat=" "
-
-                    //}).ToList().Where(t=> t._serveStat==false || t._iscancelledbooking==true) .Select(book => new RefundsViewModel()
-                      }).ToList().Where(t=>t._serveStat == false).Select(book => new RefundsViewModel()
+                    }).ToList().Where(t=>t._serveStat == false).Select(book => new RefundsViewModel()
                       {
                         TransId = book._tId,
                         cId = (int) book._cusId,

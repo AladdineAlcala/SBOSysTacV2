@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SBOSysTacV2.Models;
 using SBOSysTacV2.ViewModel;
 using System.Data.Entity;
+using System.Globalization;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.ServiceLayer;
 
@@ -17,16 +18,24 @@ namespace SBOSysTacV2.Controllers
         // GET: Inquiry
 
         private PegasusEntities _dbEntities;
-        private CustomerBookingsViewModel cb=new CustomerBookingsViewModel();
-        private BookingPaymentsViewModel bookingPayments = new BookingPaymentsViewModel();
-        private readonly TransactionDetailsViewModel transactionDetails = new TransactionDetailsViewModel();
-        private TransRecievablesViewModel tr = new TransRecievablesViewModel();
-        private PackageBookingViewModel packageBook = new PackageBookingViewModel();
-       
+        private CustomerBookingsViewModel cb;
+        private BookingPaymentsViewModel bookingPayments;
+        private readonly TransactionDetailsViewModel transactionDetails;
+        private TransRecievablesViewModel tr;
+        private PackageBookingViewModel packageBook;
+        private readonly IncentivesService incentivesService;
+        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
 
         public InquiryController()
         {
             _dbEntities=new PegasusEntities();
+
+            incentivesService = new IncentivesService();
+            cb = new CustomerBookingsViewModel();
+            bookingPayments = new BookingPaymentsViewModel();
+            transactionDetails = new TransactionDetailsViewModel();
+            tr = new TransRecievablesViewModel();
+            packageBook = new PackageBookingViewModel();
         }
 
 
@@ -89,7 +98,7 @@ namespace SBOSysTacV2.Controllers
                         venue = l.venue,
                         bookdatetime = l.startdate,
                         package = l.Package.p_descripton,
-                        packageDue = bookingPayments.Get_TotalAmountBook(l.trn_Id),
+                        packageDue = _getBookingAmount(l.trn_Id),
                         isServe = Convert.ToBoolean(l.serve_stat)
 
                     }).ToList();
@@ -487,10 +496,43 @@ namespace SBOSysTacV2.Controllers
             return View("~/Views/Shared/ReportContainer.cshtml", pOption);
         }
 
+        [HttpGet]
+        public ActionResult AdminReportsIncentives_Index() => View();
+
+
+       
+        [HttpGet]
+        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin)]
+        public ActionResult Admin_IncentivesReport(DateTime dateFrom,DateTime dateTo)
+        {
+            var pOption = new PrintOptionViewModel()
+            {
+
+                selPrintOpt = "incentivesreport",
+                dateFrom = Convert.ToDateTime(dateFrom),
+                dateTo = Convert.ToDateTime(dateTo)
+ 
+
+            };
+
+            //IncentivesService.DateFrom = DateTime.Parse("07-01-2021",CultureInfo.InvariantCulture);
+            //IncentivesService.dateTo = DateTime.Parse("07-30-2021", CultureInfo.InvariantCulture);
+
+            //var list= IncentivesService.Paymentlist();
+
+            var incentivesService = new IncentivesService();
+
+            incentivesService.GetIncentivesReport(pOption.dateFrom,pOption.dateTo);
+
+
+            return View("~/Views/Shared/ReportContainer.cshtml", pOption);
+        }
+
         protected override void Dispose(bool disposing)
         {
             _dbEntities.Dispose();
         }
 
+      
     }
 }

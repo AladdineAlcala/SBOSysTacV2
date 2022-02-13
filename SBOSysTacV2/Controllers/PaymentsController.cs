@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.Models;
+using SBOSysTacV2.ServiceLayer;
 using SBOSysTacV2.ViewModel;
 
 namespace SBOSysTacV2.Controllers
@@ -25,7 +26,7 @@ namespace SBOSysTacV2.Controllers
         private PaymentsViewModel pv;
         private TransactionDetailsViewModel transdetails;
         private PegasusEntities _dbcontext;
-
+        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
         public PaymentsController()
         {
             _dbcontext = new PegasusEntities();
@@ -52,12 +53,12 @@ namespace SBOSysTacV2.Controllers
 
                 bookpay.Bookings = bookingsViewModel.GetListofBookings(transactionId);
 
-                totalAmount = bookingPayments.Get_TotalAmountBook(transactionId);
+                totalAmount = _getBookingAmount(transactionId);
                 bookpay.t_amtBooking = totalAmount;
                 bookpay.t_addons = bookingPayments.getTotalAddons(transactionId);
                 bookpay.cateringdiscount = bookingPayments.GetCateringDiscount(transactionId);
                 bookpay.locationextcharge = transdetails.Get_extendedAmountLoc(transactionId);
-                bookpay.generaldiscount = bookingPayments.getBookingTransDiscount(transactionId, totalAmount);
+                bookpay.generaldiscount = BookingsService.getBookingTransDiscount(transactionId, totalAmount);
 
                 bookpay.PaymentList = bookingPayments.GetPaymentDetaiilsBooking(transactionId);
 
@@ -298,7 +299,6 @@ namespace SBOSysTacV2.Controllers
 
                 paytrans.refundentry = _dbcontext.Refunds.FirstOrDefault(x => x.trn_Id == transId);
 
-               
 
             }
 

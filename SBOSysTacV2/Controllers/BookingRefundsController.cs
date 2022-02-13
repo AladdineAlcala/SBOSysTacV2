@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using SBOSysTacV2.Models;
+using SBOSysTacV2.ServiceLayer;
 using SBOSysTacV2.ViewModel;
 
 namespace SBOSysTacV2.Controllers
@@ -19,6 +20,7 @@ namespace SBOSysTacV2.Controllers
         private BookingsViewModel bookingsViewModel = new BookingsViewModel();
         private TransactionDetailsViewModel transdetails = new TransactionDetailsViewModel();
         private BookingRefundViewModel refundbook=new BookingRefundViewModel();
+        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
 
         public BookingRefundsController()
         {
@@ -61,7 +63,8 @@ namespace SBOSysTacV2.Controllers
             var booking = (from b in dbEntities.Bookings select b).FirstOrDefault(x=>x.trn_Id==transId);
 
 
-            decimal totalbookAmount = bookingPayments.Get_TotalAmountBook(transId);
+            decimal totalbookAmount = _getBookingAmount(transId);
+
             decimal totalAmountPay = (decimal) (from p in dbEntities.Payments select p).Where(s => s.trn_Id == transId).Sum(x => x.amtPay);
 
             bookrefundinfo.transId = transId;

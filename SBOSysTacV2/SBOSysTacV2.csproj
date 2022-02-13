@@ -326,6 +326,7 @@
     <Compile Include="HtmlHelperClass\CustomerCustomValidate.cs" />
     <Compile Include="HtmlHelperClass\DataTableConverter.cs" />
     <Compile Include="HtmlHelperClass\JsonExtractorHelper.cs" />
+    <Compile Include="HtmlHelperClass\PackageEnum.cs" />
     <Compile Include="HtmlHelperClass\UserPermissionAuthorized.cs" />
     <Compile Include="HtmlHelperClass\Utilities.cs" />
     <Compile Include="Hub\NotificationHub.cs" />
@@ -438,6 +439,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Reports\AdminIncentivesReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdminIncentivesReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Reports\AdminMonthCateringReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -478,6 +486,13 @@
     </Compile>
     <Compile Include="Reports\ReportViewers\AccountsRecieveClient.aspx.designer.cs">
       <DependentUpon>AccountsRecieveClient.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportViewers\Admin_Incentives_Report.aspx.cs">
+      <DependentUpon>Admin_Incentives_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ReportViewers\Admin_Incentives_Report.aspx.designer.cs">
+      <DependentUpon>Admin_Incentives_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\ReportViewers\Admin_MonthCatReport.aspx.cs">
       <DependentUpon>Admin_MonthCatReport.aspx</DependentUpon>
@@ -570,7 +585,9 @@
     <Compile Include="Reports\ReportViewers\ReportViewerContractPrint.aspx.designer.cs">
       <DependentUpon>ReportViewerContractPrint.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ServiceLayer\Bookings_Service.cs" />
     <Compile Include="ServiceLayer\ContainerClass.cs" />
+    <Compile Include="ServiceLayer\Incentives_Service.cs" />
     <Compile Include="ServiceLayer\PackageActionType.cs" />
     <Compile Include="ViewModel\AccnRecieveSummaryViewModel.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
@@ -612,6 +629,7 @@
     <Compile Include="ViewModel\EventSelectionViewModel.cs" />
     <Compile Include="ViewModel\EventsViewModel.cs" />
     <Compile Include="ViewModel\GlobalSearchViewModel.cs" />
+    <Compile Include="ViewModel\IncentivesReportViewModel.cs" />
     <Compile Include="ViewModel\IndexViewModel.cs" />
     <Compile Include="ViewModel\MainMenuListViewModel.cs" />
     <Compile Include="ViewModel\PackageAreaDetailsViewModel.cs" />
@@ -621,6 +639,7 @@
     <Compile Include="ViewModel\PackageDetailsLocationViewModel.cs" />
     <Compile Include="ViewModel\PackageViewModel.cs" />
     <Compile Include="ViewModel\Package_MenusBookViewModel.cs" />
+    <Compile Include="ViewModel\PaymentLogDetailsViewModel.cs" />
     <Compile Include="ViewModel\PaymentsDetailsViewModel.cs" />
     <Compile Include="ViewModel\PaymentsViewModel.cs" />
     <Compile Include="ViewModel\PaymentTransViewModel.cs" />
@@ -7477,6 +7496,7 @@
     <Content Include="Reports\ReportViewers\AccnRecvPayment.aspx" />
     <Content Include="Reports\ReportViewers\AccountsRecieveClient.aspx" />
     <Content Include="Reports\ReportViewers\AccountsRecieveSummary.aspx" />
+    <Content Include="Reports\ReportViewers\Admin_Incentives_Report.aspx" />
     <Content Include="Reports\ReportViewers\Admin_MonthCatReport.aspx" />
     <Content Include="Reports\ReportViewers\CashReportViewer.aspx" />
     <Content Include="Reports\ReportViewers\PrintDistribution.aspx" />
@@ -7899,6 +7919,7 @@
     <Content Include="Views\Shared\_sideBar_left.cshtml" />
     <Content Include="Views\Packages\_packageListPartialView.cshtml" />
     <Content Include="Views\Packages\GetPackageView.cshtml" />
+    <Content Include="Views\Inquiry\AdminReportsIncentives_Index.cshtml" />
     <None Include="Web.developtment_testConfig.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -8016,6 +8037,11 @@
       <LastGenOutput>CashReport.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Reports\AdminIncentivesReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>AdminIncentivesReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\PrintRefundVouch.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>PrintRefundVouch1.cs</LastGenOutput>

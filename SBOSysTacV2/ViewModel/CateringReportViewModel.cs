@@ -31,16 +31,7 @@ namespace SBOSysTacV2.ViewModel
 
         static Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = null;
 
-        public enum packageType
-        {
-            regular,
-            vip,
-            pm,
-            sd,
-            cat
-
-            
-        }
+       
         public CateringReportViewModel()
         {
             transactionDetails = new TransactionDetailsViewModel();
@@ -56,7 +47,7 @@ namespace SBOSysTacV2.ViewModel
                 cId = x.Customer.c_Id,
                 Client = Utilities.Getfullname(x.Customer.lastname,x.Customer.firstname,x.Customer.middle),
                 Occasion = x.occasion,
-                p_type = x.Package.p_type.TrimEnd()==packageType.vip.ToString() || x.Package.p_type.TrimEnd() == packageType.regular.ToString() ?"cat" : x.Package.p_type.TrimEnd(),
+                p_type = x.Package.p_type.TrimEnd()==PackageEnum.packageType.vip.ToString() || x.Package.p_type.TrimEnd() == PackageEnum.packageType.regular.ToString() ?"cat" : x.Package.p_type.TrimEnd(),
                 Venue = x.venue,
                 noofPax = (int)x.noofperson,
                 PackageRate=x.Package.p_type.Trim()!="vip"? (decimal)x.Package.p_amountPax - TransactionDetailsViewModel.GetCateringdiscountByPax((int)x.noofperson): (decimal)x.Package.p_amountPax,
@@ -69,7 +60,7 @@ namespace SBOSysTacV2.ViewModel
                 isDeletedTran = (bool) x.is_deleted
 
 
-            }).Where(t=>t.iscancelled==false && t.isDeletedTran==false && t.p_type==packageType.cat.ToString() || t.p_type==packageType.pm.ToString()).OrderBy(o=>o.p_type);
+            }).Where(t=>t.iscancelled==false && t.isDeletedTran==false && t.p_type==PackageEnum.packageType.cat.ToString() || t.p_type==PackageEnum.packageType.pm.ToString()).OrderBy(o=>o.p_type);
         }
 
         public static void init_addons()

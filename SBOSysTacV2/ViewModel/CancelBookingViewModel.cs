@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using SBOSysTacV2.Models;
 using SBOSysTacV2.HtmlHelperClass;
+using SBOSysTacV2.ServiceLayer;
 
 namespace SBOSysTacV2.ViewModel
 {
@@ -31,7 +32,7 @@ namespace SBOSysTacV2.ViewModel
         private readonly BookingPaymentsViewModel bookingPayments = new BookingPaymentsViewModel();
         private readonly TransactionDetailsViewModel transdetails = new TransactionDetailsViewModel();
         private PegasusEntities _dbcontext=new PegasusEntities();
-
+        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
 
 
         public CancelBookingViewModel GetCancelledBooking(int transId)
@@ -50,7 +51,7 @@ namespace SBOSysTacV2.ViewModel
                     NoofPax =(int) booking.noofperson,
                     Venue = booking.venue,
                     CancelDate = DateTime.Now,
-                    AmountDue = bookingPayments.Get_TotalAmountBook(transId),
+                    AmountDue = _getBookingAmount(transId),
                     AmountPaid = transdetails.GetTotalPaymentByTrans(transId),
                 };
             }

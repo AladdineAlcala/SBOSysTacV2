@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.Models;
+using SBOSysTacV2.ServiceLayer;
 
 namespace SBOSysTacV2.ViewModel
 {
@@ -19,6 +20,7 @@ namespace SBOSysTacV2.ViewModel
         public decimal balance { get; set; }
         public decimal refunds { get; set; }
 
+        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
         public IEnumerable<AccnRecieveSummaryViewModel> GetAllAccnRecievables()
         {
             List<AccnRecieveSummaryViewModel> listAccn=new List<AccnRecieveSummaryViewModel>();
@@ -26,8 +28,8 @@ namespace SBOSysTacV2.ViewModel
             var bookingPayments = new BookingPaymentsViewModel();
             var transdetails = new TransactionDetailsViewModel();
             var bookingRefund = new BookingRefundViewModel();
-            
-             
+           
+
             try
             {
 
@@ -50,7 +52,7 @@ namespace SBOSysTacV2.ViewModel
                             ? 0
                             : Convert.ToInt32(DateTime.Now.Subtract(eventdatedue).Days),
 
-                        balance = bookingPayments.Get_TotalAmountBook(b.trn_Id) - transdetails.GetTotalPaymentByTrans(b.trn_Id)
+                        balance = _getBookingAmount(b.trn_Id) - transdetails.GetTotalPaymentByTrans(b.trn_Id)
                         
                              
 

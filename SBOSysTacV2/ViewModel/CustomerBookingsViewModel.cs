@@ -5,6 +5,7 @@ using System.Web;
 using SBOSysTacV2.Models;
 using System.ComponentModel.DataAnnotations;
 using SBOSysTacV2.HtmlHelperClass;
+using SBOSysTacV2.ServiceLayer;
 
 namespace SBOSysTacV2.ViewModel
 {
@@ -27,6 +28,7 @@ namespace SBOSysTacV2.ViewModel
         public string bookingtype { get; set; }
 
         private BookingPaymentsViewModel bookingPayments = new BookingPaymentsViewModel();
+        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
         public IEnumerable<CustomerBookingsViewModel> GetCusBookings()
         {
             var _dbEntities=new PegasusEntities();
@@ -52,7 +54,7 @@ namespace SBOSysTacV2.ViewModel
                         bookdatetime = l.startdate,
                         package = l.Package.p_descripton,
                         packageType = l.Package.p_type.Trim(),
-                        packageDue = bookingPayments.Get_TotalAmountBook(l.trn_Id),
+                        packageDue = _getBookingAmount(l.trn_Id),
                         isServe =Convert.ToBoolean(l.serve_stat),
                         isCancelled = Convert.ToBoolean(l.is_cancelled),
                         bookingtype = l.booktype?.Trim() ?? "",
@@ -97,7 +99,7 @@ namespace SBOSysTacV2.ViewModel
                         bookdatetime = l.startdate,
                         package = l.Package.p_descripton,
                         packageType = l.Package.p_type.Trim(),
-                        packageDue = bookingPayments.Get_TotalAmountBook(l.trn_Id),
+                        packageDue = _getBookingAmount(l.trn_Id),
                         isServe = Convert.ToBoolean(l.serve_stat),
                         isCancelled = Convert.ToBoolean(l.is_cancelled),
                         bookingtype = l.booktype?.Trim() ?? "",

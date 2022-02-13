@@ -356,11 +356,14 @@ function LoadDataTabletoModal(_courseId) {
                     'autowidth': true, 'targets': 2,
                     "data": "course"
                 }
-                //,
-                //{
+                ,
+                {
+                    'targets': [3],
+                    "data": "price",
+                    "visible": false
 
-                //    "data": "price", 'targets': 3
-                //}
+                }
+
 
 
             ],

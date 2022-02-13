@@ -47,55 +47,57 @@
 
             //console.log(filterdatefrom + '' + filterdateto);
 
-            if (selprintopt === "contform")
-            {
-
-                $("#ReportFrame").attr("src",
-                    "@Url.Content("~/Reports/ReportViewers/ReportViewerContractPrint.aspx?transactionId=")" +
-                    paramTransId);
 
 
-            }
-            else if (selprintopt === "accnrecievesummary") {
+
+            switch (selprintopt) {
+
+                case "contform":
+                    $("#ReportFrame").attr("src",
+                        "@Url.Content("~/Reports/ReportViewers/ReportViewerContractPrint.aspx?transactionId=")" +
+                        paramTransId);
+
+                    break;
+
+                case "accnrecievesummary":
+                    $("#ReportFrame").attr("src",
+                        "@Url.Content("~/Reports/ReportViewers/AccountsRecieveSummary.aspx?")");
+                    break;
+
+                case "accnrecievepercustomer":
+                    $("#ReportFrame").attr("src",
+                        "@Url.Content("~/Reports/ReportViewers/AccountsRecieveClient.aspx?clientId=")" + clientId);
+                    break;
+
+                case "cashreport":
+                    $("#ReportFrame").attr("src",
+                        "@Url.Content("~/Reports/ReportViewers/CashReportViewer.aspx?filterdatefrom=")" + filterdatefrom + "&filterdateto=" + filterdateto);
+                    break;
+
+                case "distribution":
+
+                    break;
+
+                case "printaccnRcv":
+
+                    $("#ReportFrame").attr("src",
+                        "@Url.Content("~/Reports/ReportViewers/AccnRecvPayment.aspx?transactionId=")" +
+                        paramTransId);
+                    break;
+
+                case "cateringreport":
+                    $("#ReportFrame").attr("src","@Url.Content("~/Reports/ReportViewers/Admin_MonthCatReport.aspx?month=")" + filterdatefrom);
+                    break;
 
 
-                $("#ReportFrame").attr("src",
-                    "@Url.Content("~/Reports/ReportViewers/AccountsRecieveSummary.aspx?")");
+                case "incentivesreport":
+                    $("#ReportFrame").attr("src","@Url.Content("~/Reports/ReportViewers/Admin_Incentives_Report.aspx?month=")" + filterdatefrom);
+                    break;
 
-
-            }
-            else if (selprintopt === "accnrecievepercustomer")
-            {
-                $("#ReportFrame").attr("src",
-                    "@Url.Content("~/Reports/ReportViewers/AccountsRecieveClient.aspx?clientId=")" + clientId);
-
-            }
-            else if (selprintopt === "cashreport")
-            {
-                $("#ReportFrame").attr("src",
-                    "@Url.Content("~/Reports/ReportViewers/CashReportViewer.aspx?filterdatefrom=")" + filterdatefrom + "&filterdateto=" + filterdateto);
-            }
-
-            else if (selprintopt === "distribution")
-            {
-
-            }
-            else if (selprintopt === "printaccnRcv") {
-                $("#ReportFrame").attr("src",
-                    "@Url.Content("~/Reports/ReportViewers/AccnRecvPayment.aspx?transactionId=")" +
-                    paramTransId);
-
-            }
-            else if (selprintopt ==="cateringreport") {
-
-                $("#ReportFrame").attr("src","@Url.Content("~/Reports/ReportViewers/Admin_MonthCatReport.aspx?month=")" + filterdatefrom);
-            }
-
-
-            else {
-                $("#ReportFrame").attr("src",
-                    "@Url.Content("~/Reports/ReportViewers/ReportViewerContractFunction.aspx?transactionId=")" +
-                    paramTransId);
+                default:
+                    $("#ReportFrame").attr("src",
+                        "@Url.Content("~/Reports/ReportViewers/ReportViewerContractFunction.aspx?transactionId=")" +
+                        paramTransId);
             }
 
 
