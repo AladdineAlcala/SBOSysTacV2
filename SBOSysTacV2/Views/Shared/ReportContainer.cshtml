@@ -94,6 +94,11 @@
                     $("#ReportFrame").attr("src","@Url.Content("~/Reports/ReportViewers/Admin_Incentives_Report.aspx?month=")" + filterdatefrom);
                     break;
 
+                case "addons_report":
+
+                    $("#ReportFrame").attr("src","@Url.Content("~/Reports/ReportViewers/AdminAddonsReport.aspx?filterdatefrom=")" + filterdatefrom + "&filterdateto=" + filterdateto);
+                    break;
+
                 default:
                     $("#ReportFrame").attr("src",
                         "@Url.Content("~/Reports/ReportViewers/ReportViewerContractFunction.aspx?transactionId=")" +
@@ -104,7 +109,7 @@
             setTimeout(function () {
 
                 $('#spinn-loader').hide();
-                
+
                 /*window.history.back();*/
 
                 },
@@ -112,7 +117,7 @@
 
         });
 
-        </script>
+    </script>
 
 
 }

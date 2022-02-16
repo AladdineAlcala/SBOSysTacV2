@@ -10,17 +10,9 @@ namespace SBOSysTacV2.ServiceLayer
 
     public class BookingsService
     {
-        private static TransactionDetailsViewModel transdetails;
-        private static PackageBookingViewModel package_book_vm;
-        private static BookMenusViewModel book_menus_vm;
+     
 
-        public BookingsService()
-        {
-            package_book_vm = new PackageBookingViewModel();
-            transdetails = new TransactionDetailsViewModel();
-            book_menus_vm = new BookMenusViewModel();
 
-        }
 
         //get totalPackageAmount
         public static decimal Get_TotalAmountBook(int transId)
@@ -40,7 +32,7 @@ namespace SBOSysTacV2.ServiceLayer
                 decimal hasLocationExtendedCharge = 0;
 
 
-                var package = package_book_vm.GetPackageByTransaction_Id(transId);
+                var package = new PackageBookingViewModel().GetPackageByTransaction_Id(transId);
 
                 if (package.p_type.TrimEnd() != "sd")
                 {
@@ -66,7 +58,7 @@ namespace SBOSysTacV2.ServiceLayer
 
                     totalAmount = discount > 0 ? (totalAmount - discount) : totalAmount;
 
-                    hasLocationExtendedCharge = transdetails.Get_extendedAmountLoc(transId);
+                    hasLocationExtendedCharge = new TransactionDetailsViewModel().Get_extendedAmountLoc(transId);
 
                     if (hasLocationExtendedCharge > 0)
                     {
@@ -87,7 +79,7 @@ namespace SBOSysTacV2.ServiceLayer
                 else
                 {
 
-                    totalAmount = book_menus_vm.ComputeAmountForSnacksByTransId(transId);
+                    totalAmount = new BookMenusViewModel().ComputeAmountForSnacksByTransId(transId);
 
                 }
 

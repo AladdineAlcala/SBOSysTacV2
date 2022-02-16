@@ -453,6 +453,12 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\Admin_AddonsReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Admin_AddonsReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\CashReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -486,6 +492,13 @@
     </Compile>
     <Compile Include="Reports\ReportViewers\AccountsRecieveClient.aspx.designer.cs">
       <DependentUpon>AccountsRecieveClient.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportViewers\AdminAddonsReport.aspx.cs">
+      <DependentUpon>AdminAddonsReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ReportViewers\AdminAddonsReport.aspx.designer.cs">
+      <DependentUpon>AdminAddonsReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\ReportViewers\Admin_Incentives_Report.aspx.cs">
       <DependentUpon>Admin_Incentives_Report.aspx</DependentUpon>
@@ -592,6 +605,7 @@
     <Compile Include="ViewModel\AccnRecieveSummaryViewModel.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\AddonCatViewModel.cs" />
+    <Compile Include="ViewModel\AddonsReportViewModel.cs" />
     <Compile Include="ViewModel\AddonsUpgrade_BookRegisterViewModel.cs" />
     <Compile Include="ViewModel\AddonsViewModel.cs" />
     <Compile Include="ViewModel\ArchiveViewModel.cs" />
@@ -7496,6 +7510,7 @@
     <Content Include="Reports\ReportViewers\AccnRecvPayment.aspx" />
     <Content Include="Reports\ReportViewers\AccountsRecieveClient.aspx" />
     <Content Include="Reports\ReportViewers\AccountsRecieveSummary.aspx" />
+    <Content Include="Reports\ReportViewers\AdminAddonsReport.aspx" />
     <Content Include="Reports\ReportViewers\Admin_Incentives_Report.aspx" />
     <Content Include="Reports\ReportViewers\Admin_MonthCatReport.aspx" />
     <Content Include="Reports\ReportViewers\CashReportViewer.aspx" />
@@ -7920,6 +7935,7 @@
     <Content Include="Views\Packages\_packageListPartialView.cshtml" />
     <Content Include="Views\Packages\GetPackageView.cshtml" />
     <Content Include="Views\Inquiry\AdminReportsIncentives_Index.cshtml" />
+    <Content Include="Views\Inquiry\AddonsReport_Index.cshtml" />
     <None Include="Web.developtment_testConfig.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -8041,6 +8057,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>AdminIncentivesReport.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Admin_AddonsReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Admin_AddonsReport.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\PrintRefundVouch.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

@@ -14,10 +14,16 @@ namespace SBOSysTacV2.ServiceLayer
 
         public static List<TransRecievablesViewModel> TransRecievablesAccn = new List<TransRecievablesViewModel>();
 
+        public static List<AddonsReportViewModel> AddonsReport = new List<AddonsReportViewModel>();
 
         public static void CateringReport(List<CateringReportViewModel> _list)
         { 
             CateringList = _list;
+        }
+
+        public static void GetAddonsReport(List<AddonsReportViewModel> _addonsReport)
+        {
+            AddonsReport = _addonsReport;
         }
     }
 }

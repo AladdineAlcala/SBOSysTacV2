@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SBOSysTacV2.Models;
 using SBOSysTacV2.ViewModel;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Globalization;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.ServiceLayer;
@@ -524,6 +525,30 @@ namespace SBOSysTacV2.Controllers
 
             incentivesService.GetIncentivesReport(pOption.dateFrom,pOption.dateTo);
 
+
+            return View("~/Views/Shared/ReportContainer.cshtml", pOption);
+        }
+        
+        [HttpGet]
+        public ActionResult AddonsReport_Index() => View();
+
+        public ActionResult Admin_AddonsReport(DateTime dateFrom, DateTime dateTo)
+        {
+            var pOption = new PrintOptionViewModel()
+            {
+
+                selPrintOpt = "addons_report",
+                dateFrom = Convert.ToDateTime(dateFrom),
+                dateTo = Convert.ToDateTime(dateTo)
+
+
+            };
+
+            var list = _dbEntities.Database.SqlQuery<AddonsReportViewModel>("exec [dbo].[Addons] @datestart,@date_end",
+                new SqlParameter("@datestart",pOption.dateFrom),
+                new SqlParameter("@date_end",pOption.dateTo)).ToList();
+
+            ContainerClass.GetAddonsReport(list);
 
             return View("~/Views/Shared/ReportContainer.cshtml", pOption);
         }

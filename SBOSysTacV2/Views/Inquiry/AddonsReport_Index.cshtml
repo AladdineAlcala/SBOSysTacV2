@@ -1,0 +1,61 @@
+﻿
+<section class="content">
+    <div class="pad margin no-print" style="padding-left: 0px !important; padding-right: 0px !important; margin-bottom: 0px; padding-bottom: 0px;">
+        <div class="callout callout-info" style="margin-bottom: 15px;">
+            <h4><i class="fa fa-info" style="padding: 0px; margin: 0px;"></i> Print Addons Lechon Report </h4>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="register-box">
+            <div class="box box-success">
+
+                <div class="box-body" style="min-height:180px;">
+                    <p class="text text-left">Filter Date</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>From </label>
+                                <input type="text" id="dateFrom" class="form-control" placeholder="Date Start">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>To </label>
+                                <input type="text" id="dateTo" class="form-control" placeholder="Date End">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-4">
+                            <a class="btn bg-olive btn-flat btn-sm print_incentivesReport" href="@Url.Action("Admin_AddonsReport","Inquiry")"> Print Report</a>
+                            @*<button class="btn bg-purple btn-flat" type="button" id="cancel" onclick="window.history.back()">Cancel</button>*@
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<div id="spinn-loader"></div>
+
+
+@section scripts
+{
+
+    @*@Scripts.Render("~/bundles/PrintDatatable")*@
+
+
+    @Scripts.Render("~/Scripts/js_collectionreport.js")
+}
+
