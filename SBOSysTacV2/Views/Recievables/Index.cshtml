@@ -1,6 +1,4 @@
-﻿<div id="spinn-loader">
-    Loading data Pls. wait....
-</div>
+﻿
 
 <section class="content" style="min-height: 100px;">
     <div class="row">
@@ -36,6 +34,9 @@
 
 
 </section>
+
+<div id="spinn-loader"></div>
+
 <div class="row" id="filteredRecord">
     
 </div>
@@ -44,7 +45,7 @@
 {
     @Scripts.Render("~/Scripts/js_recievables.js")
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
 
         var recievableUrl = {
@@ -54,7 +55,7 @@
         }
 
         var bookingsUrl = {
-            
+
             bookUrl_getPackageId: "@Url.Action("GetPackageId","Bookings")",
             bookUrl_paymentBooking: "@Url.Action("GetBooking_Payments", "Payments",new {transactionId="tId"})"
         }
@@ -103,7 +104,7 @@
 
                             bookingclients.typeahead('val', '');
 
-                            //$('#hiddencusId').val(customer.customerId);
+                            $('#hiddencusId').val(customer.customerId);
 
                             getClient(customer);
 
@@ -121,7 +122,7 @@
 
               $.ajax({
                   type: 'Get',
-                  url: recievableUrl.url_loadrecievablelist,
+                  url: recievableUrl.url_loadrecievablelist,    @*"@Url.Action("GetPaymentListView", "Recievables")",*@
                   contentType: 'application/html;charset=utf8',
                   datatype: 'html',
                   data: { cusId: client.customerId},
@@ -142,11 +143,11 @@
                   $('#spinn-loader').hide();
 
               });
-          } 
+          }
         }
 
 
-    </script>
+</script>
 
    
 

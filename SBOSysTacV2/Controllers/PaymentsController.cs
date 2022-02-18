@@ -41,26 +41,21 @@ namespace SBOSysTacV2.Controllers
         [HttpGet]
         public ActionResult GetBooking_Payments(int transactionId)
         {
-            var bookpay=new BookingPaymentsViewModel();
 
-         //  BookingsViewModel bbViewModel=new BookingsViewModel();
             try
             {
                 decimal totalAmount = 0;
-                bookpay.transId = transactionId;
+                bookingPayments.transId = transactionId;
 
-                //.SingleOrDefault(x => x.trn_Id == transactionId)
-
-                bookpay.Bookings = bookingsViewModel.GetListofBookings(transactionId);
-
+                bookingPayments.Bookings = bookingsViewModel.GetListofBookings(transactionId);
                 totalAmount = _getBookingAmount(transactionId);
-                bookpay.t_amtBooking = totalAmount;
-                bookpay.t_addons = bookingPayments.getTotalAddons(transactionId);
-                bookpay.cateringdiscount = bookingPayments.GetCateringDiscount(transactionId);
-                bookpay.locationextcharge = transdetails.Get_extendedAmountLoc(transactionId);
-                bookpay.generaldiscount = BookingsService.getBookingTransDiscount(transactionId, totalAmount);
+                bookingPayments.t_amtBooking = totalAmount;
+                bookingPayments.t_addons = BookingPaymentsViewModel.getTotalAddons(transactionId);
+                bookingPayments.cateringdiscount = bookingPayments.GetCateringDiscount(transactionId);
+                bookingPayments.locationextcharge = transdetails.Get_extendedAmountLoc(transactionId);
+                bookingPayments.generaldiscount = BookingsService.getBookingTransDiscount(transactionId, totalAmount);
 
-                bookpay.PaymentList = bookingPayments.GetPaymentDetaiilsBooking(transactionId);
+                bookingPayments.PaymentList =this.bookingPayments.GetPaymentDetaiilsBooking(transactionId);
 
                // bookpay.Bookings.startdate = DateTime.Now;
 
@@ -72,7 +67,7 @@ namespace SBOSysTacV2.Controllers
                 throw;
             }
 
-            return View(bookpay);
+            return View(bookingPayments);
         }
 
         public ActionResult LoadPaymentList(int transactionId)

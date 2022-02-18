@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
@@ -10,9 +11,11 @@ using SBOSysTacV2.ViewModel;
 
 namespace SBOSysTacV2.Controllers
 {
+
     [Authorize]
     public class RecievablesController : Controller
     {
+        
         private PegasusEntities _dbEntities;
 
         private TransRecievablesViewModel tr=new TransRecievablesViewModel();
@@ -51,18 +54,33 @@ namespace SBOSysTacV2.Controllers
 
 
         [HttpGet]
-        public ActionResult LoadBookingsByCustomer(int cusId)
+        public ActionResult LoadBookingsByCustomer(int cusId, string filter)
         {
+            var enumFilter =(RecievableType)Enum.Parse(typeof(RecievableType), filter);
+
+
             List<TransRecievablesViewModel> recievablesList=new List<TransRecievablesViewModel>();
 
             try
             {
                 var bookinglist = (from b in _dbEntities.Bookings.AsNoTracking() where b.c_Id == cusId select b).ToList();
-                    
-                    
-                recievablesList = tr.GetAllRecievables(bookinglist).ToList();
 
-                // recievablesList = (from r in list where r.cusId == cusId select r) as List<TransRecievablesViewModel>;
+                switch (enumFilter)
+                {
+                    case RecievableType.all:
+                        recievablesList = tr.GetAllRecievables(bookinglist).ToList();
+                        break;
+
+                    case RecievableType.paid:
+                        recievablesList = tr.GetAllRecievables(bookinglist).Where(t => t.balance == 0).ToList();
+                        break;
+                    case RecievableType.unpaid:
+                        recievablesList = tr.GetAllRecievables(bookinglist).Where(t => t.balance>0).ToList();
+                        break;
+
+                    default: break;
+                }
+
             }
             catch (Exception e)
             {

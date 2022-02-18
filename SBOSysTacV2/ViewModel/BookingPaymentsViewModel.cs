@@ -59,14 +59,27 @@ namespace SBOSysTacV2.ViewModel
             return discountedAmount;
         }
 
-        public decimal getTotalAddons(int transId)
+        public static decimal getTotalAddons(int transId)
         {
-            var _dbcontext = new PegasusEntities();
-            var addonsList = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId).ToList();
 
-            _dbcontext.Dispose();
+            decimal addAmount = 0;
 
-            return Convert.ToDecimal(100);
+             var _dbcontext = new PegasusEntities();
+             var addons = (from ba in _dbcontext.BookingAddons
+                 join bad in _dbcontext.BookAddonsDetails on ba.bookaddonNo equals bad.bookaddonNo
+                 where ba.trn_Id == transId
+                 select new
+                 {
+                     _addAmount = bad.qty * bad.amount
+                 }).FirstOrDefault();
+
+
+             if (addons?._addAmount != null)
+             {
+                 addAmount = (decimal)addons._addAmount;
+             }
+             _dbcontext.Dispose();
+            return Convert.ToDecimal(addAmount);
         }
 
         public IEnumerable<PaymentsViewModel> GetPaymentDetaiilsBooking(int transId)

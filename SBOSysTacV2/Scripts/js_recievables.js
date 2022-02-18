@@ -5,6 +5,7 @@ $(document).ready(function() {
 
 
 
+
 });  //end doc ready
 
 function currencyFormat(num) {
@@ -16,7 +17,11 @@ function currencyFormat(num) {
 }
 
 
-var recievables = function loadDataRecievables(id) {
+function isEmpty(value) {
+    return (value == null || value === '');
+}
+
+var recievables = function loadDataRecievables(id,_filter) {
 
     if ($.fn.dataTable.isDataTable('#tbl-cusrecievables')) {
 
@@ -25,8 +30,9 @@ var recievables = function loadDataRecievables(id) {
 
     }
 
-
-
+    if (isEmpty(_filter)) {
+        _filter = 'all';
+    }
     $tblCusRecievables = $('#tbl-cusrecievables').DataTable({
 
         "serverSide": false,
@@ -44,9 +50,9 @@ var recievables = function loadDataRecievables(id) {
 
         "ajax":
         {
-            "url": recievableUrl.inquiryUrl_loadbookingsbycustomer,
+            "url": recievableUrl.inquiryUrl_loadbookingsbycustomer,    /*"@Url.Action("LoadBookingsByCustomer", "Recievables")"*/
             "type": "Get",
-            "data": { cusId: id },
+            "data": { cusId: id, filter: _filter },
             "datatype": "json"
         },
         "columnDefs":
@@ -218,4 +224,32 @@ $(document).on('click', '.get_paymentdetails', function (e) {
 
 
     return false;
+});
+
+
+$(document).on('change', 'input[name="radfilter"]', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var selected = $(this).attr('id');
+
+    var cusId = $('#customerId').val();
+
+    var _filter = "";
+
+    switch (selected) {
+
+        case 'rad_unpd':
+            _filter = "unpaid";
+            break;
+
+        case 'rad_pd':
+            _filter = "paid";
+            break;
+        default:
+            _filter = "all";
+
+    }
+
+     recievables(cusId, _filter);
 });

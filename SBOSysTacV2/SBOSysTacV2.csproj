@@ -327,6 +327,7 @@
     <Compile Include="HtmlHelperClass\DataTableConverter.cs" />
     <Compile Include="HtmlHelperClass\JsonExtractorHelper.cs" />
     <Compile Include="HtmlHelperClass\PackageEnum.cs" />
+    <Compile Include="HtmlHelperClass\RecievableEnum.cs" />
     <Compile Include="HtmlHelperClass\UserPermissionAuthorized.cs" />
     <Compile Include="HtmlHelperClass\Utilities.cs" />
     <Compile Include="Hub\NotificationHub.cs" />

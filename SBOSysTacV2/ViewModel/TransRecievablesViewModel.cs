@@ -96,6 +96,8 @@ namespace SBOSysTacV2.ViewModel
             return recievable_list;
         }
 
+       
+       
 
         public IEnumerable<TransRecievablesViewModel> GetRecieveDetails()
         {

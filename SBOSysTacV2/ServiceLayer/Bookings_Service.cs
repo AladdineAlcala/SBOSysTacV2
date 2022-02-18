@@ -13,7 +13,6 @@ namespace SBOSysTacV2.ServiceLayer
      
 
 
-
         //get totalPackageAmount
         public static decimal Get_TotalAmountBook(int transId)
         {
@@ -24,9 +23,10 @@ namespace SBOSysTacV2.ServiceLayer
 
             try
             {
-                decimal totalPackage_Amount = 0;
+          
                 decimal addons = 0;
                 decimal discount = 0;
+                decimal packageAmount = 0;
                 int noofpax = 0;
 
                 decimal hasLocationExtendedCharge = 0;
@@ -38,21 +38,24 @@ namespace SBOSysTacV2.ServiceLayer
                 {
                     var bookingdetails = (from books in _dbcontext.Bookings
                                           join packages in _dbcontext.Packages on books.p_id equals packages.p_id
-                                          //join bookaddons in _dbcontext.BookingAddons on books.trn_Id equals bookaddons.trn_Id
                                           where books.trn_Id == transId
                                           select new
                                           {
                                               packageAmount = packages.p_amountPax,
                                               no_of_pax = books.noofperson,
-                                              addons = books.BookingAddons
+                                              addons =(from ba in books.BookingAddons join bad in _dbcontext.BookAddonsDetails on ba.bookaddonNo equals bad.bookaddonNo select new { _addAmount = bad.amount * bad.qty}).FirstOrDefault()._addAmount
                                           }).FirstOrDefault();
 
-                    noofpax = (int)(bookingdetails.no_of_pax);
 
-                    totalPackage_Amount = (bookingdetails != null) ? Convert.ToDecimal(bookingdetails.packageAmount) * noofpax : 0;
+                    if (bookingdetails != null)
+                    {
+                        packageAmount = Convert.ToDecimal(bookingdetails.packageAmount);
+                        noofpax = bookingdetails.no_of_pax??0;
+                        addons =  bookingdetails.addons??0;
+                    }
 
-                    // get transaction discount
-                    totalAmount = totalPackage_Amount + addons;
+
+                    totalAmount = (packageAmount * noofpax) + addons;
 
                     discount = getBookingTransDiscount(transId, totalAmount);
 
