@@ -52,7 +52,7 @@ namespace SBOSysTacV2.Controllers
                 bookingPayments.t_amtBooking = totalAmount;
                 bookingPayments.t_addons = BookingPaymentsViewModel.getTotalAddons(transactionId);
                 bookingPayments.cateringdiscount = bookingPayments.GetCateringDiscount(transactionId);
-                bookingPayments.locationextcharge = transdetails.Get_extendedAmountLoc(transactionId);
+                bookingPayments.locationextcharge = BookingsService.Get_extendedAmountLoc(transactionId);
                 bookingPayments.generaldiscount = BookingsService.getBookingTransDiscount(transactionId, totalAmount);
 
                 bookingPayments.PaymentList =this.bookingPayments.GetPaymentDetaiilsBooking(transactionId);

@@ -27,45 +27,39 @@ namespace SBOSysTacV2.ViewModel
         public bool iscancelled { get; set; }
         public bool isDeletedTran { get; set; }
 
-        private readonly TransactionDetailsViewModel transactionDetails;
 
-        static Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = null;
+        //public CateringReportViewModel()
+        //{
+        //    transactionDetails = new TransactionDetailsViewModel();
+        //}
+        //public static IEnumerable<CateringReportViewModel> GetCateringReport(IEnumerable<Booking> bookings)
+        //{
+        //    Func<Booking, List<ICollection<BookAddonsDetail>>> _getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
 
-       
-        public CateringReportViewModel()
-        {
-            transactionDetails = new TransactionDetailsViewModel();
-        }
-        public static IEnumerable<CateringReportViewModel> GetCateringReport(IEnumerable<Booking> bookings)
-        {
-            init_addons();
+        //        return bookings.Select(x => new CateringReportViewModel()
+        //        {
 
-            return bookings.Select(x => new CateringReportViewModel()
-            {
-
-                EventDate = (DateTime) x.startdate,
-                cId = x.Customer.c_Id,
-                Client = Utilities.Getfullname(x.Customer.lastname,x.Customer.firstname,x.Customer.middle),
-                Occasion = x.occasion,
-                p_type = x.Package.p_type.TrimEnd()==PackageEnum.packageType.vip.ToString() || x.Package.p_type.TrimEnd() == PackageEnum.packageType.regular.ToString() ?"cat" : x.Package.p_type.TrimEnd(),
-                Venue = x.venue,
-                noofPax = (int)x.noofperson,
-                PackageRate=x.Package.p_type.Trim()!="vip"? (decimal)x.Package.p_amountPax - TransactionDetailsViewModel.GetCateringdiscountByPax((int)x.noofperson): (decimal)x.Package.p_amountPax,
-                Addons = x.BookingAddons.Any() ? string.Join(", ",x.BookingAddons.Select(t=>t.Addondesc)):String.Empty,
-                AddonsTotal = x.BookingAddons.Any() ? AddonsViewModel.AddonsTotal(getAddonDetails(x)) :0,
-                AmountPaid = x.Payments.Any() ? x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum() : 0,
-                PaymentMode = x.Payments.Any()? x.Payments.Select(t => t.pay_means).ToList().Aggregate((i,j)=> i + "," + j!=i?j:""):"---",
-                Status = x.Payments.Any()?"pd":"unpd",
-                iscancelled = (bool) x.is_cancelled,
-                isDeletedTran = (bool) x.is_deleted
+        //            EventDate = (DateTime) x.startdate,
+        //            cId = x.Customer.c_Id,
+        //            Client = Utilities.Getfullname(x.Customer.lastname,x.Customer.firstname,x.Customer.middle),
+        //            Occasion = x.occasion,
+        //            p_type = x.Package.p_type.TrimEnd()==PackageEnum.packageType.vip.ToString() || x.Package.p_type.TrimEnd() == PackageEnum.packageType.regular.ToString() ?"cat" : x.Package.p_type.TrimEnd(),
+        //            Venue = x.venue,
+        //            noofPax = (int)x.noofperson,
+        //            PackageRate=x.Package.p_type.Trim()!="vip"? (decimal)x.Package.p_amountPax - TransactionDetailsViewModel.GetCateringdiscountByPax((int)x.noofperson): (decimal)x.Package.p_amountPax,
+        //            Addons = x.BookingAddons.Any() ? string.Join(", ",x.BookingAddons.Select(t=>t.Addondesc)):String.Empty,
+        //            AddonsTotal = x.BookingAddons.Any() ? AddonsViewModel.AddonsTotal(_getAddonDetails(x)) :0,
+        //            AmountPaid = x.Payments.Any() ? x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum() : 0,
+        //            PaymentMode = x.Payments.Any()? x.Payments.Select(t => t.pay_means).ToList().Aggregate((i,j)=> i + "," + j!=i?j:""):"---",
+        //            Status = x.Payments.Any()?"pd":"unpd",
+        //            iscancelled = (bool) x.is_cancelled,
+        //            isDeletedTran = (bool) x.is_deleted
 
 
-            }).Where(t=>t.iscancelled==false && t.isDeletedTran==false && t.p_type==PackageEnum.packageType.cat.ToString() || t.p_type==PackageEnum.packageType.pm.ToString()).OrderBy(o=>o.p_type);
-        }
+        //        }).Where(t=>t.iscancelled==false && t.isDeletedTran==false && t.p_type==PackageEnum.packageType.cat.ToString() || t.p_type==PackageEnum.packageType.pm.ToString()).OrderBy(o=>o.p_type)
+        //        .ToList();
+        //}
 
-        public static void init_addons()
-        {
-            getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
-        }
+      
     }
 }

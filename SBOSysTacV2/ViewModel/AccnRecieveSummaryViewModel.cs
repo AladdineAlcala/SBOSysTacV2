@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.Models;
@@ -20,53 +21,62 @@ namespace SBOSysTacV2.ViewModel
         public decimal balance { get; set; }
         public decimal refunds { get; set; }
 
-        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
         public IEnumerable<AccnRecieveSummaryViewModel> GetAllAccnRecievables()
         {
             List<AccnRecieveSummaryViewModel> listAccn=new List<AccnRecieveSummaryViewModel>();
+            Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
+            Func<int, decimal> _getTotalPaymentByBooking = TransactionDetailsViewModel.GetTotalPaymentByTrans;
+
             var _dbentities=new PegasusEntities();
-            var bookingPayments = new BookingPaymentsViewModel();
-            var transdetails = new TransactionDetailsViewModel();
-            var bookingRefund = new BookingRefundViewModel();
-           
+            
+                try
+                {
 
-            try
-            {
-
-                var bookings = (from booking in _dbentities.Bookings where booking.is_cancelled==false select booking).OrderBy(x => x.Customer.lastname).ToList();
+                    var bookings = (from booking in _dbentities.Bookings where booking.is_cancelled==false && booking.is_deleted==false select booking).ToList();
 
 
-                listAccn = (from b in bookings
-                    //let daydue = Convert.ToDateTime(b.transdate).AddDays(30)
-                    let eventdatedue = Convert.ToDateTime(b.startdate).AddDays(30)
-                    where b.startdate != null && DateTime.Now.Subtract((DateTime) b.startdate).Days >= 0
+                         listAccn = (from b in bookings
+                        //let daydue = Convert.ToDateTime(b.transdate).AddDays(30)
+                        let eventdatedue = Convert.ToDateTime(b.startdate).AddDays(30)
+                        where b.startdate != null && DateTime.Now.Subtract((DateTime) b.startdate).Days >= 0
+                        select new
+                        {
+                            _transId = b.trn_Id,
+                            _duedate = eventdatedue,
+                            _transDate= Convert.ToDateTime(b.startdate),
+                            _amtBooking = _getBookingAmount(b.trn_Id),
+                            _totaPayment = _getTotalPaymentByBooking(b.trn_Id),
+                            _accnNo=b.c_Id,
+                            _cusname = Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
 
-                    select new AccnRecieveSummaryViewModel
-                    {
-                        cusId = Convert.ToInt32(b.c_Id),
-                        cusname = Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
-                        transId = b.trn_Id,
-                        transDate = Convert.ToDateTime(b.startdate),
-                        duedate = eventdatedue,
-                        daysOdd = Convert.ToInt32(DateTime.Now.Subtract(eventdatedue).Days) <= 0
-                            ? 0
-                            : Convert.ToInt32(DateTime.Now.Subtract(eventdatedue).Days),
+                        }).Select(acc=>  new AccnRecieveSummaryViewModel
+                        {
+                            transId =acc._transId,
+                            cusId = (int)acc._accnNo,
+                            cusname = acc._cusname,
+                            transDate =acc._transDate,
+                            duedate = acc._duedate,
+                            daysOdd = Convert.ToInt32(DateTime.Now.Subtract(acc._duedate).Days) <= 0
+                                ? 0
+                                : Convert.ToInt32(DateTime.Now.Subtract(acc._duedate).Days),
 
-                        balance = _getBookingAmount(b.trn_Id) - transdetails.GetTotalPaymentByTrans(b.trn_Id)
-                        
-                             
-
-                    }).ToList();
+                            balance =acc._amtBooking - acc._totaPayment
 
 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
 
-            return listAccn.Where(x=>x.balance>0).ToList();
+                        }).ToList();
+
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+
+            _dbentities.Dispose();
+
+            return listAccn.Where(x=>x.balance>0).OrderBy(t=>t.cusname).ToList();
         }
     }
 }

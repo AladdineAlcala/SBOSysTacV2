@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SBOSysTacV2.ViewModel;
+using System.Data.Entity;
+using SBOSysTacV2.HtmlHelperClass;
 
 namespace SBOSysTacV2.ServiceLayer
 {
 
     public class BookingsService
     {
-     
-
 
         //get totalPackageAmount
         public static decimal Get_TotalAmountBook(int transId)
@@ -20,6 +20,9 @@ namespace SBOSysTacV2.ServiceLayer
             var _dbcontext = new PegasusEntities();
 
             List<BookingAddon> addonsList = new List<BookingAddon>();
+
+
+            var booking = _dbcontext.Bookings.FirstOrDefault(t => t.trn_Id == transId);
 
             try
             {
@@ -32,9 +35,7 @@ namespace SBOSysTacV2.ServiceLayer
                 decimal hasLocationExtendedCharge = 0;
 
 
-                var package = new PackageBookingViewModel().GetPackageByTransaction_Id(transId);
-
-                if (package.p_type.TrimEnd() != "sd")
+                if (booking.Package.p_type.TrimEnd() != "sd")
                 {
                     var bookingdetails = (from books in _dbcontext.Bookings
                                           join packages in _dbcontext.Packages on books.p_id equals packages.p_id
@@ -61,7 +62,7 @@ namespace SBOSysTacV2.ServiceLayer
 
                     totalAmount = discount > 0 ? (totalAmount - discount) : totalAmount;
 
-                    hasLocationExtendedCharge = new TransactionDetailsViewModel().Get_extendedAmountLoc(transId);
+                    hasLocationExtendedCharge = booking.Package.p_type!=PackageType.vip.ToString() ? Get_extendedAmountLoc(transId):0;
 
                     if (hasLocationExtendedCharge > 0)
                     {
@@ -143,5 +144,61 @@ namespace SBOSysTacV2.ServiceLayer
 
             return Convert.ToDecimal(discountedAmount);
         }
+
+        public static List<Booking> GetBookingReport(DateTime dateFrom,DateTime dateTo)
+        {
+  
+            var _dbEntities = new PegasusEntities();
+
+            return _dbEntities.Bookings.Where(t =>
+                DbFunctions.TruncateTime(t.startdate) >= DbFunctions.TruncateTime(dateFrom) &&
+                DbFunctions.TruncateTime(t.startdate) <= DbFunctions.TruncateTime(dateTo)).ToList();
+        }
+
+        public static decimal Get_extendedAmountLoc(int transId)
+        {
+
+            decimal extAmt = 0;
+
+            using (var _dbEntities = new PegasusEntities())
+            {
+                var booking = _dbEntities.Bookings.FirstOrDefault(x => x.trn_Id == transId);
+
+
+                if (booking.Package.p_type.Trim() != PackageType.vip.ToString() && booking.extendedAreaId != null)
+                {
+                    try
+                    {
+                        var list = (from b in _dbEntities.Bookings
+                            join p in _dbEntities.Packages on b.p_id equals p.p_id
+                            join pa in _dbEntities.PackageAreaCoverages on p.p_id equals pa.p_id
+                            where pa.p_id == booking.p_id && pa.aID == booking.extendedAreaId
+                            select new
+                            {
+                                extLocAmount = pa.ext_amount
+
+                            }).FirstOrDefault();
+
+
+                        if (list != null)
+                        {
+
+                            extAmt = Convert.ToDecimal(list.extLocAmount);
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }
+
+
+            }
+
+            return extAmt;
+        }
+
     }
 }

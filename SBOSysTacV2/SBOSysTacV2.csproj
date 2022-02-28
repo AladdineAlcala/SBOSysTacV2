@@ -459,6 +459,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Admin_AddonsReport.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\CashReport.cs">
       <AutoGen>True</AutoGen>
@@ -6201,6 +6202,10 @@
     <Content Include="Content\dist\img\leading.jpg" />
     <Content Include="Content\dist\img\ls.jpg" />
     <Content Include="Content\dist\img\measure.jpg" />
+    <Content Include="Content\dist\img\pexels-oleg-magni-1853003.jpg" />
+    <Content Include="Content\dist\img\pexels-pixabay-372882.jpg" />
+    <Content Include="Content\dist\img\pexels-rajesh-tp-1624487.jpg" />
+    <Content Include="Content\dist\img\pexels-rajesh-tp-1633578.jpg" />
     <Content Include="Content\dist\img\photo1.png" />
     <Content Include="Content\dist\img\photo2.png" />
     <Content Include="Content\dist\img\photo3.jpg" />
@@ -8054,15 +8059,16 @@
       <LastGenOutput>CashReport.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Reports\AdminIncentivesReport.rpt">
+    <Content Include="Reports\AdminIncentivesReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>AdminIncentivesReport.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Admin_AddonsReport.rpt">
+    </Content>
+    <Content Include="Reports\Admin_AddonsReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Admin_AddonsReport.cs</LastGenOutput>
-    </EmbeddedResource>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Reports\PrintRefundVouch.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>PrintRefundVouch1.cs</LastGenOutput>

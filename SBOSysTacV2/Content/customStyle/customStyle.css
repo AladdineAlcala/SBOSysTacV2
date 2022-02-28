@@ -1170,9 +1170,6 @@ img.hover-shadow {
 
 /*===============================================================================================   */
 
-/*td.align-middle {
-    vertical-align:middle;
-}*/
 
 #tablePackage > tbody > tr > td {
     vertical-align: middle;
@@ -1181,3 +1178,13 @@ img.hover-shadow {
 #tbl_eventsBooking > tbody > tr > td {
     vertical-align: middle;
 }
+
+    #tbl_eventsBooking > tbody > tr > td > span.name {
+        font-weight: bold;
+        vertical-align: top;
+    }
+
+
+    #tbl_eventsBooking > tbody > tr > td > label.lack__menus {
+        font-weight: normal;
+    }

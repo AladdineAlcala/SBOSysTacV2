@@ -1,4 +1,6 @@
-﻿@using SBOSysTacV2.HtmlHelperClass
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@using SBOSysTacV2.HtmlHelperClass
 @using SBOSysTacV2.ViewModel
 @model TransactionDetailsViewModel
 
@@ -6,16 +8,16 @@
 
 
 @{
-    var fullname = Utilities.getfullname(Model.Customer.lastname, Model.Customer.firstname, Model.Customer.middle);
+    var fullname = Utilities.Getfullname(Model.Customer.lastname, Model.Customer.firstname, Model.Customer.middle);
     string status = "";
 
-    if (Model.Booking_Trans.iscancelled == true)
+    if (Model.Booking_Trans.is_cancelled == true)
     {
         status = "Cancelled";
     }
     else
     {
-        status = Model.Booking_Trans.serve_status == true ? "Served" : "UnServed";
+        status = Model.Booking_Trans.serve_stat == true ? "Served" : "UnServed";
     }
 }
 @*<section class="content-header">
@@ -105,11 +107,11 @@
                 <br />
                 <div class="control-label col-sm-4"> EVENTCOLOR:</div> <span class="bookdetails"> @Html.DisplayFor(m => m.Booking_Trans.eventcolor) </span>
                 <br />
-                <div class="control-label col-sm-4"> TYPE OF SERVICE:</div><span class="bookdetails">@Html.DisplayFor(m => m.Booking_Trans.serviceType)</span>
+                <div class="control-label col-sm-4"> TYPE OF SERVICE:</div><span class="bookdetails">@Html.DisplayFor(m => m.Booking_Trans.ServiceType.servicetypedetails)</span>
                 <br />
                 <div class="control-label col-sm-4">NOTES :</div>
                 <br />
-                <span class="bookdetails col-sm-12">@Html.DisplayFor(m => m.Booking_Trans.refernce)</span>
+                <span class="bookdetails col-sm-12">@Html.DisplayFor(m => m.Booking_Trans.reference)</span>
 
             </div>
 
@@ -146,9 +148,13 @@
                 </div>
                 <div class="clearfix"></div>
                 <br />
-                <div class="control-label col-sm-4">Last Update By:</div> <span class="bookdetails">@Html.DisplayFor(m => m.Booking_Trans.b_createdbyUserName)</span>
+                
+                @{
+                    var user = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(Model.Booking_Trans.b_createdbyUser);
+                }
+                <div class="control-label col-sm-4">Last Update By:</div> <span class="bookdetails">@user.UserName</span>
                 <br />
-                <div class="control-label col-sm-4">Updated Date:</div> <span class="bookdetails">@Model.Booking_Trans.b_updatedDate.ToString("MMM d, yyyy h:mm tt")</span>
+                <div class="control-label col-sm-4">Updated Date:</div> <span class="bookdetails">@(Model.Booking_Trans.b_updatedDate.HasValue ? Model.Booking_Trans.b_updatedDate.Value.ToString("MMM d, yyyy h:mm tt") : "n/a" )</span>
             </div>
 
             <div class="col-sm-6">

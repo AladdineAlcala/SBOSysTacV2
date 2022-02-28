@@ -25,47 +25,53 @@ namespace SBOSysTacV2.ViewModel
        
         private PegasusEntities dbentities = new PegasusEntities();
         private BookingPaymentsViewModel bookingPayments = new BookingPaymentsViewModel();
-        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
+       
 
         public IEnumerable<RefundsViewModel> GetAllRefundsList()
         {
+            Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
 
             List<RefundsViewModel> listRefunds = new List<RefundsViewModel>();
 
             try
             {
-                IEnumerable<Booking> bookings = (from booking in dbentities.Bookings select booking).ToList();
+                var refunds = (from rf in dbentities.Refunds select rf).ToList();
+                var bookings = (from booking in dbentities.Bookings where booking.serve_stat == false || booking.is_deleted == false select booking).ToList();
 
 
-                listRefunds = (from b in bookings
-                    select new
-                    {
-                        _tId = b.trn_Id,
-                        _trEvtDate = b.startdate,
-                        _cusId = b.c_Id,
-                        _cusfullname = Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
-                        _occasion = b.occasion,
-                        _evtVenue=b.venue,
-                        _iscancelledbooking = b.is_cancelled,
-                        _serveStat=b.serve_stat,
-                        _tpackageAmt = _getBookingAmount(b.trn_Id),
-                        _totapayment = (from p in dbentities.Payments select p).Where(s => s.trn_Id == b.trn_Id).Sum(x => x.amtPay),
-                        _hasrefundEntry=(from rp in dbentities.Refunds select rp).Any(x => x.trn_Id==b.trn_Id),
-                        _stat=" "
-                    }).ToList().Where(t=>t._serveStat == false).Select(book => new RefundsViewModel()
-                      {
-                        TransId = book._tId,
-                        cId = (int) book._cusId,
-                        CustomerName =book._cusfullname,
-                        EventLocation = book._evtVenue,
-                        Eventdate = (DateTime)book._trEvtDate,
-                        isCancelled =(bool) book._iscancelledbooking,
-                        PaymemntAmount = Convert.ToDecimal(book._totapayment),
-                        RefundAmount = book._totapayment > book._tpackageAmt?Convert.ToDecimal(book._totapayment - book._tpackageAmt):0,
-                        //RefundAmount =book._iscancelledbooking==false? Convert.ToDecimal(book._totapayment - book._tpackageAmt): Convert.ToDecimal(book._totapayment),
-                        hasrefundEntry = book._hasrefundEntry,
-                        Status = book._stat
-                    }).ToList();
+                    listRefunds = (from booking in bookings
+                                   join rf in refunds on booking.trn_Id equals rf.trn_Id
+                                   select new
+                                        {
+                                            _tId = booking.trn_Id,
+                                            _trEvtDate = booking.startdate,
+                                            _cusId = booking.c_Id,
+                                            _lastname=booking.Customer.lastname,
+                                            _first=booking.Customer.firstname,
+                                            _mid=booking.Customer.middle,
+                                            _occasion = booking.occasion,
+                                            _evtVenue = booking.venue,
+                                            _iscancelledbooking = booking.is_cancelled,
+                                            _serveStat = booking.serve_stat,
+                                            _tpackageAmt = _getBookingAmount(booking.trn_Id),
+                                            _totapayment = (from p in dbentities.Payments select p).Where(s => s.trn_Id == booking.trn_Id).Sum(x => x.amtPay),
+                                            _hasrefundEntry=(from rp in dbentities.Refunds select rp).Any(t => t.trn_Id== booking.trn_Id),
+                                            _netRefundable=rf.rf_Amount,
+                                            _totalRefundEntry=dbentities.RefundEntries.Where(t=>t.Rf_id==rf.Rf_id).Sum(t=>t.Amount)
+                                   }).AsEnumerable()
+                                    .Select(book => new RefundsViewModel()
+                                    {
+                                        TransId = book._tId,
+                                        cId = (int)book._cusId,
+                                        Eventdate = (DateTime)book._trEvtDate,
+                                        CustomerName = Utilities.Getfullname(book._lastname, book._first, book._mid),
+                                        EventLocation = book._evtVenue,
+                                        isCancelled = (bool)book._iscancelledbooking,
+                                        PaymemntAmount = Convert.ToDecimal(book._totapayment),
+                                        RefundAmount = book._totapayment > book._tpackageAmt ? Convert.ToDecimal(book._totapayment - book._tpackageAmt) : 0,
+                                        hasrefundEntry = book._hasrefundEntry,
+                                        Status =book._netRefundable==book._totalRefundEntry?"serve":"pending"
+                                    }).ToList();
 
             }
             catch (Exception e)

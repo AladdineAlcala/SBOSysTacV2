@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SBOSysTacV2.Models;
+using SBOSysTacV2.ServiceLayer;
 using SBOSysTacV2.ViewModel;
 
 namespace SBOSysTacV2.Controllers
@@ -151,7 +152,7 @@ namespace SBOSysTacV2.Controllers
 
                 addonslist = _dbcontext.BookingAddons.Where(x => x.trn_Id == transId).ToList();
                 //addonsTotal = addonslist.Sum(y => Convert.ToDecimal(y.AddonAmount));
-                extendedLocationAmount = transactionDetails.Get_extendedAmountLoc(transId);
+                extendedLocationAmount = BookingsService.Get_extendedAmountLoc(transId);
 
                 //belowminPax = packageType.Trim() == "vip" ? 0 : transactionDetails.GetBelowMinPaxAmount(no_of_pax);
 

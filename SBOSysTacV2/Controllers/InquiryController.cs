@@ -187,7 +187,7 @@ namespace SBOSysTacV2.Controllers
         {
             IEnumerable<SalesSummaryViewModel> salessummarylist=new List<SalesSummaryViewModel>();
             TransactionDetailsViewModel transdetails = new TransactionDetailsViewModel();
-
+            Func<int, decimal> _getTotalPaymentByBooking = TransactionDetailsViewModel.GetTotalPaymentByTrans;
             //var s=new SalesSummaryViewModel();
 
             try
@@ -213,8 +213,8 @@ namespace SBOSysTacV2.Controllers
                         dateTrans = Convert.ToDateTime(b.startdate),
                         //reference =p==null?"No reference" :p.particular,
                         particular = b.Package.p_descripton + " @ " + b.Package.p_amountPax +" /pax x " + b.noofperson ,
-                        CashSales = transdetails.GetTotalPaymentByTrans(b.trn_Id),
-                        OnAccount = transdetails.GetTotalBookingAmount(b.trn_Id) - transdetails.GetTotalPaymentByTrans(b.trn_Id)
+                        CashSales = _getTotalPaymentByBooking(b.trn_Id),
+                        OnAccount = transdetails.GetTotalBookingAmount(b.trn_Id) - _getTotalPaymentByBooking(b.trn_Id)
 
 
                     }).Where(t=>t.OnAccount>0).ToList();
@@ -309,7 +309,7 @@ namespace SBOSysTacV2.Controllers
 
                 if ((bool) _transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value
                 {
-                    extendedLocationAmount = transactionDetails.Get_extendedAmountLoc(transId);
+                    extendedLocationAmount = BookingsService.Get_extendedAmountLoc(transId);
                 }
 
 
@@ -483,16 +483,16 @@ namespace SBOSysTacV2.Controllers
 
             };
 
-            var list = CateringReportViewModel.GetCateringReport(_dbEntities.Bookings.Where(t => DbFunctions.TruncateTime(t.startdate) >= DbFunctions.TruncateTime(pOption.dateFrom) &&
-                                                                            DbFunctions.TruncateTime(t.startdate) <= DbFunctions.TruncateTime(pOption.dateTo))).ToList();
+           
 
+            var list = IncentivesService.GetCateringReport(BookingsService.GetBookingReport(pOption.dateFrom,pOption.dateTo));
 
             if (pOption.ex_unsetevent == true)
             {
                 list = list.Where(t => t.Status == "pd").ToList();
             }
 
-            ContainerClass.CateringList = list;
+            ContainerClass.CateringList = list.ToList();
 
             return View("~/Views/Shared/ReportContainer.cshtml", pOption);
         }

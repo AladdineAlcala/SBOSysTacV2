@@ -20,18 +20,17 @@
     }
 
     .addontools {
-
         color: #dd4b39;
         /*margin:0px;*/
         text-align: center;
         /*margin-right: 10px;*/
     }
 
-    .addontools span {
-        display: inline-block;
-        padding-left: 2px;
-        padding-right: 2px;
-    }
+        .addontools span {
+            display: inline-block;
+            padding-left: 2px;
+            padding-right: 2px;
+        }
 
     /*tr:hover .addontools {
         cursor: pointer;
@@ -55,11 +54,11 @@
         color: #dddddd;
         font-size: 15px;
     }
-    tfoot td {
-        border-bottom: 0;
-        border-right: 0;
-    }
 
+        tfoot td {
+            border-bottom: 0;
+            border-right: 0;
+        }
 </style>
 
 
@@ -67,10 +66,10 @@
 <section class="content">
 
     @*<div class="panel panel-default">
-        <div class="panel-body">
-            @Model.Package.p_descripton
-        </div>
-    </div>*@
+            <div class="panel-body">
+                @Model.Package.p_descripton
+            </div>
+        </div>*@
 
     <div class="pad margin no-print" style="padding-left: 0px !important; padding-right: 0px !important; margin-bottom: 0px; padding-bottom: 0px;">
         <div class="callout callout-info" style="margin-bottom: 15px;">
@@ -83,22 +82,22 @@
             <div class="button-group" style="margin-right: 14px;">
                 <a class="btn bg-olive btn-flat" href="@Url.Action("Index", "Bookings")"><i class="fa fa-reply"></i> Bookings </a>
                 @*<a class="btn bg-olive btn-flat" href="@Url.Action("GetPackageBookingDetails", "Bookings",new {transId =Model.transactionId})"><i class="fa fa-reply"></i> Details </a>
-                <a class="btn bg-olive btn-flat" href="@Url.Action("PrintDistribution","Bookings",new {transId=Model.transactionId})"> <i class="fa fa-print"></i> Print Distribution</a>*@
+                    <a class="btn bg-olive btn-flat" href="@Url.Action("PrintDistribution","Bookings",new {transId=Model.transactionId})"> <i class="fa fa-print"></i> Print Distribution</a>*@
                 @*<button class="btn bg-olive btn-flat" type="button" id="btn_PrintDistribution"><i class="fa fa-print"></i> Print Distribution </button>*@
             </div>
         </div>
     </div>
     <div class="col-sm-5" id="bookmenus">
-        @{
-            Html.RenderAction("GetListofBookMenus","Bookings",new { transactionId = Model.transactionId});
+        @*@{
+                Html.RenderAction("GetListofBookMenus","Bookings",new { transactionId = Model.transactionId});
 
-        }
+            }*@
     </div>
 
     <div class="col-sm-7" id="addons">
-        @{
-            Html.RenderAction("GetListofAddons", "Bookings",new {transid=Model.transactionId});
-        }
+        @*@{
+                Html.RenderAction("GetListofAddons", "Bookings",new {transid=Model.transactionId});
+            }*@
 
     </div>
 </section>
@@ -186,7 +185,7 @@
             urlModifyBookingAddOns: "@Url.Action("ModifyAddOns", "Bookings")",
             urlAddOnsInformation: "@Url.Action("AddOnsInformation", "Bookings")",
             urlRemoveBookingMenus: "@Url.Action("RemoveMenufromListofBookings", "Bookings")",
-            urlRemoveBookingAddOns: "@Url.Action("RemoveAddons", "Bookings")"
+            @*urlRemoveBookingAddOns: "@Url.Action("RemoveAddons", "Bookings")"*@
 
 
         }

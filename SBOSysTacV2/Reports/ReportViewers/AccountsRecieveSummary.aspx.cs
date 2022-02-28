@@ -56,7 +56,7 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                     CRViewerAccnRecievableSummary.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
 
-                    var accnsummary = accnsum.GetAllAccnRecievables().ToList();
+                    var accnsummary = accnsum.GetAllAccnRecievables().ToList();  //2.45 min
 
 
                     cryRep.Database.Tables[0].SetDataSource(accnsummary);

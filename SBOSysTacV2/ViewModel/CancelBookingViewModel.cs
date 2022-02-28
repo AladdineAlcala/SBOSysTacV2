@@ -37,6 +37,8 @@ namespace SBOSysTacV2.ViewModel
 
         public CancelBookingViewModel GetCancelledBooking(int transId)
         {
+            Func<int, decimal> _getTotalPaymentByBooking = TransactionDetailsViewModel.GetTotalPaymentByTrans;
+
             CancelBookingViewModel cancelledBooking = null;
 
             var booking = (from b in _dbcontext.Bookings where b.trn_Id.Equals(transId) select b).FirstOrDefault();
@@ -52,7 +54,7 @@ namespace SBOSysTacV2.ViewModel
                     Venue = booking.venue,
                     CancelDate = DateTime.Now,
                     AmountDue = _getBookingAmount(transId),
-                    AmountPaid = transdetails.GetTotalPaymentByTrans(transId),
+                    AmountPaid = _getTotalPaymentByBooking(transId),
                 };
             }
 

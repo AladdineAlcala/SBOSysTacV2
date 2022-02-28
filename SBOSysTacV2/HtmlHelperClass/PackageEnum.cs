@@ -5,17 +5,14 @@ using System.Web;
 
 namespace SBOSysTacV2.HtmlHelperClass
 {
-    public static class PackageEnum
+    public enum PackageType
     {
-        public enum packageType
-        {
-            regular,
-            vip,
-            pm,
-            sd,
-            cat
+        regular,
+        vip,
+        pm,
+        sd,
+        cat
 
 
-        }
     }
 }

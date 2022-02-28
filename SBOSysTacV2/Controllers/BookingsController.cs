@@ -14,6 +14,7 @@ using System.Web.Services.Protocols;
 using System.Web.SessionState;
 using SBOSysTacV2.ServiceLayer;
 
+
 namespace SBOSysTacV2.Controllers
 {
     [Authorize]
@@ -149,6 +150,7 @@ namespace SBOSysTacV2.Controllers
                             b_createdbyUser = bookingViewModel.b_createdbyUser,
                             reference = bookingViewModel.refernce,
                             b_updatedDate = createdDate,
+                            b_createdDate = createdDate,
                             is_cancelled = false,
                             is_deleted = false
                             
@@ -285,7 +287,7 @@ namespace SBOSysTacV2.Controllers
 
                 var bookings = _dbcontext.Bookings.Find(transDetails.Booking_Trans.trn_Id);
 
-                packageAmount = (decimal) (!string.Equals(packageType, PackageEnum.packageType.sd.ToString(), StringComparison.Ordinal)
+                packageAmount = (decimal) (!string.Equals(packageType, PackageType.sd.ToString(), StringComparison.Ordinal)
                     ? transDetails.Package_Trans.p_amountPax
                     : book_menus_vm.ComputeAmountForSnacksByTransId(transId));
 
@@ -298,7 +300,8 @@ namespace SBOSysTacV2.Controllers
 
                 if ((bool)transDetails.Booking_Trans.apply_extendedAmount) // check if location extended charge is true otherwise extended location will be zero value
                 {
-                    extendedLocationAmount = transDetailsvm.Get_extendedAmountLoc(transId);
+                    extendedLocationAmount = BookingsService.Get_extendedAmountLoc(transId);
+                    
                 }
 
                 
@@ -1102,7 +1105,7 @@ namespace SBOSysTacV2.Controllers
                 updatedBooking.b_createdbyUser = User.Identity.GetUserId();
                 updatedBooking.serve_stat = bookingViewModel.serve_status;
                 updatedBooking.is_cancelled = bookingViewModel.iscancelled;
-                updatedBooking.is_deleted = bookingViewModel.isDeleted;
+                //updatedBooking.is_deleted = bookingViewModel.isDeleted;
 
             }
 

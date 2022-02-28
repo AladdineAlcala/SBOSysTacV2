@@ -5,6 +5,8 @@ var $areasel;
 
 $(document).ready(function () {
 
+    deactivateLoader();
+
     $('#packageselect').select2({
 
         dropdownParent: $('#modal-searchPackage')
@@ -28,10 +30,6 @@ $(document).ready(function () {
 
 
     loaddatatableBookings();
-
-  
- /*   $tablebookings.button(4).disable();*/
-
 
     //==================================================================================
 
@@ -302,7 +300,7 @@ $(document).ready(function () {
 
             e.preventDefault();
 
-            $('#spinn-loader').show();
+            activeLoader();
 
             var trnsId = $(this).attr("id");
 
@@ -335,7 +333,7 @@ $(document).ready(function () {
                 },
                 done: function () {
 
-                    $('#spinn-loader').hide();
+                    deactivateLoader();
                 }
 
                 
@@ -553,6 +551,9 @@ $(document).ready(function () {
 
     function loaddatatableBookings() {
 
+
+        activeLoader();
+
         if ($.fn.DataTable.isDataTable('#tbl_eventsBooking')) {
 
             $('#tbl_eventsBooking').dataTable().fnDestroy();
@@ -588,12 +589,12 @@ $(document).ready(function () {
             {
                 "serverSide": false,
 
-                "processing": true,
+                "processing": false,
 
-                "language": {
-                    'infoFiltered': "",
-                    'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:40px;color:rgb(75, 183, 245);"></i><span class="sr-only"> Loading ....</span>'
-                },
+                //"language": {
+                //    'infoFiltered': ""
+                //    /*'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size:40px;color:rgb(75, 183, 245);"></i><span class="sr-only"> Loading ....</span>'*/
+                //},
 
                 "paging": true,
 
@@ -611,6 +612,9 @@ $(document).ready(function () {
                 "fnInitComplete": function () {
 
                     $('#bookingtop').addClass('my-2');
+
+                    deactivateLoader();
+
                 },
                 "pagingType": "full_numbers",
 
@@ -636,11 +640,7 @@ $(document).ready(function () {
                     {
                         'autowidth': true, 'targets': 1,
                         "data": "fullname",
-                        //"render": function (data) {
-
-                        //    return toProperCase(data);
-                        //}
-
+                       
                         "render":function(data,type,row) {
 
                             if (row.no_of_lackingMenus > 0) {
@@ -648,11 +648,13 @@ $(document).ready(function () {
                                 return '<span class="name">' +
                                     toProperCase(data) +
                                     '</span> </br>' +
-                                    '<label class="control-label text-danger"><i class="fa fa-bell-o"></i> ' + row.no_of_lackingMenus + ' lacking menu(s) unselected </label>';
+                                    '<p class="lack__menus text-danger"><i class="fa fa-bell-o"></i> ' + row.no_of_lackingMenus + ' lacking menu(s) unselected </p>';
 
                             } else {
 
-                                return toProperCase(data);
+                                return '<span class="name">' +
+                                    toProperCase(data) +
+                                    '</span> </br>';
                             }
                            
 
@@ -724,10 +726,15 @@ $(document).ready(function () {
                         titleAttr: 'Create new bookings',
                         action: function () {
 
+                            deactivateLoader();
+
                             window.location.href = bookingsUrl.bookUrl_createBooking;
+
+                          
 
                         }
                     }
+
                     //,
                     //{
                     //    text: '<i class="fa fa-edit fa-sm fa-fw"></i>',
@@ -788,6 +795,8 @@ $(document).ready(function () {
 
             }
         );
+
+       
     }
 
 
@@ -1852,3 +1861,18 @@ $(document).on('keypress', '#txtcharge_amt', function (event) {
         event.preventDefault();
     }
 });
+
+
+function activeLoader() {
+    $('.overlay').show();
+    $('#spinn-loader').show();
+}
+
+function deactivateLoader() {
+
+    setTimeout(function () {
+
+            $('.overlay').hide();
+            $('#spinn-loader').hide();
+    },1000);
+}

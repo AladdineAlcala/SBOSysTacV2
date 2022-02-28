@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SBOSysTacV2.Reports.ReportViewers {
-    
-    
-    public partial class CashReportViewer {
-        
+namespace SBOSysTacV2.Reports.ReportViewers
+{
+
+
+    public partial class CashReportViewer
+    {
+
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace SBOSysTacV2.Reports.ReportViewers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// CRViewerCashReport control.
         /// </summary>

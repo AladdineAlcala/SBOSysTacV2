@@ -19,7 +19,9 @@ $(document).ready(function () {
                  url: inquiryUrl.inquiryUrl_customerbookings,  // "@Url.Action("GetCustomerBookings", "Inquiry")",
                  contentType: 'application/html;charset=utf8',
                  beforeSend: function () {
+
                      $('#spinn-loader').show();
+
                  },
                  datatype: 'html',
                  cache: false,
@@ -158,9 +160,10 @@ $(document).ready(function () {
                                 '<li><a href="#" class="get_packagemenus" id=' +
                                 data +
                                 '><i class="fa fa-cube fa-sm"></i> Menus </a></li>' +
-                                '<li><a href="#" class="get_packagedetails" id=' +
+
+                                '<li><a href="#" class="get_bookingpackagedetails" id=' +
                                 data +
-                                '><i class="fa fa-info-circle fa-sm"></i> Details </a></li>';
+                                '><i class="fa fa-info-circle fa-sm"></i> Booking Details </a></li>';
 
                             if (row.isServe === false && row.isCancelled === true) {
 
@@ -397,7 +400,7 @@ $(document).ready(function () {
             });
 
 
-        $('#tbl-cusBookings tbody').on('click', 'tr .get_packagedetails',
+        $('#tbl-cusBookings tbody').on('click', 'tr .get_bookingpackagedetails',
             function (e) {
 
                 e.preventDefault();
@@ -409,6 +412,7 @@ $(document).ready(function () {
                     data: { transactionId:trnsId},
                     success: function (result) {
                         if (result.success) {
+
                             window.location.href = inquiryUrl.bookUrl_getPackageBookingDetailsId.replace("trans_Id", trnsId);
                         }
                         else {
@@ -471,6 +475,8 @@ $(document).ready(function () {
 
                 window.location.href = inquiryUrl.bookUrl_BookingTransHistory.replace("trans_Id", _transid);
 
+
+              /*  "@Url.Action("BookingTransactionHistory","Inquiry", new { transId = "trans_Id" })"*/
 
             });
 

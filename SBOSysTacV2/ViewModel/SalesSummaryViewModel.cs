@@ -25,11 +25,12 @@ namespace SBOSysTacV2.ViewModel
             TransRecievablesViewModel t=new TransRecievablesViewModel();
             TransactionDetailsViewModel transdetails = new TransactionDetailsViewModel();
             PegasusEntities db_entities=new PegasusEntities();
+            Func<int, decimal> _getTotalPaymentByBooking = TransactionDetailsViewModel.GetTotalPaymentByTrans;
 
             try
             {
 
-                IEnumerable<Booking> bookings = (from booking in db_entities.Bookings select booking).ToList();
+                var bookings = (from booking in db_entities.Bookings where booking.is_cancelled == false && booking.is_deleted == false select booking).OrderBy(x => x.Customer.lastname).ToList();
                 listofSales = (from b in bookings join p in db_entities.Payments on b.trn_Id equals p.trn_Id
                     select new SalesSummaryViewModel()
                     {
@@ -39,7 +40,7 @@ namespace SBOSysTacV2.ViewModel
                         reference = p.particular,
                         particular = b.Package.p_descripton,
                         CashSales =Convert.ToDecimal(p.amtPay),
-                        OnAccount =transdetails.GetTotalBookingAmount(b.trn_Id)-transdetails.GetTotalPaymentByTrans(b.trn_Id)
+                        OnAccount =transdetails.GetTotalBookingAmount(b.trn_Id)- _getTotalPaymentByBooking(b.trn_Id)
 
                     }).ToList();
 

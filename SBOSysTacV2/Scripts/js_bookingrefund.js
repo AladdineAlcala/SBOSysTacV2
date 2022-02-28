@@ -115,10 +115,10 @@ $(document).ready(function () {
             {
                 'autowidth': true,
                 'targets': 6,
-                'data': 'Status',
-                'render': function(data) {
-                    return 'pending';
-                }
+                'data': 'Status'
+                //'render': function(data) {
+                //    return data.Status;
+                //}
             },
             {
                 'width': '10%',

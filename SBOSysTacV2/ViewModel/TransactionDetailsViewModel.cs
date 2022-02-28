@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.Models;
+using SBOSysTacV2.ServiceLayer;
 
 namespace SBOSysTacV2.ViewModel
 {
@@ -26,7 +27,7 @@ namespace SBOSysTacV2.ViewModel
         public decimal extLocAmount { get; set; } = 0;
         public decimal cateringdiscount { get; set; } = 0;
         public decimal fullpaymnt { get; set; } = 0;
-
+        public ApplicationUser User { get; set; }
 
         private BookingsViewModel bvm = new BookingsViewModel();
         private AddonsViewModel advm = new AddonsViewModel();
@@ -39,11 +40,6 @@ namespace SBOSysTacV2.ViewModel
 
             List<TransactionDetailsViewModel> _list = new List<TransactionDetailsViewModel>();
 
-            //List<BookingsViewModel> _bookingsViewModel = new List<BookingsViewModel>();
-
-            // _dbEntities.Configuration.ProxyCreationEnabled = false;
-
-            //_bookingsViewModel = bvm.GetListofBookings().ToList();  
 
 
             try
@@ -58,7 +54,9 @@ namespace SBOSysTacV2.ViewModel
                              transactionId = b.trn_Id,
                              Booking_Trans = b,
                              Customer = c,
-                             Package_Trans = p
+                             Package_Trans = p,
+                             ServiceType = b.ServiceType
+                     
                          }).ToList();
 
             }
@@ -293,50 +291,7 @@ namespace SBOSysTacV2.ViewModel
             return extAmt;
         }
 
-        public decimal Get_extendedAmountLoc(int transId)
-        {
-
-            decimal extAmt = 0;
-
-            using (var _dbEntities = new PegasusEntities())
-            {
-                var booking = _dbEntities.Bookings.FirstOrDefault(x => x.trn_Id == transId);
-
-
-                if (booking.Package.p_type.Trim() != PackageEnum.packageType.vip.ToString() && booking.extendedAreaId != null)
-                {
-                    try
-                    {
-                        var list = (from b in _dbEntities.Bookings
-                            join p in _dbEntities.Packages on b.p_id equals p.p_id
-                            join pa in _dbEntities.PackageAreaCoverages on p.p_id equals pa.p_id
-                            where pa.p_id == booking.p_id && pa.aID == booking.extendedAreaId
-                            select new
-                            {
-                                extLocAmount = pa.ext_amount
-
-                            }).FirstOrDefault();
-
-
-                        if (list != null)
-                        {
-
-                            extAmt =  Convert.ToDecimal(list.extLocAmount * booking.noofperson);
-                        }
-
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
-                    }
-                }
-
-               
-            }
-
-            return extAmt;
-        }
+       
 
 
         public decimal GetFullPayment(int transId)
@@ -362,7 +317,7 @@ namespace SBOSysTacV2.ViewModel
         }
 
 
-        public decimal GetTotalPaymentByTrans(int transId)
+        public static decimal GetTotalPaymentByTrans(int transId)
         {
 
             var _dbEntities = new PegasusEntities();
@@ -595,7 +550,7 @@ namespace SBOSysTacV2.ViewModel
 
         public decimal GetCateringdiscountByPax(string packageType, int noOfPax)
         {
-            return packageType.Trim() ==PackageEnum.packageType.vip.ToString() ? 0 : GetCateringdiscountByPax(noOfPax);
+            return packageType.Trim() == PackageType.vip.ToString() ? 0 : GetCateringdiscountByPax(noOfPax);
         }
 
 
@@ -604,7 +559,11 @@ namespace SBOSysTacV2.ViewModel
         {
             var transid = contractDetail.transId;
 
-            List<Book_OtherCharge> otherCharges = new List<Book_OtherCharge>();
+            decimal _extededAmount = 0;
+            decimal _cateringDiscount = 0;
+            decimal _packageAmount = 0;
+
+            List <Book_OtherCharge> otherCharges = new List<Book_OtherCharge>();
 
             using (var dbcontext=new PegasusEntities())
             {
@@ -612,15 +571,26 @@ namespace SBOSysTacV2.ViewModel
                 otherCharges = dbcontext.Book_OtherCharge.Where(t => t.trn_Id == transid).ToList();
             }
 
+            _packageAmount =
+                (decimal) (!string.Equals(contractDetail.packageType.TrimEnd(), PackageType.sd.ToString(),
+                    StringComparison.Ordinal)
+                    ? this.GetAccountTotalByTransId(transid)
+                    : book_menus_vm.ComputeAmountForSnacksByTransId(transid));
+
+
+            _extededAmount = BookingsService.Get_extendedAmountLoc(transid);
+            _cateringDiscount = this.GetCateringdiscountByPax(contractDetail.packageType, contractDetail.noofPax);
+
             return new TransactionDetailsViewModel
             {
+                
+
                 transactionId = transid,
-                PackageAmount =(decimal) (!string.Equals(contractDetail.packageType.TrimEnd(), PackageEnum.packageType.sd.ToString(), StringComparison.Ordinal)? 
-                                this.GetAccountTotalByTransId(transid) : book_menus_vm.ComputeAmountForSnacksByTransId(transid)),
+                PackageAmount = _packageAmount,
                 //TotaAddons = advm.AddonsTotal(transid),
                 TotaMiscCharge = bocvm.GetTotalOtherCharges(otherCharges),
-                extLocAmount = this.Get_extendedAmountLoc(transid),
-                cateringdiscount = this.GetCateringdiscountByPax(contractDetail.packageType,contractDetail.noofPax)  * contractDetail.noofPax
+                extLocAmount = _extededAmount>0? _extededAmount* contractDetail.noofPax :0,
+                cateringdiscount = _cateringDiscount >0? _cateringDiscount * contractDetail.noofPax:0
 
             };
 

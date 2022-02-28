@@ -37,10 +37,9 @@ namespace SBOSysTacV2.Controllers
         [HttpGet]
         public JsonResult Get_RefundableBookings()
         {
-
             List<RefundsViewModel> refundableList = new List<RefundsViewModel>();
-            refundableList = _refundsView.GetAllRefundsList().Where(x => x.RefundAmount > 0|| (x.isCancelled && x.PaymemntAmount > 0)).ToList();
-
+            //refundableList = _refundsView.GetAllRefundsList().Where(x => x.RefundAmount > 0|| (x.isCancelled && x.PaymemntAmount > 0)).ToList();
+            refundableList = _refundsView.GetAllRefundsList().ToList();
 
             return Json(new { data = refundableList }, JsonRequestBehavior.AllowGet);
         }
@@ -133,12 +132,11 @@ namespace SBOSysTacV2.Controllers
             
               //decimal totalAmount = 0;
             refundEntry.transId = transId;
-            //totalAmount = bookingPayments.Get_TotalAmountBook(transId);
-            //refundEntry.t_amountPayment = (decimal) (from p in dbEntities.Payments select p)
-            //    .Where(s => s.trn_Id == transId).Sum(x => x.amtPay);
-            //refundEntry.t_amtBooking = bookingPayments.Get_TotalAmountBook(transId);
+            refundEntry.t_amtBooking = _getBookingAmount(transId);
+            refundEntry.t_amountPayment = (decimal)(from p in dbEntities.Payments select p)
+                .Where(s => s.trn_Id == transId).Sum(x => x.amtPay);
 
-            refundEntry.Bookings = bookingsViewModel.GetListofBookings().FirstOrDefault(x => x.trn_Id == transId);
+            refundEntry.Bookings = bookingsViewModel.GetListofBookings(transId);
             refundEntry.bookingrefund = refundbook.GetBookingRefund(transId);
 
 
