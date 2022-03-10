@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using SBOSysTacV2.HtmlHelperClass;
@@ -184,12 +186,28 @@ namespace SBOSysTacV2.Controllers
             return Json(new {data=lst}, JsonRequestBehavior.AllowGet);
         }
 
+        
+        /// <summary>
+        /// Get All Images in the Content/Images/RandomImages Folder and Display in the main form
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [OutputCache(Duration = 60, VaryByParam = "none")]
+        public ActionResult GetImages()
+        {
+            var physicalPath = Server.MapPath("~/Content/dist/img/RandomImages/");
+            string[] pictureFiles =  Directory.GetFiles(physicalPath, "*.jpg");
+
+
+            return Json(new {data= pictureFiles.Select(t => Path.GetFileName(t)).ToArray()}, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             _dbcontext.Dispose();
         }
 
-    }
+    }   
 
    
 }

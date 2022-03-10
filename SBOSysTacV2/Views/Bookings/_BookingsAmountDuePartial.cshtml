@@ -77,15 +77,11 @@
             <td class="text-right bookdetails" style="width: 60%;margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;"> <h4 class="my-1">@String.Format("{0:N}", otherMiscCharge)</h4></td>
         </tr>
 
-
-    @*<tr style="margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px;">
-            <th style="width: 60%;margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;font-weight: normal;"> Below Min. Pax: <small class="text-muted">(@String.Format("{0:N}", totalbelowminPax))</small> </th>
-            <td class="text-right bookdetails" style="width: 60%;margin-top: 0px; margin-bottom: 0px; padding-top: 2px; padding-bottom: 2px;">@String.Format("{0:N}", totalbelowminPax * noofPax)</td>
-        </tr>*@
         
-        @{
-            subtotal=(decimal) (t_AmountPackage + totalAddons + (extLocAmount * noofPax));
-        }
+    @{
+
+        subtotal=(decimal) (t_AmountPackage + totalAddons + otherMiscCharge +(extLocAmount * noofPax));
+    }
 
     <tr style="border-top: 1pt solid black;">
 
@@ -154,6 +150,7 @@
 
         var grandTota = subtotal - totaldiscount;
     }
+
     <tr style="border-top: 1pt solid  #000;border-bottom:4px double #000">
 
             <th style="width: 60%;" class="text-bold text-center text-justify"><h4 class="my-1">Total :</h4> </th>

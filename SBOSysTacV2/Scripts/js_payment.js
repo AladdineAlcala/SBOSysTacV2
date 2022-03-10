@@ -552,4 +552,16 @@ $(document).on('keypress', '#txtpayamt', function (event) {
     }
 });
 
+$(document).on('click', '#printInvoice', function(e) {
 
+
+    var modal = $('#modal-PrintInvoice');
+/*    modal.find('#modalcontent').html(result);*/
+
+    modal.modal({
+            backdrop: 'static',
+            keyboard: false
+        },
+        'show');
+
+});

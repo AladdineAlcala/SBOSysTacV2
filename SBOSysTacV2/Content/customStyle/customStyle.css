@@ -1188,3 +1188,14 @@ img.hover-shadow {
     #tbl_eventsBooking > tbody > tr > td > label.lack__menus {
         font-weight: normal;
     }
+
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+} 

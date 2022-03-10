@@ -113,7 +113,89 @@
 
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
+
+
+    $(function () {
+
+            var imagesdata = null;
+
+            GetImages();
+
+            setInterval(runslide(), 1000);
+            
+
+        function runslide() {
+
+            //console.log(imagesdata);
+
+            $('#pic1').delay(1000).fadeOut({ queue: true, duration: 'slow' }).animate({ opacity:1}, 'slow').delay(1500).fadeIn(1500, function () {
+
+                $('#pic1').attr("src", "/Content/dist/img/RandomImages/"+ imagesdata[RandomImages(imagesdata)]);
+
+                    $('#pic2').delay(1000).fadeOut({ queue: false, duration: 'slow' }).animate({ opacity:1}, 'slow').delay(1500).fadeIn(1500, function () {
+
+                        $('#pic2').attr("src", "/Content/dist/img/RandomImages/" + imagesdata[RandomImages(imagesdata)]);
+
+                            $('#pic3').delay(1000).fadeOut({ queue: false, duration: 'slow' }).animate({ opacity:1}, 'slow').delay(1500).fadeIn(1500, function () {
+
+                                $('#pic3').attr("src", "/Content/dist/img/RandomImages/" + imagesdata[RandomImages(imagesdata)]);
+
+                                    $('#pic4').delay(1000).fadeOut({ queue: false, duration: 'slow' }).animate({ opacity:1}, 'slow').delay(1500).fadeIn(1500, function () {
+
+                                        $('#pic4').attr("src", "/Content/dist/img/RandomImages/" + imagesdata[RandomImages(imagesdata)]);
+
+                                         runslide();
+                                    });
+                            });
+                    });
+            });
+
+        }
+
+
+            function RandomImages(data) {
+                var index = 0;
+                if (data === null) return 0;
+
+                else {
+
+                    index = Math.floor(Math.random() * data.length);
+                }
+
+                return index;
+
+            }
+
+            function GetImages() {
+
+                $.ajax({
+                    type:'Get',
+                    url: '/Home/GetImages',
+                    data: '{}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        
+                        imagesdata = result.data;
+                    },
+                    failure: function (r) {
+                        console.log(r.d);
+                    },
+                    error: function (r) {
+                        console.log(r.d);
+                    }
+                });
+
+
+
+            }
+
+    });
+
+
+       
+
 
         var UserlProfile= {
         url_userProfile: "@Url.Action("GetProfileInformation", "Account",new {userId= "userid" })"
@@ -125,18 +207,18 @@
                  function() {
                      $(this).css({ display: "block" });
                  });
-            
+
         }).on('collapsed.pushMenu', function () {
             //hide
             $('.sidebar-images').fadeOut("slow",
                 function() {
                     $(this).css({ display: "none" });
                 });
-            
+
         });
 
 
-     
+
         $('.main-sidebar').hover(function () {
 
             if ($('body').hasClass('sidebar-mini') && $("body").hasClass('sidebar-collapse')) {
@@ -145,10 +227,10 @@
                     function() {
                         $(this).css({ display: "block" });
                     });
-            
+
             }
         });
-    </script>
+</script>
     
 
       

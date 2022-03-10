@@ -12,22 +12,23 @@
         <div class="box-header">
             <h3 class="box-title">List of Payments</h3>
             <div class="box-tools">
-                
-                <a class="btn bg-olive btn-flat print_Payment" href="@Url.Action("PrintPaymentDetails", "Payments")" data-id="@Model.transId" style="margin-right: 5px;"><i class="fa fa-print"></i></a> @*target="_blank"*@
+
 
                 @{
                     if (Convert.ToBoolean(Model.Booking.is_cancelled))
                     {
-                        <button id="add_payment" class="btn bg-olive-active btn-flat" disabled="disabled" data-id="@Model.transId"><i class="fa fa-credit-card"></i></button>
+                        <button id="add_payment" class="btn bg-olive-active btn-flat" disabled="disabled" data-id="@Model.transId"><i class="fa fa-plus fa-lg"></i></button>
                     }
                     else
                     {
-                        <button id="add_payment" class="btn bg-olive-active btn-flat" data-id="@Model.transId"><i class="fa fa-credit-card"></i></button>
+                        <button id="add_payment" class="btn bg-olive-active btn-flat" data-id="@Model.transId"><i class="fa fa-plus fa-lg"></i></button>
                     }
                 }
 
+                <button class="btn bg-olive-active btn-flat" id="printInvoice"><i class="fa fa-print"></i></button>
 
-               
+                <!--<a class="btn bg-olive btn-flat print_Payment" href="@Url.Action("PrintPaymentDetails", "Payments")" data-id="@Model.transId" style="margin-right: 5px;"><i class="fa fa-print"></i></a>--> @*target="_blank"*@
+
             </div>
         </div>
         
