@@ -25,6 +25,7 @@
 @Html.Hidden("datefrom",@Model.dateFrom)
 @Html.Hidden("dateto", @Model.dateTo)
 @Html.Hidden("clientId",@Model.Id)
+@Html.Hidden("paymentId",@Model.pmtNo)
 
 <div id="spinn-loader">
 </div>
@@ -44,6 +45,7 @@
 
             var filterdatefrom = $('#datefrom').val();
             var filterdateto = $('#dateto').val();
+            var _payNo = $('#paymentId').val();
 
             //console.log(filterdatefrom + '' + filterdateto);
 
@@ -80,8 +82,8 @@
                 case "printaccnRcv":
 
                     $("#ReportFrame").attr("src",
-                        "@Url.Content("~/Reports/ReportViewers/AccnRecvPayment.aspx?transactionId=")" +
-                        paramTransId);
+                        "@Url.Content("~/Reports/ReportViewers/AccnRecvPayment.aspx?_paymntNo=")" +
+                        _payNo);
                     break;
 
                 case "cateringreport":

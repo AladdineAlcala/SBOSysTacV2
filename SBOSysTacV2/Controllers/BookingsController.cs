@@ -34,6 +34,7 @@ namespace SBOSysTacV2.Controllers
         private CourseCategoryViewModel courseCategory;
         private PackageBookingViewModel package_book_vm;
         private BookingOtherChargeViewModel bookOtherCharge;
+        private BookingsService bookingsService;
         Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
 
         public BookingsController()
@@ -51,6 +52,7 @@ namespace SBOSysTacV2.Controllers
             courseCategory = new CourseCategoryViewModel();
             package_book_vm = new PackageBookingViewModel();
             bookOtherCharge = new BookingOtherChargeViewModel();
+            bookingsService = new BookingsService();
         }
 
         // GET: Bookings
@@ -246,7 +248,7 @@ namespace SBOSysTacV2.Controllers
 
 
         [HttpGet]
-        public ActionResult GetPackageBookingDetails(int transId) => View(booking.GetBookingByTransaction(transId));
+        public ActionResult GetPackageBookingDetails(int transId) => View(bookingsService.GetBookingByTransaction(transId));
 
 
         [HttpGet]

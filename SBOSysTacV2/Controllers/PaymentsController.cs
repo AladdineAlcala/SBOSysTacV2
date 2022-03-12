@@ -306,7 +306,38 @@ namespace SBOSysTacV2.Controllers
             return PartialView("_PaymentsList", paytrans);
         }
 
+        [HttpGet]
+        public ActionResult GetPaymentVoucherForm()
+        {
 
+            return PartialView("_GetPaymentVoucherForm");
+        }
+
+        [HttpPost]
+        public ActionResult PrintVoucherReport(PrintVoucher printVoucher)
+        {
+            if (!ModelState.IsValid) return PartialView("_GetPaymentVoucherForm", printVoucher);
+
+            var success = false;
+
+            var isvalidPmtNo = _dbcontext.Payments.Any(t => t.payNo == printVoucher.PaymentNo);
+          
+
+            if (isvalidPmtNo)
+            {
+                success = true;
+            }
+            else
+            {
+                success = false;
+                ModelState.AddModelError(String.Empty, "No Payment reference found in the database");
+                //return PartialView("_GetPaymentVoucherForm", printVoucher);
+            }
+
+            return Json(new {success= success,data=printVoucher.PaymentNo, errorList= ModelState.Values.Where(t => t.Errors.Count > 0) }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public ActionResult PrintPaymentDetails(int transId)
         {
             var pOption = new PrintOptionViewModel()
@@ -325,6 +356,16 @@ namespace SBOSysTacV2.Controllers
             return View("~/Views/Shared/ReportContainer.cshtml", pOption);
 
         }
+
+        public ActionResult ReturnPrintVoucher(string paymentNo)
+        {
+            return View("~/Views/Shared/ReportContainer.cshtml",new PrintOptionViewModel()
+            {
+                pmtNo = paymentNo,
+                selPrintOpt = "printaccnRcv"
+            });
+        }
+
 
         protected override void Dispose(bool disposing)
         {

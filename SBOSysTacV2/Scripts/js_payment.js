@@ -553,15 +553,90 @@ $(document).on('keypress', '#txtpayamt', function (event) {
 });
 
 $(document).on('click', '#printInvoice', function(e) {
+    e.preventDefault();
 
+    $.ajax({
+        type: 'Get',
+        url: paymentsUrl.payUrl_printPaymentVoucher,   
+        contentType: 'application/html;charset=utf8',
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
 
-    var modal = $('#modal-PrintInvoice');
-/*    modal.find('#modalcontent').html(result);*/
+            var modal = $('#modal-PrintInvoice');
+            modal.find('#modalcontent').html(result);
 
-    modal.modal({
-            backdrop: 'static',
-            keyboard: false
+            modal.modal({
+                    backdrop: 'static',
+                    keyboard: false
+                },
+                'show');
         },
-        'show');
+        error: function (xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error!', 'Please try again', 'error');
+        }
+
+
+    });
+
+
+});
+
+
+$(document).on('click', '#btn_PrintVoucher', function(e) {
+    e.preventDefault();
+
+    var formUrl = $('#printpaymentvoucherform').attr('action');
+    var form = $('[id*=printpaymentvoucherform]');
+    $.validator.unobtrusive.parse(form);
+    form.validate();
+
+    if (form.valid()) {
+
+        $.ajax({
+            type: 'POST',
+            url: formUrl,
+            data: form.serialize(),
+            datatype: 'json',
+            cache: false,
+            success: function (result) {
+                if (result.success) {
+
+                    window.location.href = paymentsUrl.payUrl_printVoucher.replace("_payNo",result.data);
+
+                } else {
+
+                    //var modal = $('#modal-PrintInvoice');
+                    //modal.find('#modalcontent').html(result);
+
+                    //formUrl = $('#printpaymentvoucherform').attr('action');
+                    //form = $('[id*=printpaymentvoucherform]');
+                    //$.validator.unobtrusive.parse(form);
+                    //form.validate();
+                    //console.log(result.errorList);
+
+                    $.each(result.errorList, function (key, value) {
+                        $errorSpan = $("span[data-valmsg-for='" + "PaymentNo" + "']");
+                        $errorSpan.html("<span style='color:#a94442'>" + value.Errors[0].ErrorMessage + "</span>");
+                        $errorSpan.show();
+                    });
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                Swal.fire('Error updating record!', 'Please try again', 'error');
+            }
+        });
+
+
+    } else {
+
+        console.log(form.validate().errorList);
+
+        $.each(form.validate().errorList, function (key, value) {
+            $errorSpan = $("span[data-valmsg-for='" + value.element.id + "']");
+            $errorSpan.html("<span style='color:#a94442'>" + value.message + "</span>");
+            $errorSpan.show();
+        });
+    }
 
 });

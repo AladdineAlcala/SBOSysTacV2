@@ -15,6 +15,7 @@ namespace SBOSysTacV2.ViewModel
         public DateTime dateTo { get; set; }
         public Customer Customer { get; set; }
         public bool ex_unsetevent { get; set; }
+        public string pmtNo { get; set; }
         public IEnumerable<TransRecievablesViewModel> AccountRecievables { get; set; }
     }
 

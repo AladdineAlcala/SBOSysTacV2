@@ -1,0 +1,29 @@
+﻿@using SBOSysTacV2.ViewModel
+@model PrintVoucher
+
+@using (Html.BeginForm("PrintVoucherReport", "Payments", FormMethod.Post, new { @class = "form-horizontal", @id = "printpaymentvoucherform", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="box-body">
+        <div class="form-group">
+            <label class="col-sm-3 control-label text-right align-items-center">Enter Payment #:</label>
+            <div class="col-xs-5">
+                @Html.TextBoxFor(m => m.PaymentNo, new { @class = "form-control text-center", id = "txtpay_voucher" })
+                <div class="col-xs-12">
+                    @Html.ValidationMessageFor(m => m.PaymentNo, null, new { @class = "text-danger" })
+                </div>
+            </div>
+           
+        </div>
+       
+    </div>
+    <div class="box-footer">
+        <div class="col-md-5 col-md-offset-4">
+            <button class="btn bg-olive btn-flat" id="btn_PrintVoucher">Print Voucher </button>
+        </div>
+    </div>
+
+}
+

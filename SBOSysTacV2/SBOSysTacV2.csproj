@@ -468,6 +468,13 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\PrintPaymentVouch.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintPaymentVouch.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Reports\PrintRefundVouch1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -604,6 +611,7 @@
     <Compile Include="ServiceLayer\ContainerClass.cs" />
     <Compile Include="ServiceLayer\Incentives_Service.cs" />
     <Compile Include="ServiceLayer\PackageActionType.cs" />
+    <Compile Include="ServiceLayer\Payment_Service.cs" />
     <Compile Include="ViewModel\AccnRecieveSummaryViewModel.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\AddonCatViewModel.cs" />
@@ -665,6 +673,7 @@
     <Compile Include="ViewModel\PrintOptionViewModel.cs" />
     <Compile Include="ViewModel\PrintRcvPaymentDetails.cs" />
     <Compile Include="ViewModel\PrintRefundViewModel.cs" />
+    <Compile Include="ViewModel\PrintVoucher.cs" />
     <Compile Include="ViewModel\RefundEntryViewModel.cs" />
     <Compile Include="ViewModel\RefundsViewModel.cs" />
     <Compile Include="ViewModel\RefundTransViewModel.cs" />
@@ -7947,6 +7956,7 @@
     <Content Include="Views\Packages\GetPackageView.cshtml" />
     <Content Include="Views\Inquiry\AdminReportsIncentives_Index.cshtml" />
     <Content Include="Views\Inquiry\AddonsReport_Index.cshtml" />
+    <Content Include="Views\Payments\_GetPaymentVoucherForm.cshtml" />
     <None Include="Web.developtment_testConfig.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -8072,6 +8082,11 @@
     <Content Include="Reports\Admin_AddonsReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Admin_AddonsReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\PrintPaymentVouch.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PrintPaymentVouch.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Reports\PrintRefundVouch.rpt">

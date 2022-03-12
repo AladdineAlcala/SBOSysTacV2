@@ -190,7 +190,8 @@
                 <h4 class="modal-title">Enter Payment Invoice</h4>
             </div>
             <div class="modal-body" id="modalcontent">
-
+                
+               
             </div>
 
         </div>
@@ -217,7 +218,9 @@
             payUrl_addPayment: "@Url.Action("Add_PaymentPartialView", "Payments")",
             payUrl_updatePayment: "@Url.Action("Update_PaymentPartialView", "Payments")",
             payUrl_removePayment: "@Url.Action("RemovePayment", "Payments")",
-            payUrl_printPayment:"@Url.Action("PrintPaymentDetails", "Payments")"
+            payUrl_printPayment: "@Url.Action("PrintPaymentDetails", "Payments")",
+            payUrl_printPaymentVoucher: "@Url.Action("GetPaymentVoucherForm", "Payments")",
+            payUrl_printVoucher: "@Url.Action("ReturnPrintVoucher", "Payments",new{paymentNo="_payNo"})"
         }
 
 

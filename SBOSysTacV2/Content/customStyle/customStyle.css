@@ -1198,4 +1198,12 @@ img.hover-shadow {
     100% {
         transform: translateX(0);
     }
-} 
+}
+
+.align-items-center {
+    vertical-align: middle;
+}
+
+.align-items-baseline {
+    vertical-align:bottom;
+}

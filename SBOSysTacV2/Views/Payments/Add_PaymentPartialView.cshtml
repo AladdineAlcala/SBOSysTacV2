@@ -64,7 +64,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">Total Payment of: </label>
             <div class="col-sm-7">
-                @Html.TextBoxFor(m=>m.amtPay,new {@class="form-control text-right",@placeholder="0.00", @id = "txtpayamt" })
+                @Html.TextBoxFor(m=>m.amtPay,new {@class="form-control text-right",placeholder="0.00", id = "txtpayamt" })
             </div>
             @Html.ValidationMessageFor(m => m.amtPay, null, new { @class = "text-danger" })
         </div>

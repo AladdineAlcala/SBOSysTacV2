@@ -5,20 +5,38 @@ using System.Linq;
 using System.Web;
 using SBOSysTacV2.ViewModel;
 using System.Data.Entity;
+using System.Threading;
 using SBOSysTacV2.HtmlHelperClass;
 
 namespace SBOSysTacV2.ServiceLayer
 {
 
-    public class BookingsService
+    public class BookingsService:IDisposable
     {
+        private static PegasusEntities _dbcontext = new PegasusEntities();
+
+
+        public BookingsService()
+        {
+            PegasusEntities _dbcontext = new PegasusEntities();
+        }
+
+        public Booking GetBookingByTransaction(int _transId)
+        {
+            var booking = new Booking();
+
+            booking = (_dbcontext.Bookings.Where(c => c.trn_Id == _transId)).Include(c => c.Customer)
+                .Single();
+
+            return booking;
+
+        }
 
         //get totalPackageAmount
         public static decimal Get_TotalAmountBook(int transId)
         {
             decimal totalAmount = 0;
-            var _dbcontext = new PegasusEntities();
-
+            
             List<BookingAddon> addonsList = new List<BookingAddon>();
 
 
@@ -94,7 +112,6 @@ namespace SBOSysTacV2.ServiceLayer
                 throw;
             }
 
-            _dbcontext.Dispose();
 
             return totalAmount;
         }
@@ -103,7 +120,6 @@ namespace SBOSysTacV2.ServiceLayer
         public static decimal getBookingTransDiscount(int transId, decimal amountdue)
         {
             decimal discountedAmount = 0;
-            var _dbcontext = new PegasusEntities();
 
             try
             {
@@ -140,17 +156,15 @@ namespace SBOSysTacV2.ServiceLayer
                 throw;
             }
 
-            _dbcontext.Dispose();
 
             return Convert.ToDecimal(discountedAmount);
         }
 
         public static List<Booking> GetBookingReport(DateTime dateFrom,DateTime dateTo)
         {
-  
-            var _dbEntities = new PegasusEntities();
 
-            return _dbEntities.Bookings.Where(t =>
+
+            return _dbcontext.Bookings.Where(t =>
                 DbFunctions.TruncateTime(t.startdate) >= DbFunctions.TruncateTime(dateFrom) &&
                 DbFunctions.TruncateTime(t.startdate) <= DbFunctions.TruncateTime(dateTo)).ToList();
         }
@@ -160,45 +174,44 @@ namespace SBOSysTacV2.ServiceLayer
 
             decimal extAmt = 0;
 
-            using (var _dbEntities = new PegasusEntities())
+            var booking = _dbcontext.Bookings.FirstOrDefault(x => x.trn_Id == transId);
+
+
+            if (booking.Package.p_type.Trim() != PackageType.vip.ToString() && booking.extendedAreaId != null)
             {
-                var booking = _dbEntities.Bookings.FirstOrDefault(x => x.trn_Id == transId);
-
-
-                if (booking.Package.p_type.Trim() != PackageType.vip.ToString() && booking.extendedAreaId != null)
+                try
                 {
-                    try
-                    {
-                        var list = (from b in _dbEntities.Bookings
-                            join p in _dbEntities.Packages on b.p_id equals p.p_id
-                            join pa in _dbEntities.PackageAreaCoverages on p.p_id equals pa.p_id
-                            where pa.p_id == booking.p_id && pa.aID == booking.extendedAreaId
-                            select new
-                            {
-                                extLocAmount = pa.ext_amount
-
-                            }).FirstOrDefault();
-
-
-                        if (list != null)
+                    var list = (from b in _dbcontext.Bookings
+                        join p in _dbcontext.Packages on b.p_id equals p.p_id
+                        join pa in _dbcontext.PackageAreaCoverages on p.p_id equals pa.p_id
+                        where pa.p_id == booking.p_id && pa.aID == booking.extendedAreaId
+                        select new
                         {
+                            extLocAmount = pa.ext_amount
 
-                            extAmt = Convert.ToDecimal(list.extLocAmount);
-                        }
+                        }).FirstOrDefault();
 
-                    }
-                    catch (Exception e)
+
+                    if (list != null)
                     {
-                        Console.WriteLine(e);
-                        throw;
+
+                        extAmt = Convert.ToDecimal(list.extLocAmount);
                     }
+
                 }
-
-
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
 
             return extAmt;
         }
 
+        public void Dispose()
+        {
+            _dbcontext.Dispose();
+        }
     }
 }

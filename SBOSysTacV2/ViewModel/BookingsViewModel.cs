@@ -143,19 +143,7 @@ namespace SBOSysTacV2.ViewModel
         }
 
 
-        public Booking GetBookingByTransaction(int _transId)
-        {
-            var booking = new Booking();
 
-            using (var _dbcontext = new PegasusEntities())
-            {
-                booking = (_dbcontext.Bookings.Where(c => c.trn_Id == _transId)).Include(c => c.Customer)
-                    .Single();
-            }
-
-            return booking;
-
-        }
 
 
         public BookingsViewModel GetListofBookings(int _transId)
