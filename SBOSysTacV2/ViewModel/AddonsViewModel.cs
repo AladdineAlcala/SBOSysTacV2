@@ -40,29 +40,31 @@ namespace SBOSysTacV2.ViewModel
         public IEnumerable<AddonsViewModel> ListofAddons()
         {
             List<AddonsViewModel> list=new List<AddonsViewModel>();
-            var dbcontext = new PegasusEntities();
             try
             {
-                list = (from bal in dbcontext.BookingAddons
+                using (var dbcontext=new PegasusEntities())
+                {
+                    list = (from bal in dbcontext.BookingAddons
                         select new
-                            {
-                                _bookaddonNo = bal.bookaddonNo,
-                                _TransId = (int) bal.trn_Id,
-                                _AddonsDescription = bal.Addondesc,
+                        {
+                            _bookaddonNo = bal.bookaddonNo,
+                            _TransId = (int)bal.trn_Id,
+                            _AddonsDescription = bal.Addondesc,
 
-                                _Addons = bal.BookAddonsDetails.Select(g => new {g.addonId, tota = g.amount * g.qty}),
-                                _AddonNote = bal.Note
-                            }).Select(p => new AddonsViewModel()
-                            {
-                                
-                                bookaddonNo = p._bookaddonNo,
-                                TransId = p._TransId,
-                                AddonsDescription = p._AddonsDescription,
-                                AddonNote = p._AddonNote,
-                                AddonAmount = p._Addons.Sum(t=>t.tota)!=null ? (decimal)p._Addons.Sum(t => t.tota):0
-          
+                            _Addons = bal.BookAddonsDetails.Select(g => new { g.addonId, tota = g.amount * g.qty }),
+                            _AddonNote = bal.Note
+                        }).Select(p => new AddonsViewModel()
+                    {
 
-                            }).ToList();
+                        bookaddonNo = p._bookaddonNo,
+                        TransId = p._TransId,
+                        AddonsDescription = p._AddonsDescription,
+                        AddonNote = p._AddonNote,
+                        AddonAmount = p._Addons.Sum(t => t.tota) != null ? (decimal)p._Addons.Sum(t => t.tota) : 0
+
+
+                    }).ToList();
+                }
 
             }
             catch (Exception e)
@@ -71,7 +73,6 @@ namespace SBOSysTacV2.ViewModel
                 throw;
             }
 
-            dbcontext.Dispose();
             return list;
         }
 
@@ -98,16 +99,19 @@ namespace SBOSysTacV2.ViewModel
 
         public IEnumerable<SelectListItem> GetSelectListAddonCat()
         {
-            var dbcontext=new PegasusEntities();
-
-            var addoncatselectlist = dbcontext.AddonCategories.AsEnumerable().Select(x => new SelectListItem()
+            using (var dbcontext = new PegasusEntities())
             {
-                Value = x.addoncatId.ToString(),
-                Text = x.addoncatdesc
-                
-            });
-            dbcontext.Dispose();
-            return new SelectList(addoncatselectlist, "Value", "Text");
+                var addoncatselectlist = dbcontext.AddonCategories.AsEnumerable().Select(x => new SelectListItem()
+                {
+                    Value = x.addoncatId.ToString(),
+                    Text = x.addoncatdesc
+
+                }).ToList();
+
+                return new SelectList(addoncatselectlist, "Value", "Text");
+            }
+            
+           
         }
 
 

@@ -95,7 +95,7 @@ $(document).ready(function () {
         ]
         ,
         createdRow: function (row, data, dataIndex) {
-            $(row).attr('data-addonId', data.No);
+            $(row).attr('data-addonId', data.addonId);
         }
     }
     ); //============================= table addons end of code =================================
@@ -133,10 +133,9 @@ $(document).ready(function () {
 
         if ($selectedObject.hasClass('selected')) {
 
-           
-
+         
             var $this = $selectedObject;
-            var selectedid = $this.attr('data-addonId');
+            var selectedid = $this.attr('data-addonid');
 
             $.ajax({
                 type: 'Get',
@@ -191,6 +190,8 @@ $(document).ready(function () {
 
 
             $selectedObject = $(this);
+
+/*            console.log($selectedObject);*/
         }
 
 
@@ -206,6 +207,7 @@ $(document).ready(function () {
         //alert('asdasd');
 
         if ($selectedObject.hasClass('selected')) {
+
 
             var $this = $selectedObject;
 

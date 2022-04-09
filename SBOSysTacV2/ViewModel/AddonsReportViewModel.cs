@@ -8,7 +8,7 @@ namespace SBOSysTacV2.ViewModel
     public class AddonsReportViewModel
     {
         public int transid { get; set; }
-        public DateTime transdate { get; set; }
+        public DateTime eventDate { get; set; }
         public int cusid { get; set; }
         public int addondetailId { get; set; }
         public int addonid { get; set; }

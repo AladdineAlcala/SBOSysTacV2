@@ -193,13 +193,16 @@ namespace SBOSysTacV2.Controllers
         [HttpPost]
         public JsonResult IsCustomerRegistered(string fullname)
         {
-            bool customerexist;
+            bool customerexist=false;
 
             string[] splitfullname = fullname.Split(',');
 
             if (splitfullname.Length > 1)
             {
-                customerexist = Hascustomerexist(splitfullname[0].Trim());
+                string lname = splitfullname[0].Length > 0 ? splitfullname[0].Trim().ToLower() : String.Empty;
+                string fname= splitfullname[1].Length > 0?  splitfullname[1].Trim().ToLower(): String.Empty;
+
+                customerexist = Hascustomerexist(lname,fname);
             }
             else
             {
@@ -212,7 +215,7 @@ namespace SBOSysTacV2.Controllers
   
 
 
-        public bool Hascustomerexist(string lname) => _dbcontext.Customers.Any(x => x.lastname == lname);
+        public bool Hascustomerexist(string _lname,string _fname) => _dbcontext.Customers.Any(x => x.lastname.ToLower().Equals(_lname) && x.firstname.ToLower().Equals(_fname) );
 
 
 
@@ -392,7 +395,6 @@ namespace SBOSysTacV2.Controllers
 
 
         [HttpGet]
-        [ChildActionOnly]
         public ActionResult GetListofAddons(int transId)
         {
             var listaddons = addonsviewmodel.ListofAddons();
@@ -818,9 +820,9 @@ namespace SBOSysTacV2.Controllers
 
             ModelState.Clear();
 
-            var ReturnUrl = Url.Action("GetListofAddons", "Bookings", new { transId = addons.TransId });
+            var _url = Url.Action("GetListofAddons", "Bookings", new { transId = addons.TransId });
 
-            return Json(new { success = true, url = ReturnUrl }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, url = _url }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

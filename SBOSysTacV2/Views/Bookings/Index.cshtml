@@ -1,12 +1,18 @@
 ﻿
 <style type="text/css">
+
     #tbl_eventsBooking tbody tr td:last-child .get-details {
         opacity: 0;
     }
     #tbl_eventsBooking tbody tr:hover td:last-child .get-details {
         opacity: 1;
     }
-
+    #tbl_eventsBooking tbody tr.selected td:last-child .get-details {
+        opacity: 1;
+    }
+    #tbl_eventsBooking tbody tr.selected td:last-child .round-button {
+        background-color: #008d4c;
+    }
     .round-button {
         min-width: 40px;
         height: 40px;
@@ -37,11 +43,9 @@
         transition: background 0.25s;
     }
 
-        .btnAddBookings:active, .btnAddBookings:hover {
-            background-color: #2e6cd1;
-        }
-
-
+    .btnAddBookings:active, .btnAddBookings:hover {
+        background-color: #2e6cd1;
+    }
 </style>
 
 

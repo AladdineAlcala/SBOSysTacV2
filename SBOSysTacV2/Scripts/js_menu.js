@@ -523,8 +523,8 @@ $(document).ready(function () {
     });
 });
 
-document.getElementById("UpImage").onchange = function () {
-    //alert(this.value);
-    $('p.help-block').html(this.value);
-};
+//document.getElementById("UpImage").onchange = function () {
+//    //alert(this.value);
+//    $('p.help-block').html(this.value);
+//};
 

@@ -78,7 +78,7 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                         payablelist = Payment_Service.GetPaymentsListById(_paymentId).ToList();
 
-                        var paymentlog = payablelist.FirstOrDefault(t => t.PayNo == _paymentId);
+                        //var paymentlog = payablelist.FirstOrDefault(t => t.PayNo == _paymentId);
 
                         var paymentdate = Payment_Service.GetPaymentDate(_paymentId);
                         //decimal totalPackageAmountDue = _getBookingAmount(transId);
@@ -100,7 +100,7 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
 
                     cryRep.Database.Tables[0].SetDataSource(conDetails.ToDataTable());
-                    cryRep.Database.Tables[1].SetDataSource(paymentlog.ToDataTable());
+                    cryRep.Database.Tables[1].SetDataSource(payablelist.ToDataTableList());
 
                     cryRep.SetParameterValue("pmtNo", _paymentId);
                     cryRep.SetParameterValue("paymdate", paymentdate);

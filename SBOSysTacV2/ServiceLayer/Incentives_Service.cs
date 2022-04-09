@@ -24,9 +24,11 @@ namespace SBOSysTacV2.ServiceLayer
             dbEntities = new PegasusEntities();
         }
 
-        public static IEnumerable<CateringReportViewModel> GetCateringReport(IEnumerable<Booking> bookings)
+        public Func<PaymentLogDetailsViewModel, bool> pcondition = e => GetAmount(e) == true;
+
+        public static IEnumerable<CateringReportViewModel> GetCateringReport(IEnumerable<Booking> bookings, Func<CateringReportViewModel, bool> expression)
         {
-            //init_addons();
+ 
 
             return bookings.Select(x => new CateringReportViewModel()
             {
@@ -48,7 +50,7 @@ namespace SBOSysTacV2.ServiceLayer
                 isDeletedTran = (bool)x.is_deleted
 
 
-            }).Where(t => t.iscancelled == false && t.isDeletedTran == false && t.p_type == PackageType.cat.ToString() || t.p_type == PackageType.pm.ToString()).OrderBy(o => o.p_type);
+            }).Where(expression).OrderBy(o => o.p_type);
         }
 
         public void GetIncentivesReport(DateTime _dateFrom, DateTime _dateTo)
@@ -56,14 +58,17 @@ namespace SBOSysTacV2.ServiceLayer
             DateFrom = _dateFrom;
             DateTo = _dateTo;
 
-            var bookinglist = ShowBookingsFullyPaid(Paymentlist(), Pcondition);
+            var bookinglist = ShowBookingsFullyPaid(Paymentlist(), pcondition);
 
-            ContainerClass.CateringList = GetCateringReport(bookinglist).ToList();
+            ContainerClass.CateringList = GetCateringReport(bookinglist.ToList(), t => t.iscancelled == false && t.isDeletedTran == false && t.p_type == PackageType.cat.ToString()).ToList();
 
         }
         public IEnumerable<Booking> ShowBookingsFullyPaid(List<PaymentLogDetailsViewModel> list, Func<PaymentLogDetailsViewModel, bool> condition)
         {
+            //get all booking that is available in bookings and also in payment 
+            // Note: if booking number is available in payment entity that means booking has already a payment rendered
             var data = list.Where(condition);
+
 
             var bookings = dbEntities.Bookings.ToList()
                 .Where(t => data.Select(x => x.transId).Contains(t.trn_Id));
@@ -73,11 +78,11 @@ namespace SBOSysTacV2.ServiceLayer
             return bookings;
         }
 
-        private Func<PaymentLogDetailsViewModel, bool> Pcondition = e => GetAmount(e) == true;
+    
 
         public static bool GetAmount(PaymentLogDetailsViewModel paymentlog)
         {
-            return (paymentlog.totalPayment - paymentlog.totalBookingsAmount == 0);
+            return paymentlog.totalPayment - paymentlog.totalBookingsAmount <=0;
         }
 
         public IEnumerable<Payment> GetPaymentList()
@@ -85,16 +90,17 @@ namespace SBOSysTacV2.ServiceLayer
             return dbEntities.Payments.Where(CheckPaymentDate);
         }
 
-
-        readonly Func<Payment, bool> CheckPaymentDate = t =>
-            t.dateofPayment.Value.Date >= DateFrom.Date && t.dateofPayment.Value.Date <= DateTo.Date;
+        /// <summary>
+        /// Func Delegate to check payment for filtered month if it is fully paid or partially paid
+        /// </summary>
+        readonly Func<Payment, bool> CheckPaymentDate = t => t.dateofPayment.Value.Date >= DateFrom.Date && t.dateofPayment.Value.Date <= DateTo.Date;
 
         public List<PaymentLogDetailsViewModel> Paymentlist()
         {
             List<Payment> listofpaymentLogs = new List<Payment>();
-            var l = new IncentivesService();
+            var incentive = new IncentivesService();
 
-            var recordedList = l.GetPaymentList();
+            var recordedList = incentive.GetPaymentList();
 
             foreach (var item in recordedList)
             {
@@ -129,9 +135,7 @@ namespace SBOSysTacV2.ServiceLayer
                     }).ToList();
         }
 
-       
 
-       
-        
+
     }
 }

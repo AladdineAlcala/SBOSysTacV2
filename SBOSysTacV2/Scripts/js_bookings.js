@@ -253,43 +253,28 @@ $(document).ready(function () {
     $('#tbl_eventsBooking tbody').on('click', 'tr', function (e) {
 
         e.stopPropagation();
+        e.preventDefault();
 
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
+        $selectedObject = null;
 
-           /* $tablebookings.button(0).enable();*/
-            //$tablebookings.button(1).disable();
-            //$tablebookings.button(2).disable();
-            //$tablebookings.button(3).disable();
-            //$tablebookings.button(4).disable();
-         
-          /*  $tablebookings.button(5).enable();*/
+            if ($(this).hasClass('selected'))
+            {
 
-            $(this).closest('.get-details').css({ "opacity": "0" });
+                $(this).removeClass('selected');
 
-        } else {
+                $(this).closest('.get-details').css({ "opacity": "0" });
 
-            $tablebookings.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
+            } else {
 
-            /*$tablebookings.button(0).disable();*/
-            //$tablebookings.button(1).enable();
-            //$tablebookings.button(2).enable();
-            //$tablebookings.button(3).enable();
+                $tablebookings.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
 
-            $(this).closest('.get-details').css({ "opacity": "1" });
+                $(this).closest('.get-details').css({ "opacity": "1" });
 
-            //if (hassuperadminrights === 'true') {
 
-            //    $tablebookings.button(4).enable();
+                $selectedObject = $(this);
 
-            //}
-           ;
-            /*$tablebookings.button(5).disable();*/
-
-            $selectedObject = $(this);
-
-        }
+            }
     });
 
 
@@ -299,45 +284,56 @@ $(document).ready(function () {
         function (e) {
 
             e.preventDefault();
+            e.stopPropagation();
 
-            activeLoader();
 
-            var trnsId = $(this).attr("id");
+            if ($(this).closest('tr').hasClass('selected')) {
 
-            $.ajax({
-                type: 'Get',
-                url: bookingsUrl.bookUrl_getPackageId,  //"@Url.Action("GetPackageId","Bookings")",
-                data: { transactionId: trnsId },
-                success: function (result) {
-                    if (result.success) {
+                var trnsId = $(this).attr("id");
 
-                        setTimeout(function () {
+                activeLoader();
 
-                            window.location.href = bookingsUrl.bookUrl_getPackageBookingDetails.replace("trans_Id", trnsId);  //"@Url.Action("GetPackageBookingDetails", "Bookings",new {transId = "trans_Id"})",
+                $.ajax({
+                    type: 'Get',
+                    url: bookingsUrl.bookUrl_getPackageId, //"@Url.Action("GetPackageId","Bookings")",
+                    data: { transactionId: trnsId },
+                    success: function(result) {
+                        if (result.success) {
 
-                            // $('#spinn-loader').hide();
-                        }, 600);
+                            setTimeout(function() {
 
-                        
+                                    window.location.href =
+                                        bookingsUrl.bookUrl_getPackageBookingDetails.replace("trans_Id",
+                                            trnsId); //"@Url.Action("GetPackageBookingDetails", "Bookings",new {transId = "trans_Id"})",
+
+                                  
+                                },
+                                600);
+
+
+                        } else {
+
+                            Swal.fire({
+                                title: "Operation Failed",
+                                text: "No Package Available on this transaction",
+                                type: "info"
+
+                            });
+
+                        }
+                    },
+                    done: function() {
+
+                        deactivateLoader();
                     }
-                    else {
 
-                        Swal.fire({
-                            title: "Operation Failed",
-                            text: "No Package Available on this transaction",
-                            type: "info"
 
-                        });
+                });
 
-                    }
-                },
-                done: function () {
+            } else {
 
-                    deactivateLoader();
-                }
-
-                
-            });
+                return false;
+            }
 
 
         });
@@ -495,58 +491,6 @@ $(document).ready(function () {
 
 
     });
-
-
-    //================= end of code for update booking ====================================
-
-
-
-
-    // Date Created: 1-11-2019
-    //================ remove booking command===============================================
-
-
-
-    var onCancelBooking = function () {
-
-        if ($selectedObject.hasClass('selected')) {
-
-            var $this = $selectedObject;
-
-            var booktransactionId = $this.attr('data-transid');
-
-            Swal.fire({
-                title: "You are about to cancel this booking?",
-                text: "Confirm Cancellation .",
-                type: "question",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Proceed Operation.!'
-                //closeOnConfirm: true, closeOnCancel: true
-            }).then((result) => {
-
-                if (result.value) {
-
-                    window.location.href = bookingsUrl.bookUrl_cancelBooking.replace("trans_Id", booktransactionId);
-
-
-                }
-
-            });//end then
-
-
-            
-          
-
-
-        }
-
-    };
-
-
-
-  
 
 
     function loaddatatableBookings() {
@@ -735,61 +679,6 @@ $(document).ready(function () {
                         }
                     }
 
-                    //,
-                    //{
-                    //    text: '<i class="fa fa-edit fa-sm fa-fw"></i>',
-                    //    className: 'btn btn-primary btn-sm btnEditBooking',
-                    //    titleAttr: 'Modify Booking',
-                    //    action: function () {
-                    //        var $this = $selectedObject;
-                    //        onEditBooking($this.attr('data-transid'));
-
-                    //    }, enabled: false
-                    //},
-                    //{
-                    //    text: '<i class="fa fa-times-circle-o fa-sm fa-fw"></i>',
-                    //    className: 'btn btn-primary btn-sm btnRemoveBooking',
-                    //    titleAttr: 'Cancel Booking',
-                    //    action: function () {
-
-                    //        onCancelBooking();
-
-                    //    }, enabled: false
-                    //},
-
-                    //{
-                    //    text: '<i class="fa fa-archive fa-sm fa-fw"></i>',
-                    //    className: 'btn btn-primary btn-sm btnServeBooking',
-                    //    titleAttr: 'Served Booking Status',
-                    //    action: function () {
-                    //        var $this = $selectedObject;
-                    //        onBookingServed($this.attr('data-transid'));
-
-                    //    }, enabled: false
-                    //},
-
-                    //{
-                    //    text: '<i class="fa fa-trash fa-sm fa-fw"></i>',
-                    //    className: 'btn btn-primary btn-sm btnTrashBooking',
-                    //    titleAttr: 'Remove Booking Permanently',
-                    //    action: function () {
-                    //        var $this = $selectedObject;
-                    //        onTrashBooking($this.attr('data-transid'));
-
-                    //    }, enabled: false
-                    //}
-                    //,
-
-                    //{
-                    //    text: '<i class="fa fa-refresh fa-sm fa-fw"></i>',
-                    //    className: 'btn btn-primary btn-sm btnRefreshBooking',
-                    //    titleAttr: 'Refresh',
-                    //    action: function () {
-                           
-                    //        onrefreshBooking();
-
-                    //    }, enabled: true
-                    //}
 
                 ]
 
@@ -895,6 +784,43 @@ $(document).ready(function () {
 
 
 //})
+
+
+
+
+
+
+
+// Date Created: 1-11-2019
+//================ cancel booking command===============================================
+
+
+
+var onCancelBooking = function (transId) {
+
+    Swal.fire({
+        title: "You are about to cancel this booking?",
+        text: "Confirm Cancellation .",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed Operation.!'
+        //closeOnConfirm: true, closeOnCancel: true
+    }).then((result) => {
+
+        if (result.value) {
+
+            window.location.href = bookingsUrl.bookUrl_cancelBooking.replace("trans_Id", transId);
+
+
+        }
+
+    });//end then
+
+};
+//================= end of code for cancel booking ====================================
+
 
 
 

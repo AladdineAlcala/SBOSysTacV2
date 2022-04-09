@@ -21,9 +21,9 @@ namespace SBOSysTacV2.ServiceLayer
             try
             {
 
-                var payments = (from p in _dbEntities.Payments select p).ToList();
+                var payments = (from p in _dbEntities.Payments select p).Where(t => t.payNo == payNo).ToList();
 
-                paymentslist = (from pmt in payments
+                paymentslist = (from pmt in payments 
                     select new PrintRcvPaymentDetails()
                     {
                         PayNo = pmt.payNo,
@@ -48,7 +48,7 @@ namespace SBOSysTacV2.ServiceLayer
                 throw;
             }
 
-            return paymentslist.ToList();
+            return paymentslist;
         }
 
         public static DateTime GetPaymentDate(string paymentNo) =>

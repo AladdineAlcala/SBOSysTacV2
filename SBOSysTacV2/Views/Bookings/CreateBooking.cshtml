@@ -277,13 +277,11 @@
 
                 customers = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('fullname'),
-
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
 
                 remote: {
                   url: '/Customers/GetCustomers?query=%QUERY',
-                 // url: '/Sals/Customers/GetCustomers?query=%QUERY',
-                    wildcard: '%QUERY'
+                  wildcard: '%QUERY'
 
                 }
 

@@ -12,8 +12,10 @@
         <div class="form-group">
             <label class="control-label col-sm-3 required">Addons Cat.</label>
             <div class="col-sm-7">
-                @Html.DropDownListFor(model =>model.addoncatId,Model.addonscatselectlist, "----- Select Add ons Category   -------", new {@class = "form-control", @id = "addonscat"})
-                @Html.ValidationMessageFor(model => model.addoncatId, null, new { @class = "text-danger" })
+
+                @Html.DropDownListFor(model => model.addoncatId, Model.addonscatselectlist, "----- Select Add ons Category   -------", new {@class = "form-control", @id = "addonscat"})
+                @Html.ValidationMessageFor(model => model.addoncatId, null, new {@class = "text-danger"})
+
             </div>
 
         </div>

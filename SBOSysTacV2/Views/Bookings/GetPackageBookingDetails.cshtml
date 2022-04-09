@@ -23,6 +23,7 @@
                     <button type="button" class="btn btn-default btn-flat" data-toggle="tooltip" data-placement="bottom" title="Back to Booking List" onclick="location.href='@Url.Action("Index","Bookings")'"><i class="fa fa-arrow-left fa-lg"></i></button>
                     <button type="button" class="btn btn-default btn-flat" data-toggle="tooltip" data-placement="bottom" title="Modify Booking" data-id="@Model.trn_Id" onclick="onEditBooking($(this).attr('data-id'));"><i class="fa fa-edit fa-lg"></i></button>
                     <button type="button" class="btn btn-default btn-flat" data-toggle="tooltip" data-placement="bottom" title="Delete Booking" data-id="@Model.trn_Id" id="bookingTrash"><i class="fa fa-trash-o fa-lg"></i></button>
+                    <button type="button" class="btn btn-default btn-flat" data-toggle="tooltip" data-placement="bottom" title="Cancel Booking" data-id="@Model.trn_Id" onclick="onCancelBooking($(this).attr('data-id'))"><i class="fa fa-unlink fa-lg"></i></button>
                     <button type="button" class="btn btn-default btn-flat" data-toggle="tooltip" data-placement="bottom" title="Serve Booking Status" data-id="@Model.trn_Id" id="bookingServe"><i class="fa fa-archive fa-lg"></i></button>
                     <button type="button" class="btn btn-default btn-flat" data-toggle="tooltip" data-placement="bottom" title="Print Option" id="printContract" data-id="@Model.trn_Id"><i class="fa fa-print fa-lg"></i></button>
                 </div>

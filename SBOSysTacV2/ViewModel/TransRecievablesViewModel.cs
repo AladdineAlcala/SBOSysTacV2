@@ -31,57 +31,59 @@ namespace SBOSysTacV2.ViewModel
         private BookingPaymentsViewModel bookingPayments = new BookingPaymentsViewModel();
         private TransactionDetailsViewModel transdetails = new TransactionDetailsViewModel();
         static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
-
+        
         public IEnumerable<TransRecievablesViewModel> GetAllRecievables(IEnumerable<Booking> tBookings)
         {
             List<TransRecievablesViewModel> recievable_list=new List<TransRecievablesViewModel>();
             try
             {
 
+                Func<Booking, bool> isNotCancelledorDeletedBooking = e => e.is_cancelled == false && e.is_deleted==false;
+
                 //IEnumerable<Booking> bookings = tBookings.ToList();
 
 
-                recievable_list = (from b in tBookings
+                recievable_list = (from b in tBookings.Where(isNotCancelledorDeletedBooking)
                                    select new
-                    {
-                        _tId = b.trn_Id,
-                        _trDate = b.transdate,
-                        _evtDate = b.startdate,
-                        _cusId = b.c_Id,
-                        _cusfullname =
-                        Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
-                        _address = b.Customer.address,
-                        _contact = b.Customer.contact1,
-                        _occasion = b.occasion,
-                        _venue = b.venue,
-                        _iscancelledbooking = b.is_cancelled,
-                        _packagedetails = b.Package.p_descripton,
-                        _pAmountperPax = b.Package.p_amountPax,
-                        _tpackageAmt = _getBookingAmount(b.trn_Id),
-                        _totapayment = (from p in db_entities.Payments select p).Where(s => s.trn_Id == b.trn_Id)
-                        .Sum(x => x.amtPay),
-                        _refunds = (from re in db_entities.Refunds select re).FirstOrDefault(t => t.trn_Id == b.trn_Id)
+                                    {
+                                        _tId = b.trn_Id,
+                                        _trDate = b.transdate,
+                                        _evtDate = b.startdate,
+                                        _cusId = b.c_Id,
+                                        _cusfullname =
+                                        Utilities.Getfullname(b.Customer.lastname, b.Customer.firstname, b.Customer.middle),
+                                        _address = b.Customer.address,
+                                        _contact = b.Customer.contact1,
+                                        _occasion = b.occasion,
+                                        _venue = b.venue,
+                                        _iscancelledbooking = b.is_cancelled,
+                                        _packagedetails = b.Package.p_descripton,
+                                        _pAmountperPax = b.Package.p_amountPax,
+                                        _tpackageAmt = _getBookingAmount(b.trn_Id),
+                                        _totapayment = (from p in db_entities.Payments select p).Where(s => s.trn_Id == b.trn_Id)
+                                        .Sum(x => x.amtPay),
+                                        _refunds = (from re in db_entities.Refunds select re).FirstOrDefault(t => t.trn_Id == b.trn_Id)
 
-                    }).Select(p => new TransRecievablesViewModel()
-                    {
-                        transId = p._tId,
-                        transDate = Convert.ToDateTime(p._trDate),
-                        bookdatetime = Convert.ToDateTime(p._evtDate),
-                        cusId = Convert.ToInt32(p._cusId),
-                        cusfullname = p._cusfullname,
-                        address = p._address,
-                        contact = p._contact,
-                        occasion = p._occasion,
-                        venue = p._venue,
-                        iscancelled = Convert.ToBoolean(p._iscancelledbooking),
-                        packagedetails = p._packagedetails,
-                        p_amountperPax = Convert.ToDecimal(p._pAmountperPax),
-                        totalPackageAmount = p._tpackageAmt,
-                        totalPayment = Convert.ToDecimal(p._totapayment),
-                            //balance = Convert.ToDecimal(p._totapayment)> p._tpackageAmt?Convert.ToDecimal(p._refunds) > 0 ? Convert.ToDecimal(((p._tpackageAmt - p._totapayment) + Convert.ToDecimal(p._refunds.rf_Amount))) : Convert.ToDecimal(p._tpackageAmt - p._totapayment): p._tpackageAmt,
-                        balance = Convert.ToDecimal(p._totapayment) > p._tpackageAmt ? p._refunds!=null ? Convert.ToDecimal(((p._tpackageAmt - p._totapayment) + Convert.ToDecimal(p._refunds.rf_Amount))) : Convert.ToDecimal(p._tpackageAmt - p._totapayment) : p._refunds != null?0: p._tpackageAmt==p._totapayment?0: p._tpackageAmt>p._totapayment?Convert.ToDecimal(p._tpackageAmt-p._totapayment):p._tpackageAmt,
-                            refunds = p._refunds != null ? Convert.ToDecimal(p._refunds.rf_Amount) : 0
-                    }).ToList();
+                                    }).AsEnumerable().Select(p => new TransRecievablesViewModel()
+                                    {
+                                        transId = p._tId,
+                                        transDate = Convert.ToDateTime(p._trDate),
+                                        bookdatetime = Convert.ToDateTime(p._evtDate),
+                                        cusId = Convert.ToInt32(p._cusId),
+                                        cusfullname = p._cusfullname,
+                                        address = p._address,
+                                        contact = p._contact,
+                                        occasion = p._occasion,
+                                        venue = p._venue,
+                                        iscancelled = Convert.ToBoolean(p._iscancelledbooking),
+                                        packagedetails = p._packagedetails,
+                                        p_amountperPax = Convert.ToDecimal(p._pAmountperPax),
+                                        totalPackageAmount = p._tpackageAmt,
+                                        totalPayment = Convert.ToDecimal(p._totapayment),
+                                            //balance = Convert.ToDecimal(p._totapayment)> p._tpackageAmt?Convert.ToDecimal(p._refunds) > 0 ? Convert.ToDecimal(((p._tpackageAmt - p._totapayment) + Convert.ToDecimal(p._refunds.rf_Amount))) : Convert.ToDecimal(p._tpackageAmt - p._totapayment): p._tpackageAmt,
+                                        balance = Convert.ToDecimal(p._totapayment) > p._tpackageAmt ? p._refunds!=null ? Convert.ToDecimal(((p._tpackageAmt - p._totapayment) + Convert.ToDecimal(p._refunds.rf_Amount))) : Convert.ToDecimal(p._tpackageAmt - p._totapayment) : p._refunds != null?0: p._tpackageAmt==p._totapayment?0: p._tpackageAmt>p._totapayment?Convert.ToDecimal(p._tpackageAmt-p._totapayment):p._tpackageAmt,
+                                            refunds = p._refunds != null ? Convert.ToDecimal(p._refunds.rf_Amount) : 0
+                                    }).ToList();
             }
 
             catch (Exception e)
@@ -96,7 +98,7 @@ namespace SBOSysTacV2.ViewModel
             return recievable_list;
         }
 
-       
+      
        
 
         public IEnumerable<TransRecievablesViewModel> GetRecieveDetails()

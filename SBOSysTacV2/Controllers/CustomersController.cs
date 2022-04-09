@@ -102,10 +102,10 @@ namespace SBOSysTacV2.Controllers
                         var newcustomer = new Customer()
                         {
                             c_Id = Convert.ToInt32(newcusViewmodel.c_Id),
-                            lastname = _lastname,
-                            firstname = _firstname,
-                            middle = _middle,
-                            address = _address,
+                            lastname = _lastname.ToUpper(),
+                            firstname = _firstname.ToUpper(),
+                            middle = _middle!=null?_middle.ToUpper():_middle,
+                            address = _address.Length>0?_address.ToUpper():_address,
                             contact1 = newcusViewmodel.contact1,
                             contact2 = newcusViewmodel.contact2,
                             datereg = newcusViewmodel.datereg,
@@ -114,6 +114,7 @@ namespace SBOSysTacV2.Controllers
                         };
 
                         _dbcontext.Customers.Add(newcustomer);
+
                         _dbcontext.SaveChanges();
 
                         isSuccess = true;

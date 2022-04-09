@@ -33,8 +33,8 @@ Global
 		{27ABF436-12A9-4068-88AA-8B75FB6F9CDC}.SalsTaclobanServerRelease|Any CPU.Build.0 = SalsTaclobanServerRelease|Any CPU
 		{27ABF436-12A9-4068-88AA-8B75FB6F9CDC}.SmartASP|Any CPU.ActiveCfg = SmartASP|Any CPU
 		{27ABF436-12A9-4068-88AA-8B75FB6F9CDC}.SmartASP|Any CPU.Build.0 = SmartASP|Any CPU
-		{27ABF436-12A9-4068-88AA-8B75FB6F9CDC}.TestConfig|Any CPU.ActiveCfg = TestConfig|Any CPU
-		{27ABF436-12A9-4068-88AA-8B75FB6F9CDC}.TestConfig|Any CPU.Build.0 = TestConfig|Any CPU
+		{27ABF436-12A9-4068-88AA-8B75FB6F9CDC}.TestConfig|Any CPU.ActiveCfg = Debug|Any CPU
+		{27ABF436-12A9-4068-88AA-8B75FB6F9CDC}.TestConfig|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

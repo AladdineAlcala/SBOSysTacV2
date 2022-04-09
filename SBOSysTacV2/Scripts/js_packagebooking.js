@@ -907,20 +907,26 @@ $(document).on('click', '#btn_saveaddOns', function (e) {
                         success: function (data) {
                             if (data.success) {
 
-                                Swal.fire({
-                                        title: "Success",
-                                        text: "It was succesfully added!",
-                                        type: "success"
-                                 
-
-                                    });
-
-                                //$('#addonDescription').val("");
-
-                                $('#addons').load(data.url);
-
-
                                 $('#modal-Addons').modal('hide');
+
+
+                                setTimeout(function () {
+
+                                    console.log(data.url);
+                                    $('#addons').load(data.url);
+
+                                }, 1000);
+
+                                
+                                Swal.fire({
+                                    title: "Success",
+                                    text: "It was succesfully added!",
+                                    type: "success"
+
+
+                                });
+
+                              
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
@@ -973,6 +979,13 @@ $(document).on('click', '#menu_remove', function (e) {
 
                                 if (data.success) {
 
+                                    setTimeout(function () {
+
+                                        console.log(data.url);
+                                        $('#bookmenus').load(data.url);
+
+                                    }, 1000);
+
                                     Swal.fire({
                                         title: "Success",
                                         text: "It was succesfully removed!",
@@ -981,9 +994,7 @@ $(document).on('click', '#menu_remove', function (e) {
 
                                         //  window.location.href = bookingsUrl.bookUrl_IndexLoad;
                                     });
-
-
-                                    $('#bookmenus').load(data.url);
+                                   
 
                                 } else {
                                     Swal.fire({
@@ -1048,8 +1059,13 @@ $(document).on('click', '#addons_remove', function (e) {
                             });
 
 
-                            $('#addons').load(data.url);
+                           
+                            setTimeout(function () {
 
+                                console.log(data.url);
+                                $('#addons').load(data.url);
+
+                            }, 1000);
 
                             //setTimeout(function () { $("#modal-Addons").modal('hide') }, 300);
                         }

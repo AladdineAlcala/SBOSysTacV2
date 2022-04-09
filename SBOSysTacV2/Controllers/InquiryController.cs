@@ -485,7 +485,7 @@ namespace SBOSysTacV2.Controllers
 
            
 
-            var list = IncentivesService.GetCateringReport(BookingsService.GetBookingReport(pOption.dateFrom,pOption.dateTo));
+            var list = IncentivesService.GetCateringReport(BookingsService.GetBookingReport(pOption.dateFrom,pOption.dateTo), t => t.iscancelled == false && t.isDeletedTran == false && t.p_type == PackageType.cat.ToString() || t.p_type == PackageType.pm.ToString());
 
             if (pOption.ex_unsetevent == true)
             {

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.Models;
 using SBOSysTacV2.ServiceLayer;
@@ -33,6 +31,8 @@ namespace SBOSysTacV2.ViewModel
         private AddonsViewModel advm = new AddonsViewModel();
         private BookingOtherChargeViewModel bocvm = new BookingOtherChargeViewModel();
         private BookMenusViewModel book_menus_vm=new BookMenusViewModel();
+        private BookingsService bookingsService = new BookingsService();
+        Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
 
         public IEnumerable<TransactionDetailsViewModel> GetTransactionDetails()
         {
@@ -564,11 +564,14 @@ namespace SBOSysTacV2.ViewModel
             decimal _packageAmount = 0;
 
             List <Book_OtherCharge> otherCharges = new List<Book_OtherCharge>();
+            Booking booking = new Booking();
 
+            
             using (var dbcontext=new PegasusEntities())
             {
 
                 otherCharges = dbcontext.Book_OtherCharge.Where(t => t.trn_Id == transid).ToList();
+               
             }
 
             _packageAmount =
@@ -581,13 +584,16 @@ namespace SBOSysTacV2.ViewModel
             _extededAmount = BookingsService.Get_extendedAmountLoc(transid);
             _cateringDiscount = this.GetCateringdiscountByPax(contractDetail.packageType, contractDetail.noofPax);
 
+            var bookings = bookingsService.GetBookingByTransaction(transid);
+            decimal addons = AddonsViewModel.AddonsTotal(getAddonDetails(bookings));
+
             return new TransactionDetailsViewModel
             {
                 
 
                 transactionId = transid,
                 PackageAmount = _packageAmount,
-                //TotaAddons = advm.AddonsTotal(transid),
+                TotaAddons = addons,
                 TotaMiscCharge = bocvm.GetTotalOtherCharges(otherCharges),
                 extLocAmount = _extededAmount>0? _extededAmount* contractDetail.noofPax :0,
                 cateringdiscount = _cateringDiscount >0? _cateringDiscount * contractDetail.noofPax:0
