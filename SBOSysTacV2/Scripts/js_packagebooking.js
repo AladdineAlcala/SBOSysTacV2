@@ -188,7 +188,6 @@ $(document).on('click', '#menu_add', function (e) {
 
     var courseId = elem.attr('data-id');
 
-   
 
     $.ajax({
         type: 'Get',
@@ -315,7 +314,7 @@ function LoadDataTabletoModal(_courseId) {
             "ajax":
             {
                 "url":PackageBookingUrl.urlMenuList, //==============>>>>>>  "@Url.Action("LoadListMenus", "Bookings")",  <<<<<<<<<<<<<<<<<<<<<
-                "data": { courseId: _courseId },
+                "data": {courseId: _courseId },
                 "type": "Get",
                 "datatype": "json"
                
@@ -368,6 +367,9 @@ function LoadDataTabletoModal(_courseId) {
 
             ],
             createdRow: function (row, data) {
+
+                //console.log(data.course_id);
+                //console.log(data.menuId);
 
                 $(row).attr('data-id', data.course_id);
                 $(row).find("td:eq(0)").attr('data-id', data.menuId);

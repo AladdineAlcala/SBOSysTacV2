@@ -22,8 +22,10 @@ namespace SBOSysTacV2.Reports.ReportViewers
         private PrintRcvPaymentDetails pmtRcvDetails=new PrintRcvPaymentDetails();
         private BookingsService bookingsService = new BookingsService();
         private TransactionDetailsViewModel transDetailsvm = new TransactionDetailsViewModel();
+        private BookingOtherChargeViewModel bookOtherCharge=new BookingOtherChargeViewModel();
         static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
         private Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
+        //private static PegasusEntities _dbcontext = new PegasusEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -93,8 +95,9 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                         decimal catering_discount = transDetailsvm.GetCateringdiscountByPax(packageType, conDetails.noofPax);
 
+                        decimal TotaMiscCharge = BookingsService.GetOtherCharge(transId);
 
-                        decimal totalPayment = Payment_Service.GetTotalPaymentByTransId(transId);
+                    decimal totalPayment = Payment_Service.GetTotalPaymentByTransId(transId);
 
                     //var discount = rcvDetails.Get_bookingDiscountbyTrans(transId, totalPackageAmountDue);
 
@@ -104,7 +107,7 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                     cryRep.SetParameterValue("pmtNo", _paymentId);
                     cryRep.SetParameterValue("paymdate", paymentdate);
-                    cryRep.SetParameterValue("addons", addons);
+                    cryRep.SetParameterValue("addons", addons + TotaMiscCharge);
                     cryRep.SetParameterValue("extlocation", locextcharge > 0 ? Convert.ToDecimal(locextcharge * conDetails.noofPax):0);
                     cryRep.SetParameterValue("catdesc", catering_discount> 0 ? Convert.ToDecimal(catering_discount * conDetails.noofPax) : 0);
                     cryRep.SetParameterValue("PrevPayment", totalPayment);

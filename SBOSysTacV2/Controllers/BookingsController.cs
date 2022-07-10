@@ -350,7 +350,6 @@ namespace SBOSysTacV2.Controllers
             return PartialView("_BookingsAmountDuePartial", transDetails);
         }
 
-        //public IEnumerable<ICollection<BookAddonsDetail>> Func { get; set; }
 
 
         [HttpGet]

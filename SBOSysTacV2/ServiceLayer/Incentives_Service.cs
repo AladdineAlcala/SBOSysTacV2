@@ -45,7 +45,7 @@ namespace SBOSysTacV2.ServiceLayer
                 AddonsTotal = x.BookingAddons.Any() ? AddonsViewModel.AddonsTotal(_getAddonDetails(x)) : 0,
                 AmountPaid = x.Payments.Any() ? x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum() : 0,
                 PaymentMode = x.Payments.Any() ? x.Payments.Select(t => t.pay_means).ToList().Aggregate((i, j) => i + "," + j != i ? j : "") : "---",
-                Status = x.Payments.Any() ? "pd" : "unpd",
+                Status = x.Payments.Any() ? _getBookingAmount(x.trn_Id) - x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum()==0? "pd" : "unpd": "unpd",
                 iscancelled = (bool)x.is_cancelled,
                 isDeletedTran = (bool)x.is_deleted
 

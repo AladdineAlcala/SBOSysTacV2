@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.Models;
@@ -585,6 +586,7 @@ namespace SBOSysTacV2.ViewModel
             _cateringDiscount = this.GetCateringdiscountByPax(contractDetail.packageType, contractDetail.noofPax);
 
             var bookings = bookingsService.GetBookingByTransaction(transid);
+
             decimal addons = AddonsViewModel.AddonsTotal(getAddonDetails(bookings));
 
             return new TransactionDetailsViewModel
@@ -603,5 +605,29 @@ namespace SBOSysTacV2.ViewModel
 
         }
 
+
+        public static List<AddonsMiscListReport> GetListReport(int transId)
+        {
+
+            var addonsvm = new AddonsViewModel();
+            List<Book_OtherCharge> otherCharges = new List<Book_OtherCharge>();
+
+            using (var dbcontext = new PegasusEntities())
+            {
+
+                otherCharges = dbcontext.Book_OtherCharge.Where(t => t.trn_Id == transId).ToList();
+
+            }
+
+            List<AddonsViewModel> addons = addonsvm.ListofAddons().Where(t => t.TransId == transId).ToList();
+
+            var addonsList = addons.Select(addon => new AddonsMiscListReport() {transId = addon.TransId, description = addon.AddonsDescription, transType = "addon", amount = addon.AddonAmount}).ToList();
+
+            addonsList.AddRange(otherCharges.Select(othercharge => new AddonsMiscListReport() {transId = othercharge.trn_Id, description = othercharge.ch_desc, transType = "misc", amount = othercharge.amount ?? 0}));
+
+
+            return addonsList.OrderBy(t=>t.transType).ToList();
+
+        }
     }
 }

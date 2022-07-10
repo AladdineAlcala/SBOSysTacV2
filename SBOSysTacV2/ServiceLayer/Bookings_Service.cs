@@ -14,7 +14,7 @@ namespace SBOSysTacV2.ServiceLayer
     public class BookingsService:IDisposable
     {
         private static PegasusEntities _dbcontext = new PegasusEntities();
-
+      
 
         public BookingsService()
         {
@@ -38,7 +38,7 @@ namespace SBOSysTacV2.ServiceLayer
             decimal totalAmount = 0;
             
             List<BookingAddon> addonsList = new List<BookingAddon>();
-
+            Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
 
             var booking = _dbcontext.Bookings.FirstOrDefault(t => t.trn_Id == transId);
 
@@ -48,6 +48,8 @@ namespace SBOSysTacV2.ServiceLayer
                 decimal addons = 0;
                 decimal discount = 0;
                 decimal packageAmount = 0;
+                decimal bookOtherCharge = 0;
+
                 int noofpax = 0;
 
                 decimal hasLocationExtendedCharge = 0;
@@ -62,7 +64,9 @@ namespace SBOSysTacV2.ServiceLayer
                                           {
                                               packageAmount = packages.p_amountPax,
                                               no_of_pax = books.noofperson,
-                                              addons =(from ba in books.BookingAddons join bad in _dbcontext.BookAddonsDetails on ba.bookaddonNo equals bad.bookaddonNo select new { _addAmount = bad.amount * bad.qty}).FirstOrDefault()._addAmount
+                                              //addons =(from ba in books.BookingAddons join bad in _dbcontext.BookAddonsDetails on ba.bookaddonNo equals bad.bookaddonNo select new { _addAmount = bad.amount * bad.qty}).FirstOrDefault()._addAmount,
+                                              addons=books,
+                                              bookothercharge =(from b in books.Book_OtherCharge where b.trn_Id==transId select b.amount).Sum()
                                           }).FirstOrDefault();
 
 
@@ -70,11 +74,12 @@ namespace SBOSysTacV2.ServiceLayer
                     {
                         packageAmount = Convert.ToDecimal(bookingdetails.packageAmount);
                         noofpax = bookingdetails.no_of_pax??0;
-                        addons =  bookingdetails.addons??0;
+                        addons = AddonsViewModel.AddonsTotal(getAddonDetails(bookingdetails.addons));
+                        bookOtherCharge = bookingdetails.bookothercharge ?? 0;
                     }
 
 
-                    totalAmount = (packageAmount * noofpax) + addons;
+                    totalAmount = (packageAmount * noofpax) + addons + bookOtherCharge;
 
                     discount = getBookingTransDiscount(transId, totalAmount);
 
@@ -207,6 +212,13 @@ namespace SBOSysTacV2.ServiceLayer
             }
 
             return extAmt;
+        }
+
+        public static decimal GetOtherCharge(int transId)
+        {
+            return (from b in _dbcontext.Book_OtherCharge
+                where b.trn_Id == transId
+                select b.amount).Sum() ?? 0;
         }
 
         public void Dispose()

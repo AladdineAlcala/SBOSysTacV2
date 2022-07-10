@@ -615,6 +615,7 @@
     <Compile Include="ViewModel\AccnRecieveSummaryViewModel.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\AddonCatViewModel.cs" />
+    <Compile Include="ViewModel\AddonsMiscListReport.cs" />
     <Compile Include="ViewModel\AddonsReportViewModel.cs" />
     <Compile Include="ViewModel\AddonsUpgrade_BookRegisterViewModel.cs" />
     <Compile Include="ViewModel\AddonsViewModel.cs" />

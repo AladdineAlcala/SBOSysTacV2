@@ -490,6 +490,7 @@ namespace SBOSysTacV2.Controllers
             if (pOption.ex_unsetevent == true)
             {
                 list = list.Where(t => t.Status == "pd").ToList();
+               // list=list.Where(t=>t.)
             }
 
             ContainerClass.CateringList = list.ToList();

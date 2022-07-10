@@ -27,6 +27,7 @@ namespace SBOSysTacV2.Controllers
         private TransactionDetailsViewModel transdetails;
         private PegasusEntities _dbcontext;
         static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
+        Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
         public PaymentsController()
         {
             _dbcontext = new PegasusEntities();
@@ -44,13 +45,15 @@ namespace SBOSysTacV2.Controllers
 
             try
             {
+                var bookings = _dbcontext.Bookings.Find(transactionId);
+
                 decimal totalAmount = 0;
                 bookingPayments.transId = transactionId;
 
                 bookingPayments.Bookings = bookingsViewModel.GetListofBookings(transactionId);
                 totalAmount = _getBookingAmount(transactionId);
                 bookingPayments.t_amtBooking = totalAmount;
-                bookingPayments.t_addons = BookingPaymentsViewModel.getTotalAddons(transactionId);
+                bookingPayments.t_addons = AddonsViewModel.AddonsTotal(getAddonDetails(bookings));
                 bookingPayments.cateringdiscount = bookingPayments.GetCateringDiscount(transactionId);
                 bookingPayments.locationextcharge = BookingsService.Get_extendedAmountLoc(transactionId);
                 bookingPayments.generaldiscount = BookingsService.getBookingTransDiscount(transactionId, totalAmount);

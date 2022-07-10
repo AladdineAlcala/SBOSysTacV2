@@ -592,7 +592,7 @@ $(document).ready(function () {
                                 return '<span class="name">' +
                                     toProperCase(data) +
                                     '</span> </br>' +
-                                    '<p class="lack__menus text-danger"><i class="fa fa-bell-o"></i> ' + row.no_of_lackingMenus + ' lacking menu(s) unselected </p>';
+                                    '<p class="lack__menus text-danger"><i class="fa fa-solid fa-bell text-blue mr-2"></i> ' + row.no_of_lackingMenus + ' lacking menu(s) unselected </p>';
 
                             } else {
 

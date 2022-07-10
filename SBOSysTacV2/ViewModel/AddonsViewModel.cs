@@ -153,7 +153,38 @@ namespace SBOSysTacV2.ViewModel
                 {
                     foreach (var addons in addonsList.Select(addon => addon.Select(t => calcAddons((decimal)t.qty, (decimal)t.amount))))
                     {
-                        addonsTotal = addons.Sum();
+                        addonsTotal += addons.Sum();
+                    }
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
+            return addonsTotal;
+        }
+
+
+        public static decimal AddonsTotalByaddonId(IEnumerable<ICollection<BookAddonsDetail>> bookAddonsDetails)
+        {
+
+            decimal addonsTotal = 0;
+
+
+            try
+            {
+                var addonsList = bookAddonsDetails.ToList();
+
+                if (addonsList.Count != 0)
+                {
+                    foreach (var addons in addonsList.Select(addon => addon.Select(t => calcAddons((decimal)t.qty, (decimal)t.amount))))
+                    {
+                        addonsTotal += addons.Sum();
                     }
                 }
 
