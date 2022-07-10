@@ -551,12 +551,12 @@ namespace SBOSysTacV2.ViewModel
 
         public decimal GetCateringdiscountByPax(string packageType, int noOfPax)
         {
-            return packageType.Trim() == PackageType.vip.ToString() ? 0 : GetCateringdiscountByPax(noOfPax);
+            return packageType.Trim() == PackageType.vip.ToString() || packageType.Trim() == PackageType.pm.ToString() ? 0 : GetCateringdiscountByPax(noOfPax);
         }
 
 
 
-        public TransactionDetailsViewModel GetTransactionStatementAccountById(PrintContractDetails contractDetail)
+        public TransactionDetailsReportViewModel GetTransactionStatementAccountById(PrintContractDetails contractDetail)
         {
             var transid = contractDetail.transId;
 
@@ -589,7 +589,7 @@ namespace SBOSysTacV2.ViewModel
 
             decimal addons = AddonsViewModel.AddonsTotal(getAddonDetails(bookings));
 
-            return new TransactionDetailsViewModel
+            return new TransactionDetailsReportViewModel()
             {
                 
 

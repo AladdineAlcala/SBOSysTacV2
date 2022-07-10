@@ -684,6 +684,7 @@
     <Compile Include="ViewModel\Select2AreaViewModel.cs" />
     <Compile Include="ViewModel\Select2Model.cs" />
     <Compile Include="ViewModel\SelectedAddonsViewModel.cs" />
+    <Compile Include="ViewModel\TransactionDetailsReportViewModel.cs" />
     <Compile Include="ViewModel\TransactionDetailsViewModel.cs" />
     <Compile Include="ViewModel\TransRecievablesViewModel.cs" />
     <Compile Include="ViewModel\UserHubViewModel.cs" />

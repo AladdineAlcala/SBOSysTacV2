@@ -44,6 +44,10 @@ namespace SBOSysTacV2.Reports.ReportViewers
                     //var paramPrint_Option = Request["reportOption"].Trim();
 
                     var cryRep = new ReportDocument();
+                   
+
+                   
+
                     //TableLogOnInfos tbloginfos = new TableLogOnInfos();
                     
 
@@ -52,6 +56,8 @@ namespace SBOSysTacV2.Reports.ReportViewers
                     string report = Utilities.ReportPath(reportName);
 
                     cryRep.Load(report);
+
+                  
 
                     SqlConnectionStringBuilder cnstrbuilding = new SqlConnectionStringBuilder(Utilities.DBGateway());
 
@@ -115,7 +121,7 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                    // ReportContract repcontract = new ReportContract();
 
-                   conDetails = condetails.GetContractDetailsById(Convert.ToInt32(paramTransId));
+                    conDetails = condetails.GetContractDetailsById(Convert.ToInt32(paramTransId));
 
                    //Convert ViewModel List to DataTable
                    DataTable dtBookingDetailsTable = conDetails.ToDataTable();
@@ -131,20 +137,29 @@ namespace SBOSysTacV2.Reports.ReportViewers
 
                     var transdetails = tdvm.GetTransactionStatementAccountById(conDetails);
                     var addonsmiscListRep = TransactionDetailsViewModel.GetListReport(Convert.ToInt32(paramTransId));
+
                     DataTable dtaddmiscLlist = addonsmiscListRep.ToDataTableList();
-                    DataTable dtTransDetails = transdetails.ToDataTable();
+
+                    //DataTable dtTransDetails = transdetails.ToDataTable();
 
                     //repcontract.SetDataSource(conDetails);
 
+                    var netPackageAmount =
+                        (transdetails.PackageAmount + transdetails.TotaAddons + transdetails.TotaMiscCharge) -
+                        (transdetails.cateringdiscount + transdetails.extLocAmount);
 
-
+                    var discountAmount = transdetails.cateringdiscount + transdetails.extLocAmount;
 
                     cryRep.Database.Tables[0].SetDataSource(dtBookingDetailsTable);
                     cryRep.Database.Tables[1].SetDataSource(dtBookMenus);
                     cryRep.Database.Tables[2].SetDataSource(dtaddmiscLlist);
-                    cryRep.Database.Tables[3].SetDataSource(dtTransDetails);
+                    //cryRep.Database.Tables[3].SetDataSource(dtTransDetails);
+
+                    cryRep.SetParameterValue("PackageTotaAmount", netPackageAmount, "SOA");
+                    cryRep.SetParameterValue("Discount", discountAmount, "SOA");
 
                     //cryRep.Subreports[1].Database.Tables[0].SetDataSource();
+
 
 
                     Response.Buffer = false;
