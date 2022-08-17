@@ -597,7 +597,7 @@ namespace SBOSysTacV2.ViewModel
                 PackageAmount = _packageAmount,
                 TotaAddons = addons,
                 TotaMiscCharge = bocvm.GetTotalOtherCharges(otherCharges),
-                extLocAmount = _extededAmount>0? _extededAmount* contractDetail.noofPax :0,
+                extLocAmount = _extededAmount>0? _extededAmount * contractDetail.noofPax :0,
                 cateringdiscount = _cateringDiscount >0? _cateringDiscount * contractDetail.noofPax:0
 
             };

@@ -153,7 +153,7 @@ namespace SBOSysTacV2.Controllers
                         deptId = Convert.ToInt32(courseMenu.deptId),
                         note = courseMenu.Note,
                         image = filename,
-                        price = courseMenu.price,
+                        price = courseMenu.price??0,
                         date_added = courseMenu.dateAdded
 
 
@@ -338,10 +338,11 @@ namespace SBOSysTacV2.Controllers
                         modifyMenu.courseId = Convert.ToInt32(editedCourseMenuModel.courseId);
                         modifyMenu.menu_name = editedCourseMenuModel.menudesc;
                         modifyMenu.deptId = Convert.ToInt32(editedCourseMenuModel.deptId);
-                        modifyMenu.price = editedCourseMenuModel.price;
+                        modifyMenu.price = editedCourseMenuModel.price??0;
                         modifyMenu.note = editedCourseMenuModel.Note;
                         modifyMenu.image = filename;
-                        modifyMenu.date_added = editedCourseMenuModel.dateAdded;
+                        //modifyMenu.date_added = editedCourseMenuModel.dateAdded;
+                        modifyMenu.date_update=DateTime.Today;
                     }
                     
                     _dbEntities.SaveChanges();

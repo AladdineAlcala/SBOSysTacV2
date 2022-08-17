@@ -28,7 +28,7 @@ namespace SBOSysTacV2.ViewModel
 
         [Display(Name = "Price per Serve:")]
         [DisplayFormat(DataFormatString = "{0:C}")]
-        public decimal? price { get; set; } = 0;
+        public decimal? price { get; set; } =0;
 
         [Display(Name = "Course Category:")]
         [Required(ErrorMessage = "Course Category Required")]

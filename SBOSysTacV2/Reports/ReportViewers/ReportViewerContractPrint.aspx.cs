@@ -145,10 +145,10 @@ namespace SBOSysTacV2.Reports.ReportViewers
                     //repcontract.SetDataSource(conDetails);
 
                     var netPackageAmount =
-                        (transdetails.PackageAmount + transdetails.TotaAddons + transdetails.TotaMiscCharge) -
-                        (transdetails.cateringdiscount + transdetails.extLocAmount);
+                        (transdetails.PackageAmount + transdetails.TotaAddons + transdetails.TotaMiscCharge + transdetails.extLocAmount) -
+                        (transdetails.cateringdiscount);
 
-                    var discountAmount = transdetails.cateringdiscount + transdetails.extLocAmount;
+                    var discountAmount = transdetails.cateringdiscount;
 
                     cryRep.Database.Tables[0].SetDataSource(dtBookingDetailsTable);
                     cryRep.Database.Tables[1].SetDataSource(dtBookMenus);
