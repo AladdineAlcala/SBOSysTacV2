@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Web.UI.WebControls;
 using CrystalDecisions.ReportSource;
+using System.Web.Routing;
 
 namespace SBOSysTacV2.HtmlHelperClass
 {
@@ -229,5 +230,7 @@ namespace SBOSysTacV2.HtmlHelperClass
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(wordstring.ToLower());
         }
+
+        public static string Getcontroller(string routUri) => routUri.ToLower().Split('/')[1].ToString();
     }
 }   

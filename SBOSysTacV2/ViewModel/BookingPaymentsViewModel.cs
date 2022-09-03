@@ -10,6 +10,7 @@ namespace SBOSysTacV2.ViewModel
         public int transId { get; set; }
         public decimal t_amtBooking { get; set; }
         public decimal t_addons { get; set; }
+        public decimal t_otherCharge { get; set; }
         public decimal cateringdiscount { get; set; }
         public decimal generaldiscount { get; set; }
         public decimal locationextcharge { get; set; }

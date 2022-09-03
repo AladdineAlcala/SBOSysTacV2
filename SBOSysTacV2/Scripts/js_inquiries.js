@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('#customerbookinginquiry').on('click', function (e) {
 
         e.preventDefault();
-        debugger;
+/*        debugger;*/
         var cusId = $('#hiddencusId').val();
 
          if (cusId === "") {
@@ -157,9 +157,10 @@ $(document).ready(function () {
                                 '<span class="sr-only">Toggle Dropdown</span>' +
                                 '</button>' +
                                 '<ul class="dropdown-menu" role="menu">' +
-                                '<li><a href="#" class="get_packagemenus" id=' +
-                                data +
-                                '><i class="fa fa-cube fa-sm"></i> Menus </a></li>' +
+
+                                //'<li><a href="#" class="get_packagemenus" id=' +
+                                //data +
+                                //'><i class="fa fa-cube fa-sm"></i> Menus </a></li>' +
 
                                 '<li><a href="#" class="get_bookingpackagedetails" id=' +
                                 data +
@@ -175,9 +176,9 @@ $(document).ready(function () {
                             }
 
 
-                            button += '<li><a href="#" class="getTransHistory" id=' + data + '><i class="fa fa-clock-o fa-sm"></i> View History </a></li>' +
-                                    '</ul>' +
-                                    ' </div>';
+                            //button += '<li><a href="#" class="getTransHistory" id=' + data + '><i class="fa fa-clock-o fa-sm"></i> View History </a></li>' +
+                            //        '</ul>' +
+                            //        ' </div>';
 
 
 

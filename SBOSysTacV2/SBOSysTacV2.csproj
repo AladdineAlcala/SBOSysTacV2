@@ -7959,6 +7959,9 @@
     <Content Include="Views\Inquiry\AdminReportsIncentives_Index.cshtml" />
     <Content Include="Views\Inquiry\AddonsReport_Index.cshtml" />
     <Content Include="Views\Payments\_GetPaymentVoucherForm.cshtml" />
+    <Content Include="Views\Inquiry\_PackageBookingMenus_Inquiry.cshtml" />
+    <Content Include="Views\Inquiry\_BookingOtherCharge_Inquiry.cshtml" />
+    <Content Include="Views\Inquiry\_BookingAmountDue_Inquiry.cshtml" />
     <None Include="Web.developtment_testConfig.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

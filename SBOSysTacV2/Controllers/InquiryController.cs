@@ -274,6 +274,9 @@ namespace SBOSysTacV2.Controllers
             return View(_transDetails);
         }
 
+        //[HttpGet,ActionName("GetBookingDetailsPartial_Inquiry")]
+        //public ActionResult BookingDetails_Inquiry(int transId) => PartialView("_BookingDetails_Inquiry", transactionDetails.GetTransactionDetailsById(transId));
+
 
         [HttpGet]
         public ActionResult getPartialView_AmountDue(int transId)

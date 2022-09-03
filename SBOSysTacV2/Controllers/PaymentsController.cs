@@ -24,10 +24,11 @@ namespace SBOSysTacV2.Controllers
         private BookingPaymentsViewModel bookingPayments;
         private TransRecievablesViewModel tr;
         private PaymentsViewModel pv;
+        private BookingOtherChargeViewModel bookOtherCharge;
         private TransactionDetailsViewModel transdetails;
         private PegasusEntities _dbcontext;
-        static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
-        Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
+        static readonly Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
+        readonly Func<Booking, List<ICollection<BookAddonsDetail>>> getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
         public PaymentsController()
         {
             _dbcontext = new PegasusEntities();
@@ -36,6 +37,7 @@ namespace SBOSysTacV2.Controllers
             bookingPayments = new BookingPaymentsViewModel();
             tr = new TransRecievablesViewModel();
             pv = new PaymentsViewModel();
+            bookOtherCharge = new BookingOtherChargeViewModel();
             transdetails = new TransactionDetailsViewModel();
         }
 
@@ -54,6 +56,7 @@ namespace SBOSysTacV2.Controllers
                 totalAmount = _getBookingAmount(transactionId);
                 bookingPayments.t_amtBooking = totalAmount;
                 bookingPayments.t_addons = AddonsViewModel.AddonsTotal(getAddonDetails(bookings));
+                bookingPayments.t_otherCharge = bookOtherCharge.GetTotalOtherCharges(bookings.Book_OtherCharge.ToList());
                 bookingPayments.cateringdiscount = bookingPayments.GetCateringDiscount(transactionId);
                 bookingPayments.locationextcharge = BookingsService.Get_extendedAmountLoc(transactionId);
                 bookingPayments.generaldiscount = BookingsService.getBookingTransDiscount(transactionId, totalAmount);

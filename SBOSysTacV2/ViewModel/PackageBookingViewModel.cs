@@ -16,8 +16,9 @@ namespace SBOSysTacV2.ViewModel
         public IEnumerable<PackageBody> PackageBody { get; set; }
         public IEnumerable<BookMenusViewModel> BookMenuses { get; set; }
         public IEnumerable<AddonsViewModel> BookAddOns { get; set; }
+        //public string controllerFlag { get; set; }
 
-      
+
 
         public IEnumerable<PackageBookingViewModel> GetBookingDetails()
         {

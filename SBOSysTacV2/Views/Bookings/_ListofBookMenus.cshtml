@@ -1,59 +1,65 @@
 ﻿@using SBOSysTacV2.ViewModel
 @model PackageBookingViewModel
 
-
+@{
+    string cntrlFlag = ViewBag.cntrlFlag;
+}
 
 <div id="menuslist" class="box box-primary">
-        <div class="box-header">
-            <i class="ion ion-clipboard"></i>
-            <h3 class="box-title">Menus:</h3>
-            @*<div class="box-tools pull-right">
+    <div class="box-header">
+        <i class="ion ion-clipboard"></i>
+        <h3 class="box-title">Menus:</h3>
+        @*<div class="box-tools pull-right">
                 <button id="add_maincourse" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-search"></i></button>
             </div>*@
 
-        </div>
-        <!--box-header-->
-        <div class="box-body">
-            <ul class="products-list product-list-in-box">
-                
-                
-                @Html.HiddenFor(m=>m.Booking.noofperson,new{id="booking_no_of_pax"})
-                
+    </div>
+    <!--box-header-->
+    <div class="box-body">
+        <ul class="products-list product-list-in-box">
 
 
-                @{ var counter = 0; }
-
-                @foreach (var menu in Model.BookMenuses)
-                {
-
-                    counter += 1;
-
-                    int? _menuNo = 0;
+            @Html.HiddenFor(m => m.Booking.noofperson, new { id = "booking_no_of_pax" })
 
 
 
-                   
+            @{ var counter = 0; }
 
-                    <li class="item position-relative my-1 py-1">
+            @foreach (var menu in Model.BookMenuses)
+            {
 
-                        <div id="course" class="product product-info" data-id="@menu.course_id">
-                      
-                            <span class="menu-counter">@counter</span>
-                            <span class="product-title">
-                                @menu.coursename
+                counter += 1;
 
+                int? _menuNo = 0;
+
+
+
+
+
+                <li class="item position-relative my-1 py-1">
+
+                    <div id="course" class="product product-info" data-id="@menu.course_id">
+
+                        <span class="menu-counter">@counter</span>
+                        <span class="product-title">
+                            @menu.coursename
+
+                        </span>
+                        <div class="ml-5 my-2 py-1">
+                            <span class="product-description">
+                                @(string.IsNullOrEmpty(menu.menu_name)?"":menu.menu_name.ToUpper())
                             </span>
-                            <div class="ml-5 my-2 py-1">
-                                <span class="product-description">
-                                    @(string.IsNullOrEmpty(menu.menu_name)?"":menu.menu_name.ToUpper())
-                                </span>
-                                
-                               
-                            </div>
+
 
                         </div>
 
+                    </div>
+
+
+                    @if (cntrlFlag == "bookings")
+                    {
                         <div class="tools position-absolute" data-transid="@Model.transactionId">
+
 
                             @if (string.IsNullOrEmpty(menu.menu_name))
                             {
@@ -67,25 +73,28 @@
                             }
 
                         </div>
+                    }
 
-                    </li>
 
-                 }
 
-            </ul> 
-           
-        </div>
-        <!--box-body-->
+                </li>
+
+            }
+
+        </ul>
+
     </div>
+    <!--box-body-->
+</div>
 
 
 
 <script type="text/javascript">
 
-   
+
     $tblBookMenu = @Html.Raw(Json.Encode(@Model.BookMenuses));
 
-    
+
 
 </script>
 

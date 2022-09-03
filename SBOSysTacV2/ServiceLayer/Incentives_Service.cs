@@ -93,21 +93,21 @@ namespace SBOSysTacV2.ServiceLayer
         /// <summary>
         /// Func Delegate to check payment for filtered month if it is fully paid or partially paid
         /// </summary>
-        readonly Func<Payment, bool> CheckPaymentDate = t => t.dateofPayment.Value.Date >= DateFrom.Date && t.dateofPayment.Value.Date <= DateTo.Date;
+        readonly Func<Payment, bool> CheckPaymentDate = t => t.dateofPayment!=null &&  t.dateofPayment.Value.Date >= DateFrom.Date && t.dateofPayment.Value.Date <= DateTo.Date;
 
         public List<PaymentLogDetailsViewModel> Paymentlist()
         {
             List<Payment> listofpaymentLogs = new List<Payment>();
             var incentive = new IncentivesService();
 
-            var recordedList = incentive.GetPaymentList();
+            var recordedList = incentive.GetPaymentList().ToList();
 
             foreach (var item in recordedList)
             {
                listofpaymentLogs.Add(new Payment()
                {
                    trn_Id = (int)item.trn_Id,
-                   dateofPayment = (DateTime) item.dateofPayment,
+                   dateofPayment = item.dateofPayment,
                    amtPay = item.amtPay
                    
                });
@@ -136,6 +136,6 @@ namespace SBOSysTacV2.ServiceLayer
         }
 
 
-
+      
     }
 }

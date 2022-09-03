@@ -13,7 +13,7 @@ using System.Web.Mvc;
 using System.Web.Services.Protocols;
 using System.Web.SessionState;
 using SBOSysTacV2.ServiceLayer;
-
+using System.Web.Routing;
 
 namespace SBOSysTacV2.Controllers
 {
@@ -53,13 +53,15 @@ namespace SBOSysTacV2.Controllers
             package_book_vm = new PackageBookingViewModel();
             bookOtherCharge = new BookingOtherChargeViewModel();
             bookingsService = new BookingsService();
+
+          
         }
 
         // GET: Bookings
         public ActionResult Index()
         {
             ViewBag.FormTitle = "Bookings & Events Details";
-
+          
             return View();
         }
 
@@ -256,7 +258,12 @@ namespace SBOSysTacV2.Controllers
 
         [HttpGet]
         [ActionName("GetBookingDetailsPartial")]
-        public ActionResult BookingDetails(int transId) => PartialView("_BookingDetailsPartial", transDetailsvm.GetTransactionDetailsById(transId));
+        public ActionResult BookingDetails(int transId)
+        {
+            ViewData["controllerFlag"] = Utilities.Getcontroller(Request.RawUrl);
+
+            return PartialView("_BookingDetailsPartial", transDetailsvm.GetTransactionDetailsById(transId));
+        }
 
 
 
@@ -366,6 +373,10 @@ namespace SBOSysTacV2.Controllers
         {
             string actionname = RouteData.Values["action"].ToString();
 
+            //string controller = RouteData.Values["controller"].ToString();
+
+           
+
             PackageActionType.Getpackagecontroller(actionname);
 
             var packageBooking = package_book_vm.GetBookingDetailById(transactionId);
@@ -375,6 +386,7 @@ namespace SBOSysTacV2.Controllers
                 transactionId = transactionId,
                 Booking = packageBooking.Booking,
                 BookMenuses = book_menus_vm.ListOfMenusBook(packageBooking).ToList()
+            
 
             });
         }
@@ -388,6 +400,9 @@ namespace SBOSysTacV2.Controllers
 
             PackageActionType.Getpackagecontroller(actionname);
 
+
+            ViewBag.cntrlFlag = Utilities.Getcontroller(Request.RawUrl);
+
             var packageBooking = package_book_vm.GetBookingDetailById(transactionId);
 
             return PartialView("_GetSnacksForm",new PackageBookingViewModel()
@@ -396,7 +411,7 @@ namespace SBOSysTacV2.Controllers
                 Booking = packageBooking.Booking,
                 Package = package_book_vm.GetPackageByTransaction_Id(transactionId),
                 BookMenuses = book_menus_vm.Get_Menu_on_SnackPackageByTransId(transactionId).ToList()
-
+               
             });
         }
 
@@ -405,6 +420,8 @@ namespace SBOSysTacV2.Controllers
         public ActionResult GetListofAddons(int transId)
         {
             var listaddons = addonsviewmodel.ListofAddons();
+
+            ViewBag.cntrlFlag = Utilities.Getcontroller(Request.RawUrl);
 
             return PartialView("_GetListofAddons", new PackageBookingViewModel()
             {

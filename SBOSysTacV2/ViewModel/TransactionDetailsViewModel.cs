@@ -100,18 +100,7 @@ namespace SBOSysTacV2.ViewModel
                         }).FirstOrDefault();
                 }
 
-                  
-
-
-                //(from ot in b.Book_OtherCharge where ot.trn_Id == transId select ot).ToList()
-                //bookingsList = new TransactionDetailsViewModel()
-                //{
-                //    transactionId = transId,
-                //    Booking_Trans = bookings,
-                //    Customer =(from c in _dbEntities.Customers where c.c_Id==bookings.c_Id select c).Single(),
-                //    BookOtherCharges = (from ot in _dbEntities.Book_OtherCharge where ot.trn_Id == transId select ot).ToList(),
-                //    Package_Trans = (from p in _dbEntities.Packages where  p.p_id==bookings.p_id p).Single()
-                //};
+                 
 
             }
             catch (Exception e)

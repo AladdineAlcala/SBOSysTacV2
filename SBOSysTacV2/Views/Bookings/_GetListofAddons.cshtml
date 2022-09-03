@@ -3,15 +3,21 @@
 
 @{
     var totalAddons = Model.BookAddOns.Sum(x => x.AddonAmount);
+
+    string cntrlFlag = ViewBag.cntrlFlag;
 }
 
 <div class="box box-primary">
     <div class="box-header">
         <h3 class="box-title text-blue">Additional Information/Addons and Uprades</h3>
         <div class="box-tools">
-            <button id="addon_Information" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-lg fa-cart-arrow-down"></i></button>
-            @*<button id="addon_upgrades" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-lg fa-glass"></i></button>*@
-        </div>
+
+            @if (cntrlFlag == "bookings")
+            {
+                <button id="addon_Information" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-lg fa-cart-arrow-down"></i></button>
+                @*<button id="addon_upgrades" class="btn btn-sm btn-default" data-id="@Model.transactionId"><i class="fa fa-lg fa-glass"></i></button>*@
+            }
+            </div>
 
     </div>
     <!--box-header-->
@@ -25,7 +31,7 @@
 
                             <div class="tools addons">
                                 @*<i class="fa fa-square-o fa-lg" data-id="@item.bookaddonNo"></i>*@
-                                
+
                                 <i class="fa @(item.isSelected?"fa-check-square-o":"fa-square-o") fa-lg" data-id="@item.bookaddonNo"></i>
 
                             </div>
@@ -34,11 +40,14 @@
 
                         <td style="width: 70px;" class="text-center">
 
-                            <div class="addontools mx-1 text-center hide">
-                                <span><i class="fa fa-trash" id="addons_remove" data-id="@item.bookaddonNo"></i></span>
-                                <span><i class="fa fa-edit" id="addons_modify" data-id="@item.bookaddonNo"></i></span>
-                            </div>
-                                
+                            @if (cntrlFlag == "bookings")
+                            {
+                                <div class="addontools mx-1 text-center hide">
+                                    <span><i class="fa fa-trash" id="addons_remove" data-id="@item.bookaddonNo"></i></span>
+                                    <span><i class="fa fa-edit" id="addons_modify" data-id="@item.bookaddonNo"></i></span>
+                                </div>
+                            }
+
                         </td>
 
                         <td>@item.AddonsDescription </td>
@@ -142,6 +151,6 @@
         var parentNode = node.parentNode.parentNode;
         var targetElement = parentNode.nextElementSibling.firstElementChild;
         targetElement.classList.remove("hide");
-       
+
     }
 </script>

@@ -20,12 +20,7 @@
         status = Model.Booking_Trans.serve_stat == true ? "Served" : "UnServed";
     }
 }
-@*<section class="content-header">
-        <h1>
-            Transaction
-            <small>#@Model.transactionId</small>
-        </h1>
-    </section>*@
+
 
 <div class="pad margin no-print" style="padding-left: 0 !important; padding-right: 0 !important; margin-bottom: 0; padding-bottom: 0;">
     <div class="callout callout-info" style="margin-bottom: 5px; padding-bottom: 8px;">
@@ -34,147 +29,72 @@
     </div>
 </div>
 
-<div class="row" style="margin-bottom:3px;">
-    <div class="col-sm-6 col-sm-offset-6">
-        <div class="button-group pull-right" style="margin-right:12px;">
-            @*<a class="btn bg-olive btn-flat" href="@Url.Action("Index", "Bookings")"><i class="fa fa-reply"></i> Bookings </a>
-            <a class="btn bg-olive btn-flat" href="@Url.Action("GetPackageonBooking", "Bookings",new {transId =Model.transactionId})"><i class="fa fa-reply"></i> Menus </a>*@
-            @{
-                int transId = Model.transactionId;
 
-                if (Model.hasDiscountEnable(transId))
-                {
-                    <button class="btn bg-olive btn-flat" type="button" data-id="@Model.transactionId" id="remove_discount"><i class="fa fa-rouble"></i> Remove Discount </button>
-                }
-                else
-                {
-                    <button class="btn bg-olive btn-flat" type="button" data-id="@Model.transactionId" id="addDiscount"><i class="fa fa-rouble"></i> Create Discount </button>
-                }
-            }
+<section class="content">
 
-
-            @*<a class="btn bg-olive btn-flat" href="#"><i class="fa fa-print"></i>  </a>*@
-
-            @*<a class="btn bg-olive btn-flat" href="@Url.Action("PrintContractOption","Bookings",new {transId=Model.transactionId})"><i class="fa fa-print"></i> Print Contract </a>*@
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    <section class="invoice" style="margin-top: 0; padding-top: 0;">
-        <div class="row" style="margin-bottom: 0; padding-bottom: 0;">
-            <div class="col-xs-6">
-                <h2 class="page-header" style="margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid  #c8c8a6; color: #2f4f4f;">
-                    <i class="fa fa-address-card"></i> @fullname
-
-                </h2>
-            </div>
-            <div class="col-xs-6">
-                <small class="pull-right bookdetails" style="padding-top: 12px;">
-                    <b>Trn Date:</b>
-
-                    @Model.Booking_Trans.transdate.Value.ToString("MMM d, yyyy h:mm tt")
-                </small>
-
-            </div>
-        </div>
-
-
-        <div class="control-label col-sm-2"> BOOKING STATUS:</div> <span class="bookdetails">@status</span>
-
-
-
-        <br />
-        <div class="clearfix"></div>
-        <br />
-
-        <div class="row">
-
-
-
-
-            <div class="col-sm-6">
-
-                <div class="control-label text-bold col-sm-4 titlehead"> Event Details</div>
-                <br />
-                <div class="clearfix"></div>
-                <div class="control-label col-sm-4"> OCCASION:</div> <span class="bookdetails">@Html.DisplayFor(m => m.Booking_Trans.occasion)</span>
-                <br />
-                <div class="control-label col-sm-4"> VENUE:</div> <span class="bookdetails">@Html.DisplayFor(m => m.Booking_Trans.venue)</span>
-                <br />
-                <div class="control-label col-sm-4"> DATE:</div> <span class="bookdetails"> @Model.Booking_Trans.startdate.Value.ToString("MMM d, yyyy h:mm tt")</span>
-                <br />
-                <div class="control-label col-sm-4"> EVENTCOLOR:</div> <span class="bookdetails"> @Html.DisplayFor(m => m.Booking_Trans.eventcolor) </span>
-                <br />
-                <div class="control-label col-sm-4"> TYPE OF SERVICE:</div><span class="bookdetails">@Html.DisplayFor(m => m.Booking_Trans.ServiceType.servicetypedetails)</span>
-                <br />
-                <div class="control-label col-sm-4">NOTES :</div>
-                <br />
-                <span class="bookdetails col-sm-12">@Html.DisplayFor(m => m.Booking_Trans.reference)</span>
-
-            </div>
-
-            <div class="col-sm-6">
-                <div class="control-label text-bold col-sm-6 titlehead"> Package Details</div>
-                <br />
-                <div class="clearfix"></div>
-                <div class="control-label col-sm-4"> PACKAGE:</div> <span class="bookdetails"> @Html.DisplayFor(m => m.Package_Trans.p_descripton)</span>
-                <br />
-                <div class="control-label col-sm-4"> TYPE:</div> <span class="bookdetails">@Html.DisplayFor(m => m.Package_Trans.p_type)</span>
-
-                <br />
-                <div class="control-label col-sm-4"> AMOUNT PER PAX:</div> <span class="bookdetails">@Html.DisplayFor(m => m.Package_Trans.p_amountPax)</span>
-
-                <br />
-                <div class="control-label col-sm-4"> No. OF HEADS:</div><span class="bookdetails"> @Html.DisplayFor(m => m.Booking_Trans.noofperson)</span>
-                <br />
-                @*<div class="control-label col-sm-4"> DP:</div> <span class="bookdetails"> Php @String.Format("{0:N}", Model.TotaDp)</span>
-
-                    <br />
-
-                    <div class="control-label col-sm-4"> FP:</div> <span class="bookdetails">Php @String.Format("{0:N}", Model.Fullpaymnt)</span>
-                    <br />*@
-
-
-            </div>
-        </div>
-        <div class="row" style="margin-top: 10px;">
-            <div class="col-sm-6">
-
-
-                <div class="control-label text-bold col-sm-5 titlehead">
-                    Booking Created
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="my-3 ml-2 p-2" id="optrbtn">
+                <div class="button-group">
+                    <button type="button" class="btn btn-default btn-flat" data-toggle="tooltip" data-placement="bottom" title="Back to Booking List" onclick="history.back()"><i class="fa fa-arrow-left fa-lg"></i></button>
+                   
                 </div>
-                <div class="clearfix"></div>
-                <br />
-                
-                @{
-                    var user = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(Model.Booking_Trans.b_createdbyUser);
-                }
-                <div class="control-label col-sm-4">Last Update By:</div> <span class="bookdetails">@user.UserName</span>
-                <br />
-                <div class="control-label col-sm-4">Updated Date:</div> <span class="bookdetails">@(Model.Booking_Trans.b_updatedDate.HasValue ? Model.Booking_Trans.b_updatedDate.Value.ToString("MMM d, yyyy h:mm tt") : "n/a" )</span>
             </div>
+        </div>
+        
+    </div>
 
-            <div class="col-sm-6">
+    <div class="row">
+        <div class="pad mb-3">
+            <div class="row">
 
-                <div class="col-xs-10">
-                    <p class="lead" style="margin-bottom: 10px;">AMOUNT DUE</p>
-                    <div class="table-responsive" id="amountDue">
-                        @{
+                <div class="col-xs-6">
 
-                            Html.RenderAction("getPartialView_AmountDue", new { transId = Model.transactionId });
-                        }
+                    <div class="card-body">
+
+                        <div class="col-sm-12">
+                            <h2 class="mb-3 mt-1 text-bold">@fullname </h2>
+                            <ul class=" ml-4 mb-0 fa-ul text-muted">
+                                <li class="text"><span class="fa-li"><i class="fa fa-lg fa-home"></i> </span> <b class="text-info mr-1">Address:</b> @Model.Customer.address</li>
+                                <li class="text">
+                                    <span class="fa-li"><i class="fa fa-lg fa-phone"></i></span> <b class="text-info mr-1">Phone #:</b>
+                                    @(String.IsNullOrEmpty(Model.Customer.contact1) && String.IsNullOrEmpty(Model.Customer.contact2) ? "No Contact Details" : !String.IsNullOrEmpty(Model.Customer.contact1) && String.IsNullOrEmpty(Model.Customer.contact2) ? String.Format("{0}", Model.Customer.contact1) : String.IsNullOrEmpty(Model.Customer.contact1) && !String.IsNullOrEmpty(Model.Customer.contact2) ? String.Format("{0}", Model.Customer.contact2) : String.Format("{0} / {1}", Model.Customer.contact1, Model.Customer.contact2))
+                                </li>
+                            </ul>
+                        </div>
 
                     </div>
+
+
                 </div>
 
+                <div class="col-xs-6">
+
+                    @*<div class="col-sm-6 mt-4">
+                            <button class="bt btn-success btn-flat btn-sm" id="printContract" data-id="@Model.trn_Id"><i class="fa fa-lg fa-print"></i> Print Contact Form</button>
+                        </div>*@
+
+                    <h5 class="pull-right bookdetails pt-4 mr-3">
+                        <b>Trn Date:</b>
+
+                        @Model.Booking_Trans.transdate.Value.ToString("MMM d, yyyy h:mm tt")
+                    </h5>
+
+                </div>
             </div>
         </div>
+    </div>
 
-    </section>
-</div>
+
+    <div class="row" id="booking_details">
+
+        @*@{Html.RenderAction("GetBookingDetailsPartial_Inquiry", Model.transactionId); }*@
+
+        @{ Html.RenderAction("GetBookingDetailsPartial", "Bookings", Model.transactionId);}
+    </div>
+
+
+</section>
 
 <div class="modal fade" id="modalAddDiscount">
     <div class="modal-dialog">

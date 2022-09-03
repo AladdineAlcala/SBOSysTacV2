@@ -139,7 +139,9 @@
                 <br />
                 <div class="control-label col-sm-4 text-right">ADD-ONS</div> <span class="bookdetails">@String.Format("{0:N}", Model.t_addons)</span>
                 <br />
-                <div class="control-label col-sm-4 text-right">DISCOUNTS</div> <span class="bookdetails">@String.Format("{0:N}", totaldiscount)</span>
+                <div class="control-label col-sm-4 text-right">MISC/OTHER CHARGES:</div> <span class="bookdetails">@String.Format("{0:N}", Model.t_otherCharge)</span>
+                <br />
+                <div class="control-label col-sm-4 text-right">DISCOUNTS:</div> <span class="bookdetails">@String.Format("{0:N}", totaldiscount)</span>
                 <br />
                 <label class="lead text-black" style="margin-right: 5px;">Total Amount Due: </label> Php: <label style="font-size: 22px; margin-left: 5px;" class="text-info"> @String.Format("{0:N}", Model.t_amtBooking)</label>
             </div>
