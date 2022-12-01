@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.ServiceLayer;
+using System.Linq.Dynamic;
 
 namespace SBOSysTacV2.Controllers
 {
@@ -520,10 +521,7 @@ namespace SBOSysTacV2.Controllers
 
             };
 
-            //IncentivesService.DateFrom = DateTime.Parse("07-01-2021",CultureInfo.InvariantCulture);
-            //IncentivesService.dateTo = DateTime.Parse("07-30-2021", CultureInfo.InvariantCulture);
-
-            //var list= IncentivesService.Paymentlist();
+     
 
             var incentivesService = new IncentivesService();
 
@@ -552,7 +550,9 @@ namespace SBOSysTacV2.Controllers
                 new SqlParameter("@datestart",pOption.dateFrom),
                 new SqlParameter("@date_end",pOption.dateTo)).ToList();
 
-            ContainerClass.GetAddonsReport(list);
+            var addon_lechon = list.Where(t => t.addoncat_id == (int)AddonsEnum_Lechon.baka || t.addoncat_id==(int)AddonsEnum_Lechon.baboy).ToList();
+
+            ContainerClass.GetAddonsReport(addon_lechon);
 
             return View("~/Views/Shared/ReportContainer.cshtml", pOption);
         }

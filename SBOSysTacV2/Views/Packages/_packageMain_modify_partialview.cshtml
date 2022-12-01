@@ -20,16 +20,33 @@
                     <div class="form-group">
                         <label class="control-label required">Package Type:</label>
                         <div class="radio" style="margin-top: 0;">
+
                             <label style="margin-right: 10px;">
-                                @Html.RadioButtonFor(m => m.packagetype, "vip", new { @id = "vip_option" })
+                                @Html.RadioButtonFor(m => m.packagetype, "vip", new { @id = "vip_option", @class = "packagetype" })
                                 Vip
                             </label>
 
 
                             <label style="margin-left: 10px; margin-right: 10px;">
-                                @Html.RadioButtonFor(m => m.packagetype, "regular", new { @id = "reg_option" })
+                                @Html.RadioButtonFor(m => m.packagetype, "regular", new { @id = "reg_option", @class = "packagetype" })
                                 Regular
                             </label>
+
+                            <label style="margin-left: 10px; margin-right: 10px;">
+                                @Html.RadioButtonFor(m => m.packagetype, "pm", new { @id = "pm_option", @class = "packagetype" })
+                                PackMeals
+                            </label>
+                            <label style="margin-left: 10px; margin-right: 10px;">
+                                @Html.RadioButtonFor(m => m.packagetype, "sd", new { @id = "sd_option", @class = "packagetype" })
+                                Snacks and Drinks
+                            </label>
+
+                            <label style="margin-left: 10px; margin-right: 10px;">
+                                @Html.RadioButtonFor(m => m.packagetype, "wedding", new { @id = "wedding_option", @class = "packagetype" })
+                                Wedding Package
+                            </label>
+
+
 
                         </div>
                         @Html.ValidationMessageFor(m => m.packagetype, null, new {@class = "text-danger"})

@@ -540,7 +540,10 @@ namespace SBOSysTacV2.ViewModel
 
         public decimal GetCateringdiscountByPax(string packageType, int noOfPax)
         {
-            return packageType.Trim() == PackageType.vip.ToString() || packageType.Trim() == PackageType.pm.ToString() ? 0 : GetCateringdiscountByPax(noOfPax);
+            return packageType.Trim().Equals(PackageType.vip.ToString()) 
+                   || packageType.Trim().Equals(PackageType.pm.ToString()) 
+                   || packageType.Trim().Equals(PackageType.wedding.ToString()) 
+                    ? 0 : GetCateringdiscountByPax(noOfPax);
         }
 
 

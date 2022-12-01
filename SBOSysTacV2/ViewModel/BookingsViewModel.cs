@@ -13,37 +13,54 @@ namespace SBOSysTacV2.ViewModel
     public class BookingsViewModel
     {
         public int trn_Id { get; set; }
+
         public int? c_Id { get; set; }
+
         [Display(Name = "No. of Person:")]
         [Required(ErrorMessage = "No. of persons required")]
         [RegularExpression("([0-9]+)", ErrorMessage = "Pls. enter valid number format")]
         public int? noofperson { get; set; }
+
+
         [Display(Name = "Event:")]
         [Required(ErrorMessage = "Event/Ocassion Name Required")]
         public string occasion { get; set; }
         [Display(Name = "Venue:")]
+
+
         //[Required(ErrorMessage = "Event Venue Required")]
         public string venue { get; set; }
+
         public int? typeofservice { get; set; }
+
         [Display(Name = "Date and Time:")]
         [Required(ErrorMessage = "Date Required")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:mm-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? startdate { get; set; }
+
         public DateTime? enddate { get; set; }
+
         public int pId { get; set; }
+
         [Required(ErrorMessage = "Package Required")]
         public string packagename { get; set; }
+
         public string packageType { get; set; }
+
         public bool? serve_status { get; set; } = false;
+
         public bool? iscancelled { get; set; } = false;
+
         [Display(Name = "Event Motf:")]
         public string eventcolor { get; set; }
+
         [Display(Name = "Customer:")]
         //[CustomerCustomValidate]
         [Required(ErrorMessage = "Customer Name Required")]
         [Remote("IsCustomerRegistered","Bookings",HttpMethod ="Post",ErrorMessage ="Customer does not exist")]
         public string fullname { get; set; }
+
         public int? serviceId { get; set; }
         public string serviceType { get; set; }
         public string refernce { get; set; }

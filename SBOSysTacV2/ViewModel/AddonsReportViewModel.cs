@@ -11,9 +11,11 @@ namespace SBOSysTacV2.ViewModel
         public DateTime eventDate { get; set; }
         public int cusid { get; set; }
         public int addondetailId { get; set; }
-        public int addonid { get; set; }
+        public int book_addonid { get; set; }
+        public string addon_unit { get; set; }
         public decimal book_addon_qty { get; set; }
         public decimal addonAmount { get; set; }
+        public int addoncat_id { get; set; }
         public string addoncatDesc { get; set; }
         public string addoncatdescription { get; set; }
         public string p_type { get; set; }

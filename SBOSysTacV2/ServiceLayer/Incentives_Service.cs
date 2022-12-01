@@ -24,7 +24,7 @@ namespace SBOSysTacV2.ServiceLayer
             dbEntities = new PegasusEntities();
         }
 
-        public Func<PaymentLogDetailsViewModel, bool> pcondition = e => GetAmount(e) == true;
+        public Func<PaymentLogDetailsViewModel, bool> pcondition = _amt => GetAmount(_amt) == true;
 
         public static IEnumerable<CateringReportViewModel> GetCateringReport(IEnumerable<Booking> bookings, Func<CateringReportViewModel, bool> expression)
         {

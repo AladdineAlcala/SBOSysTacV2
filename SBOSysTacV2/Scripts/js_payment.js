@@ -12,7 +12,7 @@ function currencyFormat(num) {
 }
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 
 
     var row = $('#tbl_paymentBooking tbody >tr');
@@ -52,19 +52,19 @@ $(document).ready(function() {
             temp = initBal - debitVal;
             balance = temp;
             totaldebit = parseFloat(totaldebit) + parseFloat(debitVal);
-            
-           // console.log(totaldebit);
+
+            // console.log(totaldebit);
         }
 
         totaldebit = parseFloat(totaldebit);
 
 
-    
 
-       // var prevBal = prevrow.find("td:eq(5)").text();
-       // init_bal = cleanDecimal(prevBal);
+
+        // var prevBal = prevrow.find("td:eq(5)").text();
+        // init_bal = cleanDecimal(prevBal);
         initBal = balance;
-    
+
 
 
         if (isNaN(parseFloat(balance))) {
@@ -77,7 +77,7 @@ $(document).ready(function() {
             $(row[i].cells[6]).text(currencyFormat(balance));
         }
 
-       
+
     }
 
     $('#totalPayment').html(currencyFormat(totaldebit));
@@ -85,11 +85,11 @@ $(document).ready(function() {
     if (balance <= 0) {
 
         initBal = parseFloat(initBal);
-       // console.log(currencyFormat(init_bal));
+        // console.log(currencyFormat(init_bal));
         $('#endbalance').html(currencyFormat(initBal));
 
     } else {
-          $('#endbalance').html(currencyFormat(balance));
+        $('#endbalance').html(currencyFormat(balance));
 
     }
 
@@ -110,7 +110,7 @@ $(document).ready(function() {
     }
 
 
-  
+
 
 }); //======= end of code document.ready====================
 
@@ -143,30 +143,30 @@ function loadTablePayments() {
         ],
 
         buttons:
-        [
-            {
-                text: '<i class="fa fa-plus-square fa-sm fa-fw"></i>',
-                className: 'btn btn-primary btn-sm btnAddPayment',
-                titleAttr: 'Create new payment',
-                action: function () {
+            [
+                {
+                    text: '<i class="fa fa-plus-square fa-sm fa-fw"></i>',
+                    className: 'btn btn-primary btn-sm btnAddPayment',
+                    titleAttr: 'Create new payment',
+                    action: function () {
 
-                   // onAddNewPayment(id);
+                        // onAddNewPayment(id);
+                    }
+
+
+                },
+                {
+                    text: '<i class="fa fa-print fa-sm fa-fw"></i>',
+                    className: 'btn btn-primary btn-sm btnPrintPayment',
+                    titleAttr: 'Print',
+                    action: function () {
+
+                        //onAddNewPayment(id);
+                    }
+
+
                 }
-
-
-            },
-            {
-                text: '<i class="fa fa-print fa-sm fa-fw"></i>',
-                className: 'btn btn-primary btn-sm btnPrintPayment',
-                titleAttr: 'Print',
-                action: function () {
-
-                    //onAddNewPayment(id);
-                }
-
-
-            }
-        ]
+            ]
 
 
     });
@@ -176,83 +176,83 @@ function loadTablePayments() {
 $(document).on('click', '#btn_regPayment', function (e) {
     e.preventDefault();
 
-        Swal.fire({
-            title: "Are You Sure ?",
-            text: "Confirm Adding Payment..",
-            type: "question",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Proceed Transaction..'
-          
-        }).then((result) => {
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Adding Payment..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed Transaction..'
 
-            if (result.value) {
+    }).then((result) => {
 
-                var formUrl = $('#paymentform').attr('action');
-                var form = $('[id*=paymentform]');
+        if (result.value) {
 
-                $.validator.unobtrusive.parse(form);
-                form.validate();
+            var formUrl = $('#paymentform').attr('action');
+            var form = $('[id*=paymentform]');
 
-
-
-                if (form.valid()) {
+            $.validator.unobtrusive.parse(form);
+            form.validate();
 
 
-                    $('#spinn-loader').show();
-                    $.ajax({
-                        type: 'POST',
-                        url: formUrl,               //Payments/SavePayment
-                        data: form.serialize(),
-                        datatype: 'json',
-                        cache: false,
-                        success: function (data) {
 
-                            if (data.success) {
+            if (form.valid()) {
 
-                                $('#paymentsTable').load(data.url);
 
-                                $("#modal-PaymentBooking").modal('hide');
+                $('#spinn-loader').show();
+                $.ajax({
+                    type: 'POST',
+                    url: formUrl,               //Payments/SavePayment
+                    data: form.serialize(),
+                    datatype: 'json',
+                    cache: false,
+                    success: function (data) {
 
-                                //console.log(data.url);
-                                setTimeout(function () {
+                        if (data.success) {
 
-                                    Swal.fire({
-                                        title: "Success",
-                                        text: "Payment was succesfully Added!",
-                                        type: "success"
+                            $('#paymentsTable').load(data.url);
 
-                                    });
+                            $("#modal-PaymentBooking").modal('hide');
 
-                                    $('#spinn-loader').hide();
+                            //console.log(data.url);
+                            setTimeout(function () {
 
-                                }, 1000);
+                                Swal.fire({
+                                    title: "Success",
+                                    text: "Payment was succesfully Added!",
+                                    type: "success"
 
-                            }
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            Swal.fire('Error adding record!', 'Please try again', 'error');
+                                });
 
-                            $('#spinn-loader').hide();
+                                $('#spinn-loader').hide();
+
+                            }, 1000);
+
                         }
-                    });
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire('Error adding record!', 'Please try again', 'error');
 
-                }
-                else {
+                        $('#spinn-loader').hide();
+                    }
+                });
 
-                    $('#spinn-loader').hide();
-
-                    $.each(form.validate().errorList, function (key, value) {
-                        $errorSpan = $("span[data-valmsg-for='" + value.element.id + "']");
-                        $errorSpan.html("<span style='color:#a94442'>" + value.message + "</span>");
-                        $errorSpan.show();
-                    });
-
-                }
-          
             }
-        });
+            else {
+
+                $('#spinn-loader').hide();
+
+                $.each(form.validate().errorList, function (key, value) {
+                    $errorSpan = $("span[data-valmsg-for='" + value.element.id + "']");
+                    $errorSpan.html("<span style='color:#a94442'>" + value.message + "</span>");
+                    $errorSpan.show();
+                });
+
+            }
+
+        }
+    });
 
 
 });
@@ -308,16 +308,17 @@ $(document).on('click', '#removepayment', function (e) {
                     if (data.success) {
 
                         Swal.fire({
-                                title: "Success",
-                                text: "Payment was succesfully removed!",
-                                type: "success"
-                         
-                            });
+                            title: "Success",
+                            text: "Payment was succesfully removed!",
+                            type: "success"
+
+                        });
 
 
                         setTimeout(function () {
 
                             $('#paymentsTable').load(data.url);
+
                             $('#spinn-loader').hide();
                         }, 500);
 
@@ -333,13 +334,15 @@ $(document).on('click', '#removepayment', function (e) {
 
                     if (xhr.status === 403) {
 
+                        $('#spinn-loader').hide();
+
                         var response = $.parseJSON(xhr.responseText);
 
                         //  console.log(response);
                         // window.location = response.LogOnUrl;
                         Swal.fire({
                             title: "UnAuthorized Access",
-                            text: data.Error,
+                            text: response.Error,
                             type: "error"
 
                         });
@@ -408,72 +411,72 @@ function UpdatePayment(pymtId) {
 $(document).on('click', '#btn_updatePayment', function (e) {
     e.preventDefault();
 
-            Swal.fire({
-                title: "Are You Sure ?",
-                text: "Confirm Updating Payment..",
-                type: "question",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Proceed Update it!'
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Updating Payment..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed Update it!'
 
-            }).then((result) => {
+    }).then((result) => {
 
-                if (result.value) {
+        if (result.value) {
 
-                    $('#spinn-loader').show();
+            $('#spinn-loader').show();
 
-                    var formUrl = $('#Updatepaymentform').attr('action');
-                    var form = $('[id*=Updatepaymentform]');
-                    $.validator.unobtrusive.parse(form);
-                    form.validate();
+            var formUrl = $('#Updatepaymentform').attr('action');
+            var form = $('[id*=Updatepaymentform]');
+            $.validator.unobtrusive.parse(form);
+            form.validate();
 
-                    if (form.valid()) {
+            if (form.valid()) {
 
-                        $.ajax({
-                            type: 'POST',
-                            url: formUrl,
-                            data: form.serialize(),
-                            datatype: 'json',
-                            cache: false,
-                            success: function (data) {
-                                if (data.success) {
+                $.ajax({
+                    type: 'POST',
+                    url: formUrl,
+                    data: form.serialize(),
+                    datatype: 'json',
+                    cache: false,
+                    success: function (data) {
+                        if (data.success) {
 
-                                    Swal.fire({
-                                            title: "Success",
-                                            text: "It was succesfully Updated!",
-                                            type: "success"
-                                   
+                            Swal.fire({
+                                title: "Success",
+                                text: "It was succesfully Updated!",
+                                type: "success"
 
-                                        });
-                                    $('#paymentsTable').load(data.url);
 
-                                    setTimeout(function () {
-                                        $("#modal-PaymentBooking").modal('hide');
+                            });
+                            $('#paymentsTable').load(data.url);
 
-                                        $('#spinn-loader').hide();
-                                    }, 500);
+                            setTimeout(function () {
+                                $("#modal-PaymentBooking").modal('hide');
 
-                                }
-                            },
-                            error: function (xhr, ajaxOptions, thrownError) {
-                                Swal.fire('Error updating record!', 'Please try again', 'error');
-                            }
-                        });
+                                $('#spinn-loader').hide();
+                            }, 500);
 
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire('Error updating record!', 'Please try again', 'error');
                     }
-                    else {
+                });
 
-                        $.each(form.validate().errorList, function (key, value) {
-                            $errorSpan = $("span[data-valmsg-for='" + value.element.id + "']");
-                            $errorSpan.html("<span style='color:#a94442'>" + value.message + "</span>");
-                            $errorSpan.show();
-                        });
+            }
+            else {
 
-                    }
+                $.each(form.validate().errorList, function (key, value) {
+                    $errorSpan = $("span[data-valmsg-for='" + value.element.id + "']");
+                    $errorSpan.html("<span style='color:#a94442'>" + value.message + "</span>");
+                    $errorSpan.show();
+                });
 
-                }
-            });
+            }
+
+        }
+    });
 
 
 
@@ -481,27 +484,27 @@ $(document).on('click', '#btn_updatePayment', function (e) {
 
 
 
- getBalance=()=> $('#endbalance').html();
+getBalance = () => $('#endbalance').html();
 
 
 
 
 //function onAddNewPayment(id) {
 
-$(document).on('click','#add_payment',function(e) {
-        e.preventDefault();
+$(document).on('click', '#add_payment', function (e) {
+    e.preventDefault();
 
 
-   /* console.log(getBalance());*/
+    /* console.log(getBalance());*/
     var _balance = cleanDecimal(getBalance());
 
-/*    console.log(_balance);*/
+    /*    console.log(_balance);*/
 
     $.ajax({
         type: 'Get',
         url: paymentsUrl.payUrl_addPayment,    // url:'http://localhost:Sals/Payments/Add_PaymentPartialView',
         contentType: 'application/html;charset=utf8',
-        data: { transactionId: $(this).data('id'), balance: _balance},
+        data: { transactionId: $(this).data('id'), balance: _balance },
         datatype: 'html',
         cache: false,
         success: function (result) {
@@ -513,12 +516,12 @@ $(document).on('click','#add_payment',function(e) {
             $('#paymentdatepicker').datepicker({ autoclose: true, format: 'mm/dd/yyyy' });
 
             modal.modal({
-                    backdrop: 'static',
-                    keyboard: false
-                },
+                backdrop: 'static',
+                keyboard: false
+            },
                 'show');
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             Swal.fire('Error adding record!', 'Please try again', 'error');
         }
 
@@ -552,12 +555,12 @@ $(document).on('keypress', '#txtpayamt', function (event) {
     }
 });
 
-$(document).on('click', '#printInvoice', function(e) {
+$(document).on('click', '#printInvoice', function (e) {
     e.preventDefault();
 
     $.ajax({
         type: 'Get',
-        url: paymentsUrl.payUrl_printPaymentVoucher,   
+        url: paymentsUrl.payUrl_printPaymentVoucher,
         contentType: 'application/html;charset=utf8',
         datatype: 'html',
         cache: false,
@@ -567,9 +570,9 @@ $(document).on('click', '#printInvoice', function(e) {
             modal.find('#modalcontent').html(result);
 
             modal.modal({
-                    backdrop: 'static',
-                    keyboard: false
-                },
+                backdrop: 'static',
+                keyboard: false
+            },
                 'show');
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -583,7 +586,7 @@ $(document).on('click', '#printInvoice', function(e) {
 });
 
 
-$(document).on('click', '#btn_PrintVoucher', function(e) {
+$(document).on('click', '#btn_PrintVoucher', function (e) {
     e.preventDefault();
 
     var formUrl = $('#printpaymentvoucherform').attr('action');
@@ -602,7 +605,7 @@ $(document).on('click', '#btn_PrintVoucher', function(e) {
             success: function (result) {
                 if (result.success) {
 
-                    window.location.href = paymentsUrl.payUrl_printVoucher.replace("_payNo",result.data);
+                    window.location.href = paymentsUrl.payUrl_printVoucher.replace("_payNo", result.data);
 
                 } else {
 

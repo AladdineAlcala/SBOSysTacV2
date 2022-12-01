@@ -1,5 +1,8 @@
-﻿
+﻿@using System.Web.Mvc.Html
+@using SBOSysTacV2.HtmlHelperClass
+@using SBOSysTacV2.ViewModel
 
+@*@model PackageViewModel*@
 
 <section class="content">
     <!-- Default box -->
@@ -22,14 +25,19 @@
 
                 <div class="col-md-5">
                     <div class="form-group mt-2 mb-0">
-                        <label class="control-label col-sm-2 "> Select Type: </label>
+                        
                         <div class="radio m-0 mb-0 mt-3" style="width: 500px;">
+
+                
 
                             <label class="mx-2"><input type="radio" name="radfilter" checked="checked" id="rad_all"/>View All </label>
                             <label class="mx-2"><input type="radio" name="radfilter" id="rad_vip"/>Vip </label>
                             <label class="mx-2"><input type="radio" name="radfilter" id="radregular"/>Regular </label>
                             <label class="mx-2"><input type="radio" name="radfilter" id="rad_packmeal"/>Pack Meals </label>
+                            <label class="mx-2"><input type="radio" name="radfilter" id="rad_wedd"/>Wedding Package </label>
+
                         </div>
+
                     </div>
 
                 </div>

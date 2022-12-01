@@ -65,10 +65,10 @@ namespace SBOSysTacV2
                       "~/Content/dist/css/AdminLTE.min.css",
                       "~/Content/dist/css/skins/_all-skins.min.css",
                       "~/Content/dist/css/skins/skin-green.min.css",
-                      "~/Content/customStyle/customStyle.css",
                       "~/Content/customStyle/spinner.css",
                       "~/Content/customStyle/typehead.css",
-                      "~/Content/bower_components/sweetalert/sweetalert2.min.css"
+                      "~/Content/bower_components/sweetalert/sweetalert2.min.css",
+                      "~/Content/customStyle/customStyle.css" 
                        ));
         }
 

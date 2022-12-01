@@ -1208,3 +1208,9 @@ img.hover-shadow {
 .align-items-baseline {
     vertical-align:bottom;
 }
+
+a#login-opt {
+    font-size: 18px;
+    font-weight: bold;
+}
+  

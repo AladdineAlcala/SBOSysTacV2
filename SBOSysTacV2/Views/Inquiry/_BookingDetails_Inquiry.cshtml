@@ -1,0 +1,84 @@
+﻿@using SBOSysTacV2.ViewModel
+@model TransactionDetailsViewModel
+
+
+<div class="col-md-12">
+
+    <div class=" card card-primary card-outline card-outline-tabs" style="margin-left: 5px; width: 90%;">
+
+        <div class="card-header">
+
+            <ul class="nav nav-tabs" id="bookingTab" role="tablist">
+                <li class="nav-item active">
+                    <a class="nav-link" id="booking_info-tab" data-toggle="pill" href="#tabpane_bookinginfo" role="tab" aria-controls="tabpane_bookinginfo" aria-selected="true">Booking Information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="menu_info-tab" data-toggle="pill" href="#tabpane_menuinfo" role="tab" aria-controls="tabpane_menuinfo" aria-selected="false">Menus / Add-ons and Upgrades</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="otherCharges_info-tab" data-toggle="pill" href="#tabpane_otherchargesinfo" role="tab" aria-controls="tabpane_otherchargesinfo" aria-selected="false">Other Charges</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="statement_info-tab" data-toggle="pill" href="#tabpane_statementinfo" role="tab" aria-controls="tabpane_statementinfo" aria-selected="false">Statement of Account</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="tab-pane fade active in" id="tabpane_bookinginfo" role="tabpanel" aria-labelledby="booking_info-tab">
+
+                <div class="row">
+                    <div class="col-md-10">
+                        @{ Html.RenderPartial("~/Views/Bookings/_BookingInfo.cshtml", Model); }
+                    </div>
+                </div>
+
+              
+
+            </div>
+
+            <div class="tab-pane fade" id="tabpane_menuinfo" role="tabpanel" aria-labelledby="menu_info-tab">
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        @{ Html.RenderPartial("_PackageBookingMenus_Inquiry", Model); }
+
+                        <a href="~/Views/Bookings/GetPackageonBooking.cshtml">~/Views/Bookings/GetPackageonBooking.cshtml</a>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="tabpane_otherchargesinfo" role="tabpanel" aria-labelledby="otherCharges_info-tab">
+
+                <div class="row">
+                    <div class="col-md-8">
+
+                        @{ Html.RenderPartial("_BookingOtherCharge_Inquiry", Model); }
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="tabpane_statementinfo" role="tabpanel" aria-labelledby="statement_info-tab">
+                <p class="lead" style="margin: 10px;">AMOUNT DUE</p>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="table-responsive" id="amountDue">
+                            @{Html.RenderAction("GetPartialView_AmountDue","Bookings", new { transDetails = Model }); }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

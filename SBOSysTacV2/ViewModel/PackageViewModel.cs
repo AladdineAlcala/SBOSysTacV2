@@ -4,12 +4,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.Models;
+
+
 
 namespace SBOSysTacV2.ViewModel
 {
     public class PackageViewModel
     {
+
+
 
         public int? p_id { get; set; }
         [Required(ErrorMessage = "Pls. select package type ")]
@@ -27,6 +32,8 @@ namespace SBOSysTacV2.ViewModel
         public DateTime dateCreated { get; set; }=DateTime.Now;
         public DateTime dateUpdated { get; set; }=DateTime.Now;
         public IEnumerable<SelectListItem> packageNoPax_listitem { get; set; }
+
+        //public PackageType PackageType { get; set; }
 
 
         public IEnumerable<SelectListItem> GetPackageNoofPaxListItems()

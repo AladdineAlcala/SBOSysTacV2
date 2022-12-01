@@ -174,8 +174,11 @@ namespace SBOSysTacV2.Controllers
 
         }
 
-        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin, UserPermessionLevelEnum.cashier)]
+        //[UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin, UserPermessionLevelEnum.cashier)]
+
+        
         [HttpPost]
+        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin)]
         public ActionResult RemovePayment(int pmtNo)
         {
             Payment paymt=new Payment();
@@ -239,6 +242,7 @@ namespace SBOSysTacV2.Controllers
         }
 
         [HttpPost]
+        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin, UserPermessionLevelEnum.cashier)]
         [ValidateAntiForgeryToken]
         public ActionResult Update_PaymentPartialView(PaymentsViewModel updatedPayment)
         {

@@ -43,8 +43,13 @@
                             @if (cntrlFlag == "bookings")
                             {
                                 <div class="addontools mx-1 text-center hide">
-                                    <span><i class="fa fa-trash" id="addons_remove" data-id="@item.bookaddonNo"></i></span>
-                                    <span><i class="fa fa-edit" id="addons_modify" data-id="@item.bookaddonNo"></i></span>
+
+                                    <span class="mr-1"><i class="fa fa-trash" id="addons_remove" data-id="@item.bookaddonNo"></i></span>
+
+                                    <span class="mr-1"><i class="fa fa-edit addons_modify" data-id="@item.bookaddonNo"></i></span>
+
+                                    @*<span class="ml-1"><i class="fa fa-edit" id="addons_modify_xxx" data-id="@item.bookaddonNo"></i></span>*@
+
                                 </div>
                             }
 
@@ -136,7 +141,7 @@
 
     function displayAddOnsTable(_addonId) {
 
-        @*"@Url.Action("GetAddOnsDetails","Bookings",new { addon_No = "addonNo" })"*@
+         @*"@Url.Action("GetAddOnsDetails","Bookings",new { addon_No = "addonNo" })",*@
 
         $('#addonsdetails').load(PackageBookingUrl.urlGetAddOnDetailsListByAddonId.replace("addonNo", _addonId));
 

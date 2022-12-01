@@ -322,9 +322,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HtmlHelperClass\AddonsEnum.cs" />
     <Compile Include="HtmlHelperClass\AllowExtensionAttribute.cs" />
     <Compile Include="HtmlHelperClass\CustomerCustomValidate.cs" />
     <Compile Include="HtmlHelperClass\DataTableConverter.cs" />
+    <Compile Include="HtmlHelperClass\ModelStateExt.cs" />
     <Compile Include="HtmlHelperClass\JsonExtractorHelper.cs" />
     <Compile Include="HtmlHelperClass\PackageEnum.cs" />
     <Compile Include="HtmlHelperClass\RecievableEnum.cs" />
@@ -7962,6 +7964,7 @@
     <Content Include="Views\Inquiry\_PackageBookingMenus_Inquiry.cshtml" />
     <Content Include="Views\Inquiry\_BookingOtherCharge_Inquiry.cshtml" />
     <Content Include="Views\Inquiry\_BookingAmountDue_Inquiry.cshtml" />
+    <Content Include="Views\Bookings\_createbookingpartial.cshtml" />
     <None Include="Web.developtment_testConfig.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

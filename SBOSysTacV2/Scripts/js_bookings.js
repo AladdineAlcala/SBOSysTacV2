@@ -64,14 +64,17 @@ $(document).ready(function () {
 
                 if (form.valid()) {
 
+                    $('#spinn-loader').hide();
+
                     $.ajax({
                         type: 'POST',
                         url: formUrl,
                         data: form.serialize(),
                         datatype: 'json',
                         cache: false,
-                        success: function (data) {
-                            if (data.success) {
+                        success: function (result) {
+
+                            if (result.success) {
 
 
                                 Swal.fire({
@@ -83,16 +86,39 @@ $(document).ready(function () {
                                 });
 
 
-                                setTimeout(function () {
+                                setTimeout(function() {
 
-                                    window.location.href = bookingsUrl.bookUrl_getPackageBookingDetails.replace("trans_Id", data.trnsId);  //@Url.Action("GetPackageBookingDetails", "Bookings",new {transId = "trans_Id"})"
+                                        window.location.href =
+                                            bookingsUrl.bookUrl_getPackageBookingDetails.replace("trans_Id",result.trnsId); //@Url.Action("GetPackageBookingDetails", "Bookings",new {transId = "trans_Id"})"
 
-                                    $('#spinn-loader').hide();
+                                        $('#spinn-loader').hide();
 
-                                }, 5000);
+                                    },
+                                    3000);
 
 
-                              
+                            }
+                            else {
+                             //   console.log('load partial');
+
+                                $('#createForm').html(result);
+
+                                //console.log(data.errorstate);
+
+                                //$('#savebooking').removeData('validator');
+                                //$('#savebooking').removeData('unobtrusiveValidation');
+
+                                //$.validator.unobtrusive.parse(form);
+
+                                //form.validate();
+
+                                //$.each(form.validate().errorList, function (key, value) {
+                                //    $errorSpan = $("span[data-valmsg-for='" + value.element.id + "']");
+                                //    $errorSpan.html("<span style='color:#a94442'>" + value.message + "</span>");
+                                //    $errorSpan.show();
+                                //});
+
+                                //$('#spinn-loader').hide();
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {

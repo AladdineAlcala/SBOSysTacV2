@@ -15,32 +15,34 @@
     <div class="box-body table-responsive no-padding">
         <table class="table table-hover">
                 <thead>
-                <tr>
-                    <th></th>
-                    <th>Add-on Description</th>
-                    <th class="text-center">Quantity</th>
-                    <th class="text-right">Amount</th>
-                    <th class="text-right">Total</th>
-                </tr>
+                    <tr>
+                        <th></th>
+                        <th>Add-on Description</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-right">Unit</th>
+                        <th class="text-right">Amount</th>
+                        <th class="text-right">Total</th>
+                    </tr>
                 </thead>
             <tbody>
             @{
                 foreach (var item in Model.BookAddOn_Details)
                 {
-                    <tr data-id="@item.addondetail_Id">
-                        
-                        <td style="width: 70px;">
-                            <div class="addontools text-center">
-                                <span> <i class="fa fa-trash-o mr-2" id="addon-detail_Remove"></i></span>
-                                <span><i class="fa fa-edit ml-2" id="addon-detail_Modify"></i></span>
-                            </div>
-                        </td>
+                            <tr data-id="@item.addondetail_Id">
 
-                        <td>@item.addon_description</td>
-                        <td class="text-center">@String.Format("{0:0.0}", item.addon_qty)</td>
-                        <td class="text-right text-bold">@String.Format("{0:N}", item.addon_amount)</td>
-                        <td class="text-right text-bold">@String.Format("{0:N}", item.addon_qty * item.addon_amount)</td>
-                    </tr>
+                                <td style="width: 70px;">
+                                    <div class="addontools text-center ml-1 mr-1">
+                                        <span class="mr-1"> <i class="fa fa-trash-o mr-2" id="addon-detail_Remove"></i></span>
+                                        <span class="ml-1"><i class="fa fa-edit ml-2" id="addon-detail_Modify"></i></span>
+                                    </div>
+                                </td>
+
+                                <td>@item.addon_description</td>
+                                <td class="text-center">@String.Format("{0:0.0}", item.addon_qty)</td>
+                                <td>@item.unit_measure</td>
+                                <td class="text-right text-bold">@String.Format("{0:N}", item.addon_amount)</td>
+                                <td class="text-right text-bold">@String.Format("{0:N}", item.addon_qty * item.addon_amount)</td>
+                            </tr>
                 }
             }
             </tbody>

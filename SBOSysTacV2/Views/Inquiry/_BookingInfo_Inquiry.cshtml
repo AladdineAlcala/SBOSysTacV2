@@ -1,0 +1,63 @@
+﻿@using SBOSysTacV2.ViewModel
+@model TransactionDetailsViewModel
+
+<div class="form-horizontal" style="margin: 10px;">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">PACKAGE :</label>
+        <div class="col-sm-5">@Html.DisplayFor(m => m.Package_Trans.p_descripton)</div>
+    </div>
+</div>
+
+<div class="form-horizontal" style="margin: 10px;">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">AMOUNT PER PAX :</label>
+        <div class="col-sm-5">@Html.DisplayFor(m => m.Package_Trans.p_amountPax)</div>
+    </div>
+</div>
+
+<div class="form-horizontal" style="margin: 10px;">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">No. OF HEADS :</label>
+        <div class="col-sm-5">@Html.DisplayFor(m => m.Booking_Trans.noofperson)</div>
+    </div>
+</div>
+
+<div class="form-horizontal" style="margin: 10px;">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">OCCASION :</label>
+        <div class="col-sm-5">@Html.DisplayFor(m => m.Booking_Trans.occasion)</div>
+    </div>
+</div>
+
+<div class="form-horizontal" style="margin: 10px;">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">VENUE :</label>
+        <div class="col-sm-5">@Html.DisplayFor(m => m.Booking_Trans.venue)</div>
+    </div>
+</div>
+<div class="form-horizontal" style="margin: 10px;">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">DATE :</label>
+        <div class="col-sm-5">@Model.Booking_Trans.startdate.Value.ToString("MMM d, yyyy h:mm tt")</div>
+    </div>
+</div>
+<div class="form-horizontal" style="margin: 10px;">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">EVENTCOLOR :</label>
+        <div class="col-sm-5">@Html.DisplayFor(m => m.Booking_Trans.eventcolor) </div>
+    </div>
+</div>
+
+<div class="form-horizontal" style="margin: 10px;">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">TYPE OF SERVICE :</label>
+        <div class="col-sm-5">@Html.DisplayFor(m => m.ServiceType.servicetypedetails) </div>
+    </div>
+</div>
+
+<div class="form-horizontal" style="margin: 10px;">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">NOTES :</label>
+        <div class="col-sm-5">@Html.DisplayFor(m => m.Booking_Trans.reference) </div>
+    </div>
+</div>

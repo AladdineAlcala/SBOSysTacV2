@@ -6,14 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
-using System.Drawing.Printing;
 using System.Linq;
-using System.Threading;
 using System.Web.Mvc;
-using System.Web.Services.Protocols;
-using System.Web.SessionState;
 using SBOSysTacV2.ServiceLayer;
-using System.Web.Routing;
+using SBOSysTacV2.HtmlHelperClass;
 
 namespace SBOSysTacV2.Controllers
 {
@@ -114,11 +110,32 @@ namespace SBOSysTacV2.Controllers
             DateTime createdDate = DateTime.Now;
             int transactionId = 0;
             decimal amountPax = 0;
-            var firstOrDefault = _dbcontext.Packages.FirstOrDefault(x => x.p_id == bookingViewModel.pId);
+            var packageDetail = _dbcontext.Packages.FirstOrDefault(x => x.p_id == bookingViewModel.pId);
 
-            if (firstOrDefault != null)
+           
+
+          
+            if (packageDetail != null)
             {
-                amountPax = Convert.ToDecimal(firstOrDefault.p_amountPax);
+                // check package detail if booking data meet the requirements
+                //------------------------------------------------------------  check wedding package no of pax > package no of pax if not return to booking 
+                if (packageDetail.p_type.TrimEnd().Equals("wedding") && Convert.ToInt32(packageDetail.p_min) >
+                    Convert.ToInt32(bookingViewModel.noofperson))
+                {
+                    ModelState.AddModelError("noofperson", "No. of pax does not meet on the package minimum requirement.. ");
+
+                    bookingViewModel.Servicetype_ListItems = booking.GetServiceType_SelectListItems();
+                    bookingViewModel.DictBooktype = booking.GetDictBookingType();
+                    
+
+                    // add model state error if wedding package selected and below minimum pax is input on number of persons
+
+                  return PartialView("_createbookingpartial", bookingViewModel);
+                  //  return View(bookingViewModel);
+                }
+
+
+                amountPax = Convert.ToDecimal(packageDetail.p_amountPax);
             }
 
             var cusId = bookingViewModel.c_Id;
@@ -191,6 +208,9 @@ namespace SBOSysTacV2.Controllers
         }
 
 
+
+
+
         //booking customer exist 
         [HttpPost]
         public JsonResult IsCustomerRegistered(string fullname)
@@ -214,7 +234,12 @@ namespace SBOSysTacV2.Controllers
             return Json(customerexist, JsonRequestBehavior.AllowGet);
         }
 
-  
+
+
+        //public JsonResult IsValid_NoofPerson(int npax,int package)
+        //{
+
+        //}
 
 
         public bool Hascustomerexist(string _lname,string _fname) => _dbcontext.Customers.Any(x => x.lastname.ToLower().Equals(_lname) && x.firstname.ToLower().Equals(_fname) );
@@ -373,11 +398,10 @@ namespace SBOSysTacV2.Controllers
         {
             string actionname = RouteData.Values["action"].ToString();
 
-            //string controller = RouteData.Values["controller"].ToString();
-
-           
-
             PackageActionType.Getpackagecontroller(actionname);
+
+            ViewBag.cntrlFlag = Utilities.Getcontroller(Request.RawUrl);
+
 
             var packageBooking = package_book_vm.GetBookingDetailById(transactionId);
 
@@ -1172,8 +1196,9 @@ namespace SBOSysTacV2.Controllers
         }
 
 
-        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin)]
+       
         [HttpPost]
+        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin)]
         public ActionResult RemoveBooking(int transId)
         {
             bool success = false;
@@ -1233,7 +1258,7 @@ namespace SBOSysTacV2.Controllers
         }
 
 
-        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin, UserPermessionLevelEnum.user)]
+        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin)]
         public ActionResult ServeBookingStatus(int transactionNo)
         {
             var booking = _dbcontext.Bookings.FirstOrDefault(x => x.trn_Id == transactionNo);
@@ -1721,6 +1746,7 @@ namespace SBOSysTacV2.Controllers
                     bookaddon_No = (int)t.bookaddonNo,
                     addon_Id = (int)t.addonId,
                     addon_description = _dbcontext.AddonDetails.FirstOrDefault(a=>a.addonId==t.addonId).addondescription,
+                    unit_measure=t.AddonDetail.unit,
                     addon_qty = (decimal)t.qty,
                     addon_amount = (decimal)t.amount
                 }).ToList()
@@ -2149,5 +2175,9 @@ namespace SBOSysTacV2.Controllers
             _dbcontext.Dispose();
         }
 
+        
+
     }
+
+
 }

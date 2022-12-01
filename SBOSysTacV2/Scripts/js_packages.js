@@ -23,6 +23,10 @@ $(document).ready(function () {
 
         switch (selected) {
 
+            case 'rad_wedd':
+            _filter = 'wedding';
+                break;
+
             case 'rad_vip':
                 _filter = 'vip';
                 break;
@@ -109,10 +113,10 @@ $(document).ready(function () {
             if (vl === 'vip') {
 
                 $('#mincounthead').val(0);
-                $('#mincounthead').addProp('readonly');
+                $('#mincounthead').prop('readonly',true);
             } else {
                 $('#mincounthead').val(100);
-                $('#mincounthead').removeProp('readonly');
+                $('#mincounthead').prop('readonly',false);
             }
             //console.log(vl);
         });
@@ -286,13 +290,17 @@ $(document).on('click','#btn_savePackages', function (e) {
        if (result.value) {
 
            var formUrl = $('#new_packageForm').attr('action');
+
            $.validator.unobtrusive.parse(form);
+
            form.validate();
 
 
            if (form.valid()) {
 
-               //console.log('valid form');
+             //  console.log('valid form');
+               //debugger;
+
 
                $.ajax({
                    type: 'POST',
@@ -332,6 +340,8 @@ $(document).on('click','#btn_savePackages', function (e) {
 
 
        }
+
+
    });//end swal
 
 });
