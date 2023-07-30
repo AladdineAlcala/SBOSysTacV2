@@ -1,9 +1,17 @@
 ﻿@using SBOSysTacV2.ViewModel
 @model TransactionDetailsViewModel
 
+
+
 <div class="form-horizontal" style="margin: 10px;">
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label">PACKAGE :</label>
+        <label class="col-sm-2 col-form-label">PACKAGE TYPE :</label>
+        <div class="col-sm-5">@Html.DisplayFor(m => m.Package_Trans.p_type)</div>
+    </div>
+</div>
+<div class="form-horizontal" style="margin: 10px;">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">DESCRIPTON :</label>
         <div class="col-sm-5">@Html.DisplayFor(m => m.Package_Trans.p_descripton)</div>
     </div>
 </div>

@@ -542,7 +542,8 @@ namespace SBOSysTacV2.ViewModel
         {
             return packageType.Trim().Equals(PackageType.vip.ToString()) 
                    || packageType.Trim().Equals(PackageType.pm.ToString()) 
-                   || packageType.Trim().Equals(PackageType.wedding.ToString()) 
+                   || packageType.Trim().Equals(PackageType.wedding.ToString())
+                   || packageType.Trim().Equals(PackageType.premier.ToString())
                     ? 0 : GetCateringdiscountByPax(noOfPax);
         }
 

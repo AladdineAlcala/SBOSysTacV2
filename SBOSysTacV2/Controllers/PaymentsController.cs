@@ -40,6 +40,7 @@ namespace SBOSysTacV2.Controllers
         }
 
         [HttpGet]
+        [Route("recievabledetails")]
         public ActionResult GetBooking_Payments(int transactionId)
         {
 
@@ -52,13 +53,16 @@ namespace SBOSysTacV2.Controllers
 
                 bookingPayments.Bookings = bookingsViewModel.GetListofBookings(transactionId);
                 //totalAmount = _getBookingAmount(transactionId);
-                bookingPayments.t_amtBooking = _getBookingAmount(transactionId); ;
+                bookingPayments.t_amtBooking = _getBookingAmount(transactionId);
                 bookingPayments.t_addons = AddonsViewModel.AddonsTotal(getAddonDetails(bookings));
                 bookingPayments.t_otherCharge = bookOtherCharge.GetTotalOtherCharges(bookings.Book_OtherCharge.ToList());
                 bookingPayments.locationextcharge = BookingsService.Get_extendedAmountLoc(transactionId);
 
+
+                var packageType = bookings.Package.p_type.TrimEnd();
+
                 //Discounts 
-                if (bookings.Package.p_type.Trim() != "pm")
+                if (packageType.ToLower() == PackageType.regular.ToString().ToLower() || packageType.ToLower() == PackageType.vip.ToString().ToLower())
                 {
                     bookingPayments.generaldiscount = BookingsService.getBookingTransDiscount(transactionId, totalAmount);
                     bookingPayments.cateringdiscount = bookingPayments.GetCateringDiscount(transactionId);

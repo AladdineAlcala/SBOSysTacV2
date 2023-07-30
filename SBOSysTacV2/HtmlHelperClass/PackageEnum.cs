@@ -17,11 +17,17 @@ namespace SBOSysTacV2.HtmlHelperClass
 
         [Display(Name = "PackMeals")]
         pm,
+
+
         [Display(Name = "Snacks and Drinks")]
         sd,
 
         [Display(Name = "Wedding")]
         wedding,
+
+        [Display(Name = "Premier")]
+        premier,
+
 
         cat
 

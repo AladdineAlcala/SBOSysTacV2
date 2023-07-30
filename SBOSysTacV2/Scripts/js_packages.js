@@ -28,7 +28,7 @@ $(document).ready(function () {
                 break;
 
             case 'rad_premier':
-                _filter = 'wedding';
+                _filter = 'premier';
                 break;
 
             case 'rad_vip':

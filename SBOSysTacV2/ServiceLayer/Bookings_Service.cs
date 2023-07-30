@@ -56,20 +56,22 @@ namespace SBOSysTacV2.ServiceLayer
 
                 var packageType = booking.Package.p_type.ToString().Trim();
 
-                if (packageType=="regular" || packageType=="vip")
-                {
-                    var bookingdetails = (from books in _dbcontext.Bookings
-                                          join packages in _dbcontext.Packages on books.p_id equals packages.p_id
-                                          where books.trn_Id == transId
-                                          select new
-                                          {
-                                              packageAmount = packages.p_amountPax,
-                                              no_of_pax = books.noofperson,
-                                              //addons =(from ba in books.BookingAddons join bad in _dbcontext.BookAddonsDetails on ba.bookaddonNo equals bad.bookaddonNo select new { _addAmount = bad.amount * bad.qty}).FirstOrDefault()._addAmount,
-                                              addons=books,
-                                              bookothercharge =(from b in books.Book_OtherCharge where b.trn_Id==transId select b.amount).Sum()
-                                          }).FirstOrDefault();
+                var bookingdetails = (from books in _dbcontext.Bookings
+                                      join packages in _dbcontext.Packages on books.p_id equals packages.p_id
+                                      where books.trn_Id == transId
+                                      select new
+                                      {
+                                          packageAmount = packages.p_amountPax,
+                                          no_of_pax = books.noofperson,
+                                          //addons =(from ba in books.BookingAddons join bad in _dbcontext.BookAddonsDetails on ba.bookaddonNo equals bad.bookaddonNo select new { _addAmount = bad.amount * bad.qty}).FirstOrDefault()._addAmount,
+                                          addons = books,
+                                          bookothercharge = (from b in books.Book_OtherCharge where b.trn_Id == transId select b.amount).Sum()
+                                      }).FirstOrDefault();
 
+
+                if (packageType==PackageType.regular.ToString() || packageType== PackageType.vip.ToString())
+                {
+                    
 
                     if (bookingdetails != null)
                     {
@@ -103,21 +105,51 @@ namespace SBOSysTacV2.ServiceLayer
 
 
                 }
+
+                else if (packageType == PackageType.premier.ToString() || packageType == PackageType.wedding.ToString())
+                {
+                   
+
+                    if (bookingdetails != null)
+                    {
+                        packageAmount = Convert.ToDecimal(bookingdetails.packageAmount);
+                        noofpax = bookingdetails.no_of_pax ?? 0;
+                        addons = AddonsViewModel.AddonsTotal(getAddonDetails(bookingdetails.addons));
+                        bookOtherCharge = bookingdetails.bookothercharge ?? 0;
+                    }
+
+
+                    totalAmount = (packageAmount * noofpax) + addons + bookOtherCharge;
+
+                    discount = getBookingTransDiscount(transId, totalAmount);
+
+                    totalAmount = discount > 0 ? (totalAmount - discount) : totalAmount;
+
+                    hasLocationExtendedCharge = booking.Package.p_type != PackageType.vip.ToString() ? Get_extendedAmountLoc(transId) : 0;
+
+                    if (hasLocationExtendedCharge > 0)
+                    {
+                        totalAmount = totalAmount + (hasLocationExtendedCharge * noofpax);
+                    }
+
+
+                    //var hasCateringdiscounted = TransactionDetailsViewModel.GetCateringdiscountByPax(noofpax);
+
+                    //remove catering discount
+                    //catering discount is not applicable on premier
+                    var hasCateringdiscounted = 0;
+
+                    if (hasCateringdiscounted > 0)
+                    {
+                        totalAmount = totalAmount - (hasCateringdiscounted * noofpax);
+                    }
+
+
+                }
+
                 else if(packageType == "pm")
                 {
-                    var bookingdetails = (from books in _dbcontext.Bookings
-                                          join packages in _dbcontext.Packages on books.p_id equals packages.p_id
-                                          where books.trn_Id == transId
-                                          select new
-                                          {
-                                              packageAmount = packages.p_amountPax,
-                                              no_of_pax = books.noofperson,
-                                              //addons =(from ba in books.BookingAddons join bad in _dbcontext.BookAddonsDetails on ba.bookaddonNo equals bad.bookaddonNo select new { _addAmount = bad.amount * bad.qty}).FirstOrDefault()._addAmount,
-                                              addons = books,
-                                              bookothercharge = (from b in books.Book_OtherCharge where b.trn_Id == transId select b.amount).Sum()
-                                          }).FirstOrDefault();
-
-
+                    
                     if (bookingdetails != null)
                     {
                         packageAmount = Convert.ToDecimal(bookingdetails.packageAmount);
