@@ -23,3 +23,9 @@
 1. BookingsController  -> GetPartialView_AmountDue     ok
 2. InquiryController   -> getPartialView_AmountDue		ok
 3. EventsController  ->  getPartialView_AmountDue		ok
+
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  UPDATES   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+5/1/2023 Issue : PackMeals emplements discounts  == Resolve sd and packmeals discounts are are not applicable only for regular and vip package

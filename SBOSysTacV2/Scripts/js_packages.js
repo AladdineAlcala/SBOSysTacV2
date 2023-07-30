@@ -27,6 +27,10 @@ $(document).ready(function () {
             _filter = 'wedding';
                 break;
 
+            case 'rad_premier':
+                _filter = 'wedding';
+                break;
+
             case 'rad_vip':
                 _filter = 'vip';
                 break;
@@ -52,7 +56,6 @@ $(document).ready(function () {
             datatype: 'html',
             cache: false,
             success: function (result) {
-
                 $('#page_container').html(result);
             },
             error: function (xhr, ajaxOptions, thrownError) {

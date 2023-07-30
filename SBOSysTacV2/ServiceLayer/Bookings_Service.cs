@@ -14,7 +14,7 @@ namespace SBOSysTacV2.ServiceLayer
     public class BookingsService:IDisposable
     {
         private static PegasusEntities _dbcontext = new PegasusEntities();
-      
+       
 
         public BookingsService()
         {
@@ -54,8 +54,9 @@ namespace SBOSysTacV2.ServiceLayer
 
                 decimal hasLocationExtendedCharge = 0;
 
+                var packageType = booking.Package.p_type.ToString().Trim();
 
-                if (booking.Package.p_type.TrimEnd() != "sd")
+                if (packageType=="regular" || packageType=="vip")
                 {
                     var bookingdetails = (from books in _dbcontext.Bookings
                                           join packages in _dbcontext.Packages on books.p_id equals packages.p_id
@@ -100,6 +101,32 @@ namespace SBOSysTacV2.ServiceLayer
                         totalAmount = totalAmount - (hasCateringdiscounted * noofpax);
                     }
 
+
+                }
+                else if(packageType == "pm")
+                {
+                    var bookingdetails = (from books in _dbcontext.Bookings
+                                          join packages in _dbcontext.Packages on books.p_id equals packages.p_id
+                                          where books.trn_Id == transId
+                                          select new
+                                          {
+                                              packageAmount = packages.p_amountPax,
+                                              no_of_pax = books.noofperson,
+                                              //addons =(from ba in books.BookingAddons join bad in _dbcontext.BookAddonsDetails on ba.bookaddonNo equals bad.bookaddonNo select new { _addAmount = bad.amount * bad.qty}).FirstOrDefault()._addAmount,
+                                              addons = books,
+                                              bookothercharge = (from b in books.Book_OtherCharge where b.trn_Id == transId select b.amount).Sum()
+                                          }).FirstOrDefault();
+
+
+                    if (bookingdetails != null)
+                    {
+                        packageAmount = Convert.ToDecimal(bookingdetails.packageAmount);
+                        noofpax = bookingdetails.no_of_pax ?? 0;
+                        addons = AddonsViewModel.AddonsTotal(getAddonDetails(bookingdetails.addons));
+                        bookOtherCharge = bookingdetails.bookothercharge ?? 0;
+                    }
+
+                    totalAmount = (packageAmount * noofpax) + addons + bookOtherCharge;
 
                 }
 

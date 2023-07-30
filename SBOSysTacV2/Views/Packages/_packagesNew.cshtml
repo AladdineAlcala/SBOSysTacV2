@@ -3,7 +3,7 @@
 
 <div class="row">
             
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">New Package Details</h3>
@@ -22,28 +22,33 @@
                         <div class="radio" style="margin-top: 0;">
 
                             <label style="margin-right: 10px;">
-                                @Html.RadioButtonFor(m => m.packagetype, "vip", new {@id = "vip_option", @class = "packagetype"})
+                                @Html.RadioButtonFor(m => m.packagetype, "vip", new { @id = "vip_option", @class = "packagetype" })
                                 Vip
                             </label>
 
 
                             <label style="margin-left: 10px; margin-right: 10px;">
-                                @Html.RadioButtonFor(m => m.packagetype, "regular", new {@id = "reg_option", @class = "packagetype"})
+                                @Html.RadioButtonFor(m => m.packagetype, "regular", new { @id = "reg_option", @class = "packagetype" })
                                 Regular
                             </label>
 
                             <label style="margin-left: 10px; margin-right: 10px;">
-                                @Html.RadioButtonFor(m => m.packagetype, "pm", new {@id = "pm_option", @class = "packagetype"})
+                                @Html.RadioButtonFor(m => m.packagetype, "pm", new { @id = "pm_option", @class = "packagetype" })
                                 PackMeals
                             </label>
                             <label style="margin-left: 10px; margin-right: 10px;">
-                                @Html.RadioButtonFor(m => m.packagetype, "sd", new {@id = "sd_option", @class = "packagetype"})
+                                @Html.RadioButtonFor(m => m.packagetype, "sd", new { @id = "sd_option", @class = "packagetype" })
                                 Snacks and Drinks
                             </label>
 
                             <label style="margin-left: 10px; margin-right: 10px;">
-                                @Html.RadioButtonFor(m => m.packagetype, "wedding", new {@id = "wedding_option", @class = "packagetype"})
+                                @Html.RadioButtonFor(m => m.packagetype, "wedding", new { @id = "wedding_option", @class = "packagetype" })
                                 Wedding Package
+                            </label>
+
+                            <label style="margin-left: 10px; margin-right: 10px;">
+                                @Html.RadioButtonFor(m => m.packagetype, "premier", new { @id = "premier_option", @class = "packagetype" })
+                                Premier Package
                             </label>
 
                         </div>

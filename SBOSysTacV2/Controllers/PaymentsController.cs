@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SBOSysTacV2.HtmlHelperClass;
@@ -53,13 +51,21 @@ namespace SBOSysTacV2.Controllers
                 bookingPayments.transId = transactionId;
 
                 bookingPayments.Bookings = bookingsViewModel.GetListofBookings(transactionId);
-                totalAmount = _getBookingAmount(transactionId);
-                bookingPayments.t_amtBooking = totalAmount;
+                //totalAmount = _getBookingAmount(transactionId);
+                bookingPayments.t_amtBooking = _getBookingAmount(transactionId); ;
                 bookingPayments.t_addons = AddonsViewModel.AddonsTotal(getAddonDetails(bookings));
                 bookingPayments.t_otherCharge = bookOtherCharge.GetTotalOtherCharges(bookings.Book_OtherCharge.ToList());
-                bookingPayments.cateringdiscount = bookingPayments.GetCateringDiscount(transactionId);
                 bookingPayments.locationextcharge = BookingsService.Get_extendedAmountLoc(transactionId);
-                bookingPayments.generaldiscount = BookingsService.getBookingTransDiscount(transactionId, totalAmount);
+
+                //Discounts 
+                if (bookings.Package.p_type.Trim() != "pm")
+                {
+                    bookingPayments.generaldiscount = BookingsService.getBookingTransDiscount(transactionId, totalAmount);
+                    bookingPayments.cateringdiscount = bookingPayments.GetCateringDiscount(transactionId);
+                }
+               
+
+
 
                 bookingPayments.PaymentList =this.bookingPayments.GetPaymentDetaiilsBooking(transactionId);
 
