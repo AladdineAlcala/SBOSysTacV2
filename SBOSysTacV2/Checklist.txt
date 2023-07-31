@@ -29,3 +29,5 @@
 
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  UPDATES   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 5/1/2023 Issue : PackMeals emplements discounts  == Resolve sd and packmeals discounts are are not applicable only for regular and vip package
+
+7/30/2023 Issue : Add Premier Package

@@ -106,9 +106,10 @@ namespace SBOSysTacV2.ServiceLayer
 
                 }
 
-                else if (packageType == PackageType.premier.ToString() || packageType == PackageType.wedding.ToString())
+                else if (packageType == PackageType.premier.ToString() || packageType == PackageType.sprate.ToString())
                 {
                    
+
 
                     if (bookingdetails != null)
                     {

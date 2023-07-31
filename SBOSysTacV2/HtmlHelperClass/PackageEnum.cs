@@ -25,6 +25,9 @@ namespace SBOSysTacV2.HtmlHelperClass
         [Display(Name = "Wedding")]
         wedding,
 
+        [Display(Name = "SpecialRate")]
+        sprate,
+
         [Display(Name = "Premier")]
         premier,
 

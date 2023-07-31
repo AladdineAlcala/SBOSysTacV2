@@ -41,9 +41,14 @@
                                 Snacks and Drinks
                             </label>
 
-                            <label style="margin-left: 10px; margin-right: 10px;">
+                            @*<label style="margin-left: 10px; margin-right: 10px;">
                                 @Html.RadioButtonFor(m => m.packagetype, "wedding", new { @id = "wedding_option", @class = "packagetype" })
                                 Wedding Package
+                            </label>*@
+
+                            <label style="margin-left: 10px; margin-right: 10px;">
+                                @Html.RadioButtonFor(m => m.packagetype, "sprate", new { @id = "sprate_option", @class = "packagetype" })
+                                 Special Rate
                             </label>
 
                             <label style="margin-left: 10px; margin-right: 10px;">

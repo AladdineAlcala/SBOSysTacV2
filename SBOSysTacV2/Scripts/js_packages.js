@@ -23,9 +23,13 @@ $(document).ready(function () {
 
         switch (selected) {
 
-            case 'rad_wedd':
-            _filter = 'wedding';
+            case 'rad_sprate':
+                _filter = 'sprate';
                 break;
+
+            //case 'rad_wedd':
+            //_filter = 'wedding';
+            //    break;
 
             case 'rad_premier':
                 _filter = 'premier';
