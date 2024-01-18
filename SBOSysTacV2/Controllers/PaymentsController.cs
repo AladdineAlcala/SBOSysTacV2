@@ -62,7 +62,8 @@ namespace SBOSysTacV2.Controllers
                 var packageType = bookings.Package.p_type.TrimEnd();
 
                 //Discounts 
-                if (packageType.ToLower() == PackageType.regular.ToString().ToLower() || packageType.ToLower() == PackageType.vip.ToString().ToLower())
+                //Remove vip package from catering discount, 01/14/2023
+                if (packageType.ToLower() == PackageType.regular.ToString().ToLower())
                 {
                     bookingPayments.generaldiscount = BookingsService.getBookingTransDiscount(transactionId, totalAmount);
                     bookingPayments.cateringdiscount = bookingPayments.GetCateringDiscount(transactionId);

@@ -15,6 +15,7 @@ namespace SBOSysTacV2.ServiceLayer
     {
         private static PegasusEntities _dbcontext = new PegasusEntities();
        
+       
 
         public BookingsService()
         {
@@ -68,8 +69,10 @@ namespace SBOSysTacV2.ServiceLayer
                                           bookothercharge = (from b in books.Book_OtherCharge where b.trn_Id == transId select b.amount).Sum()
                                       }).FirstOrDefault();
 
+                //  Remove vip package from catering discount, 01/14/2023 
+                //  if (packageType==PackageType.regular.ToString() || packageType== PackageType.vip.ToString())
 
-                if (packageType==PackageType.regular.ToString() || packageType== PackageType.vip.ToString())
+                if (packageType==PackageType.regular.ToString())
                 {
                     
 
@@ -106,7 +109,9 @@ namespace SBOSysTacV2.ServiceLayer
 
                 }
 
-                else if (packageType == PackageType.premier.ToString() || packageType == PackageType.sprate.ToString())
+                else if (packageType == PackageType.premier.ToString() 
+                    || packageType == PackageType.sprate.ToString()
+                    || packageType == PackageType.vip.ToString())
                 {
                    
 
@@ -227,8 +232,6 @@ namespace SBOSysTacV2.ServiceLayer
 
         public static List<Booking> GetBookingReport(DateTime dateFrom,DateTime dateTo)
         {
-
-
             return _dbcontext.Bookings.Where(t =>
                 DbFunctions.TruncateTime(t.startdate) >= DbFunctions.TruncateTime(dateFrom) &&
                 DbFunctions.TruncateTime(t.startdate) <= DbFunctions.TruncateTime(dateTo)).ToList();
@@ -236,11 +239,9 @@ namespace SBOSysTacV2.ServiceLayer
 
         public static decimal Get_extendedAmountLoc(int transId)
         {
-
             decimal extAmt = 0;
 
             var booking = _dbcontext.Bookings.FirstOrDefault(x => x.trn_Id == transId);
-
 
             if (booking.Package.p_type.Trim() != PackageType.vip.ToString() && booking.extendedAreaId != null)
             {
@@ -254,20 +255,17 @@ namespace SBOSysTacV2.ServiceLayer
                         {
                             extLocAmount = pa.ext_amount
 
-                        }).FirstOrDefault();
-
-
+                        }).First();
                     if (list != null)
                     {
-
                         extAmt = Convert.ToDecimal(list.extLocAmount);
                     }
 
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
-                    throw;
+                    Console.WriteLine(e.Message);
+                    return 0;
                 }
             }
 
@@ -279,6 +277,11 @@ namespace SBOSysTacV2.ServiceLayer
             return (from b in _dbcontext.Book_OtherCharge
                 where b.trn_Id == transId
                 select b.amount).Sum() ?? 0;
+        }
+
+        public static decimal TranspoCharge(int pax,int trnId, Func<int,decimal> transpocharge)
+        {
+            return Convert.ToDecimal(transpocharge(trnId) * pax);
         }
 
         public void Dispose()

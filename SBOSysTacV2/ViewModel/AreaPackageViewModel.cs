@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using SBOSysTacV2.Models;
@@ -27,7 +28,7 @@ namespace SBOSysTacV2.ViewModel
             var areapackage = new List<AreaPackageViewModel>();
 
             areapackage = (from a in _dbcontext.PackageAreaCoverages
-                join p in _dbcontext.Packages on a.p_id equals p.p_id where p.p_type.Trim().Equals("regular") && p.isActive==true
+                join p in _dbcontext.Packages on a.p_id equals p.p_id where p.isActive==true
                            select new AreaPackageViewModel
                 {
                     areaId = a.aID,
@@ -35,12 +36,39 @@ namespace SBOSysTacV2.ViewModel
                     packagedetails = p.p_descripton,
                     amountperPax = p.p_amountPax,
                     isActive = p.isActive,
+                    pType=p.p_type,
                     is_extended=a.is_extended
 
                 }).ToList();
 
 
             return areapackage;
+
+        }
+
+        public IEnumerable<AreaPackageViewModel> GetAreasByPackages(string ptype)
+        {
+            var areapackage = new List<AreaPackageViewModel>();
+
+            areapackage = (from a in _dbcontext.PackageAreaCoverages
+                           join p in _dbcontext.Packages on a.p_id equals p.p_id
+                           where p.p_type.Trim() == ptype && p.isActive == true
+                           select new AreaPackageViewModel
+                           {
+                               areaId = a.aID,
+                               packageId = p.p_id,
+                               packagedetails = p.p_descripton,
+                               amountperPax = p.p_amountPax,
+                               isActive = p.isActive,
+                               is_extended = a.is_extended
+
+                           }).ToList();
+
+
+            return areapackage;
+
+
+            //var  packageareaList = _dbcontext.Packages.Where(package => package.p_type.Trim()==ptype).Include(p => p.PackageAreaCoverages).ToList();
 
         }
 
