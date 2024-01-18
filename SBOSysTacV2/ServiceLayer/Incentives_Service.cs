@@ -19,6 +19,11 @@ namespace SBOSysTacV2.ServiceLayer
         public PegasusEntities dbEntities;
         static Func<Booking, List<ICollection<BookAddonsDetail>>> _getAddonDetails = BookingAddonDetailsViewModel.GetAddonDetails;
         static Func<int, decimal> _getBookingAmount = BookingsService.Get_TotalAmountBook;
+
+        static Func<int,decimal> _getExtendedLocationCharge= BookingsService.Get_extendedAmountLoc;
+
+
+
         public IncentivesService()
         {
             dbEntities = new PegasusEntities();
@@ -26,31 +31,33 @@ namespace SBOSysTacV2.ServiceLayer
 
         public Func<PaymentLogDetailsViewModel, bool> pcondition = _amt => GetAmount(_amt) == true;
 
+
+        //Added Othercharge Column to Monthly Catering Report 01/14/2024
+
         public static IEnumerable<CateringReportViewModel> GetCateringReport(IEnumerable<Booking> bookings, Func<CateringReportViewModel, bool> expression)
         {
- 
-
-            return bookings.Select(x => new CateringReportViewModel()
-            {
-
-                EventDate = (DateTime)x.startdate,
-                cId = x.Customer.c_Id,
-                Client = Utilities.Getfullname(x.Customer.lastname, x.Customer.firstname, x.Customer.middle),
-                Occasion = x.occasion,
-                p_type = x.Package.p_type.TrimEnd() == PackageType.vip.ToString() || x.Package.p_type.TrimEnd() == PackageType.regular.ToString() ? "cat" : x.Package.p_type.TrimEnd(),
-                Venue = x.venue,
-                noofPax = (int)x.noofperson,
-                PackageRate = x.Package.p_type.Trim() != "vip" ? (decimal)x.Package.p_amountPax - TransactionDetailsViewModel.GetCateringdiscountByPax((int)x.noofperson) : (decimal)x.Package.p_amountPax,
-                Addons = x.BookingAddons.Any() ? string.Join(", ", x.BookingAddons.Select(t => t.Addondesc)) : String.Empty,
-                AddonsTotal = x.BookingAddons.Any() ? AddonsViewModel.AddonsTotal(_getAddonDetails(x)) : 0,
-                AmountPaid = x.Payments.Any() ? x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum() : 0,
-                PaymentMode = x.Payments.Any() ? x.Payments.Select(t => t.pay_means).ToList().Aggregate((i, j) => i + "," + j != i ? j : "") : "---",
-                Status = x.Payments.Any() ? _getBookingAmount(x.trn_Id) - x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum()==0? "pd" : "unpd": "unpd",
-                iscancelled = (bool)x.is_cancelled,
-                isDeletedTran = (bool)x.is_deleted
-
-
-            }).Where(expression).OrderBy(o => o.p_type);
+            return bookings
+                .Select(x => new CateringReportViewModel()
+                {
+                    EventDate = (DateTime)x.startdate,
+                    cId = x.Customer.c_Id,
+                    Client = Utilities.Getfullname(x.Customer.lastname, x.Customer.firstname, x.Customer.middle),
+                    Occasion = x.occasion,
+                    p_type = x.Package.p_type.TrimEnd() == PackageType.vip.ToString() || x.Package.p_type.TrimEnd() == PackageType.regular.ToString() ? "cat" : x.Package.p_type.TrimEnd(),
+                    Venue = x.venue,
+                    noofPax = (int)x.noofperson,
+                    PackageRate = x.Package.p_type.Trim() != "vip" ? (decimal)x.Package.p_amountPax - TransactionDetailsViewModel.GetCateringdiscountByPax((int)x.noofperson) : (decimal)x.Package.p_amountPax,
+                    Addons = x.BookingAddons.Any() ? string.Join(", ", x.BookingAddons.Select(t => t.Addondesc)) : String.Empty,
+                    AddonsTotal = x.BookingAddons.Any() ? AddonsViewModel.AddonsTotal(_getAddonDetails(x)) : 0,
+                    AmountPaid = x.Payments.Any() ? x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum() : 0,
+                    PaymentMode = x.Payments.Any() ? x.Payments.Select(t => t.pay_means).ToList().Aggregate((i, j) => i + "," + j != i ? j : "") : "---",
+                    Status = x.Payments.Any() ? _getBookingAmount(x.trn_Id) - x.Payments.Select(t => Convert.ToDecimal(t.amtPay)).Sum() == 0 ? "pd" : "unpd" : "unpd",
+                    iscancelled = (bool)x.is_cancelled,
+                    isDeletedTran = (bool)x.is_deleted,
+                    bookOtherCharge = x.Book_OtherCharge.Any() ? BookingsService.GetOtherCharge(x.trn_Id) : 0,
+                    transpoCharge = x.Package.p_type.TrimEnd() == PackageType.regular.ToString() ? BookingsService.TranspoCharge((int)x.noofperson,x.trn_Id, _getExtendedLocationCharge) : 0
+                })
+            .Where(expression).OrderBy(o => o.p_type);
         }
 
         public void GetIncentivesReport(DateTime _dateFrom, DateTime _dateTo)

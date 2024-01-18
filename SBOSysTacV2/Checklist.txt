@@ -31,3 +31,10 @@
 5/1/2023 Issue : PackMeals emplements discounts  == Resolve sd and packmeals discounts are are not applicable only for regular and vip package
 
 7/30/2023 Issue : Add Premier Package
+
+7/31/23 - Add Special Rate Package
+
+01/14/24 -
+Remove vip package from catering discount, 01/14/2023 (Payments/GetBooking_Payments)
+Add Othercharge and transporationCharge Column to Monthly Catering Report
+Fixed Catering Report Amount Paid and Balance

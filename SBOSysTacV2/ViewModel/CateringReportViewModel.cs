@@ -26,6 +26,8 @@ namespace SBOSysTacV2.ViewModel
         public string Status { get; set; }
         public bool iscancelled { get; set; }
         public bool isDeletedTran { get; set; }
+        public decimal bookOtherCharge { get; set; }
+        public decimal transpoCharge { get; set; }
 
 
         //public CateringReportViewModel()
@@ -60,6 +62,6 @@ namespace SBOSysTacV2.ViewModel
         //        .ToList();
         //}
 
-      
+
     }
 }

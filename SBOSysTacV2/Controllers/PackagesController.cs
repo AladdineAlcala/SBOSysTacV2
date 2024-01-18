@@ -541,7 +541,7 @@ namespace SBOSysTacV2.Controllers
 
 
 
-        public JsonResult GetResultSearchPackageBooking(string searchStr, string selectedId)
+        public JsonResult GetResultSearchPackageBooking(string searchStr, string selectedId,string ptype)
         {
 
 
@@ -558,10 +558,8 @@ namespace SBOSysTacV2.Controllers
                 if (!string.IsNullOrEmpty(searchStr))
                 {
                     packages = areaPackage.GetAreasByPackages()
-                        .Where(x => x.areaId.Equals(Convert.ToInt32(searchStr)))
-                         .OrderByDescending(order => order.packageId).ToList();
-
-
+                                          .Where(x => x.areaId.Equals(Convert.ToInt32(searchStr)) && x.pType.Trim().Equals(ptype))
+                                          .OrderByDescending(order => order.packageId).ToList();
                 }
 
 

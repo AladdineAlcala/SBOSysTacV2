@@ -3,7 +3,19 @@ var $selectedObject;
 var $tablebookings;
 var $areasel;
 
+
+const PackageType = {
+    Vip: 'vip',
+    Regular: 'regular',
+    Wedding: 'wedding',
+    Premier: 'premier',
+    Sprate: 'sprate',
+    PackMeals:'pm'
+}
+
 $(document).ready(function () {
+
+    var selectedpackageType="";
 
     deactivateLoader();
 
@@ -1081,9 +1093,11 @@ $(document).on('change', '#' +
 
         var selId = $(this).attr('id');
 
+        var selectedptype = $('#packageTypeSelectList').val();
+
         $areasel = $(this).val();
 
-        LoadDataTableSearch($areasel, selId);
+        LoadDataTableSearch($areasel, selId, selectedptype);
 
     });
 
@@ -1102,7 +1116,13 @@ $(document).on('change', '#' +
     var selId = "";
         selId = $(this).attr('id');
 
-        if ($(this).val() === "regular") {
+    selectedpackageType = $(this).val();
+
+    //console.log($(this).val())
+
+    console.log(selectedpackageType)
+    debugger;
+    if ($(this).val() === "regular" || $(this).val() === "premier" || $(this).val() === "sprate") {
 
             document.getElementById('areaSelectList').selectedIndex = 0;
 
@@ -1124,10 +1144,13 @@ $(document).on('change', '#' +
             document.getElementById('areaSelectList').style.display = 'inline-block';
 
         } else {
+       
+             console.log(selectedpackageType);
 
             document.getElementById('areaSelectList').style.display = 'none';
 
-            LoadDataTableSearch($(this).val(), selId);
+            LoadDataTableSearch($(this).val(), selId, selectedpackageType);
+
         }
 
 
@@ -1137,7 +1160,7 @@ $(document).on('change', '#' +
 
 
 
-var LoadDataTableSearch = function(data,selectedId) {
+var LoadDataTableSearch = function(data,selectedId,ptypeSelected) {
 
     var searchstring = data;
 
@@ -1158,7 +1181,7 @@ var LoadDataTableSearch = function(data,selectedId) {
 
         ajax: {
             url: bookingsUrl.bookUrl_getResultSearchPackages,  // "@Url.Action("getResultSearchPackageBooking", "Packages")"
-            data: { searchstr: searchstring, selectedId: seleId},
+            data: { searchstr: searchstring, selectedId: seleId, ptype: ptypeSelected},
             type: "Get",
             datatype: "json"
         },
@@ -1273,15 +1296,30 @@ $(document).on('click', '.btn-selectPackage', function () {
 
     switch (selectedval) {
 
-        case 'vip':
+        case PackageType.Vip:
             $('#packageloc_app').html('VIP')
             break;
 
-        case 'regular':
+        case PackageType.Regular:
             $('#packageloc_app').html('Regular')
             break;
 
-        case 'pm':
+        case PackageType.Premier:
+            $('#packageloc_app').html('Premier')
+            break;
+
+
+        case PackageType.Sprate:
+            $('#packageloc_app').html('Special Rate')
+            break;
+
+
+        case PackageType:
+            $('#packageloc_app').html('PackMeals')
+            break;
+
+
+        case PackageType.PackMeals:
             $('#packageloc_app').html('PackMeals')
             break;
 
