@@ -11,6 +11,8 @@ using System.Globalization;
 using SBOSysTacV2.HtmlHelperClass;
 using SBOSysTacV2.ServiceLayer;
 using System.Linq.Dynamic;
+using System.Data;
+using ClosedXML.Excel;
 
 namespace SBOSysTacV2.Controllers
 {
@@ -169,18 +171,96 @@ namespace SBOSysTacV2.Controllers
                 //return PartialView("_ClientRecievablesPartialView");
                 url = "AccountRecieveCustomer";
             }
-
-         
             return View(url, pOption);
         }
 
+        public ActionResult CollectionReportByPaymentType()
+        {
+            return View();
+        }
+        public ActionResult GetCollectionReportByPaymentType(DateTime? DateFrom, DateTime? DateTo)
+        {
+            if (!DateFrom.HasValue || !DateTo.HasValue)
+            {
+                return new HttpStatusCodeResult(400, "Date range is required.");
+            }
+            try
+            {
+                var CollectionSummaries = _dbEntities.Database.SqlQuery<CollectionReportSummaryResponse>("EXEC GetPaymentSummary @DateFrom, @DateTo",
+                                new SqlParameter("@DateFrom", DateFrom.Value),
+                                new SqlParameter("@DateTo", DateTo.Value)).ToList();
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("Collection Report");
 
-         
-       
+                    // Add Title/Heading
+                    string reportTitle = $"Collection Report Summary (Dated from {DateFrom:yyyy-MM-dd} to {DateTo:yyyy-MM-dd})";
+                    worksheet.Cell(1, 1).Value = reportTitle;
+                    worksheet.Range("A1:B1").Merge();  // Merge cells A1 and B1 for the title
+                    worksheet.Cell(1, 1).Style.Font.Bold = true;
+                    worksheet.Cell(1, 1).Style.Font.FontSize = 14;  // Larger font for title
+                    worksheet.Cell(1, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+
+                    // Add Headers (Shifted to row 3)
+                    worksheet.Cell(3, 1).Value = "Payment Type";
+                    worksheet.Cell(3, 2).Value = "Total Amount";
+                    worksheet.Range("A3:B3").Style.Font.Bold = true;
+                    var headerRange = worksheet.Range("A3:B3");
+                    headerRange.Style.Font.Bold = true;
+                    headerRange.Style.Fill.BackgroundColor = XLColor.LightSteelBlue;
+                    headerRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+                    // Loop through CollectionSummaries and add data
+                    int row = 4;
+                    foreach (var summary in CollectionSummaries)
+                    {
+                        worksheet.Cell(row, 1).Value = summary.PaymentType;
+                        worksheet.Cell(row, 2).Value = summary.TotalAmount;
+                        worksheet.Cell(row, 2).Style.NumberFormat.Format = "#,##0.00"; // Currency formatting
+                        row++;
+                    }
+
+                    // Add a total row
+                    worksheet.Cell(row, 1).Value = "Total";
+                    worksheet.Cell(row, 1).Style.Font.Bold = true;
+                    worksheet.Cell(row, 2).FormulaA1 = $"=SUM(B2:B{row - 1})";
+                    worksheet.Cell(row, 2).Style.Font.Bold = true;
+                    worksheet.Cell(row, 2).Style.NumberFormat.Format = "#,##0.00";
+
+                    // Apply Borders ONLY for the Total Row
+                    var totalRowRange = worksheet.Range($"A{row}:B{row}");
+                    totalRowRange.Style.Border.TopBorder = XLBorderStyleValues.Thin;      // Single line on top
+                    totalRowRange.Style.Border.BottomBorder = XLBorderStyleValues.Double; // Double line on bottom
+
+                    // Auto-adjust column width
+                    worksheet.Columns().AdjustToContents();
+
+                    // Return the Excel file as a download
+                    using (var stream = new System.IO.MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        stream.Position = 0;
+
+                        return File(stream.ToArray(),
+                           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                           $"CollectionSummaryReport_{DateFrom?.ToString("yyyy-MM-dd")}-{DateTo?.ToString("yyyy-MM-dd")}.xlsx");
+                    }
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                return new HttpStatusCodeResult(500, $"Database Error: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(500, $"Unexpected Error: {ex.Message}");
+            }
+
+        }
 
         public ActionResult GetSalesSummary()
         {
-
             return PartialView("_SalesSummaryListPartial");
         }
 

@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "CollectionReport By PaymentType";
+    
+}
+
+<section class="content">
+    <div class="pad margin no-print" style="padding-left: 0px !important; padding-right: 0px !important; margin-bottom: 0px; padding-bottom: 0px;">
+        <div class="callout callout-info" style="margin-bottom: 15px;">
+            <h4><i class="fa fa-info" style="padding: 0px; margin: 0px;"></i> Print @ViewBag.Title </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="register-box">
+            <p class="lead text-center">Filter Date</p>
+            <div class="box box-success">
+                <div class="box-body" style="height: 150px;">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>From </label>
+                                <input type="text" id="dateFrom" class="form-control" placeholder="Date Start">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>To </label>
+                                <input type="text" id="dateTo" class="form-control" placeholder="Date End">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-4">
+                            <a class="btn bg-olive btn-flat" id="printcollreportbypaytype"> Print Report</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts
+{
+    @Scripts.Render("~/Scripts/js_collectionreport.js")
+
+    <script type="text/javascript">
+            var printcollreportbypaytype = document.getElementById('printcollreportbypaytype');
+            printcollreportbypaytype.addEventListener('click', function (event) {
+                event.preventDefault();
+                var dateFrom = document.getElementById("dateFrom").value;
+                var dateTo = document.getElementById("dateTo").value;
+                 var url = '@Url.Action("GetCollectionReportByPaymentType", "Inquiry")' +
+                      '?DateFrom=' + encodeURIComponent(dateFrom) +
+                      '&DateTo=' + encodeURIComponent(dateTo);
+                window.location.href = url; // Redirect with model data as query params
+            });
+    </script>
+}
+

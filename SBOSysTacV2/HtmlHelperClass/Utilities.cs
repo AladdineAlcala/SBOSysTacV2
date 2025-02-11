@@ -112,15 +112,11 @@ namespace SBOSysTacV2.HtmlHelperClass
                     ParameterName = "series",
                     DbType = DbType.Int32,
                     Direction = ParameterDirection.Output
-
-
                 };
 
                 var seriesId = dbcontext.Database.SqlQuery<int>("exec Generate_PmtCode @series out", seriesParameter).FirstOrDefault();
 
                 id = Convert.ToInt32(seriesId);
-
-
             }
 
             catch (NullReferenceException)

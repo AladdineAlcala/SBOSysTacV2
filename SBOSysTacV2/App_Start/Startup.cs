@@ -54,9 +54,7 @@ namespace SBOSysTacV2
                         entity.AuditOperation = entry.Action;
                         entity.AuditData = entry.ToJson();
                     })
-
-                    .IgnoreMatchedProperties(true)
-                    );
+                    .IgnoreMatchedProperties(true));
 
             //app.MapSignalR();
         }

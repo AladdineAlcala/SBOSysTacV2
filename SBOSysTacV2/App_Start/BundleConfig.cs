@@ -9,7 +9,6 @@ namespace SBOSysTacV2
         {
             bundles.Add(new ScriptBundle("~/bundles/javascripts").Include(
                         "~/Content/bower_components/jquery/dist/jquery.min.js",
-                        //"~/Content/bower_components/jquery-ui/jquery-ui.min.js",
                         "~/Content/bower_components/bootstrap/dist/js/bootstrap.min.js",
                         "~/Scripts/moment.min.js",
                         "~/Content/bower_components/jquery-slimscroll/jquery.slimscroll.min.js",
@@ -24,13 +23,13 @@ namespace SBOSysTacV2
                         "~/Scripts/datetime-moment.js",
                         "~/Scripts/typeahead.bundle.min.js",
                         "~/Content/bower_components/select2-4.0.6-rc.1/dist/js/select2.full.min.js",
-                        //"~/Content/bower_components/select2-4.0.6-rc.1/dist/js/select2.min.js",
                         "~/Content/bower_components/sweetalert/sweetalert2.min.js",
                         "~/Content/dist/js/adminlte.min.js",
                         "~/Scripts/sidebar.js"
                          ));
 
             bundles.Add(new ScriptBundle("~/bundles/AjaxExtensions").Include(
+
                             "~/Scripts/jquery.unobtrusive-ajax.js",
                             "~/Scripts/jquery.validate.js",
                             "~/Scripts/jquery.validate.unobtrusive.js"
@@ -60,7 +59,6 @@ namespace SBOSysTacV2
                       "~/Content/bower_components/datatables.net/extensions/Select/css/select.bootstrap.min.css",
                       "~/Content/bootstrap-datetimepicker.min.css",
                       "~/Content/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
-                      //"~/Content/bower_components/select2/dist/css/select2.min.css",
                       "~/Content/bower_components/select2-4.0.6-rc.1/dist/css/select2.min.css",
                       "~/Content/dist/css/AdminLTE.min.css",
                       "~/Content/dist/css/skins/_all-skins.min.css",

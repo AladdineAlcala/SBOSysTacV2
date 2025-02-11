@@ -140,16 +140,11 @@ namespace SBOSysTacV2.Controllers
                         throw;
                     }
                 }
-
-
             }
-
-
             ViewBag.FormTitle = "Create New Customer";
             return View(newcusViewmodel);
         }
 
-       
         public JsonResult GetCustomers(string query)
         {
             List<CustomerViewModel> customerList;
@@ -179,34 +174,20 @@ namespace SBOSysTacV2.Controllers
             bool success = false;
             try
             {
-                //get customer in db
-             
-
-                // check if has balance
-
-                //var customertrans = tr.GetAllRecievables().Where(x => x.cusId == cusdelete.c_Id)
-                //    .Any(b => b.balance > 0);
-
                 var hasBookings = _dbcontext.Bookings.Any(x => x.c_Id == customerId);
-
                 if (!hasBookings)
                 {
                     cusdelete = _dbcontext.Customers.Find(customerId);
                     if (cusdelete != null) _dbcontext.Customers.Remove(cusdelete);
                     _dbcontext.SaveChanges();
-
                     success = true;
                 }
-           
-
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
-
-
             return Json(new {success=success}, JsonRequestBehavior.AllowGet);
         }
 

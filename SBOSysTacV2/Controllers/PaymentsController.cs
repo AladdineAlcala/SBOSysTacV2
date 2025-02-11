@@ -122,10 +122,7 @@ namespace SBOSysTacV2.Controllers
                 amtPay = balance,
                 createdByUserId = User.Identity.GetUserId(),
                 createdByUserName = User.Identity.GetUserName()
-
-        };
-
-
+            };
             return PartialView(paymentVM);
         }
 
@@ -135,14 +132,8 @@ namespace SBOSysTacV2.Controllers
         public ActionResult SavePayment(PaymentsViewModel paymentviewmodel)
         {
             if (!ModelState.IsValid) return PartialView("Add_PaymentPartialView", paymentviewmodel);
-
-          //  bool success = false;
-
             var url = "";
             var success = false;
-
-            int persist = 0;
-
             try
             {
                 var newPayment=new Payment
@@ -161,33 +152,19 @@ namespace SBOSysTacV2.Controllers
                     p_updatedDate = paymentviewmodel.p_updateDate
 
                 };
-
                _dbcontext.Payments.Add(newPayment);
-
-                persist = _dbcontext.SaveChanges();
-
+                success = _dbcontext.SaveChanges()==1;
                 url = Url.Action("GetPaymentList", "Payments", new {transId = paymentviewmodel.transId });
-
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
-
-
-            if (persist == 1)
-            {
-                success = true;
-            }
-
             return Json(new {success,url}, JsonRequestBehavior.AllowGet);
 
         }
 
-        //[UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin, UserPermessionLevelEnum.cashier)]
-
-        
         [HttpPost]
         [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin)]
         public ActionResult RemovePayment(int pmtNo)
@@ -199,26 +176,17 @@ namespace SBOSysTacV2.Controllers
             try
             {
                 paymt = _dbcontext.Payments.Find(pmtNo);
-
                 int t_Id =Convert.ToInt32(paymt.trn_Id);
-
-             
-                    _dbcontext.Payments.Remove(paymt);
-
-                    _dbcontext.SaveChanges();
-
-
-                    url = Url.Action("GetPaymentList", "Payments", new { transId =t_Id});
-                    success = true;
-               
-               
+                _dbcontext.Payments.Remove(paymt);
+                _dbcontext.SaveChanges();
+                url = Url.Action("GetPaymentList", "Payments", new { transId =t_Id});
+                success = true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
-
             return Json(new {success=success,url=url}, JsonRequestBehavior.AllowGet);
         }
 
@@ -226,29 +194,24 @@ namespace SBOSysTacV2.Controllers
         public ActionResult Update_PaymentPartialView(string pymtId)
         {
             Payment pmt=new Payment();
-            PaymentsViewModel pmtViewModel = new PaymentsViewModel();
+            PaymentsViewModel pmtViewModel=new PaymentsViewModel();
+            pmt = _dbcontext.Payments.FirstOrDefault(x => x.payNo == pymtId);
 
-           
-                pmt = _dbcontext.Payments.FirstOrDefault(x => x.payNo == pymtId);
-
-                if (pmt != null)
+            if (pmt != null)
+            {
+                pmtViewModel = new PaymentsViewModel()
                 {
-                     pmtViewModel = new PaymentsViewModel()
-                    {
-                        PayNo = pmt.payNo,
-                        transId = pmt.trn_Id,
-                        dateofPayment = pmt.dateofPayment,
-                        particular = pmt.particular,
-                        payType = pmt.payType,
-                        amtPay = pmt.amtPay,
-                        pay_means = pmt.pay_means.Trim(),
-                        checkNo = pmt.checkNo,
-                        notes = pmt.notes
-
-                    };
-
-                }
-
+                    PayNo = pmt.payNo,
+                    transId = pmt.trn_Id,
+                    dateofPayment = pmt.dateofPayment,
+                    particular = pmt.particular,
+                    payType = pmt.payType,
+                    amtPay = pmt.amtPay,
+                    pay_means = pmt.pay_means.Trim(),
+                    checkNo = pmt.checkNo,
+                    notes = pmt.notes
+                };
+            }
             return PartialView(pmtViewModel);
         }
 
