@@ -13,6 +13,7 @@ using SBOSysTacV2.ServiceLayer;
 using System.Linq.Dynamic;
 using System.Data;
 using ClosedXML.Excel;
+using System.Threading.Tasks;
 
 namespace SBOSysTacV2.Controllers
 {
@@ -537,10 +538,6 @@ namespace SBOSysTacV2.Controllers
         {
             var bookaudit = _dbEntities.AuditLogs.Where(x => x.TableName == "Booking").ToList();
             var logs = JsonExtractorHelper.BookingLogsHistory(bookaudit, transId);
-
-            //var list = logs.GroupBy(d => DbFunctions.TruncateTime(d.Logdate)).OrderBy(g => g.Key).Select(g => g.Select(v=>v.BookingEventList).ToList()).ToList();
-
-
             return PartialView("_BookingTransLog",logs);
         }
 
@@ -555,30 +552,31 @@ namespace SBOSysTacV2.Controllers
 
         [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin)]
         [HttpGet]
-        public ActionResult MonthlyCashReportView(DateTime datefrom,DateTime dateto,bool w_unsettle)
+        public async Task<ActionResult> MonthlyCashReportView(DateTime datefrom,DateTime dateto,bool w_unsettle)
         {
+            const string ReportName = "cateringreport";
+            const string Status = "pd";
             var pOption = new PrintOptionViewModel()
             {
-
-                selPrintOpt = "cateringreport",
+                selPrintOpt = ReportName,
                 dateFrom = Convert.ToDateTime(datefrom),
                 dateTo = Convert.ToDateTime(dateto),
                 ex_unsetevent = w_unsettle
-
             };
-
-           
-
-            var list = IncentivesService.GetCateringReport(BookingsService.GetBookingReport(pOption.dateFrom,pOption.dateTo), t => t.iscancelled == false && t.isDeletedTran == false && t.p_type == PackageType.cat.ToString() || t.p_type == PackageType.pm.ToString());
+            var bookings = await BookingsService.GetBookingReport(pOption.dateFrom, pOption.dateTo);
+            var list = await Task.Run(() =>
+                        IncentivesService.GetCateringReport(bookings, t =>
+                        !t.iscancelled && !t.isDeletedTran &&
+                        (t.p_type == PackageType.cat.ToString() ||
+                         t.p_type == PackageType.pm.ToString() ||
+                         t.p_type == PackageType.premier.ToString()))
+                        );
 
             if (pOption.ex_unsetevent == true)
             {
-                list = list.Where(t => t.Status == "pd").ToList();
-               // list=list.Where(t=>t.)
+                list = list.Where(t => t.Status == Status);
             }
-
-            ContainerClass.CateringList = list.ToList();
-
+            ContainerClass.CateringList = list.OrderBy(d=>d.EventDate).ToList();
             return View("~/Views/Shared/ReportContainer.cshtml", pOption);
         }
 

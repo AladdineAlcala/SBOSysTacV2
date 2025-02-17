@@ -223,13 +223,10 @@ namespace SBOSysTacV2.Controllers
             if (!ModelState.IsValid) return PartialView("Update_PaymentPartialView", updatedPayment);
 
             bool success = false;
-
             var url = "";
             try
             {
-
                 var modifiedPayment = _dbcontext.Payments.FirstOrDefault(pay => pay.payNo == updatedPayment.PayNo);
-
                 if (modifiedPayment != null)
                 {
                     modifiedPayment.payNo = updatedPayment.PayNo;
@@ -242,24 +239,15 @@ namespace SBOSysTacV2.Controllers
                     modifiedPayment.checkNo = updatedPayment.checkNo;
                     modifiedPayment.notes = updatedPayment.notes;
                     modifiedPayment.p_createdbyUser = User.Identity.GetUserId();
-
                     url = Url.Action("GetPaymentList", "Payments", new { transId = modifiedPayment.trn_Id });
                 }
-
-            
-                _dbcontext.SaveChanges();
-
-               
-                success = true;
-
-
+                success= _dbcontext.SaveChanges()==1?true:false;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
-
             return Json(new {success=success,url=url}, JsonRequestBehavior.AllowGet);
         }
 

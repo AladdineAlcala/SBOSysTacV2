@@ -7,6 +7,7 @@ using SBOSysTacV2.ViewModel;
 using System.Data.Entity;
 using System.Threading;
 using SBOSysTacV2.HtmlHelperClass;
+using System.Threading.Tasks;
 
 namespace SBOSysTacV2.ServiceLayer
 {
@@ -230,11 +231,11 @@ namespace SBOSysTacV2.ServiceLayer
             return Convert.ToDecimal(discountedAmount);
         }
 
-        public static List<Booking> GetBookingReport(DateTime dateFrom,DateTime dateTo)
+        public static async Task<List<Booking>> GetBookingReport(DateTime dateFrom,DateTime dateTo)
         {
-            return _dbcontext.Bookings.Where(t =>
+            return await _dbcontext.Bookings.Where(t =>
                 DbFunctions.TruncateTime(t.startdate) >= DbFunctions.TruncateTime(dateFrom) &&
-                DbFunctions.TruncateTime(t.startdate) <= DbFunctions.TruncateTime(dateTo)).ToList();
+                DbFunctions.TruncateTime(t.startdate) <= DbFunctions.TruncateTime(dateTo)).ToListAsync();
         }
 
         public static decimal Get_extendedAmountLoc(int transId)
