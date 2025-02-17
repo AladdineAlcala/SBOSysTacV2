@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Ajax.Utilities;
 using SBOSysTacV2.HtmlHelperClass;
@@ -56,8 +57,7 @@ namespace SBOSysTacV2.ServiceLayer
                     isDeletedTran = (bool)x.is_deleted,
                     bookOtherCharge = x.Book_OtherCharge.Any() ? BookingsService.GetOtherCharge(x.trn_Id) : 0,
                     transpoCharge = x.Package.p_type.TrimEnd() == PackageType.regular.ToString() ? BookingsService.TranspoCharge((int)x.noofperson,x.trn_Id, _getExtendedLocationCharge) : 0
-                })
-            .Where(expression).OrderBy(o => o.p_type);
+                }).Where(expression).OrderBy(o => o.p_type);
         }
 
         public void GetIncentivesReport(DateTime _dateFrom, DateTime _dateTo)

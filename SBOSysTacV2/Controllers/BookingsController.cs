@@ -1036,8 +1036,7 @@ namespace SBOSysTacV2.Controllers
             return Json(new { success = success, url = returnUrl,message }, JsonRequestBehavior.AllowGet);
         }
 
-
-        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin, UserPermessionLevelEnum.admin)]
+        [UserPermissionAuthorized(UserPermessionLevelEnum.superadmin)]
         [HttpGet]
         public ActionResult EditBooking(int transId)
         {

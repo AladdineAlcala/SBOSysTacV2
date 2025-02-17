@@ -58,6 +58,9 @@
       <HintPath>..\packages\Audit.NET.14.2.0\lib\net45\Audit.NET.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.95.4\lib\net46\ClosedXML.dll</HintPath>
+    </Reference>
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <HintPath>..\packages\CrystalReports.Engine.13.0.4001\lib\net40\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
       <Private>True</Private>
@@ -130,6 +133,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
       <Private>True</Private>
@@ -141,6 +147,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
@@ -216,6 +225,12 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
     <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
       <Private>True</Private>
@@ -281,6 +296,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -641,6 +657,7 @@
     <Compile Include="ViewModel\BookOtherChargeDetailViewModel.cs" />
     <Compile Include="ViewModel\CancelBookingViewModel.cs" />
     <Compile Include="ViewModel\CateringReportViewModel.cs" />
+    <Compile Include="ViewModel\CollectionReportSummaryResponse.cs" />
     <Compile Include="ViewModel\CollectionReportViewModel.cs" />
     <Compile Include="ViewModel\ContractReceiptViewModel.cs" />
     <Compile Include="ViewModel\CourseCategoryViewModel.cs" />
@@ -1828,6 +1845,10 @@
     <Content Include="aspnet_client\system_web\4_0_30319\crystalreportviewers13\prompting\js\promptengine_strings_zh_TW.js" />
     <Content Include="aspnet_client\system_web\4_0_30319\crystalreportviewers13\urlreporting\activexviewer.js" />
     <Content Include="aspnet_client\system_web\4_0_30319\crystalreportviewers13\urlreporting\appletviewer.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bower_components\bootstrap-datepicker\dist\css\bootstrap-datepicker.css" />
     <Content Include="Content\bower_components\bootstrap-datepicker\dist\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\bower_components\bootstrap-datepicker\dist\css\bootstrap-datepicker.standalone.css" />
@@ -6142,14 +6163,6 @@
     <Content Include="Content\bower_components\sweetalert\sweetalert.min.js" />
     <Content Include="Content\bower_components\sweetalert\sweetalert2.min.css" />
     <Content Include="Content\bower_components\sweetalert\sweetalert2.min.js" />
-    <Content Include="Content\build\js\BoxRefresh.js" />
-    <Content Include="Content\build\js\BoxWidget.js" />
-    <Content Include="Content\build\js\ControlSidebar.js" />
-    <Content Include="Content\build\js\DirectChat.js" />
-    <Content Include="Content\build\js\Layout.js" />
-    <Content Include="Content\build\js\PushMenu.js" />
-    <Content Include="Content\build\js\TodoList.js" />
-    <Content Include="Content\build\js\Tree.js" />
     <Content Include="Content\css\bootstrap-datetimepicker.css" />
     <Content Include="Content\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\css\bootstrap-theme.css" />
@@ -6983,10 +6996,6 @@
     <Content Include="Content\bower_components\bootstrap-datepicker\.gitignore" />
     <Content Include="Content\bower_components\bootstrap-datepicker\.travis.yml" />
     <Content Include="Content\bower_components\bootstrap-datepicker\bower.json" />
-    <Content Include="Content\bower_components\bootstrap-datepicker\build\build.less" />
-    <Content Include="Content\bower_components\bootstrap-datepicker\build\build3.less" />
-    <Content Include="Content\bower_components\bootstrap-datepicker\build\build_standalone.less" />
-    <Content Include="Content\bower_components\bootstrap-datepicker\build\build_standalone3.less" />
     <Content Include="Content\bower_components\bootstrap-datepicker\CHANGELOG.md" />
     <Content Include="Content\bower_components\bootstrap-datepicker\CODE_OF_CONDUCT.md" />
     <Content Include="Content\bower_components\bootstrap-datepicker\composer.json" />
@@ -7384,139 +7393,6 @@
     <Content Include="Content\bower_components\select2\src\scss\_dropdown.scss" />
     <Content Include="Content\bower_components\select2\src\scss\_multiple.scss" />
     <Content Include="Content\bower_components\select2\src\scss\_single.scss" />
-    <Content Include="Content\build\bootstrap-less\.csscomb.json" />
-    <Content Include="Content\build\bootstrap-less\.csslintrc" />
-    <Content Include="Content\build\bootstrap-less\alerts.less" />
-    <Content Include="Content\build\bootstrap-less\badges.less" />
-    <Content Include="Content\build\bootstrap-less\bootstrap.less" />
-    <Content Include="Content\build\bootstrap-less\breadcrumbs.less" />
-    <Content Include="Content\build\bootstrap-less\button-groups.less" />
-    <Content Include="Content\build\bootstrap-less\buttons.less" />
-    <Content Include="Content\build\bootstrap-less\carousel.less" />
-    <Content Include="Content\build\bootstrap-less\close.less" />
-    <Content Include="Content\build\bootstrap-less\code.less" />
-    <Content Include="Content\build\bootstrap-less\component-animations.less" />
-    <Content Include="Content\build\bootstrap-less\dropdowns.less" />
-    <Content Include="Content\build\bootstrap-less\forms.less" />
-    <Content Include="Content\build\bootstrap-less\glyphicons.less" />
-    <Content Include="Content\build\bootstrap-less\grid.less" />
-    <Content Include="Content\build\bootstrap-less\input-groups.less" />
-    <Content Include="Content\build\bootstrap-less\jumbotron.less" />
-    <Content Include="Content\build\bootstrap-less\labels.less" />
-    <Content Include="Content\build\bootstrap-less\list-group.less" />
-    <Content Include="Content\build\bootstrap-less\media.less" />
-    <Content Include="Content\build\bootstrap-less\mixins.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\alerts.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\background-variant.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\border-radius.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\buttons.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\center-block.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\clearfix.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\forms.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\gradients.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\grid-framework.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\grid.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\hide-text.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\image.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\labels.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\list-group.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\nav-divider.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\nav-vertical-align.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\opacity.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\pagination.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\panels.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\progress-bar.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\reset-filter.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\reset-text.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\resize.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\responsive-visibility.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\size.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\tab-focus.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\table-row.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\text-emphasis.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\text-overflow.less" />
-    <Content Include="Content\build\bootstrap-less\mixins\vendor-prefixes.less" />
-    <Content Include="Content\build\bootstrap-less\modals.less" />
-    <Content Include="Content\build\bootstrap-less\navbar.less" />
-    <Content Include="Content\build\bootstrap-less\navs.less" />
-    <Content Include="Content\build\bootstrap-less\normalize.less" />
-    <Content Include="Content\build\bootstrap-less\pager.less" />
-    <Content Include="Content\build\bootstrap-less\pagination.less" />
-    <Content Include="Content\build\bootstrap-less\panels.less" />
-    <Content Include="Content\build\bootstrap-less\popovers.less" />
-    <Content Include="Content\build\bootstrap-less\print.less" />
-    <Content Include="Content\build\bootstrap-less\progress-bars.less" />
-    <Content Include="Content\build\bootstrap-less\responsive-embed.less" />
-    <Content Include="Content\build\bootstrap-less\responsive-utilities.less" />
-    <Content Include="Content\build\bootstrap-less\scaffolding.less" />
-    <Content Include="Content\build\bootstrap-less\tables.less" />
-    <Content Include="Content\build\bootstrap-less\theme.less" />
-    <Content Include="Content\build\bootstrap-less\thumbnails.less" />
-    <Content Include="Content\build\bootstrap-less\tooltip.less" />
-    <Content Include="Content\build\bootstrap-less\type.less" />
-    <Content Include="Content\build\bootstrap-less\utilities.less" />
-    <Content Include="Content\build\bootstrap-less\variables.less" />
-    <Content Include="Content\build\bootstrap-less\wells.less" />
-    <Content Include="Content\build\grunt\.jshintrc" />
-    <Content Include="Content\build\js\.jscsrc" />
-    <Content Include="Content\build\js\.jshintrc" />
-    <Content Include="Content\build\less\.csslintrc" />
-    <Content Include="Content\build\less\404_500_errors.less" />
-    <Content Include="Content\build\less\AdminLTE-without-plugins.less" />
-    <Content Include="Content\build\less\AdminLTE.less" />
-    <Content Include="Content\build\less\alerts.less" />
-    <Content Include="Content\build\less\bootstrap-social.less" />
-    <Content Include="Content\build\less\boxes.less" />
-    <Content Include="Content\build\less\buttons.less" />
-    <Content Include="Content\build\less\callout.less" />
-    <Content Include="Content\build\less\carousel.less" />
-    <Content Include="Content\build\less\control-sidebar.less" />
-    <Content Include="Content\build\less\core.less" />
-    <Content Include="Content\build\less\datepicker.less" />
-    <Content Include="Content\build\less\direct-chat.less" />
-    <Content Include="Content\build\less\dropdown.less" />
-    <Content Include="Content\build\less\forms.less" />
-    <Content Include="Content\build\less\fullcalendar.less" />
-    <Content Include="Content\build\less\header.less" />
-    <Content Include="Content\build\less\info-box.less" />
-    <Content Include="Content\build\less\invoice.less" />
-    <Content Include="Content\build\less\labels.less" />
-    <Content Include="Content\build\less\lockscreen.less" />
-    <Content Include="Content\build\less\login_and_register.less" />
-    <Content Include="Content\build\less\mailbox.less" />
-    <Content Include="Content\build\less\miscellaneous.less" />
-    <Content Include="Content\build\less\mixins.less" />
-    <Content Include="Content\build\less\modal.less" />
-    <Content Include="Content\build\less\navs.less" />
-    <Content Include="Content\build\less\plugins.less" />
-    <Content Include="Content\build\less\print.less" />
-    <Content Include="Content\build\less\products.less" />
-    <Content Include="Content\build\less\profile.less" />
-    <Content Include="Content\build\less\progress-bars.less" />
-    <Content Include="Content\build\less\select2.less" />
-    <Content Include="Content\build\less\sidebar-mini.less" />
-    <Content Include="Content\build\less\sidebar.less" />
-    <Content Include="Content\build\less\skins\skin-black-light.less" />
-    <Content Include="Content\build\less\skins\skin-black.less" />
-    <Content Include="Content\build\less\skins\skin-blue-light.less" />
-    <Content Include="Content\build\less\skins\skin-blue.less" />
-    <Content Include="Content\build\less\skins\skin-green-light.less" />
-    <Content Include="Content\build\less\skins\skin-green.less" />
-    <Content Include="Content\build\less\skins\skin-purple-light.less" />
-    <Content Include="Content\build\less\skins\skin-purple.less" />
-    <Content Include="Content\build\less\skins\skin-red-light.less" />
-    <Content Include="Content\build\less\skins\skin-red.less" />
-    <Content Include="Content\build\less\skins\skin-yellow-light.less" />
-    <Content Include="Content\build\less\skins\skin-yellow.less" />
-    <Content Include="Content\build\less\skins\_all-skins.less" />
-    <Content Include="Content\build\less\small-box.less" />
-    <Content Include="Content\build\less\social-widgets.less" />
-    <Content Include="Content\build\less\table.less" />
-    <Content Include="Content\build\less\timeline.less" />
-    <Content Include="Content\build\less\treeview.less" />
-    <Content Include="Content\build\less\users-list.less" />
-    <Content Include="Content\build\less\variables.less" />
-    <Content Include="Content\build\scss\_variables.scss" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="Images\sals.ico" />
@@ -7745,6 +7621,10 @@
     </Content>
     <Content Include="Content\dist\css\adminlte.css.map" />
     <Content Include="Content\dist\css\adminlte.min.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="DataSet\CollectionReportDataset.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -7968,6 +7848,7 @@
     <Content Include="Views\Inquiry\_BookingOtherCharge_Inquiry.cshtml" />
     <Content Include="Views\Inquiry\_BookingAmountDue_Inquiry.cshtml" />
     <Content Include="Views\Bookings\_createbookingpartial.cshtml" />
+    <Content Include="Views\Inquiry\CollectionReportByPaymentType.cshtml" />
     <None Include="Web.developtment_testConfig.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
